@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/convertkit/main/json-schema/update_a_sequence_email_request.json",
+  "title": "Update a sequence email Request",
+  "x-tag": "Sequence Emails",
+  "type": "object",
+  "properties": {
+    "subject": {
+      "type": "string",
+      "description": "New subject line for the email"
+    },
+    "preview_text": {
+      "type": "string",
+      "nullable": true,
+      "description": "New preview text shown in email clients before the email is opened"
+    },
+    "content": {
+      "type": "string",
+      "nullable": true,
+      "description": "New HTML body content of the email"
+    },
+    "delay_value": {
+      "type": "integer",
+      "description": "New delay value"
+    },
+    "delay_unit": {
+      "type": "string",
+      "enum": [
+        "days",
+        "hours"
+      ],
+      "description": "New delay unit. Use `days` for schedule-aware delivery, `hours` for a fixed hourly delay"
+    },
+    "email_template_id": {
+      "type": "integer",
+      "nullable": true,
+      "description": "New email template ID for layout and styling. Pass `null` to clear"
+    },
+    "published": {
+      "type": "boolean",
+      "description": "Pass `true` to publish a draft email or `false` to unpublish it"
+    },
+    "send_days": {
+      "type": "array",
+      "nullable": true,
+      "items": {
+        "type": "string"
+      },
+      "description": "Days of the week this email may be sent. Pass a subset to restrict delivery, or `null` to reset to all days (inherits the sequence schedule)"
+    },
+    "position": {
+      "type": "integer",
+      "nullable": true,
+      "description": "New zero-based position of the email in the sequence"
+    }
+  }
+}

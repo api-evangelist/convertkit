@@ -1,0 +1,89 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/convertkit/main/json-schema/list_forms_response.json",
+  "title": "List forms Response",
+  "x-tag": "Forms",
+  "type": "object",
+  "properties": {
+    "forms": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "created_at": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "format": {
+            "nullable": true
+          },
+          "embed_js": {
+            "type": "string"
+          },
+          "embed_url": {
+            "type": "string"
+          },
+          "archived": {
+            "type": "boolean"
+          },
+          "uid": {
+            "type": "string"
+          },
+          "subscriber_count": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "created_at",
+          "type",
+          "format",
+          "embed_js",
+          "embed_url",
+          "archived",
+          "uid"
+        ]
+      }
+    },
+    "pagination": {
+      "type": "object",
+      "properties": {
+        "has_previous_page": {
+          "type": "boolean"
+        },
+        "has_next_page": {
+          "type": "boolean"
+        },
+        "start_cursor": {
+          "type": "string"
+        },
+        "end_cursor": {
+          "type": "string"
+        },
+        "per_page": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "has_previous_page",
+        "has_next_page",
+        "start_cursor",
+        "end_cursor",
+        "per_page"
+      ]
+    }
+  },
+  "required": [
+    "forms",
+    "pagination"
+  ]
+}

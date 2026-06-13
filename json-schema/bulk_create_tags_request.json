@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/convertkit/main/json-schema/bulk_create_tags_request.json",
+  "title": "Bulk create tags Request",
+  "x-tag": "Tags",
+  "type": "object",
+  "properties": {
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "name"
+        ]
+      }
+    },
+    "callback_url": {
+      "type": "string",
+      "nullable": true
+    }
+  },
+  "required": [
+    "tags"
+  ]
+}

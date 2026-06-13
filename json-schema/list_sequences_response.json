@@ -1,0 +1,104 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/convertkit/main/json-schema/list_sequences_response.json",
+  "title": "List sequences Response",
+  "x-tag": "Sequences",
+  "type": "object",
+  "properties": {
+    "sequences": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "hold": {
+            "type": "boolean"
+          },
+          "repeat": {
+            "type": "boolean"
+          },
+          "created_at": {
+            "type": "string"
+          },
+          "updated_at": {
+            "type": "string"
+          },
+          "email_address": {
+            "nullable": true
+          },
+          "email_template_id": {
+            "nullable": true
+          },
+          "send_days": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "send_hour": {
+            "type": "integer"
+          },
+          "time_zone": {
+            "type": "string"
+          },
+          "active": {
+            "type": "boolean"
+          },
+          "exclude_subscriber_sources": {
+            "type": "array",
+            "items": {}
+          },
+          "email_count": {
+            "type": "integer"
+          },
+          "subscriber_count": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "hold",
+          "repeat",
+          "created_at"
+        ]
+      }
+    },
+    "pagination": {
+      "type": "object",
+      "properties": {
+        "has_previous_page": {
+          "type": "boolean"
+        },
+        "has_next_page": {
+          "type": "boolean"
+        },
+        "start_cursor": {
+          "type": "string"
+        },
+        "end_cursor": {
+          "type": "string"
+        },
+        "per_page": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "has_previous_page",
+        "has_next_page",
+        "start_cursor",
+        "end_cursor",
+        "per_page"
+      ]
+    }
+  },
+  "required": [
+    "sequences",
+    "pagination"
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "summary": "Get a subscriber",
+  "method": "GET",
+  "path": "/v4/subscribers/{id}",
+  "tag": "Subscribers",
+  "response": {
+    "subscriber": {
+      "id": 1,
+      "first_name": "string",
+      "email_address": "string",
+      "state": "active",
+      "created_at": "string"
+    }
+  }
+}

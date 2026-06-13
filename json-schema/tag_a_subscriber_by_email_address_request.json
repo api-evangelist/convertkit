@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/convertkit/main/json-schema/tag_a_subscriber_by_email_address_request.json",
+  "title": "Tag a subscriber by email address Request",
+  "x-tag": "Tags",
+  "type": "object",
+  "properties": {
+    "email_address": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "email_address"
+  ]
+}

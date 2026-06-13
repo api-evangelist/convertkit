@@ -1,0 +1,90 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/convertkit/main/json-schema/FilterCondition.json",
+  "title": "FilterCondition",
+  "type": "object",
+  "description": "A filter condition with type and optional parameters. Used within the 'all' array for complex filtering where multiple conditions must be met.",
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": [
+        "opens",
+        "clicks",
+        "sent",
+        "delivered",
+        "subscribed",
+        "subscriber_state",
+        "tags",
+        "attribution"
+      ],
+      "description": "Type of filter condition. `attribution` matches subscribers by their *original signup attribution* \u2014 currently supports a `forms` sub-condition that matches by the form / landing-page id the subscriber signed up through. Attribution is the original signup source; it does not track current subscription state."
+    },
+    "count_greater_than": {
+      "type": "integer",
+      "description": "Minimum count (exclusive). Only applicable for engagement types ('opens', 'clicks', 'sent', 'delivered')."
+    },
+    "count_greater_than_or_equal": {
+      "type": "integer",
+      "description": "Minimum count (inclusive). Only applicable for engagement types ('opens', 'clicks', 'sent', 'delivered')."
+    },
+    "count_less_than": {
+      "type": "integer",
+      "description": "Maximum count (exclusive). Only applicable for engagement types ('opens', 'clicks', 'sent', 'delivered')."
+    },
+    "count_less_than_or_equal": {
+      "type": "integer",
+      "description": "Maximum count (inclusive). Only applicable for engagement types ('opens', 'clicks', 'sent', 'delivered')."
+    },
+    "after": {
+      "type": "string",
+      "format": "date",
+      "description": "Start date (YYYY-MM-DD). For 'subscribed' type, filters by subscriber_created_at. For engagement types, filters by event date. Not applicable for 'tags', 'subscriber_state', or 'attribution' types."
+    },
+    "before": {
+      "type": "string",
+      "format": "date",
+      "description": "End date (YYYY-MM-DD). For 'subscribed' type, filters by subscriber_created_at. For engagement types, filters by event date. Not applicable for 'tags', 'subscriber_state', or 'attribution' types."
+    },
+    "states": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "active",
+          "inactive",
+          "bounced",
+          "cancelled",
+          "complained"
+        ]
+      },
+      "description": "Subscriber lifecycle states. Required for 'subscriber_state' type; ignored for other types. Subscribers matching any of the listed states pass the filter. Strongly recommended to use `['active']` unless you specifically need other states \u2014 most subscriber-facing queries elsewhere in the app scope to active subscribers by default."
+    },
+    "any": {
+      "type": "array",
+      "description": "Array of OR conditions. Subscriber activity must match ANY of these conditions. Engagement types accept broadcasts/URLs; 'tags' accepts tag id matchers; 'attribution' accepts attribution sub-conditions (currently 'forms'). Not applicable for 'subscribed' or 'subscriber_state' types.",
+      "items": {
+        "oneOf": [
+          {
+            "title": "Broadcasts",
+            "$ref": "#/components/schemas/BroadcastAnyCondition"
+          },
+          {
+            "title": "URLs (clicks only)",
+            "$ref": "#/components/schemas/UrlAnyCondition"
+          },
+          {
+            "title": "Tag ids (tags only)",
+            "$ref": "#/components/schemas/IdsAnyCondition"
+          },
+          {
+            "title": "Forms (attribution only)",
+            "$ref": "#/components/schemas/FormsAnyCondition"
+          }
+        ]
+      }
+    }
+  },
+  "required": [
+    "type"
+  ]
+}

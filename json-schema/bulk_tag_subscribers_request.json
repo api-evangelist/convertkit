@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/convertkit/main/json-schema/bulk_tag_subscribers_request.json",
+  "title": "Bulk tag subscribers Request",
+  "x-tag": "Tags",
+  "type": "object",
+  "properties": {
+    "taggings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "tag_id": {
+            "type": "integer",
+            "nullable": true
+          },
+          "subscriber_id": {
+            "type": "integer",
+            "nullable": true
+          }
+        },
+        "required": [
+          "tag_id",
+          "subscriber_id"
+        ]
+      }
+    },
+    "callback_url": {
+      "type": "string",
+      "nullable": true
+    }
+  },
+  "required": [
+    "taggings"
+  ]
+}

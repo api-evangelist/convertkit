@@ -1,0 +1,19 @@
+{
+  "summary": "Get current account",
+  "method": "GET",
+  "path": "/v4/account",
+  "tag": "Accounts",
+  "response": {
+    "user": {
+      "email": "string",
+      "id": 1
+    },
+    "account": {
+      "id": 1,
+      "name": "string",
+      "plan_type": "string",
+      "primary_email_address": "string",
+      "created_at": "string"
+    }
+  }
+}

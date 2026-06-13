@@ -1,0 +1,15 @@
+{
+  "summary": "Create a snippet",
+  "method": "POST",
+  "path": "/v4/snippets",
+  "tag": "Snippets",
+  "response": {
+    "snippet": {
+      "id": 1,
+      "name": "string",
+      "snippet_type": "string",
+      "archived": true,
+      "key": "string"
+    }
+  }
+}

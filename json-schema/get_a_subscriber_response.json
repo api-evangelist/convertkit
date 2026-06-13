@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/convertkit/main/json-schema/get_a_subscriber_response.json",
+  "title": "Get a subscriber Response",
+  "x-tag": "Subscribers",
+  "type": "object",
+  "properties": {
+    "subscriber": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "first_name": {
+          "type": "string",
+          "nullable": true
+        },
+        "email_address": {
+          "type": "string"
+        },
+        "state": {
+          "type": "string",
+          "enum": [
+            "active",
+            "cancelled",
+            "bounced",
+            "complained",
+            "inactive"
+          ]
+        },
+        "created_at": {
+          "type": "string"
+        },
+        "fields": {
+          "type": "object",
+          "properties": {
+            "category": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "category"
+          ]
+        },
+        "canceled_at": {
+          "type": "string",
+          "nullable": true
+        }
+      },
+      "required": [
+        "id",
+        "first_name",
+        "email_address",
+        "state",
+        "created_at",
+        "fields"
+      ]
+    }
+  },
+  "required": [
+    "subscriber"
+  ]
+}

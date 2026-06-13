@@ -1,0 +1,23 @@
+{
+  "summary": "List custom fields",
+  "method": "GET",
+  "path": "/v4/custom_fields",
+  "tag": "Custom Fields",
+  "response": {
+    "custom_fields": [
+      {
+        "id": 1,
+        "name": "string",
+        "key": "string",
+        "label": "string"
+      }
+    ],
+    "pagination": {
+      "has_previous_page": true,
+      "has_next_page": true,
+      "start_cursor": "string",
+      "end_cursor": "string",
+      "per_page": 1
+    }
+  }
+}

@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/convertkit/main/json-schema/list_tags_response.json",
+  "title": "List tags Response",
+  "x-tag": "Tags",
+  "type": "object",
+  "properties": {
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "created_at": {
+            "type": "string"
+          },
+          "subscriber_count": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "created_at"
+        ]
+      }
+    },
+    "pagination": {
+      "type": "object",
+      "properties": {
+        "has_previous_page": {
+          "type": "boolean"
+        },
+        "has_next_page": {
+          "type": "boolean"
+        },
+        "start_cursor": {
+          "type": "string"
+        },
+        "end_cursor": {
+          "type": "string"
+        },
+        "per_page": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "has_previous_page",
+        "has_next_page",
+        "start_cursor",
+        "end_cursor",
+        "per_page"
+      ]
+    }
+  },
+  "required": [
+    "tags",
+    "pagination"
+  ]
+}

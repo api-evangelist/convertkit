@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/convertkit/main/json-schema/add_subscriber_to_form_by_email_address_request.json",
+  "title": "Add subscriber to form by email address Request",
+  "x-tag": "Forms",
+  "type": "object",
+  "properties": {
+    "email_address": {
+      "type": "string"
+    },
+    "referrer": {
+      "type": "string",
+      "nullable": true
+    }
+  },
+  "required": [
+    "email_address"
+  ]
+}

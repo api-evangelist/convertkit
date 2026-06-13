@@ -1,0 +1,8 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/convertkit/main/json-schema/add_subscriber_to_sequence_request.json",
+  "title": "Add subscriber to sequence Request",
+  "x-tag": "Sequences",
+  "type": "object",
+  "properties": {}
+}

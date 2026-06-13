@@ -1,0 +1,24 @@
+{
+  "summary": "List purchases",
+  "method": "GET",
+  "path": "/v4/purchases",
+  "tag": "Purchases",
+  "response": {
+    "purchases": [
+      {
+        "id": 1,
+        "transaction_id": "string",
+        "subscriber_id": 1,
+        "status": "string",
+        "email_address": "string"
+      }
+    ],
+    "pagination": {
+      "has_previous_page": true,
+      "has_next_page": true,
+      "start_cursor": "string",
+      "end_cursor": "string",
+      "per_page": 1
+    }
+  }
+}

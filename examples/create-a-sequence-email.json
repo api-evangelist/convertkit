@@ -1,0 +1,22 @@
+{
+  "summary": "Create a sequence email",
+  "method": "POST",
+  "path": "/v4/sequences/{sequence_id}/emails",
+  "tag": "Sequence Emails",
+  "request_body": {
+    "subject": "string",
+    "preview_text": "string",
+    "content": "string",
+    "delay_value": 1,
+    "delay_unit": "days"
+  },
+  "response": {
+    "email": {
+      "id": 1,
+      "sequence_id": 1,
+      "subject": "string",
+      "preview_text": null,
+      "email_address": "string"
+    }
+  }
+}

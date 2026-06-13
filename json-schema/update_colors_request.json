@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/convertkit/main/json-schema/update_colors_request.json",
+  "title": "Update colors Request",
+  "x-tag": "Accounts",
+  "type": "object",
+  "properties": {
+    "colors": {
+      "type": "array",
+      "description": "An array of up to 10 color hex codes",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": [
+    "colors"
+  ]
+}

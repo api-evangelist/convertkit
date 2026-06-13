@@ -1,0 +1,18 @@
+{
+  "summary": "List stats for a subscriber",
+  "method": "GET",
+  "path": "/v4/subscribers/{subscriber_id}/stats",
+  "tag": "Subscribers",
+  "response": {
+    "subscriber": {
+      "id": 1,
+      "stats": {
+        "sent": 1,
+        "opened": 1,
+        "clicked": 1,
+        "bounced": 1,
+        "open_rate": 1.0
+      }
+    }
+  }
+}

@@ -1,0 +1,69 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/convertkit/main/json-schema/create_a_snippet_request.json",
+  "title": "Create a snippet Request",
+  "x-tag": "Snippets",
+  "oneOf": [
+    {
+      "title": "Inline snippet",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of the snippet"
+        },
+        "snippet_type": {
+          "type": "string",
+          "enum": [
+            "inline"
+          ],
+          "description": "Must be 'inline'"
+        },
+        "content": {
+          "type": "string",
+          "description": "Liquid-enabled text content for the snippet"
+        }
+      },
+      "required": [
+        "name",
+        "snippet_type",
+        "content"
+      ]
+    },
+    {
+      "title": "Block snippet",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of the snippet"
+        },
+        "snippet_type": {
+          "type": "string",
+          "enum": [
+            "block"
+          ],
+          "description": "Must be 'block'"
+        },
+        "document_attributes": {
+          "type": "object",
+          "description": "Rich-text document for the snippet",
+          "properties": {
+            "value_html": {
+              "type": "string",
+              "description": "HTML content for the block snippet"
+            }
+          },
+          "required": [
+            "value_html"
+          ]
+        }
+      },
+      "required": [
+        "name",
+        "snippet_type",
+        "document_attributes"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "summary": "List tags",
+  "method": "GET",
+  "path": "/v4/tags",
+  "tag": "Tags",
+  "response": {
+    "tags": [
+      {
+        "id": 1,
+        "name": "string",
+        "created_at": "string",
+        "subscriber_count": 1
+      }
+    ],
+    "pagination": {
+      "has_previous_page": true,
+      "has_next_page": true,
+      "start_cursor": "string",
+      "end_cursor": "string",
+      "per_page": 1
+    }
+  }
+}

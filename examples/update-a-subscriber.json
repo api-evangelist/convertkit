@@ -1,0 +1,23 @@
+{
+  "summary": "Update a subscriber",
+  "method": "PUT",
+  "path": "/v4/subscribers/{id}",
+  "tag": "Subscribers",
+  "request_body": {
+    "first_name": "string",
+    "email_address": "string",
+    "fields": {}
+  },
+  "response": {
+    "subscriber": {
+      "id": 1,
+      "first_name": "string",
+      "email_address": "string",
+      "state": "active",
+      "created_at": "string"
+    },
+    "warnings": [
+      "string"
+    ]
+  }
+}

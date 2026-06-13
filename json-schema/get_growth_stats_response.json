@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/convertkit/main/json-schema/get_growth_stats_response.json",
+  "title": "Get growth stats Response",
+  "x-tag": "Accounts",
+  "type": "object",
+  "properties": {
+    "stats": {
+      "type": "object",
+      "properties": {
+        "cancellations": {
+          "type": "integer"
+        },
+        "net_new_subscribers": {
+          "type": "integer"
+        },
+        "new_subscribers": {
+          "type": "integer"
+        },
+        "subscribers": {
+          "type": "integer"
+        },
+        "starting": {
+          "type": "string"
+        },
+        "ending": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "cancellations",
+        "net_new_subscribers",
+        "new_subscribers",
+        "subscribers",
+        "starting",
+        "ending"
+      ]
+    }
+  },
+  "required": [
+    "stats"
+  ]
+}

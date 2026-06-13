@@ -1,0 +1,39 @@
+{
+  "summary": "Bulk add subscribers to forms",
+  "method": "POST",
+  "path": "/v4/bulk/forms/subscribers",
+  "tag": "Forms",
+  "request_body": {
+    "additions": [
+      {
+        "form_id": 1,
+        "subscriber_id": 1,
+        "referrer": "string"
+      }
+    ],
+    "callback_url": "string"
+  },
+  "response": {
+    "subscribers": [
+      {
+        "id": 1,
+        "first_name": "string",
+        "email_address": "string",
+        "created_at": "string",
+        "added_at": "string"
+      }
+    ],
+    "failures": [
+      {
+        "errors": [
+          null
+        ],
+        "subscription": {
+          "form_id": null,
+          "subscriber_id": null,
+          "referrer": null
+        }
+      }
+    ]
+  }
+}

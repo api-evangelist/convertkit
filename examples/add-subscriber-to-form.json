@@ -1,0 +1,18 @@
+{
+  "summary": "Add subscriber to form",
+  "method": "POST",
+  "path": "/v4/forms/{form_id}/subscribers/{id}",
+  "tag": "Forms",
+  "request_body": {
+    "referrer": "string"
+  },
+  "response": {
+    "subscriber": {
+      "id": 1,
+      "first_name": "string",
+      "email_address": "string",
+      "state": "active",
+      "created_at": "string"
+    }
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "summary": "Remove tag from subscriber",
+  "method": "DELETE",
+  "path": "/v4/tags/{tag_id}/subscribers/{id}",
+  "tag": "Tags"
+}

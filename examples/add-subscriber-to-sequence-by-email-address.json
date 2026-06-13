@@ -1,0 +1,18 @@
+{
+  "summary": "Add subscriber to sequence by email address",
+  "method": "POST",
+  "path": "/v4/sequences/{sequence_id}/subscribers",
+  "tag": "Sequences",
+  "request_body": {
+    "email_address": "string"
+  },
+  "response": {
+    "subscriber": {
+      "id": 1,
+      "first_name": "string",
+      "email_address": "string",
+      "state": "active",
+      "created_at": "string"
+    }
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/convertkit/main/json-schema/IdsAnyCondition.json",
+  "title": "IdsAnyCondition",
+  "type": "object",
+  "description": "Match a list of ids. Used by the 'tags' filter to select tag ids.",
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": [
+        "ids"
+      ],
+      "description": "Must be 'ids'"
+    },
+    "matching": {
+      "type": "array",
+      "items": {
+        "type": "integer"
+      },
+      "description": "Ids the filter should match against."
+    }
+  },
+  "required": [
+    "type",
+    "matching"
+  ]
+}

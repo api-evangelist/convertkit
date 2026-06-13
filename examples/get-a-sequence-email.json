@@ -1,0 +1,15 @@
+{
+  "summary": "Get a sequence email",
+  "method": "GET",
+  "path": "/v4/sequences/{sequence_id}/emails/{id}",
+  "tag": "Sequence Emails",
+  "response": {
+    "email": {
+      "id": 1,
+      "sequence_id": 1,
+      "subject": "string",
+      "preview_text": "string",
+      "email_address": "string"
+    }
+  }
+}

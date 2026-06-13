@@ -1,0 +1,82 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/convertkit/main/json-schema/filter_subscribers_based_on_engagement_response.json",
+  "title": "Filter subscribers based on engagement Response",
+  "x-tag": "Subscribers",
+  "type": "object",
+  "properties": {
+    "subscribers": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "first_name": {
+            "type": "string",
+            "nullable": true
+          },
+          "email_address": {
+            "type": "string"
+          },
+          "created_at": {
+            "type": "string"
+          },
+          "tag_names": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "tag_ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "id",
+          "first_name",
+          "email_address",
+          "created_at"
+        ]
+      }
+    },
+    "pagination": {
+      "type": "object",
+      "properties": {
+        "has_previous_page": {
+          "type": "boolean"
+        },
+        "has_next_page": {
+          "type": "boolean"
+        },
+        "start_cursor": {
+          "type": "string"
+        },
+        "end_cursor": {
+          "type": "string"
+        },
+        "per_page": {
+          "type": "integer"
+        },
+        "total_count": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "has_previous_page",
+        "has_next_page",
+        "start_cursor",
+        "end_cursor",
+        "per_page"
+      ]
+    }
+  },
+  "required": [
+    "subscribers",
+    "pagination"
+  ]
+}

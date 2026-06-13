@@ -1,0 +1,83 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/convertkit/main/json-schema/list_webhooks_response.json",
+  "title": "List webhooks Response",
+  "x-tag": "Webhooks",
+  "type": "object",
+  "properties": {
+    "webhooks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "account_id": {
+            "type": "integer"
+          },
+          "event": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "Product name"
+              },
+              "tag_id": {
+                "type": "integer",
+                "nullable": true
+              },
+              "form_id": {
+                "type": "integer",
+                "nullable": true
+              }
+            },
+            "required": [
+              "name"
+            ]
+          },
+          "target_url": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "account_id",
+          "event",
+          "target_url"
+        ]
+      }
+    },
+    "pagination": {
+      "type": "object",
+      "properties": {
+        "has_previous_page": {
+          "type": "boolean"
+        },
+        "has_next_page": {
+          "type": "boolean"
+        },
+        "start_cursor": {
+          "type": "string"
+        },
+        "end_cursor": {
+          "type": "string"
+        },
+        "per_page": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "has_previous_page",
+        "has_next_page",
+        "start_cursor",
+        "end_cursor",
+        "per_page"
+      ]
+    }
+  },
+  "required": [
+    "webhooks",
+    "pagination"
+  ]
+}

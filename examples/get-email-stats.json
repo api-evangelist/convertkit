@@ -1,0 +1,15 @@
+{
+  "summary": "Get email stats",
+  "method": "GET",
+  "path": "/v4/account/email_stats",
+  "tag": "Accounts",
+  "response": {
+    "stats": {
+      "sent": 1,
+      "clicked": 1,
+      "opened": 1,
+      "email_stats_mode": "string",
+      "open_tracking_enabled": true
+    }
+  }
+}

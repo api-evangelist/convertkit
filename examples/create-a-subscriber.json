@@ -1,0 +1,21 @@
+{
+  "summary": "Create a subscriber",
+  "method": "POST",
+  "path": "/v4/subscribers",
+  "tag": "Subscribers",
+  "request_body": {
+    "first_name": "string",
+    "email_address": "string",
+    "state": "active",
+    "fields": {}
+  },
+  "response": {
+    "subscriber": {
+      "id": 1,
+      "first_name": "string",
+      "email_address": "string",
+      "state": "active",
+      "created_at": "string"
+    }
+  }
+}

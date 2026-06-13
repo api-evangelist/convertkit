@@ -1,0 +1,24 @@
+{
+  "summary": "List snippets",
+  "method": "GET",
+  "path": "/v4/snippets",
+  "tag": "Snippets",
+  "response": {
+    "snippets": [
+      {
+        "id": 1,
+        "name": "string",
+        "snippet_type": "string",
+        "archived": true,
+        "key": "string"
+      }
+    ],
+    "pagination": {
+      "has_previous_page": true,
+      "has_next_page": true,
+      "start_cursor": "string",
+      "end_cursor": "string",
+      "per_page": 1
+    }
+  }
+}

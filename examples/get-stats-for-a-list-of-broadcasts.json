@@ -1,0 +1,29 @@
+{
+  "summary": "Get stats for a list of broadcasts",
+  "method": "GET",
+  "path": "/v4/broadcasts/stats",
+  "tag": "Broadcasts",
+  "response": {
+    "broadcasts": [
+      {
+        "id": 1,
+        "stats": {
+          "recipients": null,
+          "open_rate": null,
+          "emails_opened": null,
+          "click_rate": null,
+          "unsubscribe_rate": null
+        },
+        "subject": "string",
+        "send_at": null
+      }
+    ],
+    "pagination": {
+      "has_previous_page": true,
+      "has_next_page": true,
+      "start_cursor": "string",
+      "end_cursor": "string",
+      "per_page": 1
+    }
+  }
+}

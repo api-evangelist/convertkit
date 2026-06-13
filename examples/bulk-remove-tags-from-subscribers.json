@@ -1,0 +1,11 @@
+{
+  "summary": "Bulk remove tags from subscribers",
+  "method": "DELETE",
+  "path": "/v4/bulk/tags/subscribers",
+  "tag": "Tags",
+  "response": {
+    "failures": [
+      null
+    ]
+  }
+}

@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/convertkit/main/json-schema/create_a_sequence_request.json",
+  "title": "Create a sequence Request",
+  "x-tag": "Sequences",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "The name of the sequence."
+    },
+    "email_address": {
+      "type": "string",
+      "description": "The sending email address to use. Uses the account's sending email address if not provided."
+    },
+    "email_template_id": {
+      "type": "integer",
+      "description": "Id of the email template to use."
+    },
+    "send_days": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "The days of the week to send the sequence on. Must be one of: `monday`, `tuesday`, `wednesday`, `thursday`, `friday`, `saturday`, `sunday`."
+    },
+    "send_hour": {
+      "type": "integer",
+      "description": "The hour of the day to send the sequence at. Must be an integer between 0 and 23."
+    },
+    "time_zone": {
+      "type": "string",
+      "description": "The timezone to use for the sequence. Must be a valid IANA timezone string."
+    },
+    "active": {
+      "type": "boolean",
+      "description": "`true` to activate the sequence, `false` to deactivate it."
+    },
+    "repeat": {
+      "type": "boolean",
+      "description": "When `true`, subscribers can restart the sequence multiple times."
+    },
+    "hold": {
+      "type": "boolean",
+      "description": "When `true`, subscribers added via Visual Automations stay in the sequence after receiving the last email."
+    },
+    "exclude_subscriber_sources": {
+      "type": "array",
+      "description": "The subscriber sources to exclude from the sequence.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "description": "The type of subscriber source to exclude. Must be one of: `tag`, `sequence`, `form`, `segment`."
+          },
+          "ids": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "description": "The ids of the subscriber sources to exclude."
+            }
+          }
+        },
+        "required": [
+          "type",
+          "ids"
+        ]
+      }
+    }
+  }
+}

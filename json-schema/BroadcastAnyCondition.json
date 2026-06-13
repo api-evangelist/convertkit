@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/convertkit/main/json-schema/BroadcastAnyCondition.json",
+  "title": "BroadcastAnyCondition",
+  "type": "object",
+  "description": "Filter by specific broadcast IDs. Subscriber must have interacted with ANY of the specified broadcasts.",
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": [
+        "broadcasts"
+      ],
+      "description": "Must be 'broadcasts'"
+    },
+    "ids": {
+      "type": "array",
+      "items": {
+        "type": "integer"
+      },
+      "description": "Array of broadcast IDs. Subscriber must match ANY of these."
+    }
+  },
+  "required": [
+    "type",
+    "ids"
+  ]
+}

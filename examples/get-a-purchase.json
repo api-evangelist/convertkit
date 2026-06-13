@@ -1,0 +1,15 @@
+{
+  "summary": "Get a purchase",
+  "method": "GET",
+  "path": "/v4/purchases/{id}",
+  "tag": "Purchases",
+  "response": {
+    "purchase": {
+      "id": 1,
+      "transaction_id": "string",
+      "subscriber_id": 1,
+      "status": "string",
+      "email_address": "string"
+    }
+  }
+}

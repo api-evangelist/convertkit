@@ -1,0 +1,15 @@
+{
+  "summary": "Get Creator Profile",
+  "method": "GET",
+  "path": "/v4/account/creator_profile",
+  "tag": "Accounts",
+  "response": {
+    "profile": {
+      "name": "string",
+      "byline": "string",
+      "bio": "string",
+      "image_url": "string",
+      "profile_url": "string"
+    }
+  }
+}

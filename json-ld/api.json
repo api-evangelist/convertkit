@@ -1,0 +1,33 @@
+{
+  "@context": {
+    "@vocab": "https://schema.org/",
+    "hydra": "http://www.w3.org/ns/hydra/core#"
+  },
+  "@type": "WebAPI",
+  "@id": "https://api.kit.com/v4",
+  "name": "Kit API",
+  "description": "REST API for the Kit (formerly ConvertKit) creator email marketing platform, providing programmatic access to subscribers, tags, sequences, forms, broadcasts, and automation rules.",
+  "version": "4.0",
+  "url": "https://api.kit.com/v4",
+  "documentation": "https://developers.kit.com",
+  "provider": {
+    "@type": "Organization",
+    "name": "Kit",
+    "url": "https://kit.com",
+    "sameAs": [
+      "https://x.com/kit",
+      "https://www.linkedin.com/company/kit.com"
+    ]
+  },
+  "termsOfService": "https://kit.com/terms",
+  "license": "https://developers.kit.com",
+  "offers": {
+    "@type": "Offer",
+    "url": "https://kit.com/pricing"
+  },
+  "availableChannel": {
+    "@type": "ServiceChannel",
+    "serviceUrl": "https://api.kit.com/v4",
+    "availableLanguage": "en"
+  }
+}

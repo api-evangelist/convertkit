@@ -1,0 +1,108 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/convertkit/main/json-schema/create_a_purchase_request.json",
+  "title": "Create a purchase Request",
+  "x-tag": "Purchases",
+  "type": "object",
+  "properties": {
+    "purchase": {
+      "type": "object",
+      "properties": {
+        "email_address": {
+          "type": "string",
+          "description": "The subscriber that the purchase belongs to"
+        },
+        "transaction_id": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "subtotal": {
+          "type": "number",
+          "format": "float"
+        },
+        "tax": {
+          "type": "number",
+          "format": "float"
+        },
+        "shipping": {
+          "type": "integer"
+        },
+        "discount": {
+          "type": "number",
+          "format": "float"
+        },
+        "total": {
+          "type": "number",
+          "format": "float"
+        },
+        "currency": {
+          "type": "string",
+          "description": "3 letter currency code (e.g. `USD`)"
+        },
+        "transaction_time": {
+          "type": "string"
+        },
+        "products": {
+          "type": "array",
+          "description": "Array of purchased products",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "Product name"
+              },
+              "pid": {
+                "type": "string",
+                "description": "This is your identifier for a product. Each product provided in the `products` array must have a unique pid. Variants of the same product should have the same pid."
+              },
+              "lid": {
+                "type": "string",
+                "description": "Each product should have a unique `lid` (i.e., line item identifier) for this purchase."
+              },
+              "quantity": {
+                "type": "integer",
+                "description": "Product quantity"
+              },
+              "unit_price": {
+                "type": "number",
+                "format": "float",
+                "description": "Product price"
+              },
+              "sku": {
+                "type": "string",
+                "description": "Product sku"
+              }
+            },
+            "required": [
+              "name",
+              "pid",
+              "lid",
+              "quantity",
+              "unit_price",
+              "sku"
+            ]
+          }
+        }
+      },
+      "required": [
+        "email_address",
+        "transaction_id",
+        "status",
+        "subtotal",
+        "tax",
+        "shipping",
+        "discount",
+        "total",
+        "currency",
+        "transaction_time",
+        "products"
+      ]
+    }
+  },
+  "required": [
+    "purchase"
+  ]
+}

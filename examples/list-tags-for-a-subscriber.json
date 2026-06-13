@@ -1,0 +1,22 @@
+{
+  "summary": "List tags for a subscriber",
+  "method": "GET",
+  "path": "/v4/subscribers/{subscriber_id}/tags",
+  "tag": "Subscribers",
+  "response": {
+    "tags": [
+      {
+        "id": 1,
+        "name": "string",
+        "tagged_at": "string"
+      }
+    ],
+    "pagination": {
+      "has_previous_page": true,
+      "has_next_page": true,
+      "start_cursor": "string",
+      "end_cursor": "string",
+      "per_page": 1
+    }
+  }
+}

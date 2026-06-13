@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/convertkit/main/json-schema/list_stats_for_a_subscriber_response.json",
+  "title": "List stats for a subscriber Response",
+  "x-tag": "Subscribers",
+  "type": "object",
+  "properties": {
+    "subscriber": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "stats": {
+          "type": "object",
+          "properties": {
+            "sent": {
+              "type": "integer"
+            },
+            "opened": {
+              "type": "integer"
+            },
+            "clicked": {
+              "type": "integer"
+            },
+            "bounced": {
+              "type": "integer"
+            },
+            "open_rate": {
+              "type": "number",
+              "format": "float"
+            },
+            "click_rate": {
+              "type": "number",
+              "format": "float"
+            },
+            "last_sent": {
+              "type": "string"
+            },
+            "last_opened": {
+              "type": "string"
+            },
+            "last_clicked": {
+              "type": "string"
+            },
+            "sends_since_last_open": {
+              "type": "integer"
+            },
+            "sends_since_last_click": {
+              "type": "integer"
+            }
+          },
+          "required": [
+            "sent",
+            "opened",
+            "clicked",
+            "bounced",
+            "open_rate",
+            "click_rate",
+            "last_sent",
+            "last_opened",
+            "last_clicked",
+            "sends_since_last_open",
+            "sends_since_last_click"
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "stats"
+      ]
+    }
+  },
+  "required": [
+    "subscriber"
+  ]
+}

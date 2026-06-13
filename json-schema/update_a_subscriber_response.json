@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/convertkit/main/json-schema/update_a_subscriber_response.json",
+  "title": "Update a subscriber Response",
+  "x-tag": "Subscribers",
+  "type": "object",
+  "properties": {
+    "subscriber": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "first_name": {
+          "type": "string",
+          "nullable": true
+        },
+        "email_address": {
+          "type": "string"
+        },
+        "state": {
+          "type": "string",
+          "enum": [
+            "active",
+            "cancelled",
+            "bounced",
+            "complained",
+            "inactive"
+          ]
+        },
+        "created_at": {
+          "type": "string"
+        },
+        "fields": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Custom field values for the subscriber, keyed by the custom field's `key`."
+        }
+      },
+      "required": [
+        "id",
+        "first_name",
+        "email_address",
+        "state",
+        "created_at",
+        "fields"
+      ]
+    },
+    "warnings": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Present only when the request referenced custom field keys that don't exist on the account. Each entry names an unknown key that was ignored; the subscriber is still created or updated."
+    }
+  },
+  "required": [
+    "subscriber"
+  ]
+}

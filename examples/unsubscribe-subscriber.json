@@ -1,0 +1,6 @@
+{
+  "summary": "Unsubscribe subscriber",
+  "method": "POST",
+  "path": "/v4/subscribers/{id}/unsubscribe",
+  "tag": "Subscribers"
+}

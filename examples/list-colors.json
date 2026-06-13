@@ -1,0 +1,11 @@
+{
+  "summary": "List colors",
+  "method": "GET",
+  "path": "/v4/account/colors",
+  "tag": "Accounts",
+  "response": {
+    "colors": [
+      "string"
+    ]
+  }
+}

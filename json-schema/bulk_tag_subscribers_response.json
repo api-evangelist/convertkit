@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/convertkit/main/json-schema/bulk_tag_subscribers_response.json",
+  "title": "Bulk tag subscribers Response",
+  "x-tag": "Tags",
+  "type": "object",
+  "properties": {
+    "subscribers": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "first_name": {
+            "type": "string"
+          },
+          "email_address": {
+            "type": "string"
+          },
+          "created_at": {
+            "type": "string"
+          },
+          "tagged_at": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "first_name",
+          "email_address",
+          "created_at",
+          "tagged_at"
+        ]
+      }
+    },
+    "failures": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "tagging": {
+            "type": "object",
+            "properties": {
+              "tag_id": {
+                "type": "integer",
+                "nullable": true
+              },
+              "subscriber_id": {
+                "nullable": true,
+                "type": "integer"
+              }
+            },
+            "required": [
+              "tag_id",
+              "subscriber_id"
+            ]
+          }
+        },
+        "required": [
+          "errors",
+          "tagging"
+        ]
+      }
+    }
+  },
+  "required": [
+    "subscribers",
+    "failures"
+  ]
+}

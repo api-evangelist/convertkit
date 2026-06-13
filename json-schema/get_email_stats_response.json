@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/convertkit/main/json-schema/get_email_stats_response.json",
+  "title": "Get email stats Response",
+  "x-tag": "Accounts",
+  "type": "object",
+  "properties": {
+    "stats": {
+      "type": "object",
+      "properties": {
+        "sent": {
+          "type": "integer"
+        },
+        "clicked": {
+          "type": "integer"
+        },
+        "opened": {
+          "type": "integer"
+        },
+        "email_stats_mode": {
+          "type": "string"
+        },
+        "open_tracking_enabled": {
+          "type": "boolean"
+        },
+        "click_tracking_enabled": {
+          "type": "boolean"
+        },
+        "starting": {
+          "type": "string"
+        },
+        "ending": {
+          "type": "string"
+        },
+        "open_rate": {
+          "type": "number",
+          "format": "float"
+        },
+        "click_rate": {
+          "type": "number",
+          "format": "float"
+        },
+        "unsubscribe_rate": {
+          "type": "number",
+          "format": "float"
+        },
+        "bounce_rate": {
+          "type": "number",
+          "format": "float"
+        }
+      },
+      "required": [
+        "sent",
+        "clicked",
+        "opened",
+        "email_stats_mode",
+        "open_tracking_enabled",
+        "click_tracking_enabled",
+        "starting",
+        "ending"
+      ]
+    }
+  },
+  "required": [
+    "stats"
+  ]
+}

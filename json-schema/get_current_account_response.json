@@ -1,0 +1,109 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/convertkit/main/json-schema/get_current_account_response.json",
+  "title": "Get current account Response",
+  "x-tag": "Accounts",
+  "type": "object",
+  "properties": {
+    "user": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "id": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "email"
+      ]
+    },
+    "account": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        },
+        "plan_type": {
+          "type": "string"
+        },
+        "primary_email_address": {
+          "type": "string"
+        },
+        "created_at": {
+          "type": "string"
+        },
+        "timezone": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "Product name"
+            },
+            "friendly_name": {
+              "type": "string"
+            },
+            "utc_offset": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "friendly_name",
+            "utc_offset"
+          ]
+        },
+        "sending_addresses": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "email_address": {
+                "type": "string"
+              },
+              "from_name": {
+                "type": "string"
+              },
+              "status": {
+                "type": "string"
+              },
+              "is_default": {
+                "type": "boolean"
+              },
+              "is_verified": {
+                "type": "boolean"
+              },
+              "is_dmarc_configured": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "email_address",
+              "from_name",
+              "status",
+              "is_default",
+              "is_verified",
+              "is_dmarc_configured"
+            ]
+          }
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "plan_type",
+        "primary_email_address",
+        "created_at",
+        "timezone"
+      ]
+    }
+  },
+  "required": [
+    "user",
+    "account"
+  ]
+}

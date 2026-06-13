@@ -1,0 +1,95 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/convertkit/main/json-schema/list_subscribers_for_a_sequence_response.json",
+  "title": "List subscribers for a sequence Response",
+  "x-tag": "Sequences",
+  "type": "object",
+  "properties": {
+    "subscribers": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "first_name": {
+            "type": "string",
+            "nullable": true
+          },
+          "email_address": {
+            "type": "string"
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "active",
+              "cancelled",
+              "bounced",
+              "complained",
+              "inactive"
+            ]
+          },
+          "created_at": {
+            "type": "string"
+          },
+          "added_at": {
+            "type": "string"
+          },
+          "fields": {
+            "type": "object",
+            "properties": {
+              "category": {
+                "type": "string",
+                "nullable": true
+              }
+            },
+            "required": [
+              "category"
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "first_name",
+          "email_address",
+          "state",
+          "created_at",
+          "added_at",
+          "fields"
+        ]
+      }
+    },
+    "pagination": {
+      "type": "object",
+      "properties": {
+        "has_previous_page": {
+          "type": "boolean"
+        },
+        "has_next_page": {
+          "type": "boolean"
+        },
+        "start_cursor": {
+          "type": "string"
+        },
+        "end_cursor": {
+          "type": "string"
+        },
+        "per_page": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "has_previous_page",
+        "has_next_page",
+        "start_cursor",
+        "end_cursor",
+        "per_page"
+      ]
+    }
+  },
+  "required": [
+    "subscribers",
+    "pagination"
+  ]
+}

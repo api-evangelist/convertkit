@@ -1,0 +1,101 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/convertkit/main/json-schema/bulk_create_subscribers_response.json",
+  "title": "Bulk create subscribers Response",
+  "x-tag": "Subscribers",
+  "type": "object",
+  "properties": {
+    "subscribers": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "first_name": {
+            "type": "string",
+            "nullable": true
+          },
+          "email_address": {
+            "type": "string"
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "active",
+              "cancelled",
+              "bounced",
+              "complained",
+              "inactive"
+            ]
+          },
+          "created_at": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "first_name",
+          "email_address",
+          "state",
+          "created_at"
+        ]
+      }
+    },
+    "failures": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "subscriber": {
+            "type": "object",
+            "properties": {
+              "first_name": {
+                "type": "string"
+              },
+              "email_address": {
+                "type": "string",
+                "nullable": true
+              },
+              "state": {
+                "type": "string",
+                "enum": [
+                  "active",
+                  "cancelled",
+                  "bounced",
+                  "complained",
+                  "inactive"
+                ]
+              },
+              "created_at": {
+                "type": "string",
+                "nullable": true
+              }
+            },
+            "required": [
+              "first_name",
+              "email_address",
+              "state",
+              "created_at"
+            ]
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "subscriber",
+          "errors"
+        ]
+      }
+    }
+  },
+  "required": [
+    "subscribers",
+    "failures"
+  ]
+}

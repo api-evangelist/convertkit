@@ -1,0 +1,26 @@
+{
+  "summary": "Filter subscribers based on engagement",
+  "method": "POST",
+  "path": "/v4/subscribers/filter",
+  "tag": "Subscribers",
+  "response": {
+    "subscribers": [
+      {
+        "id": "string",
+        "first_name": "string",
+        "email_address": "string",
+        "created_at": "string",
+        "tag_names": [
+          null
+        ]
+      }
+    ],
+    "pagination": {
+      "has_previous_page": true,
+      "has_next_page": true,
+      "start_cursor": "string",
+      "end_cursor": "string",
+      "per_page": 1
+    }
+  }
+}

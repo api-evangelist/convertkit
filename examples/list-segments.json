@@ -1,0 +1,22 @@
+{
+  "summary": "List segments",
+  "method": "GET",
+  "path": "/v4/segments",
+  "tag": "Segments",
+  "response": {
+    "segments": [
+      {
+        "id": 1,
+        "name": "string",
+        "created_at": "string"
+      }
+    ],
+    "pagination": {
+      "has_previous_page": true,
+      "has_next_page": true,
+      "start_cursor": "string",
+      "end_cursor": "string",
+      "per_page": 1
+    }
+  }
+}

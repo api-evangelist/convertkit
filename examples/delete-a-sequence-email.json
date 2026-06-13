@@ -1,0 +1,6 @@
+{
+  "summary": "Delete a sequence email",
+  "method": "DELETE",
+  "path": "/v4/sequences/{sequence_id}/emails/{id}",
+  "tag": "Sequence Emails"
+}

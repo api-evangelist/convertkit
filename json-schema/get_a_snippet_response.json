@@ -1,0 +1,79 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/convertkit/main/json-schema/get_a_snippet_response.json",
+  "title": "Get a snippet Response",
+  "x-tag": "Snippets",
+  "type": "object",
+  "properties": {
+    "snippet": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        },
+        "snippet_type": {
+          "type": "string"
+        },
+        "archived": {
+          "type": "boolean"
+        },
+        "key": {
+          "type": "string"
+        },
+        "created_at": {
+          "type": "string"
+        },
+        "updated_at": {
+          "type": "string"
+        },
+        "content": {
+          "type": "string"
+        },
+        "document": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "integer"
+            },
+            "value": {
+              "nullable": true
+            },
+            "value_html": {
+              "type": "string"
+            },
+            "value_plain": {
+              "nullable": true
+            },
+            "version": {
+              "type": "integer"
+            }
+          },
+          "required": [
+            "id",
+            "value",
+            "value_html",
+            "value_plain",
+            "version"
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "snippet_type",
+        "archived",
+        "key",
+        "created_at",
+        "updated_at",
+        "content",
+        "document"
+      ]
+    }
+  },
+  "required": [
+    "snippet"
+  ]
+}

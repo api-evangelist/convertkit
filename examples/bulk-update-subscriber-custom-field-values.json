@@ -1,0 +1,37 @@
+{
+  "summary": "Bulk update subscriber custom field values",
+  "method": "POST",
+  "path": "/v4/bulk/custom_fields/subscribers",
+  "tag": "Custom Fields",
+  "request_body": {
+    "custom_field_values": [
+      {
+        "subscriber_id": 1,
+        "subscriber_custom_field_id": 1,
+        "value": "string"
+      }
+    ],
+    "callback_url": null
+  },
+  "response": {
+    "custom_field_values": [
+      {
+        "subscriber_id": 1,
+        "subscriber_custom_field_id": 1,
+        "value": "string"
+      }
+    ],
+    "failures": [
+      {
+        "errors": [
+          null
+        ],
+        "custom_field_value": {
+          "subscriber_id": null,
+          "subscriber_custom_field_id": null,
+          "value": null
+        }
+      }
+    ]
+  }
+}

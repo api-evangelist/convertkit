@@ -1,0 +1,114 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/convertkit/main/json-schema/bulk_add_subscribers_to_forms_response.json",
+  "title": "Bulk add subscribers to forms Response",
+  "x-tag": "Forms",
+  "type": "object",
+  "properties": {
+    "subscribers": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "first_name": {
+            "type": "string"
+          },
+          "email_address": {
+            "type": "string"
+          },
+          "created_at": {
+            "type": "string"
+          },
+          "added_at": {
+            "type": "string"
+          },
+          "referrer": {
+            "type": "string"
+          },
+          "referrer_utm_parameters": {
+            "type": "object",
+            "properties": {
+              "source": {
+                "type": "string"
+              },
+              "medium": {
+                "type": "string"
+              },
+              "campaign": {
+                "type": "string"
+              },
+              "term": {
+                "type": "string"
+              },
+              "content": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "source",
+              "medium",
+              "campaign",
+              "term",
+              "content"
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "first_name",
+          "email_address",
+          "created_at",
+          "added_at",
+          "referrer",
+          "referrer_utm_parameters"
+        ]
+      }
+    },
+    "failures": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "subscription": {
+            "type": "object",
+            "properties": {
+              "form_id": {
+                "type": "integer",
+                "nullable": true
+              },
+              "subscriber_id": {
+                "nullable": true,
+                "type": "integer"
+              },
+              "referrer": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "form_id",
+              "subscriber_id",
+              "referrer"
+            ]
+          }
+        },
+        "required": [
+          "errors",
+          "subscription"
+        ]
+      }
+    }
+  },
+  "required": [
+    "subscribers",
+    "failures"
+  ]
+}

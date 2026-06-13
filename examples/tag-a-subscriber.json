@@ -1,0 +1,15 @@
+{
+  "summary": "Tag a subscriber",
+  "method": "POST",
+  "path": "/v4/tags/{tag_id}/subscribers/{id}",
+  "tag": "Tags",
+  "response": {
+    "subscriber": {
+      "id": 1,
+      "first_name": "string",
+      "email_address": "string",
+      "state": "active",
+      "created_at": "string"
+    }
+  }
+}

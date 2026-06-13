@@ -1,0 +1,6 @@
+{
+  "summary": "Delete a broadcast",
+  "method": "DELETE",
+  "path": "/v4/broadcasts/{id}",
+  "tag": "Broadcasts"
+}

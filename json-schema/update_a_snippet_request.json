@@ -1,0 +1,61 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/convertkit/main/json-schema/update_a_snippet_request.json",
+  "title": "Update a snippet Request",
+  "x-tag": "Snippets",
+  "oneOf": [
+    {
+      "title": "Inline snippet",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "New name for the snippet"
+        },
+        "snippet_type": {
+          "type": "string",
+          "description": "Cannot be changed \u2014 must match the existing type if provided"
+        },
+        "archived": {
+          "type": "boolean",
+          "description": "Pass `true` to archive or `false` to restore the snippet"
+        },
+        "content": {
+          "type": "string",
+          "description": "New Liquid-enabled text content"
+        }
+      }
+    },
+    {
+      "title": "Block snippet",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "New name for the snippet"
+        },
+        "snippet_type": {
+          "type": "string",
+          "description": "Cannot be changed \u2014 must match the existing type if provided"
+        },
+        "archived": {
+          "type": "boolean",
+          "description": "Pass `true` to archive or `false` to restore the snippet"
+        },
+        "document_attributes": {
+          "type": "object",
+          "description": "Updated rich-text document",
+          "properties": {
+            "value_html": {
+              "type": "string",
+              "description": "New HTML content for the block snippet"
+            }
+          },
+          "required": [
+            "value_html"
+          ]
+        }
+      }
+    }
+  ]
+}

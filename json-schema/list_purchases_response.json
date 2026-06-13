@@ -1,0 +1,143 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/convertkit/main/json-schema/list_purchases_response.json",
+  "title": "List purchases Response",
+  "x-tag": "Purchases",
+  "type": "object",
+  "properties": {
+    "purchases": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "transaction_id": {
+            "type": "string"
+          },
+          "subscriber_id": {
+            "type": "integer"
+          },
+          "status": {
+            "type": "string"
+          },
+          "email_address": {
+            "type": "string",
+            "description": "The subscriber that the purchase belongs to"
+          },
+          "currency": {
+            "type": "string",
+            "description": "3 letter currency code (e.g. `USD`)"
+          },
+          "transaction_time": {
+            "type": "string"
+          },
+          "subtotal": {
+            "type": "number",
+            "format": "float"
+          },
+          "discount": {
+            "type": "number",
+            "format": "float"
+          },
+          "tax": {
+            "type": "number",
+            "format": "float"
+          },
+          "total": {
+            "type": "number",
+            "format": "float"
+          },
+          "products": {
+            "type": "array",
+            "description": "Array of purchased products",
+            "items": {
+              "type": "object",
+              "properties": {
+                "quantity": {
+                  "type": "integer",
+                  "description": "Product quantity"
+                },
+                "lid": {
+                  "type": "string",
+                  "description": "Each product should have a unique `lid` (i.e., line item identifier) for this purchase."
+                },
+                "unit_price": {
+                  "type": "number",
+                  "format": "float",
+                  "description": "Product price"
+                },
+                "sku": {
+                  "nullable": true,
+                  "description": "Product sku"
+                },
+                "name": {
+                  "type": "string",
+                  "description": "Product name"
+                },
+                "pid": {
+                  "type": "string",
+                  "description": "This is your identifier for a product. Each product provided in the `products` array must have a unique pid. Variants of the same product should have the same pid."
+                }
+              },
+              "required": [
+                "quantity",
+                "lid",
+                "unit_price",
+                "sku",
+                "name",
+                "pid"
+              ]
+            }
+          }
+        },
+        "required": [
+          "id",
+          "transaction_id",
+          "status",
+          "email_address",
+          "subscriber_id",
+          "currency",
+          "transaction_time",
+          "subtotal",
+          "discount",
+          "tax",
+          "total",
+          "products"
+        ]
+      }
+    },
+    "pagination": {
+      "type": "object",
+      "properties": {
+        "has_previous_page": {
+          "type": "boolean"
+        },
+        "has_next_page": {
+          "type": "boolean"
+        },
+        "start_cursor": {
+          "type": "string"
+        },
+        "end_cursor": {
+          "type": "string"
+        },
+        "per_page": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "has_previous_page",
+        "has_next_page",
+        "start_cursor",
+        "end_cursor",
+        "per_page"
+      ]
+    }
+  },
+  "required": [
+    "purchases",
+    "pagination"
+  ]
+}

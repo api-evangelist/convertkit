@@ -1,0 +1,15 @@
+{
+  "summary": "Get a snippet",
+  "method": "GET",
+  "path": "/v4/snippets/{id}",
+  "tag": "Snippets",
+  "response": {
+    "snippet": {
+      "id": 1,
+      "name": "string",
+      "snippet_type": "string",
+      "archived": true,
+      "key": "string"
+    }
+  }
+}

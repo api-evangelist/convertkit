@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/convertkit/main/json-schema/bulk_create_custom_fields_request.json",
+  "title": "Bulk create custom fields Request",
+  "x-tag": "Custom Fields",
+  "type": "object",
+  "properties": {
+    "custom_fields": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "label": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "label"
+        ]
+      }
+    },
+    "callback_url": {
+      "type": "string",
+      "nullable": true
+    }
+  },
+  "required": [
+    "custom_fields"
+  ]
+}

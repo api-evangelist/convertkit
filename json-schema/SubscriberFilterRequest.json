@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/convertkit/main/json-schema/SubscriberFilterRequest.json",
+  "title": "SubscriberFilterRequest",
+  "type": "object",
+  "description": "Filter subscribers based on engagement and subscription criteria using the 'all' array with filter conditions that must all be met (AND logic).",
+  "properties": {
+    "counting_mode": {
+      "type": "string",
+      "enum": [
+        "raw",
+        "unique_email"
+      ],
+      "description": "Controls how engagement-filter count thresholds are tallied. `raw` (default) counts every event \u2014 five opens of the same email = five. `unique_email` counts distinct emails on which the action occurred \u2014 five opens of the same email = one. Applies to every engagement filter (opens, clicks, sent, delivered) in the request; ignored for other filter types."
+    },
+    "all": {
+      "type": "array",
+      "description": "Array of filter conditions where ALL must be met (AND logic)",
+      "items": {
+        "$ref": "#/components/schemas/FilterCondition"
+      }
+    }
+  },
+  "required": [
+    "all"
+  ]
+}

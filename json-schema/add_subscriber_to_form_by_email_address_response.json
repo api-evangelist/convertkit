@@ -1,0 +1,88 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/convertkit/main/json-schema/add_subscriber_to_form_by_email_address_response.json",
+  "title": "Add subscriber to form by email address Response",
+  "x-tag": "Forms",
+  "type": "object",
+  "properties": {
+    "subscriber": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "first_name": {
+          "type": "string",
+          "nullable": true
+        },
+        "email_address": {
+          "type": "string"
+        },
+        "state": {
+          "type": "string",
+          "enum": [
+            "active",
+            "cancelled",
+            "bounced",
+            "complained",
+            "inactive"
+          ]
+        },
+        "created_at": {
+          "type": "string"
+        },
+        "added_at": {
+          "type": "string"
+        },
+        "fields": {
+          "type": "object",
+          "properties": {}
+        },
+        "referrer": {
+          "type": "string"
+        },
+        "referrer_utm_parameters": {
+          "type": "object",
+          "properties": {
+            "source": {
+              "type": "string"
+            },
+            "medium": {
+              "type": "string"
+            },
+            "campaign": {
+              "type": "string"
+            },
+            "term": {
+              "type": "string"
+            },
+            "content": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "source",
+            "medium",
+            "campaign",
+            "term",
+            "content"
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "first_name",
+        "email_address",
+        "state",
+        "created_at",
+        "added_at",
+        "referrer",
+        "referrer_utm_parameters",
+        "fields"
+      ]
+    }
+  },
+  "required": [
+    "subscriber"
+  ]
+}

@@ -1,0 +1,111 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/convertkit/main/json-schema/list_posts_response.json",
+  "title": "List posts Response",
+  "x-tag": "Posts",
+  "type": "object",
+  "properties": {
+    "posts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "publication_id": {
+            "type": "integer",
+            "description": "Identifier of the underlying publication. Posts that were also sent as broadcasts share the same `publication_id` \u2014 use it to match a post to its broadcast via `GET /v4/broadcasts`."
+          },
+          "created_at": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "slug": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "nullable": true
+          },
+          "meta_description": {
+            "nullable": true
+          },
+          "status": {
+            "type": "string"
+          },
+          "published_at": {
+            "type": "string",
+            "nullable": true
+          },
+          "sent_at": {
+            "type": "string",
+            "nullable": true
+          },
+          "thumbnail_alt": {
+            "nullable": true
+          },
+          "thumbnail_url": {
+            "nullable": true
+          },
+          "is_paid": {
+            "type": "boolean"
+          },
+          "public_url": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "required": [
+          "id",
+          "publication_id",
+          "created_at",
+          "title",
+          "slug",
+          "description",
+          "meta_description",
+          "status",
+          "published_at",
+          "sent_at",
+          "thumbnail_alt",
+          "thumbnail_url",
+          "is_paid",
+          "public_url"
+        ]
+      }
+    },
+    "pagination": {
+      "type": "object",
+      "properties": {
+        "has_previous_page": {
+          "type": "boolean"
+        },
+        "has_next_page": {
+          "type": "boolean"
+        },
+        "start_cursor": {
+          "type": "string"
+        },
+        "end_cursor": {
+          "type": "string"
+        },
+        "per_page": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "has_previous_page",
+        "has_next_page",
+        "start_cursor",
+        "end_cursor",
+        "per_page"
+      ]
+    }
+  },
+  "required": [
+    "posts",
+    "pagination"
+  ]
+}

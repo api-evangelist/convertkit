@@ -1,0 +1,26 @@
+{
+  "summary": "Get link clicks for a broadcast",
+  "method": "GET",
+  "path": "/v4/broadcasts/{broadcast_id}/clicks",
+  "tag": "Broadcasts",
+  "response": {
+    "broadcast": {
+      "id": 1,
+      "clicks": [
+        {
+          "url": null,
+          "unique_clicks": null,
+          "click_to_delivery_rate": null,
+          "click_to_open_rate": null
+        }
+      ]
+    },
+    "pagination": {
+      "has_previous_page": true,
+      "has_next_page": true,
+      "start_cursor": "string",
+      "end_cursor": "string",
+      "per_page": 1
+    }
+  }
+}

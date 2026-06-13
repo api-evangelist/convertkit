@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/convertkit/main/json-schema/FormsAnyCondition.json",
+  "title": "FormsAnyCondition",
+  "type": "object",
+  "description": "Attribution sub-condition: matches subscribers whose original signup attribution points at one of the given form / landing-page ids. Ids may refer to either a form or a legacy landing page \u2014 the attribution source does not distinguish between the two.",
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": [
+        "forms"
+      ],
+      "description": "Must be 'forms'"
+    },
+    "ids": {
+      "type": "array",
+      "items": {
+        "type": "integer"
+      },
+      "description": "Form / landing-page ids the subscriber's attribution should match."
+    }
+  },
+  "required": [
+    "type",
+    "ids"
+  ]
+}

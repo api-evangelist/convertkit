@@ -1,0 +1,73 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/convertkit/main/json-schema/bulk_update_subscriber_custom_field_values_response.json",
+  "title": "Bulk update subscriber custom field values Response",
+  "x-tag": "Custom Fields",
+  "type": "object",
+  "properties": {
+    "custom_field_values": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "subscriber_id": {
+            "type": "integer"
+          },
+          "subscriber_custom_field_id": {
+            "type": "integer"
+          },
+          "value": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "subscriber_id",
+          "subscriber_custom_field_id",
+          "value"
+        ]
+      }
+    },
+    "failures": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "custom_field_value": {
+            "type": "object",
+            "properties": {
+              "subscriber_id": {
+                "type": "integer",
+                "nullable": true
+              },
+              "subscriber_custom_field_id": {
+                "type": "integer"
+              },
+              "value": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "subscriber_id",
+              "subscriber_custom_field_id",
+              "value"
+            ]
+          }
+        },
+        "required": [
+          "errors",
+          "custom_field_value"
+        ]
+      }
+    }
+  },
+  "required": [
+    "custom_field_values",
+    "failures"
+  ]
+}

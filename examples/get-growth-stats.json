@@ -1,0 +1,15 @@
+{
+  "summary": "Get growth stats",
+  "method": "GET",
+  "path": "/v4/account/growth_stats",
+  "tag": "Accounts",
+  "response": {
+    "stats": {
+      "cancellations": 1,
+      "net_new_subscribers": 1,
+      "new_subscribers": 1,
+      "subscribers": 1,
+      "starting": "string"
+    }
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "summary": "Bulk create custom fields",
+  "method": "POST",
+  "path": "/v4/bulk/custom_fields",
+  "tag": "Custom Fields",
+  "request_body": {
+    "custom_fields": [
+      {
+        "label": "string"
+      }
+    ],
+    "callback_url": "string"
+  },
+  "response": {
+    "custom_fields": [
+      {
+        "id": 1,
+        "label": "string",
+        "key": "string",
+        "name": "string",
+        "created_at": "string"
+      }
+    ],
+    "failures": [
+      null
+    ]
+  }
+}

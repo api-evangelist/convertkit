@@ -1,0 +1,22 @@
+{
+  "summary": "Update a sequence email",
+  "method": "PUT",
+  "path": "/v4/sequences/{sequence_id}/emails/{id}",
+  "tag": "Sequence Emails",
+  "request_body": {
+    "subject": "string",
+    "preview_text": "string",
+    "content": "string",
+    "delay_value": 1,
+    "delay_unit": "days"
+  },
+  "response": {
+    "email": {
+      "id": 1,
+      "sequence_id": 1,
+      "subject": "string",
+      "preview_text": "string",
+      "email_address": "string"
+    }
+  }
+}

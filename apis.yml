@@ -34,7 +34,9 @@ apis:
       - type: Documentation
         url: https://developers.kit.com/docs
       - type: OpenAPI
-        url: https://developers.kit.com/api-reference/overview
+        url: https://developers.kit.com/api-reference/v4.json
+      - type: OpenAPI
+        url: https://raw.githubusercontent.com/api-evangelist/convertkit/refs/heads/main/openapi/openapi.json
       - type: Authentication
         url: https://developers.kit.com/api-reference/authentication
       - type: Changelog

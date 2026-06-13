@@ -1,0 +1,6 @@
+{
+  "summary": "Delete a sequence",
+  "method": "DELETE",
+  "path": "/v4/sequences/{id}",
+  "tag": "Sequences"
+}

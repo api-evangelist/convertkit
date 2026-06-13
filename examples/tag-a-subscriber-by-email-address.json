@@ -1,0 +1,18 @@
+{
+  "summary": "Tag a subscriber by email address",
+  "method": "POST",
+  "path": "/v4/tags/{tag_id}/subscribers",
+  "tag": "Tags",
+  "request_body": {
+    "email_address": "string"
+  },
+  "response": {
+    "subscriber": {
+      "id": 1,
+      "first_name": "string",
+      "email_address": "string",
+      "state": "active",
+      "created_at": "string"
+    }
+  }
+}

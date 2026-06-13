@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/convertkit/main/json-schema/update_a_subscriber_request.json",
+  "title": "Update a subscriber Request",
+  "x-tag": "Subscribers",
+  "type": "object",
+  "properties": {
+    "first_name": {
+      "type": "string",
+      "nullable": true
+    },
+    "email_address": {
+      "type": "string"
+    },
+    "fields": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      },
+      "description": "Custom field values keyed by the custom field's `key` (e.g. `last_name`, not `Last Name`). Unknown keys are ignored and reported in the response `warnings` array."
+    }
+  },
+  "required": [
+    "email_address"
+  ]
+}

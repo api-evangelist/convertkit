@@ -1,0 +1,211 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/convertkit/main/json-schema/list_subscribers_response.json",
+  "title": "List subscribers Response",
+  "x-tag": "Subscribers",
+  "type": "object",
+  "properties": {
+    "subscribers": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "first_name": {
+            "type": "string",
+            "nullable": true
+          },
+          "email_address": {
+            "type": "string"
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "active",
+              "cancelled",
+              "bounced",
+              "complained",
+              "inactive"
+            ]
+          },
+          "created_at": {
+            "type": "string"
+          },
+          "fields": {
+            "type": "object",
+            "properties": {
+              "category": {
+                "type": "string",
+                "nullable": true
+              }
+            }
+          },
+          "attribution": {
+            "type": "object",
+            "description": "Returned when `include` contains `attribution`.",
+            "nullable": true,
+            "properties": {
+              "referrer": {
+                "type": "string",
+                "nullable": true
+              },
+              "utm_source": {
+                "type": "string",
+                "nullable": true
+              },
+              "utm_medium": {
+                "type": "string",
+                "nullable": true
+              },
+              "utm_campaign": {
+                "type": "string",
+                "nullable": true
+              },
+              "utm_term": {
+                "type": "string",
+                "nullable": true
+              },
+              "utm_content": {
+                "type": "string",
+                "nullable": true
+              },
+              "source_type": {
+                "type": "string",
+                "nullable": true
+              },
+              "source_name": {
+                "type": "string",
+                "nullable": true
+              },
+              "source_mechanism": {
+                "type": "string",
+                "nullable": true
+              },
+              "source_mechanism_id": {
+                "type": "integer",
+                "nullable": true
+              }
+            },
+            "required": [
+              "referrer",
+              "utm_source",
+              "utm_medium",
+              "utm_campaign",
+              "utm_term",
+              "utm_content",
+              "source_type",
+              "source_name",
+              "source_mechanism",
+              "source_mechanism_id"
+            ]
+          },
+          "tags": {
+            "type": "array",
+            "description": "Returned when `include` contains `tags`.",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "nullable": true
+                },
+                "name": {
+                  "type": "string",
+                  "nullable": true
+                }
+              }
+            }
+          },
+          "location": {
+            "type": "object",
+            "description": "Returned when `include` contains `location`.",
+            "nullable": true,
+            "properties": {
+              "city": {
+                "type": "string",
+                "nullable": true
+              },
+              "state": {
+                "type": "string",
+                "nullable": true
+              },
+              "country": {
+                "type": "string",
+                "nullable": true
+              },
+              "latitude": {
+                "type": "number",
+                "nullable": true,
+                "format": "float"
+              },
+              "longitude": {
+                "type": "number",
+                "nullable": true,
+                "format": "float"
+              },
+              "timezone": {
+                "type": "string",
+                "nullable": true
+              }
+            },
+            "required": [
+              "city",
+              "state",
+              "country",
+              "latitude",
+              "longitude",
+              "timezone"
+            ]
+          },
+          "canceled_at": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true,
+            "description": "Returned when `include` contains `canceled_at`. Requires `status=cancelled`."
+          }
+        },
+        "required": [
+          "id",
+          "state",
+          "first_name",
+          "email_address",
+          "created_at",
+          "fields"
+        ]
+      }
+    },
+    "pagination": {
+      "type": "object",
+      "properties": {
+        "has_previous_page": {
+          "type": "boolean"
+        },
+        "has_next_page": {
+          "type": "boolean"
+        },
+        "start_cursor": {
+          "type": "string"
+        },
+        "end_cursor": {
+          "type": "string"
+        },
+        "per_page": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "has_previous_page",
+        "has_next_page",
+        "start_cursor",
+        "end_cursor",
+        "per_page"
+      ]
+    }
+  },
+  "required": [
+    "subscribers",
+    "pagination"
+  ]
+}

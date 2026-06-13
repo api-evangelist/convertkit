@@ -1,0 +1,80 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/convertkit/main/json-schema/get_link_clicks_for_a_broadcast_response.json",
+  "title": "Get link clicks for a broadcast Response",
+  "x-tag": "Broadcasts",
+  "type": "object",
+  "properties": {
+    "broadcast": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "clicks": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "url": {
+                "type": "string"
+              },
+              "unique_clicks": {
+                "type": "integer"
+              },
+              "click_to_delivery_rate": {
+                "type": "number",
+                "format": "float"
+              },
+              "click_to_open_rate": {
+                "type": "number",
+                "format": "float"
+              }
+            },
+            "required": [
+              "url",
+              "unique_clicks",
+              "click_to_delivery_rate",
+              "click_to_open_rate"
+            ]
+          }
+        }
+      },
+      "required": [
+        "id",
+        "clicks"
+      ]
+    },
+    "pagination": {
+      "type": "object",
+      "properties": {
+        "has_previous_page": {
+          "type": "boolean"
+        },
+        "has_next_page": {
+          "type": "boolean"
+        },
+        "start_cursor": {
+          "type": "string"
+        },
+        "end_cursor": {
+          "type": "string"
+        },
+        "per_page": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "has_previous_page",
+        "has_next_page",
+        "start_cursor",
+        "end_cursor",
+        "per_page"
+      ]
+    }
+  },
+  "required": [
+    "broadcast",
+    "pagination"
+  ]
+}

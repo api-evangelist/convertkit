@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/convertkit/main/json-schema/create_a_webhook_response.json",
+  "title": "Create a webhook Response",
+  "x-tag": "Webhooks",
+  "type": "object",
+  "properties": {
+    "webhook": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "account_id": {
+          "type": "integer"
+        },
+        "event": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "Product name"
+            },
+            "initiator_value": {
+              "nullable": true
+            }
+          },
+          "required": [
+            "name",
+            "initiator_value"
+          ]
+        },
+        "target_url": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "account_id",
+        "event",
+        "target_url"
+      ]
+    }
+  },
+  "required": [
+    "webhook"
+  ]
+}

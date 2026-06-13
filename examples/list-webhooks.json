@@ -1,0 +1,27 @@
+{
+  "summary": "List webhooks",
+  "method": "GET",
+  "path": "/v4/webhooks",
+  "tag": "Webhooks",
+  "response": {
+    "webhooks": [
+      {
+        "id": 1,
+        "account_id": 1,
+        "event": {
+          "name": null,
+          "tag_id": null,
+          "form_id": null
+        },
+        "target_url": "string"
+      }
+    ],
+    "pagination": {
+      "has_previous_page": true,
+      "has_next_page": true,
+      "start_cursor": "string",
+      "end_cursor": "string",
+      "per_page": 1
+    }
+  }
+}

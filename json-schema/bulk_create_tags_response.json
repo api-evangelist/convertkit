@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/convertkit/main/json-schema/bulk_create_tags_response.json",
+  "title": "Bulk create tags Response",
+  "x-tag": "Tags",
+  "type": "object",
+  "properties": {
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "created_at": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "created_at"
+        ]
+      }
+    },
+    "failures": {
+      "type": "array",
+      "items": {}
+    }
+  },
+  "required": [
+    "tags",
+    "failures"
+  ]
+}

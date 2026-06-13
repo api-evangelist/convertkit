@@ -1,0 +1,6 @@
+{
+  "summary": "Delete a webhook",
+  "method": "DELETE",
+  "path": "/v4/webhooks/{id}",
+  "tag": "Webhooks"
+}

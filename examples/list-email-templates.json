@@ -1,0 +1,23 @@
+{
+  "summary": "List email templates",
+  "method": "GET",
+  "path": "/v4/email_templates",
+  "tag": "Email Templates",
+  "response": {
+    "email_templates": [
+      {
+        "id": 1,
+        "name": "string",
+        "is_default": true,
+        "category": "string"
+      }
+    ],
+    "pagination": {
+      "has_previous_page": true,
+      "has_next_page": true,
+      "start_cursor": "string",
+      "end_cursor": "string",
+      "per_page": 1
+    }
+  }
+}

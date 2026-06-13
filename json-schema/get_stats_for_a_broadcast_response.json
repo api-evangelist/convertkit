@@ -1,0 +1,83 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/convertkit/main/json-schema/get_stats_for_a_broadcast_response.json",
+  "title": "Get stats for a broadcast Response",
+  "x-tag": "Broadcasts",
+  "type": "object",
+  "properties": {
+    "broadcast": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "stats": {
+          "type": "object",
+          "properties": {
+            "recipients": {
+              "type": "integer"
+            },
+            "open_rate": {
+              "type": "number",
+              "format": "float"
+            },
+            "emails_opened": {
+              "type": "integer"
+            },
+            "click_rate": {
+              "type": "number",
+              "format": "float"
+            },
+            "unsubscribe_rate": {
+              "type": "number",
+              "format": "float"
+            },
+            "unsubscribes": {
+              "type": "integer"
+            },
+            "total_clicks": {
+              "type": "integer"
+            },
+            "show_total_clicks": {
+              "type": "boolean"
+            },
+            "status": {
+              "type": "string"
+            },
+            "progress": {
+              "type": "number",
+              "format": "float"
+            },
+            "open_tracking_disabled": {
+              "type": "boolean"
+            },
+            "click_tracking_disabled": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "recipients",
+            "open_rate",
+            "emails_opened",
+            "click_rate",
+            "unsubscribe_rate",
+            "unsubscribes",
+            "total_clicks",
+            "show_total_clicks",
+            "status",
+            "progress",
+            "open_tracking_disabled",
+            "click_tracking_disabled"
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "stats"
+      ]
+    }
+  },
+  "required": [
+    "broadcast"
+  ]
+}

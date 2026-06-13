@@ -1,0 +1,26 @@
+{
+  "summary": "Bulk create tags",
+  "method": "POST",
+  "path": "/v4/bulk/tags",
+  "tag": "Tags",
+  "request_body": {
+    "tags": [
+      {
+        "name": "string"
+      }
+    ],
+    "callback_url": "string"
+  },
+  "response": {
+    "tags": [
+      {
+        "id": 1,
+        "name": "string",
+        "created_at": "string"
+      }
+    ],
+    "failures": [
+      null
+    ]
+  }
+}

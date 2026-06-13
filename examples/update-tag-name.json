@@ -1,0 +1,16 @@
+{
+  "summary": "Update tag name",
+  "method": "PUT",
+  "path": "/v4/tags/{id}",
+  "tag": "Tags",
+  "request_body": {
+    "name": "string"
+  },
+  "response": {
+    "tag": {
+      "id": 1,
+      "name": "string",
+      "created_at": "string"
+    }
+  }
+}

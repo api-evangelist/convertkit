@@ -1,0 +1,40 @@
+{
+  "summary": "Bulk create subscribers",
+  "method": "POST",
+  "path": "/v4/bulk/subscribers",
+  "tag": "Subscribers",
+  "request_body": {
+    "subscribers": [
+      {
+        "first_name": "string",
+        "email_address": "string",
+        "state": "active"
+      }
+    ],
+    "callback_url": "string"
+  },
+  "response": {
+    "subscribers": [
+      {
+        "id": 1,
+        "first_name": "string",
+        "email_address": "string",
+        "state": "active",
+        "created_at": "string"
+      }
+    ],
+    "failures": [
+      {
+        "subscriber": {
+          "first_name": null,
+          "email_address": null,
+          "state": null,
+          "created_at": null
+        },
+        "errors": [
+          null
+        ]
+      }
+    ]
+  }
+}

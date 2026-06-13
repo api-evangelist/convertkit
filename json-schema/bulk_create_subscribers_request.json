@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/convertkit/main/json-schema/bulk_create_subscribers_request.json",
+  "title": "Bulk create subscribers Request",
+  "x-tag": "Subscribers",
+  "type": "object",
+  "properties": {
+    "subscribers": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "first_name": {
+            "type": "string",
+            "nullable": true
+          },
+          "email_address": {
+            "type": "string",
+            "nullable": true
+          },
+          "state": {
+            "type": "string",
+            "nullable": true,
+            "enum": [
+              "active",
+              "cancelled",
+              "bounced",
+              "complained",
+              "inactive"
+            ]
+          }
+        }
+      }
+    },
+    "callback_url": {
+      "type": "string",
+      "nullable": true
+    }
+  },
+  "required": [
+    "subscribers"
+  ]
+}

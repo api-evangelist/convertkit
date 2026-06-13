@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/convertkit/main/json-schema/create_a_subscriber_request.json",
+  "title": "Create a subscriber Request",
+  "x-tag": "Subscribers",
+  "type": "object",
+  "properties": {
+    "first_name": {
+      "type": "string",
+      "nullable": true
+    },
+    "email_address": {
+      "type": "string"
+    },
+    "state": {
+      "type": "string",
+      "nullable": true,
+      "enum": [
+        "active",
+        "cancelled",
+        "bounced",
+        "complained",
+        "inactive"
+      ],
+      "description": "Create subscriber in this state (`active`, `bounced`, `cancelled`, `complained` or `inactive`). Defaults to `active`."
+    },
+    "fields": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      },
+      "description": "Custom field values keyed by the custom field's `key` (e.g. `last_name`, not `Last Name`). Unknown keys are ignored and reported in the response `warnings` array."
+    }
+  },
+  "required": [
+    "email_address"
+  ]
+}

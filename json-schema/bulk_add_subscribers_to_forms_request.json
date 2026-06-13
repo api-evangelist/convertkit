@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/convertkit/main/json-schema/bulk_add_subscribers_to_forms_request.json",
+  "title": "Bulk add subscribers to forms Request",
+  "x-tag": "Forms",
+  "type": "object",
+  "properties": {
+    "additions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "form_id": {
+            "type": "integer",
+            "nullable": true
+          },
+          "subscriber_id": {
+            "type": "integer",
+            "nullable": true
+          },
+          "referrer": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "form_id",
+          "subscriber_id"
+        ]
+      }
+    },
+    "callback_url": {
+      "type": "string",
+      "nullable": true
+    }
+  },
+  "required": [
+    "additions"
+  ]
+}

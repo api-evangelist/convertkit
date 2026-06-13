@@ -1,0 +1,27 @@
+{
+  "summary": "Create a webhook",
+  "method": "POST",
+  "path": "/v4/webhooks",
+  "tag": "Webhooks",
+  "request_body": {
+    "target_url": "string",
+    "event": {
+      "name": "string",
+      "form_id": null,
+      "tag_id": null,
+      "sequence_id": null,
+      "product_id": null
+    }
+  },
+  "response": {
+    "webhook": {
+      "id": 1,
+      "account_id": 1,
+      "event": {
+        "name": "string",
+        "initiator_value": null
+      },
+      "target_url": "string"
+    }
+  }
+}

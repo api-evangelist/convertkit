@@ -1,0 +1,16 @@
+{
+  "summary": "Create a tag",
+  "method": "POST",
+  "path": "/v4/tags",
+  "tag": "Tags",
+  "request_body": {
+    "name": "string"
+  },
+  "response": {
+    "tag": {
+      "id": 1,
+      "name": "string",
+      "created_at": "string"
+    }
+  }
+}

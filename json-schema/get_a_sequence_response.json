@@ -1,0 +1,81 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/convertkit/main/json-schema/get_a_sequence_response.json",
+  "title": "Get a sequence Response",
+  "x-tag": "Sequences",
+  "type": "object",
+  "properties": {
+    "sequence": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        },
+        "hold": {
+          "type": "boolean"
+        },
+        "repeat": {
+          "type": "boolean"
+        },
+        "created_at": {
+          "type": "string"
+        },
+        "updated_at": {
+          "type": "string"
+        },
+        "email_address": {
+          "nullable": true
+        },
+        "email_template_id": {
+          "nullable": true
+        },
+        "send_days": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "send_hour": {
+          "type": "integer"
+        },
+        "time_zone": {
+          "type": "string"
+        },
+        "active": {
+          "type": "boolean"
+        },
+        "exclude_subscriber_sources": {
+          "type": "array",
+          "items": {}
+        },
+        "email_count": {
+          "type": "integer"
+        },
+        "subscriber_count": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "hold",
+        "repeat",
+        "created_at",
+        "updated_at",
+        "email_address",
+        "email_template_id",
+        "send_days",
+        "send_hour",
+        "time_zone",
+        "active",
+        "exclude_subscriber_sources"
+      ]
+    }
+  },
+  "required": [
+    "sequence"
+  ]
+}

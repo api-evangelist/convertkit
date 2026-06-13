@@ -1,0 +1,15 @@
+{
+  "summary": "Get a sequence",
+  "method": "GET",
+  "path": "/v4/sequences/{id}",
+  "tag": "Sequences",
+  "response": {
+    "sequence": {
+      "id": 1,
+      "name": "string",
+      "hold": true,
+      "repeat": true,
+      "created_at": "string"
+    }
+  }
+}

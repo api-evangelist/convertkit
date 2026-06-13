@@ -1,0 +1,15 @@
+{
+  "summary": "Get a post",
+  "method": "GET",
+  "path": "/v4/posts/{id}",
+  "tag": "Posts",
+  "response": {
+    "post": {
+      "id": 1,
+      "publication_id": 1,
+      "created_at": "string",
+      "title": "string",
+      "slug": "string"
+    }
+  }
+}

@@ -1,0 +1,97 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/convertkit/main/json-schema/list_sequence_emails_response.json",
+  "title": "List sequence emails Response",
+  "x-tag": "Sequence Emails",
+  "type": "object",
+  "properties": {
+    "emails": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "sequence_id": {
+            "type": "integer"
+          },
+          "subject": {
+            "type": "string"
+          },
+          "preview_text": {
+            "type": "string"
+          },
+          "email_address": {
+            "type": "string"
+          },
+          "email_template_id": {
+            "nullable": true
+          },
+          "published": {
+            "type": "boolean"
+          },
+          "position": {
+            "type": "integer"
+          },
+          "delay_value": {
+            "type": "integer"
+          },
+          "delay_unit": {
+            "type": "string"
+          },
+          "send_days": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "id",
+          "sequence_id",
+          "subject",
+          "preview_text",
+          "email_address",
+          "email_template_id",
+          "published",
+          "position",
+          "delay_value",
+          "delay_unit",
+          "send_days"
+        ]
+      }
+    },
+    "pagination": {
+      "type": "object",
+      "properties": {
+        "has_previous_page": {
+          "type": "boolean"
+        },
+        "has_next_page": {
+          "type": "boolean"
+        },
+        "start_cursor": {
+          "type": "string"
+        },
+        "end_cursor": {
+          "type": "string"
+        },
+        "per_page": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "has_previous_page",
+        "has_next_page",
+        "start_cursor",
+        "end_cursor",
+        "per_page"
+      ]
+    }
+  },
+  "required": [
+    "emails",
+    "pagination"
+  ]
+}

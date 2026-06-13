@@ -1,0 +1,37 @@
+{
+  "summary": "Bulk tag subscribers",
+  "method": "POST",
+  "path": "/v4/bulk/tags/subscribers",
+  "tag": "Tags",
+  "request_body": {
+    "taggings": [
+      {
+        "tag_id": 1,
+        "subscriber_id": 1
+      }
+    ],
+    "callback_url": "string"
+  },
+  "response": {
+    "subscribers": [
+      {
+        "id": 1,
+        "first_name": "string",
+        "email_address": "string",
+        "created_at": "string",
+        "tagged_at": "string"
+      }
+    ],
+    "failures": [
+      {
+        "errors": [
+          null
+        ],
+        "tagging": {
+          "tag_id": null,
+          "subscriber_id": null
+        }
+      }
+    ]
+  }
+}

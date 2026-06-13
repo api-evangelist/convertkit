@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/convertkit/main/json-schema/get_a_sequence_email_response.json",
+  "title": "Get a sequence email Response",
+  "x-tag": "Sequence Emails",
+  "type": "object",
+  "properties": {
+    "email": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "sequence_id": {
+          "type": "integer"
+        },
+        "subject": {
+          "type": "string"
+        },
+        "preview_text": {
+          "type": "string"
+        },
+        "email_address": {
+          "type": "string"
+        },
+        "email_template_id": {
+          "nullable": true
+        },
+        "published": {
+          "type": "boolean"
+        },
+        "position": {
+          "type": "integer"
+        },
+        "delay_value": {
+          "type": "integer"
+        },
+        "delay_unit": {
+          "type": "string"
+        },
+        "send_days": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "content": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "sequence_id",
+        "subject",
+        "preview_text",
+        "email_address",
+        "email_template_id",
+        "published",
+        "position",
+        "delay_value",
+        "delay_unit",
+        "send_days",
+        "content"
+      ]
+    }
+  },
+  "required": [
+    "email"
+  ]
+}

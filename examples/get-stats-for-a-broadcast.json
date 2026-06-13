@@ -1,0 +1,18 @@
+{
+  "summary": "Get stats for a broadcast",
+  "method": "GET",
+  "path": "/v4/broadcasts/{broadcast_id}/stats",
+  "tag": "Broadcasts",
+  "response": {
+    "broadcast": {
+      "id": 1,
+      "stats": {
+        "recipients": 1,
+        "open_rate": 1.0,
+        "emails_opened": 1,
+        "click_rate": 1.0,
+        "unsubscribe_rate": 1.0
+      }
+    }
+  }
+}

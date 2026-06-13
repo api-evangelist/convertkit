@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/convertkit/main/json-schema/create_a_sequence_email_request.json",
+  "title": "Create a sequence email Request",
+  "x-tag": "Sequence Emails",
+  "type": "object",
+  "required": [
+    "subject",
+    "delay_value",
+    "delay_unit"
+  ],
+  "properties": {
+    "subject": {
+      "type": "string",
+      "description": "Subject line of the email"
+    },
+    "preview_text": {
+      "type": "string",
+      "nullable": true,
+      "description": "Preview text shown in email clients before the email is opened"
+    },
+    "content": {
+      "type": "string",
+      "nullable": true,
+      "description": "HTML body content of the email"
+    },
+    "delay_value": {
+      "type": "integer",
+      "description": "Number of days or hours to wait before sending this email after the previous one"
+    },
+    "delay_unit": {
+      "type": "string",
+      "enum": [
+        "days",
+        "hours"
+      ],
+      "description": "Unit for the send delay. Use `days` for schedule-aware delivery, `hours` for a fixed hourly delay"
+    },
+    "email_template_id": {
+      "type": "integer",
+      "nullable": true,
+      "description": "ID of the email template to use for layout and styling"
+    },
+    "published": {
+      "type": "boolean",
+      "description": "Whether the email is active and will be sent to subscribers. Defaults to `false` (draft)"
+    },
+    "send_days": {
+      "type": "array",
+      "nullable": true,
+      "items": {
+        "type": "string"
+      },
+      "description": "Days of the week this email may be sent. Defaults to all 7 days (inherits the sequence schedule). Pass a subset to restrict delivery, or `null` to reset to all days"
+    },
+    "position": {
+      "type": "integer",
+      "nullable": true,
+      "description": "Zero-based position of the email in the sequence. Assigned automatically after the last email if omitted"
+    }
+  }
+}

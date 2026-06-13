@@ -1,0 +1,134 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/convertkit/main/json-schema/create_a_broadcast_response.json",
+  "title": "Create a broadcast Response",
+  "x-tag": "Broadcasts",
+  "type": "object",
+  "properties": {
+    "broadcast": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "publication_id": {
+          "type": "integer"
+        },
+        "created_at": {
+          "type": "string"
+        },
+        "subject": {
+          "type": "string"
+        },
+        "preview_text": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "content": {
+          "type": "string"
+        },
+        "public": {
+          "type": "boolean"
+        },
+        "published_at": {
+          "type": "string"
+        },
+        "send_at": {
+          "type": "string",
+          "nullable": true
+        },
+        "thumbnail_alt": {
+          "type": "string",
+          "nullable": true
+        },
+        "thumbnail_url": {
+          "type": "string",
+          "nullable": true
+        },
+        "public_url": {
+          "type": "string"
+        },
+        "email_address": {
+          "type": "string"
+        },
+        "email_template": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "integer"
+            },
+            "name": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "id",
+            "name"
+          ]
+        },
+        "subscriber_filter": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "all": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "enum": [
+                        "segment",
+                        "tag"
+                      ]
+                    },
+                    "ids": {
+                      "type": "array",
+                      "items": {
+                        "type": "integer"
+                      }
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "ids"
+                  ]
+                }
+              }
+            },
+            "required": [
+              "all"
+            ]
+          }
+        },
+        "status": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "publication_id",
+        "created_at",
+        "subject",
+        "preview_text",
+        "description",
+        "public",
+        "published_at",
+        "send_at",
+        "thumbnail_alt",
+        "thumbnail_url",
+        "content",
+        "public_url",
+        "email_address",
+        "email_template",
+        "subscriber_filter"
+      ]
+    }
+  },
+  "required": [
+    "broadcast"
+  ]
+}
