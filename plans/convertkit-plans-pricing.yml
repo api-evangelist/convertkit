@@ -1,0 +1,70 @@
+name: Kit Plans and Pricing
+description: Pricing plans for Kit (formerly ConvertKit), a creator email marketing platform with REST API access.
+url: https://kit.com/pricing
+plans:
+
+  - name: Newsletter
+    description: Free plan for creators just starting out, with basic email and landing page features.
+    price:
+      monthly: 0
+      annual: 0
+      currency: USD
+    limits:
+      subscribers: 10000
+      email_sequences: 1
+      visual_automations: 1
+      team_users: 1
+    features:
+      - Unlimited emails
+      - Unlimited landing pages
+      - Unlimited forms
+      - 1 basic Visual Automation
+      - API access
+      - Single user account
+
+  - name: Creator
+    description: For growing creators who need unlimited automations, sequences, and premium support.
+    price:
+      monthly: 39
+      annual: 33
+      currency: USD
+      note: Monthly price shown for 1,000 subscribers; scales with subscriber count. Annual price reflects per-month cost when billed yearly (16% discount).
+    limits:
+      subscribers: Scales (starting at 1,000)
+      visual_automations: Unlimited
+      email_sequences: Unlimited
+    features:
+      - Everything in Newsletter
+      - Unlimited Visual Automations
+      - Unlimited email sequences
+      - Kit MCP (AI integration)
+      - SMS marketing access
+      - 24/7 support
+      - API access
+
+  - name: Pro
+    description: For scaling creators who need advanced analytics, team collaboration, and priority support.
+    price:
+      monthly: 79
+      annual: 66
+      currency: USD
+      note: Monthly price shown for 1,000 subscribers; scales with subscriber count. Annual price reflects per-month cost when billed yearly (16% discount).
+    limits:
+      subscribers: Scales (starting at 1,000)
+      team_users: Unlimited
+    features:
+      - Everything in Creator
+      - Subscriber Signals and engagement analytics
+      - Unlimited team users
+      - Advanced A/B testing (5 variations)
+      - Collaborative editing
+      - Post-send link editing
+      - Deliverability reporting
+      - Priority support
+      - API access
+
+notes:
+  - All plans include API access; no API-specific tier restrictions documented.
+  - Pricing scales with subscriber count; custom enterprise pricing available for 500K+ subscribers.
+  - Annual billing provides approximately a 16% discount (equivalent to 2 free months).
+  - ConvertKit rebranded to Kit in 2024.

@@ -1,0 +1,50 @@
+name: Kit FinOps
+description: Financial operations guidance for teams consuming the Kit (formerly ConvertKit) API, covering cost drivers, optimization strategies, and budget controls.
+url: https://kit.com/pricing
+
+cost_drivers:
+
+  - driver: Subscriber Count
+    description: Kit pricing is subscriber-based. The total number of active email subscribers on the account determines the monthly or annual bill across all plans.
+    notes:
+      - Free Newsletter plan supports up to 10,000 subscribers.
+      - Creator and Pro plans start at 1,000 subscribers and scale upward.
+      - Costs increase incrementally as subscriber thresholds are crossed.
+
+  - driver: Plan Tier
+    description: Plan selection (Newsletter, Creator, Pro) determines feature access and base price.
+    notes:
+      - API access is available on all plans.
+      - Advanced analytics and team features only on Pro.
+      - Kit MCP (AI integration) and SMS marketing on Creator and Pro.
+
+  - driver: Billing Frequency
+    description: Annual billing provides approximately 16% savings versus month-to-month.
+    notes:
+      - Monthly Creator plan starts at $39/mo; annual equivalent is $33/mo.
+      - Monthly Pro plan starts at $79/mo; annual equivalent is $66/mo.
+
+optimization:
+
+  - strategy: Choose Annual Billing
+    description: Commit to an annual plan to reduce per-month costs by ~16%.
+
+  - strategy: Monitor Subscriber Growth
+    description: Track subscriber counts proactively to anticipate tier crossings and budget increases.
+
+  - strategy: Use API Keys for Low-Volume Integrations
+    description: API Key auth (120 req/60s) is sufficient for most automation use cases and avoids OAuth implementation overhead.
+
+  - strategy: Use OAuth for High-Volume Integrations
+    description: OAuth auth (600 req/60s) allows 5x more throughput, reducing the need for request batching or retry logic at scale.
+
+  - strategy: Leverage Bulk Endpoints
+    description: Use bulk operation endpoints (OAuth required) to reduce total API call volume and stay within rate limits.
+
+  - strategy: Start on Free Newsletter Plan
+    description: The free tier supports up to 10,000 subscribers, making it cost-effective for early-stage list building with API access.
+
+notes:
+  - Kit does not charge separately for API usage; all costs are subscriber-based.
+  - Enterprise and custom pricing available for lists exceeding 500,000 subscribers; contact Kit sales.
+  - Pricing sourced from kit.com/pricing as of June 2026.

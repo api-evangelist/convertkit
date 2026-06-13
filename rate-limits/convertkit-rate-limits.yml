@@ -1,0 +1,40 @@
+name: Kit API Rate Limits
+description: Rate limits enforced by the Kit (formerly ConvertKit) REST API v4.
+url: https://developers.kit.com/api-reference/authentication
+
+limits:
+
+  - authentication: API Key
+    header: X-Kit-Api-Key
+    requests: 120
+    window: 60 seconds
+    window_type: rolling
+    notes:
+      - Suitable for personal account automation and simple integrations.
+      - Some endpoints (bulk operations, purchase creation) require OAuth exclusively.
+
+  - authentication: OAuth 2.0
+    requests: 600
+    window: 60 seconds
+    window_type: rolling
+    notes:
+      - Required for apps distributed through the Kit App Store.
+      - Supports Authorization Code Grant flow.
+      - Web servers use the refresh token flow.
+      - SPAs and mobile apps use PKCE flow.
+      - Recommended for public integrations needing higher throughput.
+
+oauth:
+  flows:
+    - type: authorization_code
+      description: Standard Authorization Code Grant for web server apps.
+    - type: pkce
+      description: Proof Key for Code Exchange for SPAs and mobile apps.
+  token_rotation:
+    refresh_tokens: single-use with automatic rotation
+  scopes: See developers.kit.com for current scope definitions.
+
+notes:
+  - Rate limits are per API key or per OAuth token, evaluated over a rolling 60-second window.
+  - Exceeding limits results in 429 Too Many Requests responses.
+  - API is versioned; V4 is current; V3 is deprecated and scheduled for sunset.
