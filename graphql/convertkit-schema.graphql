@@ -1,0 +1,761 @@
+"""
+ConvertKit (Kit) GraphQL Conceptual Schema
+Represents the domain model of the Kit creator email marketing platform.
+Source: https://developers.convertkit.com / https://developers.kit.com
+"""
+
+scalar DateTime
+scalar JSON
+
+# ────────────────────────────────────────────────
+# Enumerations
+# ────────────────────────────────────────────────
+
+enum SubscriberStatus {
+  ACTIVE
+  INACTIVE
+  BOUNCED
+  COMPLAINED
+  CANCELLED
+  UNSUBSCRIBED
+}
+
+enum FormType {
+  INLINE
+  MODAL
+  SLIDE_IN
+  STICKY_BAR
+}
+
+enum FormStatus {
+  ACTIVE
+  ARCHIVED
+  TRASHED
+}
+
+enum SequenceStatus {
+  ACTIVE
+  INACTIVE
+  DRAFT
+  ARCHIVED
+}
+
+enum EmailStatus {
+  DRAFT
+  SCHEDULED
+  SENT
+  CANCELLED
+}
+
+enum BroadcastStatus {
+  DRAFT
+  SCHEDULED
+  PUBLISHED
+  CANCELLED
+}
+
+enum PurchaseStatus {
+  PENDING
+  PAID
+  REFUNDED
+  FAILED
+}
+
+enum AutomationEvent {
+  SUBSCRIBER_CONFIRMED
+  SUBSCRIBER_ACTIVATED
+  SUBSCRIBER_TAGGED
+  SUBSCRIBER_UNTAGGED
+  FORM_SUBSCRIBED
+  SEQUENCE_COMPLETED
+  LINK_CLICKED
+  PURCHASE_MADE
+}
+
+enum RuleEvent {
+  SUBSCRIBER_CONFIRMED
+  SUBSCRIBER_SUBSCRIBED
+  SUBSCRIBER_TAGGED
+  SUBSCRIBER_ADDED_TO_SEQUENCE
+  LINK_CLICKED
+  FORM_SUBSCRIBED
+  PURCHASE_MADE
+}
+
+enum RuleAction {
+  ADD_TAG
+  REMOVE_TAG
+  SUBSCRIBE_TO_SEQUENCE
+  REMOVE_FROM_SEQUENCE
+  SUBSCRIBE_TO_FORM
+  SEND_EMAIL
+  TRIGGER_WEBHOOK
+}
+
+enum WebhookEvent {
+  SUBSCRIBER_ACTIVATED
+  SUBSCRIBER_UNSUBSCRIBED
+  SUBSCRIBER_BOUNCED
+  SUBSCRIBER_COMPLAINED
+  SUBSCRIBER_TAGGED
+  SUBSCRIBER_UNTAGGED
+  FORM_SUBSCRIBED
+  LINK_CLICKED
+  PURCHASE_MADE
+}
+
+enum SegmentCondition {
+  TAGGED_WITH
+  NOT_TAGGED_WITH
+  SUBSCRIBED_TO_FORM
+  IN_SEQUENCE
+  EMAIL_OPENED
+  LINK_CLICKED
+  CUSTOM_FIELD_EQUALS
+  CUSTOM_FIELD_CONTAINS
+}
+
+# ────────────────────────────────────────────────
+# Subscriber domain
+# ────────────────────────────────────────────────
+
+"""A subscriber in the Kit platform."""
+type Subscriber {
+  id: ID!
+  email: SubscriberEmail!
+  status: SubscriberStatus!
+  details: SubscriberDetails
+  fields: [SubscriberField!]
+  tags: [Tag!]
+  forms: [Form!]
+  sequences: [Sequence!]
+  purchases: [Purchase!]
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""Extended profile information for a subscriber."""
+type SubscriberDetails {
+  id: ID!
+  firstName: String
+  lastName: String
+  emailAddress: String!
+  status: SubscriberStatus!
+  cancelledAt: DateTime
+  subscribedAt: DateTime
+  country: String
+  timezone: String
+  customFields: JSON
+}
+
+"""Wrapper for a subscriber's email address."""
+type SubscriberEmail {
+  address: String!
+  verified: Boolean!
+}
+
+"""A custom field value attached to a subscriber."""
+type SubscriberField {
+  key: String!
+  value: String
+  customField: CustomField
+}
+
+# ────────────────────────────────────────────────
+# Custom fields
+# ────────────────────────────────────────────────
+
+"""A custom field definition on the account."""
+type CustomField {
+  id: ID!
+  name: String!
+  key: String!
+  label: String
+  details: CustomFieldDetails
+  createdAt: DateTime!
+}
+
+"""Extended metadata for a custom field."""
+type CustomFieldDetails {
+  id: ID!
+  name: String!
+  key: String!
+  label: String
+  subscriberCount: Int
+}
+
+# ────────────────────────────────────────────────
+# Forms
+# ────────────────────────────────────────────────
+
+"""A Kit opt-in form."""
+type Form {
+  id: ID!
+  name: String!
+  type: FormType!
+  status: FormStatus!
+  details: FormDetails
+  subscribers: [Subscriber!]
+  subscriberCount: Int
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""Extended metadata and embed details for a form."""
+type FormDetails {
+  id: ID!
+  name: String!
+  type: FormType!
+  status: FormStatus!
+  embedUrl: String
+  embedJs: String
+  embedHtml: String
+  signedUrl: String
+  uid: String
+  totalSubscribers: Int
+  subscribedToday: Int
+  subscribedLast7Days: Int
+  subscribedLast30Days: Int
+}
+
+# ────────────────────────────────────────────────
+# Tags
+# ────────────────────────────────────────────────
+
+"""A tag that can be applied to subscribers."""
+type Tag {
+  id: ID!
+  name: String!
+  details: TagDetails
+  subscribers: [TagSubscriber!]
+  subscriberCount: Int
+  createdAt: DateTime!
+}
+
+"""Extended metadata for a tag."""
+type TagDetails {
+  id: ID!
+  name: String!
+  totalSubscribers: Int
+  subscribedToday: Int
+  subscribedLast7Days: Int
+  subscribedLast30Days: Int
+}
+
+"""Association between a tag and a subscriber."""
+type TagSubscriber {
+  subscriber: Subscriber!
+  taggedAt: DateTime!
+}
+
+# ────────────────────────────────────────────────
+# Sequences
+# ────────────────────────────────────────────────
+
+"""An email sequence (drip campaign)."""
+type Sequence {
+  id: ID!
+  name: String!
+  status: SequenceStatus!
+  details: SequenceDetails
+  emails: [SequenceEmail!]
+  subscribers: [Subscriber!]
+  subscriberCount: Int
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""Extended metadata for a sequence."""
+type SequenceDetails {
+  id: ID!
+  name: String!
+  status: SequenceStatus!
+  description: String
+  totalSubscribers: Int
+  holdSubscribers: Int
+}
+
+"""An individual email that is part of a sequence."""
+type SequenceEmail {
+  id: ID!
+  sequence: Sequence!
+  email: Email!
+  delayDays: Int!
+  position: Int!
+  status: EmailStatus!
+}
+
+# ────────────────────────────────────────────────
+# Emails
+# ────────────────────────────────────────────────
+
+"""A single email message (sequence or broadcast)."""
+type Email {
+  id: ID!
+  subject: EmailSubject!
+  status: EmailStatus!
+  details: EmailDetails
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""Extended content and delivery details for an email."""
+type EmailDetails {
+  id: ID!
+  subject: String!
+  previewText: String
+  content: String
+  htmlContent: String
+  textContent: String
+  status: EmailStatus!
+  openRate: Float
+  clickRate: Float
+  sentAt: DateTime
+  scheduledFor: DateTime
+}
+
+"""The subject line of an email."""
+type EmailSubject {
+  text: String!
+  previewText: String
+}
+
+# ────────────────────────────────────────────────
+# Broadcasts
+# ────────────────────────────────────────────────
+
+"""A one-time broadcast email sent to a segment or all subscribers."""
+type Broadcast {
+  id: ID!
+  subject: String!
+  status: BroadcastStatus!
+  details: BroadcastDetails
+  stats: BroadcastStats
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""Extended metadata and content for a broadcast."""
+type BroadcastDetails {
+  id: ID!
+  subject: String!
+  previewText: String
+  content: String
+  htmlContent: String
+  textContent: String
+  status: BroadcastStatus!
+  publicUrl: String
+  sentAt: DateTime
+  scheduledFor: DateTime
+  segmentId: ID
+  thumbnailUrl: String
+}
+
+"""Delivery and engagement statistics for a broadcast."""
+type BroadcastStats {
+  broadcastId: ID!
+  recipients: Int
+  opens: Int
+  uniqueOpens: Int
+  openRate: Float
+  clicks: Int
+  uniqueClicks: Int
+  clickRate: Float
+  unsubscribes: Int
+  bounces: Int
+  complaints: Int
+}
+
+# ────────────────────────────────────────────────
+# Automation
+# ────────────────────────────────────────────────
+
+"""A visual automation workflow."""
+type Automation {
+  id: ID!
+  name: String!
+  details: AutomationDetails
+  rules: [AutomationRule!]
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""Extended metadata for an automation."""
+type AutomationDetails {
+  id: ID!
+  name: String!
+  active: Boolean!
+  subscriberCount: Int
+  completedCount: Int
+}
+
+"""A rule within a visual automation."""
+type AutomationRule {
+  id: ID!
+  automation: Automation!
+  event: AutomationEvent!
+  details: AutomationRuleDetails
+}
+
+"""Detail configuration of an automation rule."""
+type AutomationRuleDetails {
+  id: ID!
+  event: AutomationEvent!
+  eventValue: String
+  action: RuleAction!
+  actionValue: String
+}
+
+# ────────────────────────────────────────────────
+# Rules (legacy trigger → action rules)
+# ────────────────────────────────────────────────
+
+"""A legacy trigger-action rule."""
+type Rule {
+  id: ID!
+  details: RuleDetails
+  createdAt: DateTime!
+}
+
+"""Extended configuration for a rule."""
+type RuleDetails {
+  id: ID!
+  event: RuleEvent!
+  eventValue: String
+  action: RuleAction!
+  actionValue: String
+}
+
+# ────────────────────────────────────────────────
+# Webhooks
+# ────────────────────────────────────────────────
+
+"""A registered outbound webhook."""
+type Webhook {
+  id: ID!
+  targetUrl: String!
+  event: WebhookEvent!
+  details: WebhookDetails
+  createdAt: DateTime!
+}
+
+"""Extended metadata for a webhook."""
+type WebhookDetails {
+  id: ID!
+  targetUrl: String!
+  event: WebhookEvent!
+  parameter: String
+  active: Boolean!
+}
+
+# ────────────────────────────────────────────────
+# Purchases
+# ────────────────────────────────────────────────
+
+"""A purchase record linked to a subscriber."""
+type Purchase {
+  id: ID!
+  subscriber: Subscriber!
+  status: PurchaseStatus!
+  details: PurchaseDetails
+  createdAt: DateTime!
+}
+
+"""Extended metadata for a purchase."""
+type PurchaseDetails {
+  id: ID!
+  transactionId: String!
+  status: PurchaseStatus!
+  emailAddress: String!
+  currency: String!
+  subtotal: Float!
+  discount: Float
+  tax: Float
+  total: Float!
+  productName: String
+  productId: String
+  firstName: String
+  lastName: String
+  purchasedAt: DateTime
+}
+
+# ────────────────────────────────────────────────
+# Segments
+# ────────────────────────────────────────────────
+
+"""A reusable subscriber segment based on conditions."""
+type Segment {
+  id: ID!
+  name: String!
+  details: SegmentDetails
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""Extended metadata for a segment."""
+type SegmentDetails {
+  id: ID!
+  name: String!
+  subscriberCount: Int
+  conditions: [SegmentConditionItem!]
+}
+
+"""A single condition clause within a segment."""
+type SegmentConditionItem {
+  condition: SegmentCondition!
+  value: String
+  field: String
+}
+
+# ────────────────────────────────────────────────
+# Landing Pages
+# ────────────────────────────────────────────────
+
+"""A hosted landing page in Kit."""
+type LandingPage {
+  id: ID!
+  name: String!
+  url: String!
+  status: FormStatus!
+  details: LandingPageDetails
+  subscriberCount: Int
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""Extended metadata for a landing page."""
+type LandingPageDetails {
+  id: ID!
+  name: String!
+  url: String!
+  status: FormStatus!
+  uid: String
+  totalSubscribers: Int
+}
+
+# ────────────────────────────────────────────────
+# Account & Creator
+# ────────────────────────────────────────────────
+
+"""The Kit account (creator account)."""
+type Account {
+  id: ID!
+  name: String!
+  details: AccountDetails
+  creator: Creator
+}
+
+"""Extended profile for an account."""
+type AccountDetails {
+  id: ID!
+  name: String!
+  primaryEmailAddress: String!
+  plan: String
+  subscriberCount: Int
+  createdAt: DateTime!
+  timeZone: String
+  country: String
+}
+
+"""The creator who owns or operates the Kit account."""
+type Creator {
+  id: ID!
+  name: String!
+  email: String!
+  details: CreatorDetails
+}
+
+"""Extended metadata for a creator."""
+type CreatorDetails {
+  id: ID!
+  name: String!
+  email: String!
+  timeZone: String
+  plan: String
+  subscriberCount: Int
+}
+
+# ────────────────────────────────────────────────
+# Auth
+# ────────────────────────────────────────────────
+
+"""An API key credential."""
+type APIKey {
+  id: ID!
+  name: String!
+  key: String!
+  createdAt: DateTime!
+  lastUsedAt: DateTime
+  active: Boolean!
+}
+
+"""An OAuth 2.0 access / refresh token pair."""
+type Token {
+  accessToken: String!
+  refreshToken: String
+  tokenType: String!
+  expiresIn: Int
+  scope: String
+  createdAt: DateTime!
+}
+
+# ────────────────────────────────────────────────
+# Integrations
+# ────────────────────────────────────────────────
+
+"""Details of a third-party integration connected to a Kit account."""
+type IntegrationDetails {
+  id: ID!
+  name: String!
+  provider: String!
+  connected: Boolean!
+  connectedAt: DateTime
+  settings: JSON
+}
+
+# ────────────────────────────────────────────────
+# Pagination
+# ────────────────────────────────────────────────
+
+"""Cursor-based pagination metadata."""
+type PageInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String
+  endCursor: String
+  totalCount: Int
+}
+
+type SubscriberConnection {
+  nodes: [Subscriber!]!
+  pageInfo: PageInfo!
+}
+
+type TagConnection {
+  nodes: [Tag!]!
+  pageInfo: PageInfo!
+}
+
+type FormConnection {
+  nodes: [Form!]!
+  pageInfo: PageInfo!
+}
+
+type SequenceConnection {
+  nodes: [Sequence!]!
+  pageInfo: PageInfo!
+}
+
+type BroadcastConnection {
+  nodes: [Broadcast!]!
+  pageInfo: PageInfo!
+}
+
+# ────────────────────────────────────────────────
+# Root Query
+# ────────────────────────────────────────────────
+
+type Query {
+  account: Account
+  creator: Creator
+
+  subscriber(id: ID!): Subscriber
+  subscriberByEmail(email: String!): Subscriber
+  subscribers(
+    status: SubscriberStatus
+    tagId: ID
+    formId: ID
+    sequenceId: ID
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): SubscriberConnection!
+
+  tag(id: ID!): Tag
+  tags(after: String, first: Int): TagConnection!
+
+  form(id: ID!): Form
+  forms(type: FormType, status: FormStatus, after: String, first: Int): FormConnection!
+
+  sequence(id: ID!): Sequence
+  sequences(status: SequenceStatus, after: String, first: Int): SequenceConnection!
+
+  broadcast(id: ID!): Broadcast
+  broadcasts(status: BroadcastStatus, after: String, first: Int): BroadcastConnection!
+
+  segment(id: ID!): Segment
+  segments: [Segment!]!
+
+  customField(id: ID!): CustomField
+  customFields: [CustomField!]!
+
+  automation(id: ID!): Automation
+  automations: [Automation!]!
+
+  rule(id: ID!): Rule
+  rules: [Rule!]!
+
+  webhook(id: ID!): Webhook
+  webhooks: [Webhook!]!
+
+  purchase(id: ID!): Purchase
+  purchases(subscriberId: ID, after: String, first: Int): [Purchase!]!
+
+  landingPage(id: ID!): LandingPage
+  landingPages: [LandingPage!]!
+
+  apiKeys: [APIKey!]!
+  integrations: [IntegrationDetails!]!
+}
+
+# ────────────────────────────────────────────────
+# Root Mutation
+# ────────────────────────────────────────────────
+
+type Mutation {
+  createSubscriber(email: String!, firstName: String, fields: JSON, tagIds: [ID!]): Subscriber!
+  updateSubscriber(id: ID!, firstName: String, fields: JSON, status: SubscriberStatus): Subscriber!
+  unsubscribeSubscriber(id: ID!): Subscriber!
+  bulkSubscribe(subscribers: [JSON!]!): [Subscriber!]!
+
+  tagSubscriber(subscriberId: ID!, tagId: ID!): TagSubscriber!
+  untagSubscriber(subscriberId: ID!, tagId: ID!): Boolean!
+  tagSubscriberByEmail(email: String!, tagName: String!): Subscriber!
+
+  createTag(name: String!): Tag!
+  updateTag(id: ID!, name: String!): Tag!
+  deleteTag(id: ID!): Boolean!
+
+  subscribeToForm(subscriberId: ID!, formId: ID!): Form!
+  subscribeToSequence(subscriberId: ID!, sequenceId: ID!): Sequence!
+  removeFromSequence(subscriberId: ID!, sequenceId: ID!): Boolean!
+
+  createBroadcast(subject: String!, content: String!, scheduledFor: DateTime): Broadcast!
+  updateBroadcast(id: ID!, subject: String, content: String, scheduledFor: DateTime): Broadcast!
+  sendBroadcast(id: ID!): Broadcast!
+  cancelBroadcast(id: ID!): Broadcast!
+  deleteBroadcast(id: ID!): Boolean!
+
+  createWebhook(targetUrl: String!, event: WebhookEvent!, parameter: String): Webhook!
+  deleteWebhook(id: ID!): Boolean!
+
+  createCustomField(name: String!, label: String): CustomField!
+  updateCustomField(id: ID!, name: String, label: String): CustomField!
+  deleteCustomField(id: ID!): Boolean!
+
+  createPurchase(
+    transactionId: String!
+    emailAddress: String!
+    currency: String!
+    subtotal: Float!
+    total: Float!
+    productName: String
+    firstName: String
+    lastName: String
+    purchasedAt: DateTime
+  ): Purchase!
+
+  createRule(event: RuleEvent!, eventValue: String, action: RuleAction!, actionValue: String): Rule!
+  deleteRule(id: ID!): Boolean!
+}

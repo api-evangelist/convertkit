@@ -1,69 +1,76 @@
 aid: convertkit
 name: Kit
-description: Kit (formerly ConvertKit) is a creator email marketing platform with a REST API for managing subscribers, tags, sequences, forms, broadcasts, and automation rules. The API supports both API key and OAuth 2.0 authentication, with v4 as the current version featuring cursor-based pagination, bulk operations, and async processing.
+description: Kit (formerly ConvertKit) is a creator email marketing platform with
+  a REST API for managing subscribers, tags, sequences, forms, broadcasts, and automation
+  rules. The API supports both API key and OAuth 2.0 authentication, with v4 as the
+  current version featuring cursor-based pagination, bulk operations, and async processing.
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 url: https://raw.githubusercontent.com/api-evangelist/convertkit/refs/heads/main/apis.yml
 created: '2026-06-13'
 modified: '2026-06-13'
 specificationVersion: '0.19'
 tags:
+- Email Marketing
+- Creator Economy
+- Subscribers
+- Automation
+- Newsletters
+- Sequences
+- Forms
+- Broadcasts
+apis:
+- aid: convertkit:kit-api
+  name: Kit API
+  description: REST API for the Kit (formerly ConvertKit) creator email marketing
+    platform, providing programmatic access to subscribers, tags, sequences, forms,
+    broadcasts, and automation rules.
+  image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  humanURL: https://developers.kit.com
+  baseURL: https://api.kit.com/v4
+  tags:
   - Email Marketing
-  - Creator Economy
   - Subscribers
-  - Automation
-  - Newsletters
+  - Tags
   - Sequences
   - Forms
   - Broadcasts
-apis:
-  - aid: convertkit:kit-api
-    name: Kit API
-    description: REST API for the Kit (formerly ConvertKit) creator email marketing platform, providing programmatic access to subscribers, tags, sequences, forms, broadcasts, and automation rules.
-    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
-    humanURL: https://developers.kit.com
-    baseURL: https://api.kit.com/v4
-    tags:
-      - Email Marketing
-      - Subscribers
-      - Tags
-      - Sequences
-      - Forms
-      - Broadcasts
-      - Automation
-    properties:
-      - type: Documentation
-        url: https://developers.kit.com/docs
-      - type: OpenAPI
-        url: https://developers.kit.com/api-reference/v4.json
-      - type: OpenAPI
-        url: https://raw.githubusercontent.com/api-evangelist/convertkit/refs/heads/main/openapi/openapi.json
-      - type: Authentication
-        url: https://developers.kit.com/api-reference/authentication
-      - type: Changelog
-        url: https://developers.kit.com/changelog
-common:
-  - type: Website
-    url: https://kit.com
+  - Automation
+  properties:
   - type: Documentation
-    url: https://developers.kit.com
-  - type: GitHubOrg
-    url: https://github.com/convertkit
-  - type: LinkedIn
-    url: https://www.linkedin.com/company/kit.com
-  - type: Blog
-    url: https://kit.com/resources
-  - type: Pricing
-    url: https://kit.com/pricing
-  - type: StatusPage
-    url: https://status.kit.com
-  - type: X
-    url: https://x.com/kit
-  - type: Plans
-    url: plans/convertkit-plans-pricing.yml
-  - type: RateLimits
-    url: rate-limits/convertkit-rate-limits.yml
-  - type: FinOps
-    url: finops/convertkit-finops.yml
+    url: https://developers.kit.com/docs
+  - type: OpenAPI
+    url: https://developers.kit.com/api-reference/v4.json
+  - type: OpenAPI
+    url: https://raw.githubusercontent.com/api-evangelist/convertkit/refs/heads/main/openapi/openapi.json
+  - type: Authentication
+    url: https://developers.kit.com/api-reference/authentication
+  - type: Changelog
+    url: https://developers.kit.com/changelog
+  - url: graphql/convertkit-graphql.md
+    type: GraphQL
+common:
+- type: Website
+  url: https://kit.com
+- type: Documentation
+  url: https://developers.kit.com
+- type: GitHubOrg
+  url: https://github.com/convertkit
+- type: LinkedIn
+  url: https://www.linkedin.com/company/kit.com
+- type: Blog
+  url: https://kit.com/resources
+- type: Pricing
+  url: https://kit.com/pricing
+- type: StatusPage
+  url: https://status.kit.com
+- type: X
+  url: https://x.com/kit
+- type: Plans
+  url: plans/convertkit-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/convertkit-rate-limits.yml
+- type: FinOps
+  url: finops/convertkit-finops.yml
 maintainers:
-  - FN: Kin Lane
-    email: kin@apievangelist.com
+- FN: Kin Lane
+  email: kin@apievangelist.com
