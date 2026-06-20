@@ -4,7 +4,7 @@ description: Kit (formerly ConvertKit) is a creator email marketing platform wit
   a REST API for managing subscribers, tags, sequences, forms, broadcasts, and automation
   rules. The API supports both API key and OAuth 2.0 authentication, with v4 as the
   current version featuring cursor-based pagination, bulk operations, and async processing.
-image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
 url: https://raw.githubusercontent.com/api-evangelist/convertkit/refs/heads/main/apis.yml
 created: '2026-06-13'
 modified: '2026-06-13'
@@ -24,7 +24,7 @@ apis:
   description: REST API for the Kit (formerly ConvertKit) creator email marketing
     platform, providing programmatic access to subscribers, tags, sequences, forms,
     broadcasts, and automation rules.
-  image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
   humanURL: https://developers.kit.com
   baseURL: https://api.kit.com/v4
   tags:
