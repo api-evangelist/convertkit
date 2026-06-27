@@ -44,7 +44,7 @@ apis:
     url: https://raw.githubusercontent.com/api-evangelist/convertkit/refs/heads/main/openapi/openapi.json
   - type: Authentication
     url: https://developers.kit.com/api-reference/authentication
-  - type: Changelog
+  - type: ChangeLog
     url: https://developers.kit.com/changelog
   - url: graphql/convertkit-graphql.md
     type: GraphQL

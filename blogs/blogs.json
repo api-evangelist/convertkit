@@ -2,13 +2,13 @@
   "repo": "convertkit",
   "feeds": [
     {
-      "source": "https://www.linkedin.com/company/kit.com",
-      "feed_url": "https://www.linkedin.com/company/kit.com",
-      "title": "",
+      "source": "https://kit.com/resources",
+      "feed_url": "",
       "saved": 0,
-      "method": "none"
+      "method": "agent-scrape"
     }
   ],
   "post_count": 0,
-  "fetched": "2026-06-14T20:42:17Z"
+  "fetched": "2026-06-27T12:33:56Z",
+  "agent_pulled": "2026-06-27"
 }
