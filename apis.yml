@@ -49,6 +49,14 @@ apis:
   - url: graphql/convertkit-graphql.md
     type: GraphQL
 common:
+- type: TrustCenter
+  url: security/convertkit-trust-center.yml
+- type: VulnerabilityDisclosure
+  url: security/convertkit-vulnerability-disclosure.yml
+- type: DomainSecurity
+  url: security/convertkit-domain-security.yml
+- type: Authentication
+  url: authentication/convertkit-authentication.yml
 - type: OAuthScopes
   url: scopes/convertkit-scopes.yml
 - type: Website
