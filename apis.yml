@@ -49,6 +49,8 @@ apis:
   - url: graphql/convertkit-graphql.md
     type: GraphQL
 common:
+- type: OAuthScopes
+  url: scopes/convertkit-scopes.yml
 - type: Website
   url: https://kit.com
 - type: Documentation

@@ -1,0 +1,24 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/openapi.json
+schemes:
+- name: OAuth2
+  source: openapi/openapi.json
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://api.kit.com/v4/oauth/authorize
+    tokenUrl: https://api.kit.com/v4/oauth/token
+  description: Authenticate API requests via an OAuth token
+scopes:
+- scope: read
+  description: Read access to Kit API v4
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/openapi.json
+- scope: write
+  description: Write access to Kit API v4
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/openapi.json
