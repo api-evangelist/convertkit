@@ -49,6 +49,8 @@ apis:
   - url: graphql/convertkit-graphql.md
     type: GraphQL
 common:
+- type: AgenticAccess
+  url: agentic-access/convertkit-agentic-access.yml
 - type: TrustCenter
   url: security/convertkit-trust-center.yml
 - type: VulnerabilityDisclosure
