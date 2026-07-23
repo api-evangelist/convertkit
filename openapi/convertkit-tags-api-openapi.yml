@@ -1,0 +1,1453 @@
+openapi: 3.0.3
+info:
+  title: Kit Accounts Tags API
+  version: '4.0'
+servers:
+- url: https://api.kit.com
+tags:
+- name: Tags
+paths:
+  /v4/bulk/tags:
+    post:
+      summary: Bulk create tags
+      description: See "[Bulk & async processing](#bulk-amp-async-processing)" for more information.
+      tags:
+      - Tags
+      security:
+      - OAuth2: []
+      parameters: []
+      responses:
+        '200':
+          description: Creates or returns existing tags synchronously when 100 or less tags are requested
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  tags:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        name:
+                          type: string
+                        created_at:
+                          type: string
+                      required:
+                      - id
+                      - name
+                      - created_at
+                  failures:
+                    type: array
+                    items: {}
+                required:
+                - tags
+                - failures
+              example:
+                tags:
+                - id: 68
+                  name: Existing Tag
+                  created_at: '2023-02-17T11:43:55Z'
+                - id: 69
+                  name: Attended Event
+                  created_at: '2023-02-17T11:43:55Z'
+                - id: 70
+                  name: Newsletter
+                  created_at: '2023-02-17T11:43:55Z'
+                - id: 71
+                  name: Re-engage
+                  created_at: '2023-02-17T11:43:55Z'
+                failures: []
+        '202':
+          description: Creates or returns existing tags asynchronously when more than 100 tags are requested
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+              example: {}
+        '401':
+          description: Returns a 401 if the token and/or account cannot be authenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - errors
+              example:
+                errors:
+                - The access token is invalid
+        '413':
+          description: Returns a 413 when the size of the request would exceed the account's data limit for enqueued bulk requests
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - errors
+              example:
+                errors:
+                - This request exceeds your queued bulk requests limit. Please wait while we process your existing requests and try again later.
+        '422':
+          description: Returns a 422 when `tags` is empty or not an array
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - errors
+              example:
+                errors:
+                - No tags included for processing
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                tags:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                    required:
+                    - name
+                callback_url:
+                  type: string
+                  nullable: true
+              required:
+              - tags
+            example:
+              tags:
+              - name: Test Tag 0
+              - name: Test Tag 1
+              - name: Test Tag 2
+              - name: Test Tag 3
+              callback_url: null
+  /v4/bulk/tags/subscribers:
+    delete:
+      summary: Bulk remove tags from subscribers
+      description: See "[Bulk & async processing](#bulk-amp-async-processing)" for more information.
+      tags:
+      - Tags
+      security:
+      - OAuth2: []
+      parameters: []
+      responses:
+        '200':
+          description: Deletes the taggings synchronously when 100 or less tags/subscribers are provided
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  failures:
+                    type: array
+                    items: {}
+                required:
+                - failures
+              example:
+                failures: []
+        '202':
+          description: Destroys taggings asynchronously when more than 100 tags/subscribers are provided
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+              example: {}
+        '401':
+          description: Returns a 401 if the token and/or account cannot be authenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - errors
+              example:
+                errors:
+                - The access token is invalid
+        '413':
+          description: Returns a 413 when the size of the request would exceed the account's data limit for enqueued bulk requests
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - errors
+              example:
+                errors:
+                - This request exceeds your queued bulk requests limit. Please wait while we process your existing requests and try again later.
+        '422':
+          description: Returns a 422 when `taggings` is empty or not an array
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - errors
+              example:
+                errors:
+                - No taggings included for processing
+    post:
+      summary: Bulk tag subscribers
+      description: The subscribers being tagged must already exist. Subscribers can be created in bulk using the "[Bulk create subscriber](#bulk-create-subscribers)" endpoint.<br/><br/>See "[Bulk & async processing](#bulk-amp-async-processing)" for more information.
+      tags:
+      - Tags
+      security:
+      - OAuth2: []
+      parameters: []
+      responses:
+        '200':
+          description: Creates the taggings synchronously when 100 or less tags/subscribers are requested
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  subscribers:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        first_name:
+                          type: string
+                        email_address:
+                          type: string
+                        created_at:
+                          type: string
+                        tagged_at:
+                          type: string
+                      required:
+                      - id
+                      - first_name
+                      - email_address
+                      - created_at
+                      - tagged_at
+                  failures:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        errors:
+                          type: array
+                          items:
+                            type: string
+                        tagging:
+                          type: object
+                          properties:
+                            tag_id:
+                              type: integer
+                              nullable: true
+                            subscriber_id:
+                              nullable: true
+                              type: integer
+                          required:
+                          - tag_id
+                          - subscriber_id
+                      required:
+                      - errors
+                      - tagging
+                required:
+                - subscribers
+                - failures
+              example:
+                subscribers:
+                - id: 649
+                  first_name: Sub
+                  email_address: sub@example.com
+                  created_at: '2023-02-17T11:43:55Z'
+                  tagged_at: '2023-02-17T11:43:55Z'
+                - id: 649
+                  first_name: Sub
+                  email_address: sub@example.com
+                  created_at: '2023-02-17T11:43:55Z'
+                  tagged_at: '2023-02-17T11:43:55Z'
+                failures:
+                - errors:
+                  - Subscriber does not exist
+                  tagging:
+                    tag_id: 83
+                    subscriber_id: null
+                - errors:
+                  - Tag does not exist
+                  tagging:
+                    tag_id: null
+                    subscriber_id: 649
+        '202':
+          description: Creates or updates taggings asynchronously when more than 100 tags/subscribers are requested
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+              example: {}
+        '401':
+          description: Returns a 401 if the token and/or account cannot be authenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - errors
+              example:
+                errors:
+                - The access token is invalid
+        '413':
+          description: Returns a 413 when the size of the request would exceed the account's data limit for enqueued bulk requests
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - errors
+              example:
+                errors:
+                - This request exceeds your queued bulk requests limit. Please wait while we process your existing requests and try again later.
+        '422':
+          description: Returns a 422 when `taggings` is empty or not an array
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - errors
+              example:
+                errors:
+                - No taggings included for processing
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                taggings:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      tag_id:
+                        type: integer
+                        nullable: true
+                      subscriber_id:
+                        type: integer
+                        nullable: true
+                    required:
+                    - tag_id
+                    - subscriber_id
+                callback_url:
+                  type: string
+                  nullable: true
+              required:
+              - taggings
+            example:
+              taggings:
+              - tag_id: 0
+                subscriber_id: 0
+              - tag_id: 1
+                subscriber_id: 1
+              - tag_id: 2
+                subscriber_id: 2
+              - tag_id: 3
+                subscriber_id: 3
+              callback_url: null
+  /v4/tags:
+    get:
+      summary: List tags
+      tags:
+      - Tags
+      security:
+      - API Key: []
+      - OAuth2: []
+      parameters:
+      - name: after
+        description: To fetch next page of results, use `?after=<end_cursor>`
+        in: query
+        required: false
+        schema:
+          nullable: true
+      - name: before
+        description: To fetch previous page of results, use `?before=<start_cursor>`
+        in: query
+        required: false
+        schema:
+          nullable: true
+      - name: include_total_count
+        description: Set to `true` to include the `total_count` in the response. This option can cause slow responses; if paging through results, request it only on the first page and reuse the value for subsequent pages.
+        in: query
+        required: false
+        schema:
+          type: boolean
+        example: false
+      - name: per_page
+        description: Number of results per page. Default 500, maximum 1000.
+        in: query
+        required: false
+        schema:
+          nullable: true
+      responses:
+        '200':
+          description: Returns a paginated list of all tags for your account
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  tags:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        name:
+                          type: string
+                        created_at:
+                          type: string
+                        subscriber_count:
+                          type: integer
+                      required:
+                      - id
+                      - name
+                      - created_at
+                  pagination:
+                    type: object
+                    properties:
+                      has_previous_page:
+                        type: boolean
+                      has_next_page:
+                        type: boolean
+                      start_cursor:
+                        type: string
+                      end_cursor:
+                        type: string
+                      per_page:
+                        type: integer
+                    required:
+                    - has_previous_page
+                    - has_next_page
+                    - start_cursor
+                    - end_cursor
+                    - per_page
+                required:
+                - tags
+                - pagination
+              example:
+                tags:
+                - id: 11
+                  name: Tag B
+                  created_at: '2023-02-17T11:43:55Z'
+                  subscriber_count: 0
+                - id: 10
+                  name: Tag A
+                  created_at: '2023-02-17T11:43:55Z'
+                  subscriber_count: 0
+                pagination:
+                  has_previous_page: false
+                  has_next_page: false
+                  start_cursor: WzExXQ==
+                  end_cursor: WzEwXQ==
+                  per_page: 500
+        '401':
+          description: Returns a 401 if the token and/or account cannot be authenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - errors
+              example:
+                errors:
+                - The access token is invalid
+      x-mcp:
+        enabled: true
+    post:
+      summary: Create a tag
+      tags:
+      - Tags
+      security:
+      - API Key: []
+      - OAuth2: []
+      parameters: []
+      responses:
+        '200':
+          description: Returns the tag if it already exists
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  tag:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                      created_at:
+                        type: string
+                    required:
+                    - id
+                    - name
+                    - created_at
+                required:
+                - tag
+              example:
+                tag:
+                  id: 20
+                  name: Completed
+                  created_at: '2023-02-17T11:43:55Z'
+        '201':
+          description: Creates the tag
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  tag:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                      created_at:
+                        type: string
+                    required:
+                    - id
+                    - name
+                    - created_at
+                required:
+                - tag
+              example:
+                tag:
+                  id: 19
+                  name: Completed
+                  created_at: '2023-02-17T11:43:55Z'
+        '401':
+          description: Returns a 401 if the token and/or account cannot be authenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - errors
+              example:
+                errors:
+                - The access token is invalid
+        '422':
+          description: Returns a 422 if a name is not provided
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - errors
+              example:
+                errors:
+                - Name can't be blank
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+              required:
+              - name
+            example:
+              name: Completed
+      x-mcp:
+        enabled: true
+  /v4/tags/{id}:
+    put:
+      summary: Update tag name
+      tags:
+      - Tags
+      security:
+      - API Key: []
+      - OAuth2: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+        example: 40
+      responses:
+        '200':
+          description: Updates the tag name
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  tag:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                      created_at:
+                        type: string
+                    required:
+                    - id
+                    - name
+                    - created_at
+                required:
+                - tag
+              example:
+                tag:
+                  id: 38
+                  name: signed up
+                  created_at: '2023-02-17T11:43:55Z'
+        '401':
+          description: Returns a 401 if the token and/or account cannot be authenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - errors
+              example:
+                errors:
+                - The access token is invalid
+        '404':
+          description: Returns a 404 when the provided id does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - errors
+              example:
+                errors:
+                - Not Found
+        '422':
+          description: Returns a 422 with an error message when name is invalid
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - errors
+              example:
+                errors:
+                - Name can't be blank
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+              required:
+              - name
+            example:
+              name: signed up
+      x-mcp:
+        enabled: true
+  /v4/tags/{tag_id}/subscribers:
+    delete:
+      summary: Remove tag from subscriber by email address
+      tags:
+      - Tags
+      security:
+      - API Key: []
+      - OAuth2: []
+      parameters:
+      - name: tag_id
+        in: path
+        required: true
+        schema:
+          type: integer
+        example: 250
+      responses:
+        '204':
+          description: Removes the tag from the subscriber
+        '401':
+          description: Returns a 401 if the token and/or account cannot be authenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - errors
+              example:
+                errors:
+                - The access token is invalid
+        '404':
+          description: Returns a 404 when the provided id does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - errors
+              example:
+                errors:
+                - Not Found
+        '422':
+          description: Returns a 422 with an error message when missing email address
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - errors
+              example:
+                errors:
+                - Either subscriber id or email address is required to remove tag from subscriber
+      x-mcp:
+        enabled: true
+    get:
+      summary: List subscribers for a tag
+      tags:
+      - Tags
+      security:
+      - API Key: []
+      - OAuth2: []
+      parameters:
+      - name: after
+        description: To fetch next page of results, use `?after=<end_cursor>`
+        in: query
+        required: false
+        schema:
+          nullable: true
+      - name: before
+        description: To fetch previous page of results, use `?before=<start_cursor>`
+        in: query
+        required: false
+        schema:
+          nullable: true
+      - name: created_after
+        description: Filter subscribers who have been created after this date (format yyyy-mm-dd)
+        in: query
+        required: false
+        schema:
+          nullable: true
+          type: string
+        example: '2023-01-17T11:43:55Z'
+      - name: created_before
+        description: Filter subscribers who have been created before this date (format yyyy-mm-dd)
+        in: query
+        required: false
+        schema:
+          nullable: true
+          type: string
+        example: '2023-02-18T11:43:55Z'
+      - name: include_total_count
+        description: Set to `true` to include the `total_count` in the response. This option can cause slow responses; if paging through results, request it only on the first page and reuse the value for subsequent pages.
+        in: query
+        required: false
+        schema:
+          type: boolean
+        example: false
+      - name: per_page
+        description: Number of results per page. Default 500, maximum 1000.
+        in: query
+        required: false
+        schema:
+          nullable: true
+      - name: slim
+        in: query
+        required: false
+        schema:
+          type: boolean
+        example: false
+        description: When `true`, omits expensive optional fields from the response. Produces a faster, smaller response — useful when extra fields are not needed.
+      - name: status
+        description: Filter subscribers who have this status (`active`, `inactive`, `bounced`, `complained`, `cancelled` or `all`). Defaults to `active`.
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - active
+          - inactive
+          - bounced
+          - complained
+          - cancelled
+          - all
+        example: all
+      - name: tag_id
+        in: path
+        required: true
+        schema:
+          type: integer
+        example: 141
+      - name: tagged_after
+        description: Filter subscribers who have been tagged after this date (format yyyy-mm-dd)
+        in: query
+        required: false
+        schema:
+          nullable: true
+          type: string
+        example: '2023-02-14T11:43:55Z'
+      - name: tagged_before
+        description: Filter subscribers who have been tagged before this date (format yyyy-mm-dd)
+        in: query
+        required: false
+        schema:
+          nullable: true
+          type: string
+        example: '2023-02-18T11:43:55Z'
+      responses:
+        '200':
+          description: Returns a paginated list of subscribers for the specified tag
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  subscribers:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        first_name:
+                          type: string
+                          nullable: true
+                        email_address:
+                          type: string
+                        state:
+                          type: string
+                          enum:
+                          - active
+                          - cancelled
+                          - bounced
+                          - complained
+                          - inactive
+                        created_at:
+                          type: string
+                        tagged_at:
+                          type: string
+                        fields:
+                          type: object
+                          properties:
+                            category:
+                              type: string
+                              nullable: true
+                          required:
+                          - category
+                      required:
+                      - id
+                      - first_name
+                      - email_address
+                      - state
+                      - created_at
+                      - tagged_at
+                      - fields
+                  pagination:
+                    type: object
+                    properties:
+                      has_previous_page:
+                        type: boolean
+                      has_next_page:
+                        type: boolean
+                      start_cursor:
+                        type: string
+                      end_cursor:
+                        type: string
+                      per_page:
+                        type: integer
+                    required:
+                    - has_previous_page
+                    - has_next_page
+                    - start_cursor
+                    - end_cursor
+                    - per_page
+                required:
+                - subscribers
+                - pagination
+              example:
+                subscribers:
+                - id: 1134
+                  first_name: null
+                  email_address: subscriber632@kit.dev
+                  state: active
+                  created_at: '2023-02-17T11:43:55Z'
+                  tagged_at: '2023-02-17T11:43:55Z'
+                  fields:
+                    category: One
+                - id: 1133
+                  first_name: null
+                  email_address: subscriber631@kit.dev
+                  state: active
+                  created_at: '2023-02-17T11:43:55Z'
+                  tagged_at: '2023-02-17T11:43:55Z'
+                  fields:
+                    category: null
+                - id: 1132
+                  first_name: null
+                  email_address: subscriber630@kit.dev
+                  state: active
+                  created_at: '2023-02-17T11:43:55Z'
+                  tagged_at: '2023-02-17T11:43:55Z'
+                  fields:
+                    category: null
+                pagination:
+                  has_previous_page: false
+                  has_next_page: false
+                  start_cursor: WyIyMDIzLTAyLTE3VDExOjQzOjU1LjAwMFoiLDE2XQ==
+                  end_cursor: WyIyMDIzLTAyLTE3VDExOjQzOjU1LjAwMFoiLDE0XQ==
+                  per_page: 500
+        '401':
+          description: Returns a 401 if the token and/or account cannot be authenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - errors
+              example:
+                errors:
+                - The access token is invalid
+        '404':
+          description: Returns a 404 when the provided id does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - errors
+              example:
+                errors:
+                - Not Found
+      x-mcp:
+        enabled: true
+    post:
+      summary: Tag a subscriber by email address
+      description: The subscriber being tagged must already exist. Subscribers can be created using the "[Create a subscriber](#create-a-subscriber)" endpoint.
+      tags:
+      - Tags
+      security:
+      - API Key: []
+      - OAuth2: []
+      parameters:
+      - name: tag_id
+        in: path
+        required: true
+        schema:
+          type: integer
+        example: 207
+      responses:
+        '200':
+          description: Returns a 200 when the subscriber already has the tag
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  subscriber:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      first_name:
+                        type: string
+                        nullable: true
+                      email_address:
+                        type: string
+                      state:
+                        type: string
+                        enum:
+                        - active
+                        - cancelled
+                        - bounced
+                        - complained
+                        - inactive
+                      created_at:
+                        type: string
+                      tagged_at:
+                        type: string
+                      fields:
+                        type: object
+                        properties: {}
+                    required:
+                    - id
+                    - first_name
+                    - email_address
+                    - state
+                    - created_at
+                    - tagged_at
+                    - fields
+                required:
+                - subscriber
+              example:
+                subscriber:
+                  id: 1265
+                  first_name: Alice
+                  email_address: alice@convertkit.dev
+                  state: active
+                  created_at: '2023-02-17T11:43:55Z'
+                  tagged_at: '2023-02-17T11:43:55Z'
+                  fields: {}
+        '201':
+          description: Tags the subscriber
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  subscriber:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      first_name:
+                        type: string
+                        nullable: true
+                      email_address:
+                        type: string
+                      state:
+                        type: string
+                        enum:
+                        - active
+                        - cancelled
+                        - bounced
+                        - complained
+                        - inactive
+                      created_at:
+                        type: string
+                      tagged_at:
+                        type: string
+                      fields:
+                        type: object
+                        properties: {}
+                    required:
+                    - id
+                    - first_name
+                    - email_address
+                    - state
+                    - created_at
+                    - tagged_at
+                    - fields
+                required:
+                - subscriber
+              example:
+                subscriber:
+                  id: 1266
+                  first_name: Alice
+                  email_address: alice@convertkit.dev
+                  state: active
+                  created_at: '2023-02-17T11:43:55Z'
+                  tagged_at: '2023-02-17T11:43:55Z'
+                  fields: {}
+        '401':
+          description: Returns a 401 if the token and/or account cannot be authenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - errors
+              example:
+                errors:
+                - The access token is invalid
+        '404':
+          description: Returns a 404 when the provided id does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - errors
+              example:
+                errors:
+                - Not Found
+        '422':
+          description: Returns a 422 with an error message when missing email address
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - errors
+              example:
+                errors:
+                - Either subscriber id or email address is required to tag subscriber
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email_address:
+                  type: string
+              required:
+              - email_address
+            example:
+              email_address: alice@convertkit.dev
+      x-mcp:
+        enabled: true
+  /v4/tags/{tag_id}/subscribers/{id}:
+    delete:
+      summary: Remove tag from subscriber
+      tags:
+      - Tags
+      security:
+      - API Key: []
+      - OAuth2: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+        example: 1290
+      - name: tag_id
+        in: path
+        required: true
+        schema:
+          type: integer
+        example: 228
+      responses:
+        '204':
+          description: Removes the tag from the subscriber
+        '401':
+          description: Returns a 401 if the token and/or account cannot be authenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - errors
+              example:
+                errors:
+                - The access token is invalid
+        '404':
+          description: Returns a 404 when the provided id does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - errors
+              example:
+                errors:
+                - Not Found
+      x-mcp:
+        enabled: true
+    post:
+      summary: Tag a subscriber
+      description: The subscriber being tagged must already exist. Subscribers can be created using the "[Create a subscriber](#create-a-subscriber)" endpoint.
+      tags:
+      - Tags
+      security:
+      - API Key: []
+      - OAuth2: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+        example: 1247
+      - name: tag_id
+        in: path
+        required: true
+        schema:
+          type: integer
+        example: 184
+      responses:
+        '200':
+          description: Returns a 200 when the subscriber already has the tag
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  subscriber:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      first_name:
+                        type: string
+                        nullable: true
+                      email_address:
+                        type: string
+                      state:
+                        type: string
+                        enum:
+                        - active
+                        - cancelled
+                        - bounced
+                        - complained
+                        - inactive
+                      created_at:
+                        type: string
+                      tagged_at:
+                        type: string
+                      fields:
+                        type: object
+                        properties: {}
+                    required:
+                    - id
+                    - first_name
+                    - email_address
+                    - state
+                    - created_at
+                    - tagged_at
+                    - fields
+                required:
+                - subscriber
+              example:
+                subscriber:
+                  id: 1245
+                  first_name: Alice
+                  email_address: alice@convertkit.dev
+                  state: active
+                  created_at: '2023-02-17T11:43:55Z'
+                  tagged_at: '2023-02-17T11:43:55Z'
+                  fields: {}
+        '201':
+          description: Tags the subscriber
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  subscriber:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      first_name:
+                        type: string
+                        nullable: true
+                      email_address:
+                        type: string
+                      state:
+                        type: string
+                        enum:
+                        - active
+                        - cancelled
+                        - bounced
+                        - complained
+                        - inactive
+                      created_at:
+                        type: string
+                      tagged_at:
+                        type: string
+                      fields:
+                        type: object
+                        properties: {}
+                    required:
+                    - id
+                    - first_name
+                    - email_address
+                    - state
+                    - created_at
+                    - tagged_at
+                    - fields
+                required:
+                - subscriber
+              example:
+                subscriber:
+                  id: 1246
+                  first_name: Alice
+                  email_address: alice@convertkit.dev
+                  state: active
+                  created_at: '2023-02-17T11:43:55Z'
+                  tagged_at: '2023-02-17T11:43:55Z'
+                  fields: {}
+        '401':
+          description: Returns a 401 if the token and/or account cannot be authenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - errors
+              example:
+                errors:
+                - The access token is invalid
+        '404':
+          description: Returns a 404 when the provided id does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - errors
+              example:
+                errors:
+                - Not Found
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+            example: {}
+      x-mcp:
+        enabled: true
+components:
+  securitySchemes:
+    API Key:
+      description: Authenticate API requests via an API Key
+      type: apiKey
+      in: header
+      name: X-Kit-Api-Key
+    OAuth2:
+      description: Authenticate API requests via an OAuth token
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://api.kit.com/v4/oauth/authorize
+          tokenUrl: https://api.kit.com/v4/oauth/token
+          refreshUrl: https://api.kit.com/v4/oauth/token
+          scopes:
+            read: Read access to Kit API v4
+            write: Write access to Kit API v4
+x-mint:
+  mcp:
+    enabled: true

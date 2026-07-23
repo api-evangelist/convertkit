@@ -1,0 +1,1446 @@
+openapi: 3.0.3
+info:
+  title: Kit Accounts Sequences API
+  version: '4.0'
+servers:
+- url: https://api.kit.com
+tags:
+- name: Sequences
+paths:
+  /v4/sequences:
+    get:
+      summary: List sequences
+      description: 'Returns every sequence on the account. A sequence is a self-contained set of automated emails — subscribers join, then receive each email in order, governed by per-email `delay_value` / `delay_unit` and the sequence''s overall `send_days`, `send_hour`, and `time_zone` schedule.
+
+
+        Each entry carries the schedule defaults plus three behavioural toggles: `active` (whether the sequence is delivering), `repeat` (whether subscribers can re-enter), and `hold` (whether subscribers stay active after receiving every published email — an evergreen pattern). See [Create a sequence](/api-reference/sequences/create-a-sequence) for the full sequence model.
+
+
+        Once you have a sequence''s `id`, [List sequence emails](/api-reference/sequence-emails/list-sequence-emails) returns the individual emails inside it.
+
+
+        For end-user context on how creators build sequences, see the help articles on [creating and sending a sequence](https://help.kit.com/en/articles/2502629-creating-and-sending-a-sequence-in-kit) and [evergreen content](https://help.kit.com/en/articles/2502575-what-is-evergreen-content).'
+      tags:
+      - Sequences
+      security:
+      - API Key: []
+      - OAuth2: []
+      parameters:
+      - name: after
+        description: To fetch next page of results, use `?after=<end_cursor>`
+        in: query
+        required: false
+        schema:
+          nullable: true
+      - name: before
+        description: To fetch previous page of results, use `?before=<start_cursor>`
+        in: query
+        required: false
+        schema:
+          nullable: true
+      - name: include_total_count
+        description: Set to `true` to include the `total_count` in the response. This option can cause slow responses; if paging through results, request it only on the first page and reuse the value for subsequent pages.
+        in: query
+        required: false
+        schema:
+          type: boolean
+        example: false
+      - name: per_page
+        description: Number of results per page. Default 500, maximum 1000.
+        in: query
+        required: false
+        schema:
+          nullable: true
+      responses:
+        '200':
+          description: Returns a paginated list of all sequences for your account
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  sequences:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        name:
+                          type: string
+                        hold:
+                          type: boolean
+                        repeat:
+                          type: boolean
+                        created_at:
+                          type: string
+                        updated_at:
+                          type: string
+                        email_address:
+                          nullable: true
+                        email_template_id:
+                          nullable: true
+                        send_days:
+                          type: array
+                          items:
+                            type: string
+                        send_hour:
+                          type: integer
+                        time_zone:
+                          type: string
+                        active:
+                          type: boolean
+                        exclude_subscriber_sources:
+                          type: array
+                          items: {}
+                        email_count:
+                          type: integer
+                        subscriber_count:
+                          type: integer
+                      required:
+                      - id
+                      - name
+                      - hold
+                      - repeat
+                      - created_at
+                  pagination:
+                    type: object
+                    properties:
+                      has_previous_page:
+                        type: boolean
+                      has_next_page:
+                        type: boolean
+                      start_cursor:
+                        type: string
+                      end_cursor:
+                        type: string
+                      per_page:
+                        type: integer
+                    required:
+                    - has_previous_page
+                    - has_next_page
+                    - start_cursor
+                    - end_cursor
+                    - per_page
+                required:
+                - sequences
+                - pagination
+              example:
+                sequences:
+                - id: 1
+                  name: Evergreen sequence
+                  hold: false
+                  repeat: false
+                  created_at: '2023-02-17T11:43:55Z'
+                  updated_at: '2023-02-17T11:43:55Z'
+                  email_address: null
+                  email_template_id: null
+                  email_count: 0
+                  subscriber_count: 0
+                  send_days:
+                  - monday
+                  - tuesday
+                  - wednesday
+                  - thursday
+                  - friday
+                  - saturday
+                  - sunday
+                  send_hour: 11
+                  time_zone: America/New_York
+                  active: true
+                  exclude_subscriber_sources: []
+                pagination:
+                  has_previous_page: false
+                  has_next_page: false
+                  start_cursor: WzFd
+                  end_cursor: WzFd
+                  per_page: 500
+        '401':
+          description: Returns a 401 if the token and/or account cannot be authenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - errors
+              example:
+                errors:
+                - The access token is invalid
+      x-mcp:
+        enabled: true
+    post:
+      summary: Create a sequence
+      description: 'Creates an empty sequence — the container that holds sequence emails. After creating the shell, use [Create a sequence email](/api-reference/sequence-emails/create-a-sequence-email) to populate it.
+
+
+        Only `name` is required. Every other field has a sensible default: Kit fills in the account''s default sending address, a daily send schedule, and the account time zone — and any of these can be tuned later via [Update a sequence](/api-reference/sequences/update-a-sequence).
+
+
+        Two behavioural toggles worth flagging up front. `repeat` controls whether a subscriber can re-enter the sequence: by default a subscriber receives the emails once and is marked complete, but with `repeat: true`, re-adding the same subscriber via a Visual Automation, Rule, Bulk Action, or Import resets their position to the start. Filters and exclusions still apply across restarts. `hold` (evergreen) keeps subscribers active in the sequence after they''ve received every published email — useful when you plan to add more emails later. Without `hold`, subscribers transition to Completed and won''t pick up future additions.
+
+
+        `exclude_subscriber_sources` lets you exclude subscribers acquired via specific tags, sequences, forms, or segments — they''ll skip this sequence entirely.
+
+
+        For end-user context, see the help articles on [creating and sending a sequence](https://help.kit.com/en/articles/2502629-creating-and-sending-a-sequence-in-kit), [restarting a sequence](https://help.kit.com/en/articles/5022528-restart-a-sequence), and [holding subscribers in evergreen sequences](https://help.kit.com/en/articles/5192801-how-to-hold-subscribers-in-evergreen-sequences).'
+      tags:
+      - Sequences
+      security:
+      - API Key: []
+      - OAuth2: []
+      parameters: []
+      responses:
+        '201':
+          description: Creates a new sequence
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  sequence:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                      hold:
+                        type: boolean
+                      repeat:
+                        type: boolean
+                      created_at:
+                        type: string
+                      updated_at:
+                        type: string
+                      email_address:
+                        type: string
+                      email_template_id:
+                        type: integer
+                      send_days:
+                        type: array
+                        items:
+                          type: string
+                      send_hour:
+                        type: integer
+                      time_zone:
+                        type: string
+                      active:
+                        type: boolean
+                      exclude_subscriber_sources:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            type:
+                              type: string
+                            ids:
+                              type: array
+                              items:
+                                type: integer
+                          required:
+                          - type
+                          - ids
+                      email_count:
+                        type: integer
+                      subscriber_count:
+                        type: integer
+                    required:
+                    - id
+                    - name
+                    - hold
+                    - repeat
+                    - created_at
+                    - updated_at
+                    - email_address
+                    - email_template_id
+                    - send_days
+                    - send_hour
+                    - time_zone
+                    - active
+                    - exclude_subscriber_sources
+                required:
+                - sequence
+              example:
+                sequence:
+                  id: 30
+                  name: Full Series
+                  hold: true
+                  repeat: true
+                  created_at: '2026-06-11T16:15:56Z'
+                  updated_at: '2026-06-11T16:15:56Z'
+                  email_address: joe1010@ck.lol
+                  email_template_id: 38
+                  send_days:
+                  - monday
+                  - wednesday
+                  - friday
+                  send_hour: 9
+                  time_zone: America/Los_Angeles
+                  active: true
+                  exclude_subscriber_sources:
+                  - type: sequence
+                    ids:
+                    - 29
+                  - type: tag
+                    ids:
+                    - 2
+                  email_count: 0
+                  subscriber_count: 0
+        '401':
+          description: Returns a 401 if the token and/or account cannot be authenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - errors
+              example:
+                errors:
+                - The access token is invalid
+        '403':
+          description: Returns a 403 with an error message if the current account is unauthorized to create a sequence
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - errors
+              example:
+                errors:
+                - You do not have sufficient permissions to access this resource. Please contact support.
+        '422':
+          description: Returns a 422 with an error message when one or more of the parameters were invalid
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - errors
+              example:
+                errors:
+                - send_hour must be an integer between 0 and 23
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The name of the sequence.
+                email_address:
+                  type: string
+                  description: The sending email address to use. Uses the account's sending email address if not provided.
+                email_template_id:
+                  type: integer
+                  description: Id of the email template to use.
+                send_days:
+                  type: array
+                  items:
+                    type: string
+                  description: 'The days of the week to send the sequence on. Must be one of: `monday`, `tuesday`, `wednesday`, `thursday`, `friday`, `saturday`, `sunday`.'
+                send_hour:
+                  type: integer
+                  description: The hour of the day to send the sequence at. Must be an integer between 0 and 23.
+                time_zone:
+                  type: string
+                  description: The timezone to use for the sequence. Must be a valid IANA timezone string.
+                active:
+                  type: boolean
+                  description: '`true` to activate the sequence, `false` to deactivate it.'
+                repeat:
+                  type: boolean
+                  description: When `true`, subscribers can restart the sequence multiple times.
+                hold:
+                  type: boolean
+                  description: When `true`, subscribers added via Visual Automations stay in the sequence after receiving the last email.
+                exclude_subscriber_sources:
+                  type: array
+                  description: The subscriber sources to exclude from the sequence.
+                  items:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                        description: 'The type of subscriber source to exclude. Must be one of: `tag`, `sequence`, `form`, `segment`.'
+                      ids:
+                        type: array
+                        items:
+                          type: integer
+                          description: The ids of the subscriber sources to exclude.
+                    required:
+                    - type
+                    - ids
+            example:
+              name: Full Series
+              email_address: joe1010@ck.lol
+              email_template_id: 38
+              send_days:
+              - monday
+              - wednesday
+              - friday
+              send_hour: 9
+              time_zone: America/Los_Angeles
+              active: true
+              repeat: true
+              hold: true
+              exclude_subscriber_sources:
+              - type: tag
+                ids:
+                - 2
+              - type: sequence
+                ids:
+                - 29
+      x-mcp:
+        enabled: true
+  /v4/sequences/{id}:
+    delete:
+      summary: Delete a sequence
+      description: 'Soft-deletes a sequence. The sequence is removed from active delivery immediately, with cleanup of associated state happening in the background.
+
+
+        **Warning:** deleting a sequence with active subscribers stops deliveries to those subscribers — they will not receive remaining emails, and any Visual Automations referencing the sequence will need to be updated. Confirm the sequence is not in active use before deleting.
+
+
+        If you want to pause rather than delete, use [Update a sequence](/api-reference/sequences/update-a-sequence) with `active: false` instead.'
+      tags:
+      - Sequences
+      security:
+      - API Key: []
+      - OAuth2: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+        example: 81
+      responses:
+        '204':
+          description: Deletes the sequence
+        '401':
+          description: Returns a 401 if the token and/or account cannot be authenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - errors
+              example:
+                errors:
+                - The access token is invalid
+        '404':
+          description: Returns a 404 when the provided id does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - errors
+              example:
+                errors:
+                - Not Found
+      x-mcp:
+        enabled: true
+    get:
+      summary: Get a sequence
+      description: 'Fetches a single sequence by `id`. Use this when you need the current schedule, the `active` / `repeat` / `hold` flags, the configured `email_address` and `email_template_id`, or `exclude_subscriber_sources` for a known sequence — for example, to confirm settings before adding subscribers or to render an editor.
+
+
+        For the individual emails inside the sequence, use [List sequence emails](/api-reference/sequence-emails/list-sequence-emails). For the sequence model and field semantics, see [Create a sequence](/api-reference/sequences/create-a-sequence).'
+      tags:
+      - Sequences
+      security:
+      - API Key: []
+      - OAuth2: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+        example: 23
+      responses:
+        '200':
+          description: Returns the sequence details
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  sequence:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                      hold:
+                        type: boolean
+                      repeat:
+                        type: boolean
+                      created_at:
+                        type: string
+                      updated_at:
+                        type: string
+                      email_address:
+                        nullable: true
+                      email_template_id:
+                        nullable: true
+                      send_days:
+                        type: array
+                        items:
+                          type: string
+                      send_hour:
+                        type: integer
+                      time_zone:
+                        type: string
+                      active:
+                        type: boolean
+                      exclude_subscriber_sources:
+                        type: array
+                        items: {}
+                      email_count:
+                        type: integer
+                      subscriber_count:
+                        type: integer
+                    required:
+                    - id
+                    - name
+                    - hold
+                    - repeat
+                    - created_at
+                    - updated_at
+                    - email_address
+                    - email_template_id
+                    - send_days
+                    - send_hour
+                    - time_zone
+                    - active
+                    - exclude_subscriber_sources
+                required:
+                - sequence
+              example:
+                sequence:
+                  id: 22
+                  name: Welcome sequence
+                  hold: false
+                  repeat: false
+                  created_at: '2023-02-17T11:43:55Z'
+                  updated_at: '2023-02-17T11:43:55Z'
+                  email_address: null
+                  email_template_id: null
+                  send_days:
+                  - monday
+                  - tuesday
+                  - wednesday
+                  - thursday
+                  - friday
+                  - saturday
+                  - sunday
+                  send_hour: 11
+                  time_zone: America/New_York
+                  active: true
+                  exclude_subscriber_sources: []
+                  email_count: 0
+                  subscriber_count: 0
+        '401':
+          description: Returns a 401 if the token and/or account cannot be authenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - errors
+              example:
+                errors:
+                - The access token is invalid
+        '404':
+          description: Returns a 404 when the provided id does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - errors
+              example:
+                errors:
+                - Not Found
+      x-mcp:
+        enabled: true
+    put:
+      summary: Update a sequence
+      description: 'Updates any sequence settings — `name`, `email_address`, schedule (`send_days`, `send_hour`, `time_zone`), `email_template_id`, `exclude_subscriber_sources`, or the `active` / `repeat` / `hold` flags. Only fields included in the request body change; everything else is preserved.
+
+
+        Some changes have user-visible side effects on subscribers already in the sequence:
+
+
+        **Note:** flipping `active` from `false` to `true` resumes delivery for queued subscribers. Flipping it back to `false` pauses the sequence — subscribers stay in their current position but no new emails are sent until it''s reactivated.
+
+
+        **Note:** changing the schedule (`send_days`, `send_hour`, or `time_zone`) only affects future sends. It does not retroactively reschedule emails already queued for delivery.
+
+
+        **Warning:** turning off `repeat` while subscribers are mid-sequence does not stop them from finishing — but they won''t be re-eligible to start over after completing.
+
+
+        See [Create a sequence](/api-reference/sequences/create-a-sequence) for the full sequence model and what each field controls.'
+      tags:
+      - Sequences
+      security:
+      - API Key: []
+      - OAuth2: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+        example: 60
+      responses:
+        '200':
+          description: Updates the sequence and returns its details
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  sequence:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                      hold:
+                        type: boolean
+                      repeat:
+                        type: boolean
+                      created_at:
+                        type: string
+                      updated_at:
+                        type: string
+                      email_address:
+                        type: string
+                      email_template_id:
+                        type: integer
+                      send_days:
+                        type: array
+                        items:
+                          type: string
+                      send_hour:
+                        type: integer
+                      time_zone:
+                        type: string
+                      active:
+                        type: boolean
+                      exclude_subscriber_sources:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            type:
+                              type: string
+                            ids:
+                              type: array
+                              items:
+                                type: integer
+                          required:
+                          - type
+                          - ids
+                      email_count:
+                        type: integer
+                      subscriber_count:
+                        type: integer
+                    required:
+                    - id
+                    - name
+                    - hold
+                    - repeat
+                    - created_at
+                    - updated_at
+                    - email_address
+                    - email_template_id
+                    - send_days
+                    - send_hour
+                    - time_zone
+                    - active
+                    - exclude_subscriber_sources
+                required:
+                - sequence
+              example:
+                sequence:
+                  id: 49
+                  name: New Name
+                  hold: true
+                  repeat: true
+                  created_at: '2026-06-11T16:16:00Z'
+                  updated_at: '2026-06-11T16:16:00Z'
+                  email_address: joe1040@ck.lol
+                  email_template_id: 40
+                  send_days:
+                  - tuesday
+                  - thursday
+                  send_hour: 14
+                  time_zone: America/Chicago
+                  active: false
+                  exclude_subscriber_sources:
+                  - type: sequence
+                    ids:
+                    - 48
+                  - type: tag
+                    ids:
+                    - 3
+                  email_count: 0
+                  subscriber_count: 0
+        '401':
+          description: Returns a 401 if the token and/or account cannot be authenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - errors
+              example:
+                errors:
+                - The access token is invalid
+        '404':
+          description: Returns a 404 when the provided id does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - errors
+              example:
+                errors:
+                - Not Found
+        '422':
+          description: Returns a 422 with an error message when one or more of the parameters were invalid
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - errors
+              example:
+                errors:
+                - name can't be blank
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The name of the sequence.
+                email_address:
+                  type: string
+                  description: The sending email address to use. Uses the account's sending email address if not provided.
+                email_template_id:
+                  type: integer
+                  description: Id of the email template to use.
+                send_days:
+                  type: array
+                  items:
+                    type: string
+                  description: 'The days of the week to send the sequence on. Must be one of: `monday`, `tuesday`, `wednesday`, `thursday`, `friday`, `saturday`, `sunday`.'
+                send_hour:
+                  type: integer
+                  description: The hour of the day to send the sequence at. Must be an integer between 0 and 23.
+                time_zone:
+                  type: string
+                  description: The timezone to use for the sequence. Must be a valid IANA timezone string.
+                active:
+                  type: boolean
+                  description: '`true` to activate the sequence, `false` to deactivate it.'
+                repeat:
+                  type: boolean
+                  description: When `true`, subscribers can restart the sequence multiple times.
+                hold:
+                  type: boolean
+                  description: When `true`, subscribers added via Visual Automations stay in the sequence after receiving the last email.
+                exclude_subscriber_sources:
+                  type: array
+                  description: The subscriber sources to exclude from the sequence.
+                  items:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                        description: 'The type of subscriber source to exclude. Must be one of: `tag`, `sequence`, `form`, `segment`.'
+                      ids:
+                        type: array
+                        items:
+                          type: integer
+                          description: The ids of the subscriber sources to exclude.
+                    required:
+                    - type
+                    - ids
+            example:
+              name: New Name
+              email_address: joe1040@ck.lol
+              email_template_id: 40
+              send_days:
+              - tuesday
+              - thursday
+              send_hour: 14
+              time_zone: America/Chicago
+              active: false
+              repeat: true
+              hold: true
+              exclude_subscriber_sources:
+              - type: tag
+                ids:
+                - 3
+              - type: sequence
+                ids:
+                - 48
+      x-mcp:
+        enabled: true
+  /v4/sequences/{sequence_id}/subscribers:
+    get:
+      summary: List subscribers for a sequence
+      tags:
+      - Sequences
+      security:
+      - API Key: []
+      - OAuth2: []
+      parameters:
+      - name: added_after
+        description: Filter subscribers who have been added to the form after this date (format yyyy-mm-dd)
+        in: query
+        required: false
+        schema:
+          nullable: true
+          type: string
+        example: '2023-02-14T11:43:55Z'
+      - name: added_before
+        description: Filter subscribers who have been added to the form before this date (format yyyy-mm-dd)
+        in: query
+        required: false
+        schema:
+          nullable: true
+          type: string
+        example: '2023-02-18T11:43:55Z'
+      - name: after
+        description: To fetch next page of results, use `?after=<end_cursor>`
+        in: query
+        required: false
+        schema:
+          nullable: true
+      - name: before
+        description: To fetch previous page of results, use `?before=<start_cursor>`
+        in: query
+        required: false
+        schema:
+          nullable: true
+      - name: created_after
+        description: Filter subscribers who have been created after this date (format yyyy-mm-dd)
+        in: query
+        required: false
+        schema:
+          nullable: true
+          type: string
+        example: '2023-01-17T11:43:55Z'
+      - name: created_before
+        description: Filter subscribers who have been created before this date (format yyyy-mm-dd)
+        in: query
+        required: false
+        schema:
+          nullable: true
+          type: string
+        example: '2023-02-18T11:43:55Z'
+      - name: include_total_count
+        description: Set to `true` to include the `total_count` in the response. This option can cause slow responses; if paging through results, request it only on the first page and reuse the value for subsequent pages.
+        in: query
+        required: false
+        schema:
+          type: boolean
+        example: false
+      - name: per_page
+        description: Number of results per page. Default 500, maximum 1000.
+        in: query
+        required: false
+        schema:
+          nullable: true
+      - name: sequence_id
+        in: path
+        required: true
+        schema:
+          type: integer
+        example: 255
+      - name: status
+        description: Filter subscribers who have this status (`active`, `inactive`, `bounced`, `complained`, `cancelled` or `all`). Defaults to `active`.
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - active
+          - inactive
+          - bounced
+          - complained
+          - cancelled
+          - all
+        example: all
+      responses:
+        '200':
+          description: Returns a paginated list of subscribers for the specified sequence
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  subscribers:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        first_name:
+                          type: string
+                          nullable: true
+                        email_address:
+                          type: string
+                        state:
+                          type: string
+                          enum:
+                          - active
+                          - cancelled
+                          - bounced
+                          - complained
+                          - inactive
+                        created_at:
+                          type: string
+                        added_at:
+                          type: string
+                        fields:
+                          type: object
+                          properties:
+                            category:
+                              type: string
+                              nullable: true
+                          required:
+                          - category
+                      required:
+                      - id
+                      - first_name
+                      - email_address
+                      - state
+                      - created_at
+                      - added_at
+                      - fields
+                  pagination:
+                    type: object
+                    properties:
+                      has_previous_page:
+                        type: boolean
+                      has_next_page:
+                        type: boolean
+                      start_cursor:
+                        type: string
+                      end_cursor:
+                        type: string
+                      per_page:
+                        type: integer
+                    required:
+                    - has_previous_page
+                    - has_next_page
+                    - start_cursor
+                    - end_cursor
+                    - per_page
+                required:
+                - subscribers
+                - pagination
+              example:
+                subscribers:
+                - id: 917
+                  first_name: null
+                  email_address: subscriber492@kit.dev
+                  state: active
+                  created_at: '2023-02-17T11:43:55Z'
+                  added_at: '2023-02-17T11:43:55Z'
+                  fields:
+                    category: One
+                - id: 916
+                  first_name: null
+                  email_address: subscriber491@kit.dev
+                  state: active
+                  created_at: '2023-02-17T11:43:55Z'
+                  added_at: '2023-02-17T11:43:55Z'
+                  fields:
+                    category: null
+                - id: 915
+                  first_name: null
+                  email_address: subscriber490@kit.dev
+                  state: active
+                  created_at: '2023-02-17T11:43:55Z'
+                  added_at: '2023-02-17T11:43:55Z'
+                  fields:
+                    category: null
+                pagination:
+                  has_previous_page: false
+                  has_next_page: false
+                  start_cursor: WzkxN10=
+                  end_cursor: WzkxNV0=
+                  per_page: 500
+        '401':
+          description: Returns a 401 if the token and/or account cannot be authenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - errors
+              example:
+                errors:
+                - The access token is invalid
+        '404':
+          description: Returns a 404 when the provided id does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - errors
+              example:
+                errors:
+                - Not Found
+      x-mcp:
+        enabled: true
+    post:
+      summary: Add subscriber to sequence by email address
+      description: The subscriber being added to the sequence must already exist. Subscribers can be created using the "[Create a subscriber](#create-a-subscriber)" endpoint.
+      tags:
+      - Sequences
+      security:
+      - API Key: []
+      - OAuth2: []
+      parameters:
+      - name: sequence_id
+        in: path
+        required: true
+        schema:
+          type: integer
+        example: 324
+      responses:
+        '200':
+          description: Returns a 200 when the subscriber has already been added to the sequence
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  subscriber:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      first_name:
+                        type: string
+                        nullable: true
+                      email_address:
+                        type: string
+                      state:
+                        type: string
+                        enum:
+                        - active
+                        - cancelled
+                        - bounced
+                        - complained
+                        - inactive
+                      created_at:
+                        type: string
+                      added_at:
+                        type: string
+                      fields:
+                        type: object
+                        properties: {}
+                    required:
+                    - id
+                    - first_name
+                    - email_address
+                    - state
+                    - created_at
+                    - added_at
+                    - fields
+                required:
+                - subscriber
+              example:
+                subscriber:
+                  id: 1028
+                  first_name: Alice
+                  email_address: alice@convertkit.dev
+                  state: active
+                  created_at: '2023-02-17T11:43:55Z'
+                  added_at: '2023-02-17T11:43:55Z'
+                  fields: {}
+        '201':
+          description: Adds the subscriber to the sequence
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  subscriber:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      first_name:
+                        type: string
+                        nullable: true
+                      email_address:
+                        type: string
+                      state:
+                        type: string
+                        enum:
+                        - active
+                        - cancelled
+                        - bounced
+                        - complained
+                        - inactive
+                      created_at:
+                        type: string
+                      added_at:
+                        type: string
+                      fields:
+                        type: object
+                        properties: {}
+                    required:
+                    - id
+                    - first_name
+                    - email_address
+                    - state
+                    - created_at
+                    - added_at
+                    - fields
+                required:
+                - subscriber
+              example:
+                subscriber:
+                  id: 1029
+                  first_name: Alice
+                  email_address: alice@convertkit.dev
+                  state: active
+                  created_at: '2023-02-17T11:43:55Z'
+                  added_at: '2023-02-17T11:43:55Z'
+                  fields: {}
+        '401':
+          description: Returns a 401 if the token and/or account cannot be authenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - errors
+              example:
+                errors:
+                - The access token is invalid
+        '404':
+          description: Returns a 404 when the provided id does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - errors
+              example:
+                errors:
+                - Not Found
+        '422':
+          description: Returns a 422 with an error message when a sequence is inactive
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - errors
+              example:
+                errors:
+                - Sequence is inactive
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email_address:
+                  type: string
+              required:
+              - email_address
+            example:
+              email_address: alice@convertkit.dev
+      x-mcp:
+        enabled: true
+  /v4/sequences/{sequence_id}/subscribers/{id}:
+    post:
+      summary: Add subscriber to sequence
+      description: The subscriber being added to the sequence must already exist. Subscribers can be created using the "[Create a subscriber](#create-a-subscriber)" endpoint.
+      tags:
+      - Sequences
+      security:
+      - API Key: []
+      - OAuth2: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+        example: 1006
+      - name: sequence_id
+        in: path
+        required: true
+        schema:
+          type: integer
+        example: 293
+      responses:
+        '200':
+          description: Returns a 200 when the subscriber has already been added to the sequence
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  subscriber:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      first_name:
+                        type: string
+                        nullable: true
+                      email_address:
+                        type: string
+                      state:
+                        type: string
+                        enum:
+                        - active
+                        - cancelled
+                        - bounced
+                        - complained
+                        - inactive
+                      created_at:
+                        type: string
+                      added_at:
+                        type: string
+                      fields:
+                        type: object
+                        properties: {}
+                    required:
+                    - id
+                    - first_name
+                    - email_address
+                    - state
+                    - created_at
+                    - added_at
+                    - fields
+                required:
+                - subscriber
+              example:
+                subscriber:
+                  id: 1002
+                  first_name: Alice
+                  email_address: alice@convertkit.dev
+                  state: active
+                  created_at: '2023-02-17T11:43:55Z'
+                  added_at: '2023-02-17T11:43:55Z'
+                  fields: {}
+        '201':
+          description: Adds the subscriber to the sequence
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  subscriber:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      first_name:
+                        type: string
+                        nullable: true
+                      email_address:
+                        type: string
+                      state:
+                        type: string
+                        enum:
+                        - active
+                        - cancelled
+                        - bounced
+                        - complained
+                        - inactive
+                      created_at:
+                        type: string
+                      added_at:
+                        type: string
+                      fields:
+                        type: object
+                        properties: {}
+                    required:
+                    - id
+                    - first_name
+                    - email_address
+                    - state
+                    - created_at
+                    - added_at
+                    - fields
+                required:
+                - subscriber
+              example:
+                subscriber:
+                  id: 1003
+                  first_name: Alice
+                  email_address: alice@convertkit.dev
+                  state: active
+                  created_at: '2023-02-17T11:43:55Z'
+                  added_at: '2023-02-17T11:43:55Z'
+                  fields: {}
+        '401':
+          description: Returns a 401 if the token and/or account cannot be authenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - errors
+              example:
+                errors:
+                - The access token is invalid
+        '404':
+          description: Returns a 404 when the provided id does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - errors
+              example:
+                errors:
+                - Not Found
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+            example: {}
+      x-mcp:
+        enabled: true
+components:
+  securitySchemes:
+    API Key:
+      description: Authenticate API requests via an API Key
+      type: apiKey
+      in: header
+      name: X-Kit-Api-Key
+    OAuth2:
+      description: Authenticate API requests via an OAuth token
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://api.kit.com/v4/oauth/authorize
+          tokenUrl: https://api.kit.com/v4/oauth/token
+          refreshUrl: https://api.kit.com/v4/oauth/token
+          scopes:
+            read: Read access to Kit API v4
+            write: Write access to Kit API v4
+x-mint:
+  mcp:
+    enabled: true

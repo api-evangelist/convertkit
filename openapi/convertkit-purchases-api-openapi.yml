@@ -1,0 +1,677 @@
+openapi: 3.0.3
+info:
+  title: Kit Accounts Purchases API
+  version: '4.0'
+servers:
+- url: https://api.kit.com
+tags:
+- name: Purchases
+paths:
+  /v4/purchases:
+    get:
+      summary: List purchases
+      tags:
+      - Purchases
+      security:
+      - OAuth2: []
+      parameters:
+      - name: after
+        description: To fetch next page of results, use `?after=<end_cursor>`
+        in: query
+        required: false
+        schema:
+          nullable: true
+      - name: before
+        description: To fetch previous page of results, use `?before=<start_cursor>`
+        in: query
+        required: false
+        schema:
+          nullable: true
+      - name: include_total_count
+        description: Set to `true` to include the `total_count` in the response. This option can cause slow responses; if paging through results, request it only on the first page and reuse the value for subsequent pages.
+        in: query
+        required: false
+        schema:
+          type: boolean
+        example: false
+      - name: per_page
+        description: Number of results per page. Default 500, maximum 1000.
+        in: query
+        required: false
+        schema:
+          nullable: true
+      responses:
+        '200':
+          description: Returns a paginated list of all purchases for your account
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  purchases:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        transaction_id:
+                          type: string
+                        subscriber_id:
+                          type: integer
+                        status:
+                          type: string
+                        email_address:
+                          type: string
+                          description: The subscriber that the purchase belongs to
+                        currency:
+                          type: string
+                          description: 3 letter currency code (e.g. `USD`)
+                        transaction_time:
+                          type: string
+                        subtotal:
+                          type: number
+                          format: float
+                        discount:
+                          type: number
+                          format: float
+                        tax:
+                          type: number
+                          format: float
+                        total:
+                          type: number
+                          format: float
+                        products:
+                          type: array
+                          description: Array of purchased products
+                          items:
+                            type: object
+                            properties:
+                              quantity:
+                                type: integer
+                                description: Product quantity
+                              lid:
+                                type: string
+                                description: Each product should have a unique `lid` (i.e., line item identifier) for this purchase.
+                              unit_price:
+                                type: number
+                                format: float
+                                description: Product price
+                              sku:
+                                nullable: true
+                                description: Product sku
+                              name:
+                                type: string
+                                description: Product name
+                              pid:
+                                type: string
+                                description: This is your identifier for a product. Each product provided in the `products` array must have a unique pid. Variants of the same product should have the same pid.
+                            required:
+                            - quantity
+                            - lid
+                            - unit_price
+                            - sku
+                            - name
+                            - pid
+                      required:
+                      - id
+                      - transaction_id
+                      - status
+                      - email_address
+                      - subscriber_id
+                      - currency
+                      - transaction_time
+                      - subtotal
+                      - discount
+                      - tax
+                      - total
+                      - products
+                  pagination:
+                    type: object
+                    properties:
+                      has_previous_page:
+                        type: boolean
+                      has_next_page:
+                        type: boolean
+                      start_cursor:
+                        type: string
+                      end_cursor:
+                        type: string
+                      per_page:
+                        type: integer
+                    required:
+                    - has_previous_page
+                    - has_next_page
+                    - start_cursor
+                    - end_cursor
+                    - per_page
+                required:
+                - purchases
+                - pagination
+              example:
+                purchases:
+                - id: 3
+                  transaction_id: 512-41-4101
+                  status: paid
+                  email_address: pru.magoo@convertkit.dev
+                  subscriber_id: 12
+                  currency: USD
+                  transaction_time: '2023-02-17T11:43:55Z'
+                  subtotal: 5.0
+                  discount: 0.0
+                  tax: 0.0
+                  total: 5.0
+                  products:
+                  - quantity: 1
+                    lid: 000-13-0000
+                    unit_price: 0.05
+                    sku: null
+                    name: Tip
+                    pid: 111-75-7524
+                - id: 2
+                  transaction_id: 323-79-5320
+                  status: paid
+                  email_address: pru.magoo@convertkit.dev
+                  subscriber_id: 12
+                  currency: USD
+                  transaction_time: '2023-02-17T11:43:55Z'
+                  subtotal: 10.0
+                  discount: 0.0
+                  tax: 1.05
+                  total: 11.05
+                  products:
+                  - quantity: 1
+                    lid: 000-12-0000
+                    unit_price: 0.1
+                    sku: null
+                    name: Monthly Game Review
+                    pid: 000-11-0000
+                - id: 1
+                  transaction_id: 796-92-4892
+                  status: paid
+                  email_address: pru.magoo@convertkit.dev
+                  subscriber_id: 12
+                  currency: USD
+                  transaction_time: '2023-02-17T11:43:55Z'
+                  subtotal: 78.66
+                  discount: 5.0
+                  tax: 7.87
+                  total: 81.53
+                  products:
+                  - quantity: 1
+                    lid: 811-75-7900
+                    unit_price: 23.22
+                    sku: null
+                    name: Phantom Hourglass
+                    pid: 804-02-4430
+                  - quantity: 1
+                    lid: 766-49-1241
+                    unit_price: 32.22
+                    sku: null
+                    name: Twilight Princess
+                    pid: 833-51-1151
+                pagination:
+                  has_previous_page: false
+                  has_next_page: false
+                  start_cursor: WzNd
+                  end_cursor: WzFd
+                  per_page: 500
+        '401':
+          description: Returns a 401 if the token and/or account cannot be authenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - errors
+              example:
+                errors:
+                - The access token is invalid
+    post:
+      summary: Create a purchase
+      tags:
+      - Purchases
+      security:
+      - OAuth2: []
+      parameters: []
+      responses:
+        '201':
+          description: Creates a purchase for the provided subscriber and returns its details. It also creates products if they don't exist.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  purchase:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      transaction_id:
+                        type: string
+                      subscriber_id:
+                        type: integer
+                      status:
+                        type: string
+                      email_address:
+                        type: string
+                        description: The subscriber that the purchase belongs to
+                      currency:
+                        type: string
+                        description: 3 letter currency code (e.g. `USD`)
+                      transaction_time:
+                        type: string
+                      subtotal:
+                        type: number
+                        format: float
+                      discount:
+                        type: number
+                        format: float
+                      tax:
+                        type: number
+                        format: float
+                      total:
+                        type: number
+                        format: float
+                      products:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            quantity:
+                              type: integer
+                              description: Product quantity
+                            lid:
+                              type: string
+                              description: Each product should have a unique `lid` (i.e., line item identifier) for this purchase.
+                            unit_price:
+                              type: number
+                              format: float
+                              description: Product price
+                            sku:
+                              type: string
+                              description: Product sku
+                            name:
+                              type: string
+                              description: Product name
+                            pid:
+                              type: string
+                              description: This is your identifier for a product. Each product provided in the `products` array must have a unique pid. Variants of the same product should have the same pid.
+                          required:
+                          - quantity
+                          - lid
+                          - unit_price
+                          - sku
+                          - name
+                          - pid
+                    required:
+                    - id
+                    - transaction_id
+                    - status
+                    - email_address
+                    - subscriber_id
+                    - currency
+                    - transaction_time
+                    - subtotal
+                    - discount
+                    - tax
+                    - total
+                    - products
+                required:
+                - purchase
+              example:
+                purchase:
+                  id: 21
+                  transaction_id: 796-92-4892
+                  subscriber_id: 40
+                  status: paid
+                  email_address: pru.magoo@convertkit.dev
+                  currency: USD
+                  transaction_time: '2023-02-17T11:43:55Z'
+                  subtotal: 78.66
+                  discount: 5.0
+                  tax: 7.87
+                  total: 81.53
+                  products:
+                  - quantity: 1
+                    lid: 811-75-7900
+                    unit_price: 23.22
+                    sku: SM21-SH-M02-RD-S-001
+                    name: Phantom Hourglass
+                    pid: 804-02-4430
+                  - quantity: 1
+                    lid: 766-49-1241
+                    unit_price: 32.22
+                    sku: WT21-JK-M03-BK-L-012
+                    name: Twilight Princess
+                    pid: 833-51-1151
+                  - quantity: 1
+                    lid: 563-95-8878
+                    unit_price: 23.22
+                    sku: FL21-TS-M01-BL-M-020
+                    name: Four Swords
+                    pid: 217-99-4325
+        '401':
+          description: Returns a 401 if the token and/or account cannot be authenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - errors
+              example:
+                errors:
+                - The access token is invalid
+        '422':
+          description: Returns a 422 when one or more of the parameters are invalid
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - errors
+              example:
+                errors:
+                - Transaction cannot be blank
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                purchase:
+                  type: object
+                  properties:
+                    email_address:
+                      type: string
+                      description: The subscriber that the purchase belongs to
+                    transaction_id:
+                      type: string
+                    status:
+                      type: string
+                    subtotal:
+                      type: number
+                      format: float
+                    tax:
+                      type: number
+                      format: float
+                    shipping:
+                      type: integer
+                    discount:
+                      type: number
+                      format: float
+                    total:
+                      type: number
+                      format: float
+                    currency:
+                      type: string
+                      description: 3 letter currency code (e.g. `USD`)
+                    transaction_time:
+                      type: string
+                    products:
+                      type: array
+                      description: Array of purchased products
+                      items:
+                        type: object
+                        properties:
+                          name:
+                            type: string
+                            description: Product name
+                          pid:
+                            type: string
+                            description: This is your identifier for a product. Each product provided in the `products` array must have a unique pid. Variants of the same product should have the same pid.
+                          lid:
+                            type: string
+                            description: Each product should have a unique `lid` (i.e., line item identifier) for this purchase.
+                          quantity:
+                            type: integer
+                            description: Product quantity
+                          unit_price:
+                            type: number
+                            format: float
+                            description: Product price
+                          sku:
+                            type: string
+                            description: Product sku
+                        required:
+                        - name
+                        - pid
+                        - lid
+                        - quantity
+                        - unit_price
+                        - sku
+                  required:
+                  - email_address
+                  - transaction_id
+                  - status
+                  - subtotal
+                  - tax
+                  - shipping
+                  - discount
+                  - total
+                  - currency
+                  - transaction_time
+                  - products
+              required:
+              - purchase
+            example:
+              purchase:
+                email_address: pru.magoo@convertkit.dev
+                transaction_id: 796-92-4892
+                status: paid
+                subtotal: 78.66
+                tax: 7.87
+                shipping: 0
+                discount: 5.0
+                total: 81.53
+                currency: USD
+                transaction_time: '2023-02-17T11:43:55Z'
+                products:
+                - name: Phantom Hourglass
+                  pid: 804-02-4430
+                  lid: 811-75-7900
+                  quantity: 1
+                  unit_price: 23.22
+                  sku: SM21-SH-M02-RD-S-001
+                - name: Twilight Princess
+                  pid: 833-51-1151
+                  lid: 766-49-1241
+                  quantity: 1
+                  unit_price: 32.22
+                  sku: WT21-JK-M03-BK-L-012
+                - name: Four Swords
+                  pid: 217-99-4325
+                  lid: 563-95-8878
+                  quantity: 1
+                  unit_price: 23.22
+                  sku: FL21-TS-M01-BL-M-020
+  /v4/purchases/{id}:
+    get:
+      summary: Get a purchase
+      tags:
+      - Purchases
+      security:
+      - OAuth2: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+        example: 15
+      responses:
+        '200':
+          description: Returns the purchase details
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  purchase:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      transaction_id:
+                        type: string
+                      subscriber_id:
+                        type: integer
+                      status:
+                        type: string
+                      email_address:
+                        type: string
+                      currency:
+                        type: string
+                      transaction_time:
+                        type: string
+                      subtotal:
+                        type: number
+                        format: float
+                      discount:
+                        type: number
+                        format: float
+                      tax:
+                        type: number
+                        format: float
+                      total:
+                        type: number
+                        format: float
+                      products:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            quantity:
+                              type: integer
+                              description: Product quantity
+                            lid:
+                              type: string
+                              description: Each product should have a unique `lid` (i.e., line item identifier) for this purchase.
+                            unit_price:
+                              type: number
+                              format: float
+                              description: Product price
+                            sku:
+                              nullable: true
+                            name:
+                              type: string
+                              description: Product name
+                            pid:
+                              type: string
+                              description: This is your identifier for a product. Each product provided in the `products` array must have a unique pid. Variants of the same product should have the same pid.
+                          required:
+                          - quantity
+                          - lid
+                          - unit_price
+                          - sku
+                          - name
+                          - pid
+                    required:
+                    - id
+                    - transaction_id
+                    - status
+                    - email_address
+                    - subscriber_id
+                    - currency
+                    - transaction_time
+                    - subtotal
+                    - discount
+                    - tax
+                    - total
+                    - products
+                required:
+                - purchase
+              example:
+                purchase:
+                  id: 14
+                  transaction_id: 796-92-4892
+                  subscriber_id: 23
+                  status: paid
+                  email_address: pru.magoo@convertkit.dev
+                  currency: USD
+                  transaction_time: '2023-02-17T11:43:55Z'
+                  subtotal: 78.66
+                  discount: 5.0
+                  tax: 7.87
+                  total: 81.53
+                  products:
+                  - quantity: 1
+                    lid: 811-75-7900
+                    unit_price: 23.22
+                    sku: null
+                    name: Phantom Hourglass
+                    pid: 804-02-4430
+                  - quantity: 1
+                    lid: 766-49-1241
+                    unit_price: 32.22
+                    sku: null
+                    name: Twilight Princess
+                    pid: 833-51-1151
+        '401':
+          description: Returns a 401 if the token and/or account cannot be authenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - errors
+              example:
+                errors:
+                - The access token is invalid
+        '404':
+          description: Returns a 404 when the provided id does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - errors
+              example:
+                errors:
+                - Not Found
+components:
+  securitySchemes:
+    API Key:
+      description: Authenticate API requests via an API Key
+      type: apiKey
+      in: header
+      name: X-Kit-Api-Key
+    OAuth2:
+      description: Authenticate API requests via an OAuth token
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://api.kit.com/v4/oauth/authorize
+          tokenUrl: https://api.kit.com/v4/oauth/token
+          refreshUrl: https://api.kit.com/v4/oauth/token
+          scopes:
+            read: Read access to Kit API v4
+            write: Write access to Kit API v4
+x-mint:
+  mcp:
+    enabled: true

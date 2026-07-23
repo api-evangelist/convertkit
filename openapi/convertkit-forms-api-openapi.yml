@@ -1,0 +1,1166 @@
+openapi: 3.0.3
+info:
+  title: Kit Accounts Forms API
+  version: '4.0'
+servers:
+- url: https://api.kit.com
+tags:
+- name: Forms
+paths:
+  /v4/bulk/forms/subscribers:
+    post:
+      summary: Bulk add subscribers to forms
+      description: Adding subscribers to double opt-in forms will trigger sending an Incentive Email. Subscribers already added to the specified form will not receive the Incentive Email again. For more information about double opt-in see "[Double opt-in](#double-opt-in)". <br/><br/>The subscribers being added to the form must already exist. Subscribers can be created in bulk using the "[Bulk create subscriber](#bulk-create-subscribers)" endpoint.<br/><br/>See "[Bulk & async processing](#bulk-amp-async-processing)" for more information.
+      tags:
+      - Forms
+      security:
+      - OAuth2: []
+      parameters: []
+      responses:
+        '200':
+          description: Adds subscribers to forms synchronously when 100 or less form/subscribers are requested
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  subscribers:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        first_name:
+                          type: string
+                        email_address:
+                          type: string
+                        created_at:
+                          type: string
+                        added_at:
+                          type: string
+                        referrer:
+                          type: string
+                        referrer_utm_parameters:
+                          type: object
+                          properties:
+                            source:
+                              type: string
+                            medium:
+                              type: string
+                            campaign:
+                              type: string
+                            term:
+                              type: string
+                            content:
+                              type: string
+                          required:
+                          - source
+                          - medium
+                          - campaign
+                          - term
+                          - content
+                      required:
+                      - id
+                      - first_name
+                      - email_address
+                      - created_at
+                      - added_at
+                      - referrer
+                      - referrer_utm_parameters
+                  failures:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        errors:
+                          type: array
+                          items:
+                            type: string
+                        subscription:
+                          type: object
+                          properties:
+                            form_id:
+                              type: integer
+                              nullable: true
+                            subscriber_id:
+                              nullable: true
+                              type: integer
+                            referrer:
+                              type: string
+                          required:
+                          - form_id
+                          - subscriber_id
+                          - referrer
+                      required:
+                      - errors
+                      - subscription
+                required:
+                - subscribers
+                - failures
+              example:
+                subscribers:
+                - id: 633
+                  first_name: Sub
+                  email_address: sub@example.com
+                  created_at: '2023-02-17T11:43:55Z'
+                  added_at: '2023-02-17T11:43:55Z'
+                  referrer: https://mywebsite.com/bfpromo/?utm_source=facebook&utm_medium=cpc&utm_campaign=black_friday&utm_term=car_owners&utm_content=get_10_off
+                  referrer_utm_parameters:
+                    source: facebook
+                    medium: cpc
+                    campaign: black_friday
+                    term: car_owners
+                    content: get_10_off
+                - id: 633
+                  first_name: Sub
+                  email_address: sub@example.com
+                  created_at: '2023-02-17T11:43:55Z'
+                  added_at: '2023-02-17T11:43:55Z'
+                  referrer: https://mywebsite.com/bfpromo/?utm_source=facebook&utm_medium=cpc&utm_campaign=black_friday&utm_term=car_owners&utm_content=get_10_off
+                  referrer_utm_parameters:
+                    source: facebook
+                    medium: cpc
+                    campaign: black_friday
+                    term: car_owners
+                    content: get_10_off
+                failures:
+                - errors:
+                  - Subscriber does not exist
+                  subscription:
+                    form_id: 136
+                    subscriber_id: null
+                    referrer: https://mywebsite.com/bfpromo/?utm_source=facebook&utm_medium=cpc&utm_campaign=black_friday&utm_term=car_owners&utm_content=get_10_off
+                - errors:
+                  - Form does not exist
+                  subscription:
+                    form_id: null
+                    subscriber_id: 633
+                    referrer: https://mywebsite.com/bfpromo/?utm_source=facebook&utm_medium=cpc&utm_campaign=black_friday&utm_term=car_owners&utm_content=get_10_off
+        '202':
+          description: Adds subscribers to forms asynchronously when more than 100 form/subscribers are requested
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+              example: {}
+        '401':
+          description: Returns a 401 if the token and/or account cannot be authenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - errors
+              example:
+                errors:
+                - The access token is invalid
+        '413':
+          description: Returns a 413 when the size of the request would exceed the account's data limit for enqueued bulk requests
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - errors
+              example:
+                errors:
+                - This request exceeds your queued bulk requests limit. Please wait while we process your existing requests and try again later.
+        '422':
+          description: Returns a 422 when `additions` is empty or not an array
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - errors
+              example:
+                errors:
+                - No additions included for processing
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                additions:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      form_id:
+                        type: integer
+                        nullable: true
+                      subscriber_id:
+                        type: integer
+                        nullable: true
+                      referrer:
+                        type: string
+                    required:
+                    - form_id
+                    - subscriber_id
+                callback_url:
+                  type: string
+                  nullable: true
+              required:
+              - additions
+            example:
+              additions:
+              - form_id: 0
+                subscriber_id: 0
+              - form_id: 1
+                subscriber_id: 1
+              - form_id: 2
+                subscriber_id: 2
+              - form_id: 3
+                subscriber_id: 3
+              callback_url: null
+  /v4/forms:
+    get:
+      summary: List forms
+      tags:
+      - Forms
+      security:
+      - API Key: []
+      - OAuth2: []
+      parameters:
+      - name: after
+        description: To fetch next page of results, use `?after=<end_cursor>`
+        in: query
+        required: false
+        schema:
+          nullable: true
+      - name: before
+        description: To fetch previous page of results, use `?before=<start_cursor>`
+        in: query
+        required: false
+        schema:
+          nullable: true
+      - name: include_total_count
+        description: Set to `true` to include the `total_count` in the response. This option can cause slow responses; if paging through results, request it only on the first page and reuse the value for subsequent pages.
+        in: query
+        required: false
+        schema:
+          type: boolean
+        example: false
+      - name: per_page
+        description: Number of results per page. Default 500, maximum 1000.
+        in: query
+        required: false
+        schema:
+          nullable: true
+      - name: status
+        description: Filter forms that have this status (`active`, `archived`, `trashed`, or `all`). Defaults to `active`.
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - active
+          - archived
+          - trashed
+          - all
+          nullable: true
+      - name: type
+        description: Filter forms and landing pages by type. Use `embed` for embedded forms. Use `hosted` for landing pages.
+        in: query
+        required: false
+        schema:
+          nullable: true
+      responses:
+        '200':
+          description: Returns a paginated list of all forms and landing pages (embedded and hosted) for your account (including active and archived)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  forms:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        name:
+                          type: string
+                        created_at:
+                          type: string
+                        type:
+                          type: string
+                        format:
+                          nullable: true
+                        embed_js:
+                          type: string
+                        embed_url:
+                          type: string
+                        archived:
+                          type: boolean
+                        uid:
+                          type: string
+                        subscriber_count:
+                          type: integer
+                      required:
+                      - id
+                      - name
+                      - created_at
+                      - type
+                      - format
+                      - embed_js
+                      - embed_url
+                      - archived
+                      - uid
+                  pagination:
+                    type: object
+                    properties:
+                      has_previous_page:
+                        type: boolean
+                      has_next_page:
+                        type: boolean
+                      start_cursor:
+                        type: string
+                      end_cursor:
+                        type: string
+                      per_page:
+                        type: integer
+                    required:
+                    - has_previous_page
+                    - has_next_page
+                    - start_cursor
+                    - end_cursor
+                    - per_page
+                required:
+                - forms
+                - pagination
+              example:
+                forms:
+                - id: 53
+                  name: Sign up
+                  created_at: '2023-02-17T11:43:55Z'
+                  type: embed
+                  format: null
+                  embed_js: https://kit-greetings.kit.com/f049e3d9ab/index.js
+                  embed_url: https://kit-greetings.kit.com/f049e3d9ab
+                  archived: false
+                  uid: f049e3d9ab
+                  subscriber_count: 0
+                - id: 52
+                  name: Lead gen
+                  created_at: '2023-02-17T11:43:55Z'
+                  type: hosted
+                  format: null
+                  embed_js: https://kit-greetings.kit.com/ae7c1adaa1/index.js
+                  embed_url: https://kit-greetings.kit.com/ae7c1adaa1
+                  archived: false
+                  uid: ae7c1adaa1
+                  subscriber_count: 0
+                pagination:
+                  has_previous_page: false
+                  has_next_page: false
+                  start_cursor: WzUzXQ==
+                  end_cursor: WzUyXQ==
+                  per_page: 500
+        '401':
+          description: Returns a 401 if the token and/or account cannot be authenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - errors
+              example:
+                errors:
+                - The access token is invalid
+      x-mcp:
+        enabled: true
+  /v4/forms/{form_id}/subscribers:
+    get:
+      summary: List subscribers for a form
+      tags:
+      - Forms
+      security:
+      - API Key: []
+      - OAuth2: []
+      parameters:
+      - name: added_after
+        description: Filter subscribers who have been added to the form after this date (format yyyy-mm-dd)
+        in: query
+        required: false
+        schema:
+          nullable: true
+          type: string
+        example: '2023-02-14T11:43:55Z'
+      - name: added_before
+        description: Filter subscribers who have been added to the form before this date (format yyyy-mm-dd)
+        in: query
+        required: false
+        schema:
+          nullable: true
+          type: string
+        example: '2023-02-18T11:43:55Z'
+      - name: after
+        description: To fetch next page of results, use `?after=<end_cursor>`
+        in: query
+        required: false
+        schema:
+          nullable: true
+      - name: before
+        description: To fetch previous page of results, use `?before=<start_cursor>`
+        in: query
+        required: false
+        schema:
+          nullable: true
+      - name: created_after
+        description: Filter subscribers who have been created after this date (format yyyy-mm-dd)
+        in: query
+        required: false
+        schema:
+          nullable: true
+          type: string
+        example: '2023-01-17T11:43:55Z'
+      - name: created_before
+        description: Filter subscribers who have been created before this date (format yyyy-mm-dd)
+        in: query
+        required: false
+        schema:
+          nullable: true
+          type: string
+        example: '2023-02-18T11:43:55Z'
+      - name: form_id
+        in: path
+        required: true
+        schema:
+          type: integer
+        example: 169
+      - name: include_total_count
+        description: Set to `true` to include the `total_count` in the response. This option can cause slow responses; if paging through results, request it only on the first page and reuse the value for subsequent pages.
+        in: query
+        required: false
+        schema:
+          type: boolean
+        example: false
+      - name: per_page
+        description: Number of results per page. Default 500, maximum 1000.
+        in: query
+        required: false
+        schema:
+          nullable: true
+      - name: slim
+        in: query
+        required: false
+        schema:
+          type: boolean
+        example: false
+        description: When `true`, omits expensive optional fields from the response. Produces a faster, smaller response — useful when extra fields are not needed.
+      - name: status
+        description: Filter subscribers who have this status (`active`, `inactive`, `bounced`, `complained`, `cancelled` or `all`). Defaults to `active`.
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - active
+          - inactive
+          - bounced
+          - complained
+          - cancelled
+          - all
+        example: all
+      responses:
+        '200':
+          description: Returns a paginated list of subscribers for the specified form
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  subscribers:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        first_name:
+                          type: string
+                          nullable: true
+                        email_address:
+                          type: string
+                        state:
+                          type: string
+                          enum:
+                          - active
+                          - cancelled
+                          - bounced
+                          - complained
+                          - inactive
+                        created_at:
+                          type: string
+                        added_at:
+                          type: string
+                        fields:
+                          type: object
+                          properties:
+                            category:
+                              type: string
+                              nullable: true
+                          required:
+                          - category
+                        referrer:
+                          type: string
+                        referrer_utm_parameters:
+                          type: object
+                          properties:
+                            source:
+                              type: string
+                            medium:
+                              type: string
+                            campaign:
+                              type: string
+                            term:
+                              type: string
+                            content:
+                              type: string
+                          required:
+                          - source
+                          - medium
+                          - campaign
+                          - term
+                          - content
+                      required:
+                      - id
+                      - first_name
+                      - email_address
+                      - state
+                      - created_at
+                      - added_at
+                      - referrer
+                      - referrer_utm_parameters
+                      - fields
+                  pagination:
+                    type: object
+                    properties:
+                      has_previous_page:
+                        type: boolean
+                      has_next_page:
+                        type: boolean
+                      start_cursor:
+                        type: string
+                      end_cursor:
+                        type: string
+                      per_page:
+                        type: integer
+                    required:
+                    - has_previous_page
+                    - has_next_page
+                    - start_cursor
+                    - end_cursor
+                    - per_page
+                required:
+                - subscribers
+                - pagination
+              example:
+                subscribers:
+                - id: 673
+                  first_name: null
+                  email_address: subscriber357@kit.dev
+                  state: active
+                  created_at: '2023-02-17T11:43:55Z'
+                  added_at: '2023-02-17T11:43:55Z'
+                  referrer: https://mywebsite.com/bfpromo/?utm_source=facebook&utm_medium=cpc&utm_campaign=black_friday&utm_term=car_owners&utm_content=get_10_off
+                  referrer_utm_parameters:
+                    source: facebook
+                    medium: cpc
+                    campaign: black_friday
+                    term: car_owners
+                    content: get_10_off
+                  fields:
+                    category: One
+                - id: 672
+                  first_name: null
+                  email_address: subscriber356@kit.dev
+                  state: active
+                  created_at: '2023-02-17T11:43:55Z'
+                  added_at: '2023-02-17T11:43:55Z'
+                  referrer: https://mywebsite.com/bfpromo/?utm_source=facebook&utm_medium=cpc&utm_campaign=black_friday&utm_term=car_owners&utm_content=get_10_off
+                  referrer_utm_parameters:
+                    source: facebook
+                    medium: cpc
+                    campaign: black_friday
+                    term: car_owners
+                    content: get_10_off
+                  fields:
+                    category: null
+                - id: 671
+                  first_name: null
+                  email_address: subscriber355@kit.dev
+                  state: active
+                  created_at: '2023-02-17T11:43:55Z'
+                  added_at: '2023-02-17T11:43:55Z'
+                  referrer: https://mywebsite.com/bfpromo/?utm_source=facebook&utm_medium=cpc&utm_campaign=black_friday&utm_term=car_owners&utm_content=get_10_off
+                  referrer_utm_parameters:
+                    source: facebook
+                    medium: cpc
+                    campaign: black_friday
+                    term: car_owners
+                    content: get_10_off
+                  fields:
+                    category: null
+                pagination:
+                  has_previous_page: false
+                  has_next_page: false
+                  start_cursor: WzY3M10=
+                  end_cursor: WzY3MV0=
+                  per_page: 500
+        '401':
+          description: Returns a 401 if the token and/or account cannot be authenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - errors
+              example:
+                errors:
+                - The access token is invalid
+        '404':
+          description: Returns a 404 when the provided id does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - errors
+              example:
+                errors:
+                - Not Found
+      x-mcp:
+        enabled: true
+    post:
+      summary: Add subscriber to form by email address
+      description: The subscriber being added to the form must already exist. Subscribers can be created using the "[Create a subscriber](#create-a-subscriber)" endpoint.
+      tags:
+      - Forms
+      security:
+      - API Key: []
+      - OAuth2: []
+      parameters:
+      - name: form_id
+        in: path
+        required: true
+        schema:
+          type: integer
+        example: 234
+      responses:
+        '200':
+          description: Returns a 200 when the subscriber has already been added to the form
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  subscriber:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      first_name:
+                        type: string
+                        nullable: true
+                      email_address:
+                        type: string
+                      state:
+                        type: string
+                        enum:
+                        - active
+                        - cancelled
+                        - bounced
+                        - complained
+                        - inactive
+                      created_at:
+                        type: string
+                      added_at:
+                        type: string
+                      fields:
+                        type: object
+                        properties: {}
+                      referrer:
+                        type: string
+                      referrer_utm_parameters:
+                        type: object
+                        properties:
+                          source:
+                            type: string
+                          medium:
+                            type: string
+                          campaign:
+                            type: string
+                          term:
+                            type: string
+                          content:
+                            type: string
+                        required:
+                        - source
+                        - medium
+                        - campaign
+                        - term
+                        - content
+                    required:
+                    - id
+                    - first_name
+                    - email_address
+                    - state
+                    - created_at
+                    - added_at
+                    - referrer
+                    - referrer_utm_parameters
+                    - fields
+                required:
+                - subscriber
+              example:
+                subscriber:
+                  id: 785
+                  first_name: Alice
+                  email_address: alice@convertkit.dev
+                  state: active
+                  created_at: '2023-02-17T11:43:55Z'
+                  added_at: '2023-02-17T11:43:55Z'
+                  fields: {}
+                  referrer: https://mywebsite.com/bfpromo/?utm_source=facebook&utm_medium=cpc&utm_campaign=black_friday&utm_term=car_owners&utm_content=get_10_off
+                  referrer_utm_parameters:
+                    source: facebook
+                    medium: cpc
+                    campaign: black_friday
+                    term: car_owners
+                    content: get_10_off
+        '201':
+          description: Adds the subscriber to the form
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  subscriber:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      first_name:
+                        type: string
+                        nullable: true
+                      email_address:
+                        type: string
+                      state:
+                        type: string
+                        enum:
+                        - active
+                        - cancelled
+                        - bounced
+                        - complained
+                        - inactive
+                      created_at:
+                        type: string
+                      added_at:
+                        type: string
+                      fields:
+                        type: object
+                        properties: {}
+                      referrer:
+                        type: string
+                      referrer_utm_parameters:
+                        type: object
+                        properties:
+                          source:
+                            type: string
+                          medium:
+                            type: string
+                          campaign:
+                            type: string
+                          term:
+                            type: string
+                          content:
+                            type: string
+                        required:
+                        - source
+                        - medium
+                        - campaign
+                        - term
+                        - content
+                    required:
+                    - id
+                    - first_name
+                    - email_address
+                    - state
+                    - created_at
+                    - added_at
+                    - referrer
+                    - referrer_utm_parameters
+                    - fields
+                required:
+                - subscriber
+              example:
+                subscriber:
+                  id: 786
+                  first_name: Alice
+                  email_address: alice@convertkit.dev
+                  state: active
+                  created_at: '2023-02-17T11:43:55Z'
+                  added_at: '2023-02-17T11:43:55Z'
+                  fields: {}
+                  referrer: https://mywebsite.com/bfpromo/?utm_source=facebook&utm_medium=cpc&utm_campaign=black_friday&utm_term=car_owners&utm_content=get_10_off
+                  referrer_utm_parameters:
+                    source: facebook
+                    medium: cpc
+                    campaign: black_friday
+                    term: car_owners
+                    content: get_10_off
+        '401':
+          description: Returns a 401 if the token and/or account cannot be authenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - errors
+              example:
+                errors:
+                - The access token is invalid
+        '404':
+          description: Returns a 404 when the provided id does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - errors
+              example:
+                errors:
+                - Not Found
+        '422':
+          description: Returns a 422 with an error message when missing email address
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - errors
+              example:
+                errors:
+                - Either subscriber id or email address is required to add subscriber to form
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email_address:
+                  type: string
+                referrer:
+                  type: string
+                  nullable: true
+              required:
+              - email_address
+            example:
+              email_address: alice@convertkit.dev
+              referrer: https://mywebsite.com/bfpromo/?utm_source=facebook&utm_medium=cpc&utm_campaign=black_friday&utm_term=car_owners&utm_content=get_10_off
+      x-mcp:
+        enabled: true
+  /v4/forms/{form_id}/subscribers/{id}:
+    post:
+      summary: Add subscriber to form
+      description: The subscriber being added to the form must already exist. Subscribers can be created using the "[Create a subscriber](#create-a-subscriber)" endpoint.
+      tags:
+      - Forms
+      security:
+      - API Key: []
+      - OAuth2: []
+      parameters:
+      - name: form_id
+        in: path
+        required: true
+        schema:
+          type: integer
+        example: 210
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+        example: 767
+      responses:
+        '200':
+          description: Returns a 200 when the subscriber has already been added to the form
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  subscriber:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      first_name:
+                        type: string
+                        nullable: true
+                      email_address:
+                        type: string
+                      state:
+                        type: string
+                        enum:
+                        - active
+                        - cancelled
+                        - bounced
+                        - complained
+                        - inactive
+                      created_at:
+                        type: string
+                      added_at:
+                        type: string
+                      fields:
+                        type: object
+                        properties: {}
+                      referrer:
+                        type: string
+                      referrer_utm_parameters:
+                        type: object
+                        properties:
+                          source:
+                            type: string
+                          medium:
+                            type: string
+                          campaign:
+                            type: string
+                          term:
+                            type: string
+                          content:
+                            type: string
+                        required:
+                        - source
+                        - medium
+                        - campaign
+                        - term
+                        - content
+                    required:
+                    - id
+                    - first_name
+                    - email_address
+                    - state
+                    - created_at
+                    - added_at
+                    - referrer
+                    - referrer_utm_parameters
+                    - fields
+                required:
+                - subscriber
+              example:
+                subscriber:
+                  id: 760
+                  first_name: Alice
+                  email_address: alice@convertkit.dev
+                  state: active
+                  created_at: '2023-02-17T11:43:55Z'
+                  added_at: '2023-02-17T11:43:55Z'
+                  fields: {}
+                  referrer: https://mywebsite.com/bfpromo/?utm_source=facebook&utm_medium=cpc&utm_campaign=black_friday&utm_term=car_owners&utm_content=get_10_off
+                  referrer_utm_parameters:
+                    source: facebook
+                    medium: cpc
+                    campaign: black_friday
+                    term: car_owners
+                    content: get_10_off
+        '201':
+          description: Adds the subscriber to the form
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  subscriber:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      first_name:
+                        type: string
+                        nullable: true
+                      email_address:
+                        type: string
+                      state:
+                        type: string
+                        nullable: true
+                        enum:
+                        - active
+                        - cancelled
+                        - bounced
+                        - complained
+                        - inactive
+                      created_at:
+                        type: string
+                      added_at:
+                        type: string
+                      fields:
+                        type: object
+                        properties: {}
+                      referrer:
+                        type: string
+                      referrer_utm_parameters:
+                        type: object
+                        properties:
+                          source:
+                            type: string
+                          medium:
+                            type: string
+                          campaign:
+                            type: string
+                          term:
+                            type: string
+                          content:
+                            type: string
+                        required:
+                        - source
+                        - medium
+                        - campaign
+                        - term
+                        - content
+                    required:
+                    - id
+                    - first_name
+                    - email_address
+                    - state
+                    - created_at
+                    - added_at
+                    - referrer
+                    - referrer_utm_parameters
+                    - fields
+                required:
+                - subscriber
+              example:
+                subscriber:
+                  id: 762
+                  first_name: Alice
+                  email_address: alice@convertkit.dev
+                  state: active
+                  created_at: '2023-02-17T11:43:55Z'
+                  added_at: '2023-02-17T11:43:55Z'
+                  fields: {}
+                  referrer: https://mywebsite.com/bfpromo/?utm_source=facebook&utm_medium=cpc&utm_campaign=black_friday&utm_term=car_owners&utm_content=get_10_off
+                  referrer_utm_parameters:
+                    source: facebook
+                    medium: cpc
+                    campaign: black_friday
+                    term: car_owners
+                    content: get_10_off
+        '401':
+          description: Returns a 401 if the token and/or account cannot be authenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - errors
+              example:
+                errors:
+                - The access token is invalid
+        '404':
+          description: Returns a 404 when the provided id does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - errors
+              example:
+                errors:
+                - Not Found
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                referrer:
+                  type: string
+              required:
+              - referrer
+            example:
+              referrer: https://mywebsite.com/bfpromo/?utm_source=facebook&utm_medium=cpc&utm_campaign=black_friday&utm_term=car_owners&utm_content=get_10_off
+      x-mcp:
+        enabled: true
+components:
+  securitySchemes:
+    API Key:
+      description: Authenticate API requests via an API Key
+      type: apiKey
+      in: header
+      name: X-Kit-Api-Key
+    OAuth2:
+      description: Authenticate API requests via an OAuth token
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://api.kit.com/v4/oauth/authorize
+          tokenUrl: https://api.kit.com/v4/oauth/token
+          refreshUrl: https://api.kit.com/v4/oauth/token
+          scopes:
+            read: Read access to Kit API v4
+            write: Write access to Kit API v4
+x-mint:
+  mcp:
+    enabled: true

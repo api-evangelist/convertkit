@@ -1,0 +1,832 @@
+openapi: 3.0.3
+info:
+  title: Kit Accounts Sequence Emails API
+  version: '4.0'
+servers:
+- url: https://api.kit.com
+tags:
+- name: Sequence Emails
+paths:
+  /v4/sequences/{sequence_id}/emails:
+    get:
+      summary: List sequence emails
+      description: 'Returns every email inside a sequence, ordered by `position` (the order subscribers receive them). Each entry carries timing (`delay_value`, `delay_unit`, `send_days`), publish state (`published`), and metadata (`subject`, `preview_text`, `email_template_id`).
+
+
+        **Tip:** the heavier `content` field is omitted by default to keep responses fast on sequences with many emails. Pass `include_content=true` when you need the body — for example, to render a preview, audit Liquid usage, or sync an external draft.
+
+
+        For the field semantics — particularly how `delay_unit` and `send_days` interact, and what happens when subscribers hit a `published: false` email — see [Create a sequence email](/api-reference/sequence-emails/create-a-sequence-email).'
+      tags:
+      - Sequence Emails
+      security:
+      - API Key: []
+      - OAuth2: []
+      parameters:
+      - name: after
+        in: query
+        required: false
+        schema:
+          nullable: true
+        description: To fetch next page of results, use `?after=<end_cursor>`
+      - name: before
+        in: query
+        required: false
+        schema:
+          nullable: true
+        description: To fetch previous page of results, use `?before=<start_cursor>`
+      - name: include_content
+        in: query
+        required: false
+        schema:
+          nullable: true
+        description: Pass `true` to include the `content` field on each email in the response. Omitted by default because it increases response size for large sequences.
+      - name: include_total_count
+        in: query
+        required: false
+        schema:
+          type: boolean
+        example: false
+        description: Set to `true` to include the `total_count` in the response. This option can cause slow responses; if paging through results, request it only on the first page and reuse the value for subsequent pages.
+      - name: per_page
+        in: query
+        required: false
+        schema:
+          nullable: true
+        description: Number of results per page. Default 500, maximum 1000.
+      - name: sequence_id
+        in: path
+        required: true
+        schema:
+          type: integer
+        example: 108
+      responses:
+        '200':
+          description: Returns a paginated list of all sequence emails for your account
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  emails:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        sequence_id:
+                          type: integer
+                        subject:
+                          type: string
+                        preview_text:
+                          type: string
+                        email_address:
+                          type: string
+                        email_template_id:
+                          nullable: true
+                        published:
+                          type: boolean
+                        position:
+                          type: integer
+                        delay_value:
+                          type: integer
+                        delay_unit:
+                          type: string
+                        send_days:
+                          type: array
+                          items:
+                            type: string
+                      required:
+                      - id
+                      - sequence_id
+                      - subject
+                      - preview_text
+                      - email_address
+                      - email_template_id
+                      - published
+                      - position
+                      - delay_value
+                      - delay_unit
+                      - send_days
+                  pagination:
+                    type: object
+                    properties:
+                      has_previous_page:
+                        type: boolean
+                      has_next_page:
+                        type: boolean
+                      start_cursor:
+                        type: string
+                      end_cursor:
+                        type: string
+                      per_page:
+                        type: integer
+                    required:
+                    - has_previous_page
+                    - has_next_page
+                    - start_cursor
+                    - end_cursor
+                    - per_page
+                required:
+                - emails
+                - pagination
+              example:
+                emails:
+                - id: 6
+                  sequence_id: 107
+                  subject: Welcome to the series
+                  preview_text: Here's what to expect
+                  email_address: joe2463@ck.lol
+                  email_template_id: null
+                  published: true
+                  position: 0
+                  delay_value: 0
+                  delay_unit: days
+                  send_days:
+                  - monday
+                  - tuesday
+                  - wednesday
+                  - thursday
+                  - friday
+                  - saturday
+                  - sunday
+                pagination:
+                  has_previous_page: false
+                  has_next_page: false
+                  start_cursor: WzAsNl0=
+                  end_cursor: WzAsNl0=
+                  per_page: 500
+        '401':
+          description: Returns a 401 if the token and/or account cannot be authenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - errors
+              example:
+                errors:
+                - The access token is invalid
+        '404':
+          description: Returns a 404 when the provided id does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - errors
+              example:
+                errors:
+                - Not Found
+      x-mcp:
+        enabled: true
+    post:
+      summary: Create a sequence email
+      description: 'Adds a single email to a sequence. Each sequence email represents one step subscribers receive on their journey through the sequence — its `position` determines order, and `delay_value` / `delay_unit` / `send_days` determine when it fires relative to either the previous email or the subscriber''s entry.
+
+
+        `subject`, `delay_value`, and `delay_unit` are required. **Day-based** emails (`delay_unit: "days"`) follow the parent sequence''s `send_days` and `send_hour`; their per-email `send_days` (e.g. `["monday", "wednesday"]`) overrides the sequence schedule for that one email. **Hour-based** emails (`delay_unit: "hours"`) ignore the sequence schedule and fire once the delay elapses — Kit checks for hour-delayed sends every 15 minutes — and always return `send_days` as `null`.
+
+
+        New emails are created in draft (`published: false`) so they don''t go out until you flip the flag. `position` is auto-assigned to the end of the sequence if omitted. `content` accepts HTML and can embed snippets with `{{ snippet.<key> }}` — see [Create a snippet](/api-reference/snippets/create-a-snippet) — which Kit resolves at send time, so editing a snippet later updates every email referencing it without a re-publish.
+
+
+        **Note:** only the first email in a sequence can be an immediate send (`delay_value: 0` with `delay_unit: "days"`). Subsequent emails need a positive delay.
+
+
+        **Warning:** publishing an immediate first email, or inserting a new email at a `position` earlier than where existing subscribers sit, processes those subscribers and triggers a send right away. Plan around active sequences carefully.
+
+
+        For end-user context on how creators build sequences in the Kit UI, see the help article on [creating and sending a sequence](https://help.kit.com/en/articles/2502629-creating-and-sending-a-sequence-in-kit).'
+      tags:
+      - Sequence Emails
+      security:
+      - API Key: []
+      - OAuth2: []
+      parameters:
+      - name: sequence_id
+        in: path
+        required: true
+        schema:
+          type: integer
+        example: 154
+      responses:
+        '201':
+          description: Creates a new sequence email
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  email:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      sequence_id:
+                        type: integer
+                      subject:
+                        type: string
+                      preview_text:
+                        nullable: true
+                      email_address:
+                        type: string
+                      email_template_id:
+                        nullable: true
+                      published:
+                        type: boolean
+                      position:
+                        nullable: true
+                      delay_value:
+                        type: integer
+                      delay_unit:
+                        type: string
+                      send_days:
+                        type: array
+                        items:
+                          type: string
+                      content:
+                        nullable: true
+                    required:
+                    - id
+                    - sequence_id
+                    - subject
+                    - preview_text
+                    - email_address
+                    - email_template_id
+                    - published
+                    - position
+                    - delay_value
+                    - delay_unit
+                    - send_days
+                    - content
+                required:
+                - email
+              example:
+                email:
+                  id: 35
+                  sequence_id: 153
+                  subject: Welcome to the sequence
+                  preview_text: null
+                  email_address: joe2527@ck.lol
+                  email_template_id: null
+                  published: false
+                  position: null
+                  delay_value: 1
+                  delay_unit: days
+                  send_days:
+                  - monday
+                  - tuesday
+                  - wednesday
+                  - thursday
+                  - friday
+                  - saturday
+                  - sunday
+                  content: null
+        '401':
+          description: Returns a 401 if the token and/or account cannot be authenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - errors
+              example:
+                errors:
+                - The access token is invalid
+        '404':
+          description: Returns a 404 when the provided id does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - errors
+              example:
+                errors:
+                - Not Found
+        '422':
+          description: Returns a 422 with an error message when one or more of the parameters were invalid
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - errors
+              example:
+                errors:
+                - subject can't be blank
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - subject
+              - delay_value
+              - delay_unit
+              properties:
+                subject:
+                  type: string
+                  description: Subject line of the email
+                preview_text:
+                  type: string
+                  nullable: true
+                  description: Preview text shown in email clients before the email is opened
+                content:
+                  type: string
+                  nullable: true
+                  description: HTML body content of the email
+                delay_value:
+                  type: integer
+                  description: Number of days or hours to wait before sending this email after the previous one
+                delay_unit:
+                  type: string
+                  enum:
+                  - days
+                  - hours
+                  description: Unit for the send delay. Use `days` for schedule-aware delivery, `hours` for a fixed hourly delay
+                email_template_id:
+                  type: integer
+                  nullable: true
+                  description: ID of the email template to use for layout and styling
+                published:
+                  type: boolean
+                  description: Whether the email is active and will be sent to subscribers. Defaults to `false` (draft)
+                send_days:
+                  type: array
+                  nullable: true
+                  items:
+                    type: string
+                  description: Days of the week this email may be sent. Defaults to all 7 days (inherits the sequence schedule). Pass a subset to restrict delivery, or `null` to reset to all days
+                position:
+                  type: integer
+                  nullable: true
+                  description: Zero-based position of the email in the sequence. Assigned automatically after the last email if omitted
+            example:
+              subject: Welcome to the sequence
+              delay_value: 1
+              delay_unit: days
+              preview_text: null
+              content: null
+              email_template_id: null
+              published: null
+              send_days: null
+              position: null
+      x-mcp:
+        enabled: true
+  /v4/sequences/{sequence_id}/emails/{id}:
+    delete:
+      summary: Delete a sequence email
+      description: 'Permanently removes one email from a sequence.
+
+
+        **Warning:** subscribers already queued to receive the deleted email will skip it — they''ll continue to the next email in sequence order. This is intentional and not retryable. If subscribers need to receive the email''s content, send a broadcast or re-add subscribers to the sequence (with `repeat: true`) before deleting.
+
+
+        If you want to pause rather than delete, use [Update a sequence email](/api-reference/sequence-emails/update-a-sequence-email) with `published: false` instead.'
+      tags:
+      - Sequence Emails
+      security:
+      - API Key: []
+      - OAuth2: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+        example: 91
+      - name: sequence_id
+        in: path
+        required: true
+        schema:
+          type: integer
+        example: 212
+      responses:
+        '204':
+          description: Deletes the sequence email
+        '401':
+          description: Returns a 401 if the token and/or account cannot be authenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - errors
+              example:
+                errors:
+                - The access token is invalid
+        '404':
+          description: Returns a 404 when the provided id does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - errors
+              example:
+                errors:
+                - Not Found
+      x-mcp:
+        enabled: true
+    get:
+      summary: Get a sequence email
+      description: 'Fetches a single sequence email by `id`. Unlike [List sequence emails](/api-reference/sequence-emails/list-sequence-emails), this endpoint **always returns the full `content`** — no `include_content` flag needed.
+
+
+        Use this when you have an email''s `id` and need the current body, timing, or publish state — for example, to render a preview before pushing an update via [Update a sequence email](/api-reference/sequence-emails/update-a-sequence-email).
+
+
+        For the field semantics, see [Create a sequence email](/api-reference/sequence-emails/create-a-sequence-email).'
+      tags:
+      - Sequence Emails
+      security:
+      - API Key: []
+      - OAuth2: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+        example: 26
+      - name: sequence_id
+        in: path
+        required: true
+        schema:
+          type: integer
+        example: 129
+      responses:
+        '200':
+          description: Returns the sequence email details
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  email:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      sequence_id:
+                        type: integer
+                      subject:
+                        type: string
+                      preview_text:
+                        type: string
+                      email_address:
+                        type: string
+                      email_template_id:
+                        nullable: true
+                      published:
+                        type: boolean
+                      position:
+                        type: integer
+                      delay_value:
+                        type: integer
+                      delay_unit:
+                        type: string
+                      send_days:
+                        type: array
+                        items:
+                          type: string
+                      content:
+                        type: string
+                    required:
+                    - id
+                    - sequence_id
+                    - subject
+                    - preview_text
+                    - email_address
+                    - email_template_id
+                    - published
+                    - position
+                    - delay_value
+                    - delay_unit
+                    - send_days
+                    - content
+                required:
+                - email
+              example:
+                email:
+                  id: 24
+                  sequence_id: 127
+                  subject: Welcome email
+                  preview_text: Thanks for signing up
+                  email_address: joe2492@ck.lol
+                  email_template_id: null
+                  published: true
+                  position: 0
+                  delay_value: 0
+                  delay_unit: days
+                  send_days:
+                  - monday
+                  - tuesday
+                  - wednesday
+                  - thursday
+                  - friday
+                  - saturday
+                  - sunday
+                  content: <p>Welcome!</p>
+        '401':
+          description: Returns a 401 if the token and/or account cannot be authenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - errors
+              example:
+                errors:
+                - The access token is invalid
+        '404':
+          description: Returns a 404 when the provided id does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - errors
+              example:
+                errors:
+                - Not Found
+      x-mcp:
+        enabled: true
+    put:
+      summary: Update a sequence email
+      description: 'Updates any field on a sequence email — `subject`, `preview_text`, `content`, `delay_value`, `delay_unit`, `send_days`, `position`, `email_template_id`, or `published`. Only fields included in the request body change; everything else is preserved.
+
+
+        **Note:** pass `send_days: null` to revert a per-email schedule override and inherit the parent sequence''s `send_days` again. The response will then return all 7 days, indicating no per-email restriction.
+
+
+        **Warning:** sending `send_days` on an email with `delay_unit: "hours"` returns `422` — `send_days` only applies to day-based emails.
+
+
+        **Warning:** changing `position` while subscribers are actively progressing through the sequence can cause emails to be sent out of order or skipped. The same caution applies to flipping `published` on a `position: 0` email — it triggers Kit to process all queued subscribers for that email.
+
+
+        For the sequence-email model and how `delay_unit` and `send_days` interact, see [Create a sequence email](/api-reference/sequence-emails/create-a-sequence-email).'
+      tags:
+      - Sequence Emails
+      security:
+      - API Key: []
+      - OAuth2: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+        example: 67
+      - name: sequence_id
+        in: path
+        required: true
+        schema:
+          type: integer
+        example: 188
+      responses:
+        '200':
+          description: Updates the sequence email and returns its details
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  email:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      sequence_id:
+                        type: integer
+                      subject:
+                        type: string
+                      preview_text:
+                        type: string
+                      email_address:
+                        type: string
+                      email_template_id:
+                        nullable: true
+                      published:
+                        type: boolean
+                      position:
+                        nullable: true
+                      delay_value:
+                        type: integer
+                      delay_unit:
+                        type: string
+                      send_days:
+                        type: array
+                        items:
+                          type: string
+                      content:
+                        nullable: true
+                        type: string
+                    required:
+                    - id
+                    - sequence_id
+                    - subject
+                    - preview_text
+                    - email_address
+                    - email_template_id
+                    - published
+                    - position
+                    - delay_value
+                    - delay_unit
+                    - send_days
+                    - content
+                required:
+                - email
+              example:
+                email:
+                  id: 66
+                  sequence_id: 187
+                  subject: Updated subject
+                  preview_text: Updated preview
+                  email_address: joe2570@ck.lol
+                  email_template_id: null
+                  published: true
+                  position: null
+                  delay_value: 3
+                  delay_unit: days
+                  send_days:
+                  - monday
+                  - wednesday
+                  - friday
+                  content: Content 37
+        '401':
+          description: Returns a 401 if the token and/or account cannot be authenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - errors
+              example:
+                errors:
+                - The access token is invalid
+        '404':
+          description: Returns a 404 when the provided id does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - errors
+              example:
+                errors:
+                - Not Found
+        '422':
+          description: Returns a 422 with an error message when one or more of the parameters were invalid
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - errors
+              example:
+                errors:
+                - 'delay_unit must be one of: days, hours'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                subject:
+                  type: string
+                  description: New subject line for the email
+                preview_text:
+                  type: string
+                  nullable: true
+                  description: New preview text shown in email clients before the email is opened
+                content:
+                  type: string
+                  nullable: true
+                  description: New HTML body content of the email
+                delay_value:
+                  type: integer
+                  description: New delay value
+                delay_unit:
+                  type: string
+                  enum:
+                  - days
+                  - hours
+                  description: New delay unit. Use `days` for schedule-aware delivery, `hours` for a fixed hourly delay
+                email_template_id:
+                  type: integer
+                  nullable: true
+                  description: New email template ID for layout and styling. Pass `null` to clear
+                published:
+                  type: boolean
+                  description: Pass `true` to publish a draft email or `false` to unpublish it
+                send_days:
+                  type: array
+                  nullable: true
+                  items:
+                    type: string
+                  description: Days of the week this email may be sent. Pass a subset to restrict delivery, or `null` to reset to all days (inherits the sequence schedule)
+                position:
+                  type: integer
+                  nullable: true
+                  description: New zero-based position of the email in the sequence
+            example:
+              subject: Updated subject
+              preview_text: Updated preview
+              content: null
+              delay_value: 3
+              delay_unit: days
+              email_template_id: null
+              published: true
+              send_days:
+              - monday
+              - wednesday
+              - friday
+              position: null
+      x-mcp:
+        enabled: true
+components:
+  securitySchemes:
+    API Key:
+      description: Authenticate API requests via an API Key
+      type: apiKey
+      in: header
+      name: X-Kit-Api-Key
+    OAuth2:
+      description: Authenticate API requests via an OAuth token
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://api.kit.com/v4/oauth/authorize
+          tokenUrl: https://api.kit.com/v4/oauth/token
+          refreshUrl: https://api.kit.com/v4/oauth/token
+          scopes:
+            read: Read access to Kit API v4
+            write: Write access to Kit API v4
+x-mint:
+  mcp:
+    enabled: true

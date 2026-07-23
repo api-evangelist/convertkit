@@ -1,0 +1,763 @@
+openapi: 3.0.3
+info:
+  title: Kit Accounts Custom Fields API
+  version: '4.0'
+servers:
+- url: https://api.kit.com
+tags:
+- name: Custom Fields
+paths:
+  /v4/bulk/custom_fields:
+    post:
+      summary: Bulk create custom fields
+      description: See "[Bulk & async processing](#bulk-amp-async-processing)" for more information.
+      tags:
+      - Custom Fields
+      security:
+      - OAuth2: []
+      parameters: []
+      responses:
+        '200':
+          description: Creates the custom_fields synchronously when 100 or less custom fields are requested
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  custom_fields:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        label:
+                          type: string
+                        key:
+                          type: string
+                        name:
+                          type: string
+                        created_at:
+                          type: string
+                      required:
+                      - id
+                      - key
+                      - label
+                      - name
+                      - created_at
+                  failures:
+                    type: array
+                    items: {}
+                required:
+                - custom_fields
+                - failures
+              example:
+                custom_fields:
+                - id: 143
+                  key: existing_custom_field
+                  label: Existing Custom Field
+                  name: ck_field_143_existing_custom_field
+                  created_at: '2023-02-17T11:43:55Z'
+                - id: 145
+                  key: interests
+                  label: Interests
+                  name: ck_field_145_interests
+                  created_at: '2023-02-17T11:43:55Z'
+                - id: 144
+                  key: last_name
+                  label: Last name
+                  name: ck_field_144_last_name
+                  created_at: '2023-02-17T11:43:55Z'
+                failures: []
+        '202':
+          description: Creates or updates custom_fields asynchronously when more than 100 custom fields are requested
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+              example: {}
+        '401':
+          description: Returns a 401 if the token and/or account cannot be authenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - errors
+              example:
+                errors:
+                - The access token is invalid
+        '413':
+          description: Returns a 413 when the size of the request would exceed the account's data limit for enqueued bulk requests
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - errors
+              example:
+                errors:
+                - This request exceeds your queued bulk requests limit. Please wait while we process your existing requests and try again later.
+        '422':
+          description: Returns a 422 when `custom_fields` is empty or not an array
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - errors
+              example:
+                errors:
+                - No custom fields included for processing
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                custom_fields:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      label:
+                        type: string
+                    required:
+                    - label
+                callback_url:
+                  type: string
+                  nullable: true
+              required:
+              - custom_fields
+            example:
+              custom_fields:
+              - label: Test Custom Field 0
+              - label: Test Custom Field 1
+              - label: Test Custom Field 2
+              - label: Test Custom Field 3
+              callback_url: null
+  /v4/bulk/custom_fields/subscribers:
+    post:
+      summary: Bulk update subscriber custom field values
+      tags:
+      - Custom Fields
+      security:
+      - OAuth2: []
+      parameters: []
+      responses:
+        '200':
+          description: Creates or updates custom field values synchronously when 100 or less values are requested
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  custom_field_values:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        subscriber_id:
+                          type: integer
+                        subscriber_custom_field_id:
+                          type: integer
+                        value:
+                          type: string
+                      required:
+                      - subscriber_id
+                      - subscriber_custom_field_id
+                      - value
+                  failures:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        errors:
+                          type: array
+                          items:
+                            type: string
+                        custom_field_value:
+                          type: object
+                          properties:
+                            subscriber_id:
+                              type: integer
+                              nullable: true
+                            subscriber_custom_field_id:
+                              type: integer
+                            value:
+                              type: string
+                          required:
+                          - subscriber_id
+                          - subscriber_custom_field_id
+                          - value
+                      required:
+                      - errors
+                      - custom_field_value
+                required:
+                - custom_field_values
+                - failures
+              example:
+                custom_field_values:
+                - subscriber_id: 615
+                  subscriber_custom_field_id: 156
+                  value: Smith
+                - subscriber_id: 615
+                  subscriber_custom_field_id: 157
+                  value: Acme Inc
+                failures:
+                - errors:
+                  - Subscriber does not exist
+                  custom_field_value:
+                    subscriber_id: null
+                    subscriber_custom_field_id: 156
+                    value: Jones
+                - errors:
+                  - Custom field does not exist
+                  custom_field_value:
+                    subscriber_id: 615
+                    subscriber_custom_field_id: 999999
+                    value: Test
+        '202':
+          description: Creates or updates custom field values asynchronously when more than 100 values are requested
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+              example: {}
+        '401':
+          description: Returns a 401 if the token and/or account cannot be authenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - errors
+              example:
+                errors:
+                - The access token is invalid
+        '413':
+          description: Returns a 413 when the size of the request would exceed the account's data limit for enqueued bulk requests
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - errors
+              example:
+                errors:
+                - This request exceeds your queued bulk requests limit. Please wait while we process your existing requests and try again later.
+        '422':
+          description: Returns a 422 when `custom_field_values` is empty or not an array
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - errors
+              example:
+                errors:
+                - No custom field values included for processing
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                custom_field_values:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      subscriber_id:
+                        type: integer
+                        nullable: true
+                      subscriber_custom_field_id:
+                        type: integer
+                      value:
+                        type: string
+                    required:
+                    - subscriber_id
+                    - subscriber_custom_field_id
+                    - value
+                callback_url:
+                  nullable: true
+              required:
+              - custom_field_values
+              - callback_url
+            example:
+              custom_field_values:
+              - subscriber_id: 0
+                subscriber_custom_field_id: 0
+                value: value_0
+              - subscriber_id: 1
+                subscriber_custom_field_id: 1
+                value: value_1
+              - subscriber_id: 2
+                subscriber_custom_field_id: 2
+                value: value_2
+              - subscriber_id: 3
+                subscriber_custom_field_id: 3
+                value: value_3
+              callback_url: null
+  /v4/custom_fields:
+    get:
+      summary: List custom fields
+      description: A custom field allows you to collect subscriber information beyond the standard fields of first name and email address. An example would be a custom field called last name so you can get the full names of your subscribers.<br/><br/>You create a custom field, and then you're able to use that in your forms or emails.
+      tags:
+      - Custom Fields
+      security:
+      - API Key: []
+      - OAuth2: []
+      parameters:
+      - name: after
+        description: To fetch next page of results, use `?after=<end_cursor>`
+        in: query
+        required: false
+        schema:
+          nullable: true
+      - name: before
+        description: To fetch previous page of results, use `?before=<start_cursor>`
+        in: query
+        required: false
+        schema:
+          nullable: true
+      - name: include_total_count
+        description: Set to `true` to include the `total_count` in the response. This option can cause slow responses; if paging through results, request it only on the first page and reuse the value for subsequent pages.
+        in: query
+        required: false
+        schema:
+          type: boolean
+        example: false
+      - name: per_page
+        description: Number of results per page. Default 500, maximum 1000.
+        in: query
+        required: false
+        schema:
+          nullable: true
+      responses:
+        '200':
+          description: Returns a paginated list of all custom fields for your account
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  custom_fields:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        name:
+                          type: string
+                        key:
+                          type: string
+                        label:
+                          type: string
+                      required:
+                      - id
+                      - name
+                      - key
+                      - label
+                  pagination:
+                    type: object
+                    properties:
+                      has_previous_page:
+                        type: boolean
+                      has_next_page:
+                        type: boolean
+                      start_cursor:
+                        type: string
+                      end_cursor:
+                        type: string
+                      per_page:
+                        type: integer
+                    required:
+                    - has_previous_page
+                    - has_next_page
+                    - start_cursor
+                    - end_cursor
+                    - per_page
+                required:
+                - custom_fields
+                - pagination
+              example:
+                custom_fields:
+                - id: 1
+                  name: ck_field_1_last_name
+                  key: last_name
+                  label: Last name
+                pagination:
+                  has_previous_page: false
+                  has_next_page: false
+                  start_cursor: WzFd
+                  end_cursor: WzFd
+                  per_page: 500
+        '401':
+          description: Returns a 401 if the token and/or account cannot be authenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - errors
+              example:
+                errors:
+                - The access token is invalid
+      x-mcp:
+        enabled: true
+    post:
+      summary: Create a custom field
+      description: Create a custom field for your account. The label field must be unique to your account. Whitespace will be removed from the beginning and the end of your label.<br/><br/>Additionally, a key field and a name field will be generated for you. The key is an ASCII-only, lowercased, underscored representation of your label. This key must be unique to your account. Keys are used in personalization tags in sequences and broadcasts. Names are unique identifiers for use in the HTML of custom forms. They are made up of a combination of ID and the key of the custom field prefixed with "ck_field".
+      tags:
+      - Custom Fields
+      security:
+      - API Key: []
+      - OAuth2: []
+      parameters: []
+      responses:
+        '200':
+          description: Returns a 200 and the custom field if it already exists
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  custom_field:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                      key:
+                        type: string
+                      label:
+                        type: string
+                    required:
+                    - id
+                    - name
+                    - key
+                    - label
+                required:
+                - custom_field
+              example:
+                custom_field:
+                  id: 8
+                  name: ck_field_8_interests
+                  key: interests
+                  label: Interests
+        '201':
+          description: Creates a new custom field and returns its details
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  custom_field:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                      key:
+                        type: string
+                      label:
+                        type: string
+                    required:
+                    - id
+                    - name
+                    - key
+                    - label
+                required:
+                - custom_field
+              example:
+                custom_field:
+                  id: 6
+                  name: ck_field_6_interests
+                  key: interests
+                  label: Interests
+        '401':
+          description: Returns a 401 if the token and/or account cannot be authenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - errors
+              example:
+                errors:
+                - The access token is invalid
+        '422':
+          description: Returns a 422 with an error message when the label is missing
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - errors
+              example:
+                errors:
+                - Label can't be blank
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                label:
+                  type: string
+              required:
+              - label
+            example:
+              label: Interests
+      x-mcp:
+        enabled: true
+  /v4/custom_fields/{id}:
+    delete:
+      summary: Delete custom field
+      description: This will remove all data in this field from your subscribers.
+      tags:
+      - Custom Fields
+      security:
+      - API Key: []
+      - OAuth2: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+        example: 50
+      responses:
+        '204':
+          description: Deletes the custom field
+        '401':
+          description: Returns a 401 if the token and/or account cannot be authenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - errors
+              example:
+                errors:
+                - The access token is invalid
+        '404':
+          description: Returns a 404 when the provided id does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - errors
+              example:
+                errors:
+                - Not Found
+        '422':
+          description: Returns a 422 when the custom field cannot be deleted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - errors
+              example:
+                errors:
+                - Unable to destroy the custom field.
+      x-mcp:
+        enabled: true
+    put:
+      summary: Update a custom field
+      description: 'Updates a custom field label (see [Create a custom field](/api-reference/custom-fields/create-a-custom-field) for more information on labels). Note that the key will change but the name remains the same when the label is updated.<br/><br/><strong>Warning: </strong>An update to a custom field will break all of the liquid personalization tags in emails that reference it - e.g. if you update a `Zip_Code` custom field to `Post_Code`, all liquid tags referencing `{{ subscriber.Zip_Code }}` would no longer work and need to be replaced with `{{ subscriber.Post_Code }}`.'
+      tags:
+      - Custom Fields
+      security:
+      - API Key: []
+      - OAuth2: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+        example: 29
+      responses:
+        '200':
+          description: Updates the custom field and returns its details
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  custom_field:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                      key:
+                        type: string
+                      label:
+                        type: string
+                    required:
+                    - id
+                    - name
+                    - key
+                    - label
+                required:
+                - custom_field
+              example:
+                custom_field:
+                  id: 27
+                  name: ck_field_27_last_name
+                  key: lastname
+                  label: Last name
+        '401':
+          description: Returns a 401 if the token and/or account cannot be authenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - errors
+              example:
+                errors:
+                - The access token is invalid
+        '404':
+          description: Returns a 404 when the provided id does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - errors
+              example:
+                errors:
+                - Not Found
+        '422':
+          description: Returns a 422 with an error mesage when one or more of the parameters are invalid
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - errors
+              example:
+                errors:
+                - Label can't be blank
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                label:
+                  type: string
+              required:
+              - label
+            example:
+              label: Last name
+      x-mcp:
+        enabled: true
+components:
+  securitySchemes:
+    API Key:
+      description: Authenticate API requests via an API Key
+      type: apiKey
+      in: header
+      name: X-Kit-Api-Key
+    OAuth2:
+      description: Authenticate API requests via an OAuth token
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://api.kit.com/v4/oauth/authorize
+          tokenUrl: https://api.kit.com/v4/oauth/token
+          refreshUrl: https://api.kit.com/v4/oauth/token
+          scopes:
+            read: Read access to Kit API v4
+            write: Write access to Kit API v4
+x-mint:
+  mcp:
+    enabled: true

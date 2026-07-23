@@ -1,0 +1,548 @@
+openapi: 3.0.3
+info:
+  title: Kit Accounts API
+  version: '4.0'
+servers:
+- url: https://api.kit.com
+tags:
+- name: Accounts
+paths:
+  /v4/account:
+    get:
+      summary: Get current account
+      tags:
+      - Accounts
+      security:
+      - API Key: []
+      - OAuth2: []
+      parameters: []
+      responses:
+        '200':
+          description: Returns current account and user info
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  user:
+                    type: object
+                    properties:
+                      email:
+                        type: string
+                      id:
+                        type: integer
+                    required:
+                    - email
+                  account:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                      plan_type:
+                        type: string
+                      primary_email_address:
+                        type: string
+                      created_at:
+                        type: string
+                      timezone:
+                        type: object
+                        properties:
+                          name:
+                            type: string
+                            description: Product name
+                          friendly_name:
+                            type: string
+                          utc_offset:
+                            type: string
+                        required:
+                        - name
+                        - friendly_name
+                        - utc_offset
+                      sending_addresses:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            email_address:
+                              type: string
+                            from_name:
+                              type: string
+                            status:
+                              type: string
+                            is_default:
+                              type: boolean
+                            is_verified:
+                              type: boolean
+                            is_dmarc_configured:
+                              type: boolean
+                          required:
+                          - email_address
+                          - from_name
+                          - status
+                          - is_default
+                          - is_verified
+                          - is_dmarc_configured
+                    required:
+                    - id
+                    - name
+                    - plan_type
+                    - primary_email_address
+                    - created_at
+                    - timezone
+                required:
+                - user
+                - account
+              example:
+                user:
+                  email: test@kit.dev
+                  id: 27
+                account:
+                  id: 27
+                  name: Kit Greetings
+                  plan_type: creator
+                  primary_email_address: test@kit.dev
+                  created_at: '2023-02-17T11:43:55Z'
+                  timezone:
+                    name: America/New_York
+                    friendly_name: Eastern Time (US & Canada)
+                    utc_offset: -05:00
+                  sending_addresses:
+                  - email_address: joe27@ck.lol
+                    from_name: Joe
+                    status: pending
+                    is_default: true
+                    is_verified: false
+                    is_dmarc_configured: false
+        '401':
+          description: Returns a 401 if the token and/or account cannot be authenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - errors
+              example:
+                errors:
+                - The access token is invalid
+      x-mcp:
+        enabled: true
+  /v4/account/colors:
+    get:
+      summary: List colors
+      tags:
+      - Accounts
+      security:
+      - API Key: []
+      - OAuth2: []
+      parameters: []
+      responses:
+        '200':
+          description: Returns list of colors for the current account
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  colors:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - colors
+              example:
+                colors:
+                - '#008000'
+                - '#FF0000'
+        '401':
+          description: Returns a 401 if the token and/or account cannot be authenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - errors
+              example:
+                errors:
+                - The access token is invalid
+      x-mcp:
+        enabled: true
+    put:
+      summary: Update colors
+      tags:
+      - Accounts
+      security:
+      - API Key: []
+      - OAuth2: []
+      parameters: []
+      responses:
+        '200':
+          description: Updates and returns list of colors for the current account
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  colors:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - colors
+              example:
+                colors:
+                - '#000000'
+                - '#ffffff'
+        '401':
+          description: Returns a 401 if the token and/or account cannot be authenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - errors
+              example:
+                errors:
+                - The access token is invalid
+        '422':
+          description: Returns a 422 with an error message when invalid color code is provided
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - errors
+              example:
+                errors:
+                - 'Colors #123_not_a_code is not a valid hex color code.'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                colors:
+                  type: array
+                  description: An array of up to 10 color hex codes
+                  items:
+                    type: string
+              required:
+              - colors
+            example:
+              colors:
+              - '#000000'
+              - '#ffffff'
+      x-mcp:
+        enabled: true
+  /v4/account/creator_profile:
+    get:
+      summary: Get Creator Profile
+      tags:
+      - Accounts
+      security:
+      - API Key: []
+      - OAuth2: []
+      parameters: []
+      responses:
+        '200':
+          description: Returns Creator Profile details
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  profile:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                      byline:
+                        type: string
+                      bio:
+                        type: string
+                      image_url:
+                        type: string
+                      profile_url:
+                        type: string
+                    required:
+                    - name
+                    - byline
+                    - bio
+                    - image_url
+                    - profile_url
+                required:
+                - profile
+              example:
+                profile:
+                  name: A Creator's Journey
+                  byline: A Creator
+                  bio: Follow my Journey as a Creator
+                  image_url: https://convertkit.dev/image.jpg?fit=crop&h=320&w=320
+                  profile_url: https://kit-greetings.kit.com/profile
+        '401':
+          description: Returns a 401 if the token and/or account cannot be authenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - errors
+              example:
+                errors:
+                - The access token is invalid
+        '404':
+          description: Returns a 404 if the creator profile doesn't exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - errors
+              example:
+                errors:
+                - Not Found
+      x-mcp:
+        enabled: true
+  /v4/account/email_stats:
+    get:
+      summary: Get email stats
+      tags:
+      - Accounts
+      security:
+      - API Key: []
+      - OAuth2: []
+      parameters: []
+      responses:
+        '200':
+          description: Returns your email stats for the last 90 days
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  stats:
+                    type: object
+                    properties:
+                      sent:
+                        type: integer
+                      clicked:
+                        type: integer
+                      opened:
+                        type: integer
+                      email_stats_mode:
+                        type: string
+                      open_tracking_enabled:
+                        type: boolean
+                      click_tracking_enabled:
+                        type: boolean
+                      starting:
+                        type: string
+                      ending:
+                        type: string
+                      open_rate:
+                        type: number
+                        format: float
+                      click_rate:
+                        type: number
+                        format: float
+                      unsubscribe_rate:
+                        type: number
+                        format: float
+                      bounce_rate:
+                        type: number
+                        format: float
+                    required:
+                    - sent
+                    - clicked
+                    - opened
+                    - email_stats_mode
+                    - open_tracking_enabled
+                    - click_tracking_enabled
+                    - starting
+                    - ending
+                required:
+                - stats
+              example:
+                stats:
+                  sent: 6
+                  clicked: 3
+                  opened: 6
+                  email_stats_mode: last_90
+                  open_tracking_enabled: true
+                  click_tracking_enabled: true
+                  starting: '2022-11-19T11:43:55Z'
+                  ending: '2023-02-17T11:43:55Z'
+                  open_rate: 100.0
+                  click_rate: 50.0
+                  unsubscribe_rate: 16.67
+                  bounce_rate: 16.67
+        '401':
+          description: Returns a 401 if the token and/or account cannot be authenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - errors
+              example:
+                errors:
+                - The access token is invalid
+      x-mcp:
+        enabled: true
+  /v4/account/growth_stats:
+    get:
+      summary: Get growth stats
+      description: 'Get growth stats for a specific time period. Defaults to last 90 days.<br/><br/>NOTE: We return your stats in your sending time zone. This endpoint does not return timestamps in UTC.'
+      tags:
+      - Accounts
+      security:
+      - API Key: []
+      - OAuth2: []
+      parameters:
+      - name: ending
+        in: query
+        description: Get stats for time period ending on this date (format yyyy-mm-dd). Defaults to today.
+        required: false
+        schema:
+          type: string
+        example: 02/09/2023
+      - name: starting
+        in: query
+        description: Get stats for time period beginning on this date (format yyyy-mm-dd). Defaults to 90 days ago.
+        required: false
+        schema:
+          type: string
+        example: 02/10/2023
+      responses:
+        '200':
+          description: Returns your growth stats for the provided starting and ending dates
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  stats:
+                    type: object
+                    properties:
+                      cancellations:
+                        type: integer
+                      net_new_subscribers:
+                        type: integer
+                      new_subscribers:
+                        type: integer
+                      subscribers:
+                        type: integer
+                      starting:
+                        type: string
+                      ending:
+                        type: string
+                    required:
+                    - cancellations
+                    - net_new_subscribers
+                    - new_subscribers
+                    - subscribers
+                    - starting
+                    - ending
+                required:
+                - stats
+              example:
+                stats:
+                  cancellations: 0
+                  net_new_subscribers: 3
+                  new_subscribers: 3
+                  subscribers: 3
+                  starting: '2023-02-10T00:00:00-05:00'
+                  ending: '2023-02-24T23:59:59-05:00'
+        '401':
+          description: Returns a 401 if the token and/or account cannot be authenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - errors
+              example:
+                errors:
+                - The access token is invalid
+        '422':
+          description: Returns a 422 with an error message if the starting or ending params are misformatted or the range is invalid
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - errors
+              example:
+                errors:
+                - Starting date is incorrectly formatted. Use YYYY-MM-DD.
+                - Ending date is incorrectly formatted. Use YYYY-MM-DD.
+                - Starting date must be before the ending date.
+      x-mcp:
+        enabled: true
+components:
+  securitySchemes:
+    API Key:
+      description: Authenticate API requests via an API Key
+      type: apiKey
+      in: header
+      name: X-Kit-Api-Key
+    OAuth2:
+      description: Authenticate API requests via an OAuth token
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://api.kit.com/v4/oauth/authorize
+          tokenUrl: https://api.kit.com/v4/oauth/token
+          refreshUrl: https://api.kit.com/v4/oauth/token
+          scopes:
+            read: Read access to Kit API v4
+            write: Write access to Kit API v4
+x-mint:
+  mcp:
+    enabled: true

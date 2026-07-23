@@ -1,0 +1,708 @@
+openapi: 3.0.3
+info:
+  title: Kit Accounts Snippets API
+  version: '4.0'
+servers:
+- url: https://api.kit.com
+tags:
+- name: Snippets
+paths:
+  /v4/snippets:
+    get:
+      summary: List snippets
+      description: 'Returns every snippet on the account. Each snippet''s `key` is the identifier used in Liquid — `{{ snippet.key }}` — when creating a broadcast or sequence email. See [Create a snippet](/api-reference/snippets/create-a-snippet) for how snippets work end-to-end.
+
+
+        **Tip:** the heavier `content` and `document` fields are omitted by default to keep responses fast. Pass `include_content=true` when you need the body — for example, to render a preview or audit Liquid usage.
+
+
+        Filter the result with `snippet_type` (`inline` or `block`) and `archived` (defaults to `false`, set `true` to list only archived snippets).'
+      tags:
+      - Snippets
+      security:
+      - API Key: []
+      - OAuth2: []
+      parameters:
+      - name: after
+        description: To fetch next page of results, use `?after=<end_cursor>`
+        in: query
+        required: false
+        schema:
+          nullable: true
+      - name: archived
+        description: When `true`, returns only archived snippets. Defaults to `false`.
+        in: query
+        required: false
+        schema:
+          nullable: true
+      - name: before
+        description: To fetch previous page of results, use `?before=<start_cursor>`
+        in: query
+        required: false
+        schema:
+          nullable: true
+      - name: include_content
+        description: When `true`, includes both the `content` and `document` fields for each snippet in the response. Defaults to `false`.
+        in: query
+        required: false
+        schema:
+          type: boolean
+        example: true
+      - name: include_total_count
+        description: Set to `true` to include the `total_count` in the response. This option can cause slow responses; if paging through results, request it only on the first page and reuse the value for subsequent pages.
+        in: query
+        required: false
+        schema:
+          type: boolean
+        example: false
+      - name: per_page
+        description: Number of results per page. Default 500, maximum 1000.
+        in: query
+        required: false
+        schema:
+          nullable: true
+      - name: snippet_type
+        description: Filter snippets by type. Use `inline` for text snippets or `block` for rich-text block snippets.
+        in: query
+        required: false
+        schema:
+          nullable: true
+      responses:
+        '200':
+          description: Returns a paginated list of all snippets for your account
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  snippets:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        name:
+                          type: string
+                        snippet_type:
+                          type: string
+                        archived:
+                          type: boolean
+                        key:
+                          type: string
+                        created_at:
+                          type: string
+                        updated_at:
+                          type: string
+                        content:
+                          type: string
+                        document:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                            value:
+                              nullable: true
+                            value_html:
+                              type: string
+                            value_plain:
+                              nullable: true
+                            version:
+                              type: integer
+                          required:
+                          - id
+                          - value
+                          - value_html
+                          - value_plain
+                          - version
+                      required:
+                      - id
+                      - name
+                      - snippet_type
+                      - archived
+                      - key
+                      - created_at
+                      - updated_at
+                      - content
+                      - document
+                  pagination:
+                    type: object
+                    properties:
+                      has_previous_page:
+                        type: boolean
+                      has_next_page:
+                        type: boolean
+                      start_cursor:
+                        type: string
+                      end_cursor:
+                        type: string
+                      per_page:
+                        type: integer
+                    required:
+                    - has_previous_page
+                    - has_next_page
+                    - start_cursor
+                    - end_cursor
+                    - per_page
+                required:
+                - snippets
+                - pagination
+              example:
+                snippets:
+                - id: 5
+                  name: Welcome message
+                  snippet_type: inline
+                  archived: false
+                  key: welcome-message
+                  created_at: '2023-02-17T11:43:55Z'
+                  updated_at: '2023-02-17T11:43:55Z'
+                  content: Hello {{ subscriber.first_name }}
+                  document:
+                    id: 152
+                    value: null
+                    value_html: content
+                    value_plain: null
+                    version: 1
+                pagination:
+                  has_previous_page: false
+                  has_next_page: false
+                  start_cursor: WzVd
+                  end_cursor: WzVd
+                  per_page: 500
+        '401':
+          description: Returns a 401 if the token and/or account cannot be authenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - errors
+              example:
+                errors:
+                - The access token is invalid
+      x-mcp:
+        enabled: true
+    post:
+      summary: Create a snippet
+      description: 'Snippets are reusable pieces of email content you can drop into a broadcast or sequence email using Liquid: `{{ snippet.key }}`. Update the snippet once and every email that references it picks up the new content on next send.
+
+
+        There are two `snippet_type`s. **`inline`** snippets store plain-text content (with Liquid variable support like `{{ subscriber.first_name }}`) in the `content` field. **`block`** snippets store rich-text HTML — text, lists, images, buttons — in `document_attributes.value_html`. A snippet''s type is fixed at creation: it cannot be changed via [Update a snippet](/api-reference/snippets/update-a-snippet).
+
+
+        The response includes a `key` field. That''s the identifier you use in Liquid — for example, a snippet returned with `"key": "welcome-message"` is referenced inside a broadcast as `{{ snippet.welcome-message }}`. Keys are derived from the snippet name on creation.
+
+
+        **Note:** the API rejects circular references — a snippet cannot reference itself, directly or transitively — with a `422` validation error.
+
+
+        For end-user context on how creators build and edit snippets in the Kit UI, see the help articles on [content snippets](https://help.kit.com/en/articles/3812712-creating-and-using-content-snippets-in-your-kit-emails) and [code snippets for custom templates](https://help.kit.com/en/articles/2810398-code-snippets-for-custom-email-templates).'
+      tags:
+      - Snippets
+      security:
+      - API Key: []
+      - OAuth2: []
+      parameters: []
+      responses:
+        '201':
+          description: Creates a new snippet
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  snippet:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                      snippet_type:
+                        type: string
+                      archived:
+                        type: boolean
+                      key:
+                        type: string
+                      created_at:
+                        type: string
+                      updated_at:
+                        type: string
+                      content:
+                        type: string
+                      document:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                          value:
+                            nullable: true
+                          value_html:
+                            nullable: true
+                          value_plain:
+                            nullable: true
+                          version:
+                            type: integer
+                        required:
+                        - id
+                        - value
+                        - value_html
+                        - value_plain
+                        - version
+                    required:
+                    - id
+                    - name
+                    - snippet_type
+                    - archived
+                    - key
+                    - created_at
+                    - updated_at
+                    - content
+                    - document
+                required:
+                - snippet
+              example:
+                snippet:
+                  id: 31
+                  name: Cat Fact of the Day
+                  snippet_type: inline
+                  archived: false
+                  key: cat-fact-of-the-day
+                  created_at: '2026-06-11T16:16:17Z'
+                  updated_at: '2026-06-11T16:16:17Z'
+                  content: Did you know, {{ subscriber.first_name }}? Cats can rotate their ears 180 degrees.
+                  document:
+                    id: 178
+                    value: null
+                    value_html: null
+                    value_plain: null
+                    version: 1
+        '401':
+          description: Returns a 401 if the token and/or account cannot be authenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - errors
+              example:
+                errors:
+                - The access token is invalid
+        '422':
+          description: Returns a 422 with an error message when one or more of the parameters were invalid
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - errors
+              example:
+                errors:
+                - name can't be blank
+      requestBody:
+        content:
+          application/json:
+            schema:
+              oneOf:
+              - title: Inline snippet
+                type: object
+                properties:
+                  name:
+                    type: string
+                    description: Name of the snippet
+                  snippet_type:
+                    type: string
+                    enum:
+                    - inline
+                    description: Must be 'inline'
+                  content:
+                    type: string
+                    description: Liquid-enabled text content for the snippet
+                required:
+                - name
+                - snippet_type
+                - content
+              - title: Block snippet
+                type: object
+                properties:
+                  name:
+                    type: string
+                    description: Name of the snippet
+                  snippet_type:
+                    type: string
+                    enum:
+                    - block
+                    description: Must be 'block'
+                  document_attributes:
+                    type: object
+                    description: Rich-text document for the snippet
+                    properties:
+                      value_html:
+                        type: string
+                        description: HTML content for the block snippet
+                    required:
+                    - value_html
+                required:
+                - name
+                - snippet_type
+                - document_attributes
+            example:
+              name: Cat Fact of the Day
+              snippet_type: inline
+              content: Did you know, {{ subscriber.first_name }}? Cats can rotate their ears 180 degrees.
+      x-mcp:
+        enabled: true
+  /v4/snippets/{id}:
+    get:
+      summary: Get a snippet
+      description: 'Fetches a single snippet by `id`. Unlike [List snippets](/api-reference/snippets/list-snippets), this endpoint **always returns the full `content` and `document`** — no `include_content` flag needed.
+
+
+        Use this when you have an `id` (e.g. stored from a prior create call) and need the current `key` and body — for example, to preview the resolved HTML or confirm a snippet still exists before referencing it as `{{ snippet.key }}` in a broadcast or sequence email. See [Create a snippet](/api-reference/snippets/create-a-snippet) for the snippet model.'
+      tags:
+      - Snippets
+      security:
+      - API Key: []
+      - OAuth2: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+        example: 25
+      responses:
+        '200':
+          description: Returns the snippet details
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  snippet:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                      snippet_type:
+                        type: string
+                      archived:
+                        type: boolean
+                      key:
+                        type: string
+                      created_at:
+                        type: string
+                      updated_at:
+                        type: string
+                      content:
+                        type: string
+                      document:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                          value:
+                            nullable: true
+                          value_html:
+                            type: string
+                          value_plain:
+                            nullable: true
+                          version:
+                            type: integer
+                        required:
+                        - id
+                        - value
+                        - value_html
+                        - value_plain
+                        - version
+                    required:
+                    - id
+                    - name
+                    - snippet_type
+                    - archived
+                    - key
+                    - created_at
+                    - updated_at
+                    - content
+                    - document
+                required:
+                - snippet
+              example:
+                snippet:
+                  id: 24
+                  name: Welcome message
+                  snippet_type: inline
+                  archived: false
+                  key: welcome-message
+                  created_at: '2023-02-17T11:43:55Z'
+                  updated_at: '2023-02-17T11:43:55Z'
+                  content: Hello {{ subscriber.first_name }}
+                  document:
+                    id: 171
+                    value: null
+                    value_html: content
+                    value_plain: null
+                    version: 1
+        '401':
+          description: Returns a 401 if the token and/or account cannot be authenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - errors
+              example:
+                errors:
+                - The access token is invalid
+        '404':
+          description: Returns a 404 when the provided id does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - errors
+              example:
+                errors:
+                - Not Found
+      x-mcp:
+        enabled: true
+    put:
+      summary: Update a snippet
+      description: 'Rename a snippet, replace its body, or archive/restore it. Updates apply on the next send of any email that references the snippet via `{{ snippet.key }}` — there''s no per-email versioning, so a content change ripples to every broadcast or sequence email using that key.
+
+
+        The request body must match the existing `snippet_type`. For an **`inline`** snippet, send `content` (and optionally `name`, `archived`). For a **`block`** snippet, send `document_attributes.value_html` (and optionally `name`, `archived`). Pass `archived: true` to archive, `false` to restore.
+
+
+        **Warning:** `snippet_type` is immutable. Sending a different value, or sending the body shape for the wrong type, returns a `422` with `snippet_type cannot be changed`.
+
+
+        See [Create a snippet](/api-reference/snippets/create-a-snippet) for the full snippet model and how `key` ties into Liquid.'
+      tags:
+      - Snippets
+      security:
+      - API Key: []
+      - OAuth2: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+        example: 60
+      responses:
+        '200':
+          description: Updates the snippet and returns its details
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  snippet:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                      snippet_type:
+                        type: string
+                      archived:
+                        type: boolean
+                      key:
+                        type: string
+                      created_at:
+                        type: string
+                      updated_at:
+                        type: string
+                      content:
+                        type: string
+                      document:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                          value:
+                            nullable: true
+                          value_html:
+                            type: string
+                          value_plain:
+                            nullable: true
+                          version:
+                            type: integer
+                        required:
+                        - id
+                        - value
+                        - value_html
+                        - value_plain
+                        - version
+                    required:
+                    - id
+                    - name
+                    - snippet_type
+                    - archived
+                    - key
+                    - created_at
+                    - updated_at
+                    - content
+                    - document
+                required:
+                - snippet
+              example:
+                snippet:
+                  id: 59
+                  name: Dog Fact of the Day
+                  snippet_type: inline
+                  archived: false
+                  key: welcome-message
+                  created_at: '2023-02-17T11:43:55Z'
+                  updated_at: '2026-06-11T16:16:22Z'
+                  content: Hello {{ subscriber.first_name }}
+                  document:
+                    id: 206
+                    value: null
+                    value_html: content
+                    value_plain: null
+                    version: 1
+        '401':
+          description: Returns a 401 if the token and/or account cannot be authenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - errors
+              example:
+                errors:
+                - The access token is invalid
+        '404':
+          description: Returns a 404 when the provided id does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - errors
+              example:
+                errors:
+                - Not Found
+        '422':
+          description: Returns a 422 with an error message when one or more of the parameters were invalid
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - errors
+              example:
+                errors:
+                - snippet_type cannot be changed
+      requestBody:
+        content:
+          application/json:
+            schema:
+              oneOf:
+              - title: Inline snippet
+                type: object
+                properties:
+                  name:
+                    type: string
+                    description: New name for the snippet
+                  snippet_type:
+                    type: string
+                    description: Cannot be changed — must match the existing type if provided
+                  archived:
+                    type: boolean
+                    description: Pass `true` to archive or `false` to restore the snippet
+                  content:
+                    type: string
+                    description: New Liquid-enabled text content
+              - title: Block snippet
+                type: object
+                properties:
+                  name:
+                    type: string
+                    description: New name for the snippet
+                  snippet_type:
+                    type: string
+                    description: Cannot be changed — must match the existing type if provided
+                  archived:
+                    type: boolean
+                    description: Pass `true` to archive or `false` to restore the snippet
+                  document_attributes:
+                    type: object
+                    description: Updated rich-text document
+                    properties:
+                      value_html:
+                        type: string
+                        description: New HTML content for the block snippet
+                    required:
+                    - value_html
+            example:
+              name: Dog Fact of the Day
+      x-mcp:
+        enabled: true
+components:
+  securitySchemes:
+    API Key:
+      description: Authenticate API requests via an API Key
+      type: apiKey
+      in: header
+      name: X-Kit-Api-Key
+    OAuth2:
+      description: Authenticate API requests via an OAuth token
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://api.kit.com/v4/oauth/authorize
+          tokenUrl: https://api.kit.com/v4/oauth/token
+          refreshUrl: https://api.kit.com/v4/oauth/token
+          scopes:
+            read: Read access to Kit API v4
+            write: Write access to Kit API v4
+x-mint:
+  mcp:
+    enabled: true

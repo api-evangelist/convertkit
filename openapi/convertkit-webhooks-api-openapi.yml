@@ -1,0 +1,362 @@
+openapi: 3.0.3
+info:
+  title: Kit Accounts Webhooks API
+  version: '4.0'
+servers:
+- url: https://api.kit.com
+tags:
+- name: Webhooks
+paths:
+  /v4/webhooks:
+    get:
+      summary: List webhooks
+      description: Webhooks are automations that will receive subscriber data when a subscriber event is triggered, such as when a subscriber completes a sequence.<br/><br/>When a webhook is triggered, a `POST` request will be made to your URL with a JSON payload.
+      tags:
+      - Webhooks
+      security:
+      - API Key: []
+      - OAuth2: []
+      parameters:
+      - name: after
+        description: To fetch next page of results, use `?after=<end_cursor>`
+        in: query
+        required: false
+        schema:
+          nullable: true
+      - name: before
+        description: To fetch previous page of results, use `?before=<start_cursor>`
+        in: query
+        required: false
+        schema:
+          nullable: true
+      - name: include_total_count
+        description: Set to `true` to include the `total_count` in the response. This option can cause slow responses; if paging through results, request it only on the first page and reuse the value for subsequent pages.
+        in: query
+        required: false
+        schema:
+          type: boolean
+        example: false
+      - name: per_page
+        description: Number of results per page. Default 500, maximum 1000.
+        in: query
+        required: false
+        schema:
+          nullable: true
+      responses:
+        '200':
+          description: Returns a paginated list of webhooks
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  webhooks:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        account_id:
+                          type: integer
+                        event:
+                          type: object
+                          properties:
+                            name:
+                              type: string
+                              description: Product name
+                            tag_id:
+                              type: integer
+                              nullable: true
+                            form_id:
+                              type: integer
+                              nullable: true
+                          required:
+                          - name
+                        target_url:
+                          type: string
+                      required:
+                      - id
+                      - account_id
+                      - event
+                      - target_url
+                  pagination:
+                    type: object
+                    properties:
+                      has_previous_page:
+                        type: boolean
+                      has_next_page:
+                        type: boolean
+                      start_cursor:
+                        type: string
+                      end_cursor:
+                        type: string
+                      per_page:
+                        type: integer
+                    required:
+                    - has_previous_page
+                    - has_next_page
+                    - start_cursor
+                    - end_cursor
+                    - per_page
+                required:
+                - webhooks
+                - pagination
+              example:
+                webhooks:
+                - id: 2
+                  account_id: 1617
+                  event:
+                    name: tag_add
+                    tag_id: 44
+                  target_url: http://example.convertkit.dev/tags
+                - id: 1
+                  account_id: 1617
+                  event:
+                    name: form_subscribe
+                    form_id: 10
+                  target_url: http://example.convertkit.dev/
+                pagination:
+                  has_previous_page: false
+                  has_next_page: false
+                  start_cursor: WzJd
+                  end_cursor: WzFd
+                  per_page: 500
+        '401':
+          description: Returns a 401 if the token and/or account cannot be authenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - errors
+              example:
+                errors:
+                - The access token is invalid
+      x-mcp:
+        enabled: true
+    post:
+      summary: Create a webhook
+      description: Available event types:<br/>- `subscriber.subscriber_activate`<br/>- `subscriber.subscriber_unsubscribe`<br/>- `subscriber.subscriber_bounce`<br/>- `subscriber.subscriber_complain`<br/>- `subscriber.form_subscribe`, required parameter `form_id` [Integer]<br/>- `subscriber.course_subscribe`, required parameter `sequence_id` [Integer]<br/>- `subscriber.course_complete`, required parameter `sequence_id` [Integer]<br/>- `subscriber.link_click`, required parameter `initiator_value` [String] as a link URL<br/>- `subscriber.product_purchase`, required parameter `product_id` [Integer]<br/>- `subscriber.tag_add`, required parameter `tag_id` [Integer]<br/>- `subscriber.tag_remove`, required parameter `tag_id` [Integer]<br/>- `purchase.purchase_create`<br/>- `custom_field.field_created`<br/>- `custom_field.field_deleted`<br/>- `custom_field.field_value_updated`, required parameter `custom_field_id` [Integer]
+      tags:
+      - Webhooks
+      security:
+      - API Key: []
+      - OAuth2: []
+      parameters: []
+      responses:
+        '201':
+          description: Creates the webhook
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  webhook:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      account_id:
+                        type: integer
+                      event:
+                        type: object
+                        properties:
+                          name:
+                            type: string
+                            description: Product name
+                          initiator_value:
+                            nullable: true
+                        required:
+                        - name
+                        - initiator_value
+                      target_url:
+                        type: string
+                    required:
+                    - id
+                    - account_id
+                    - event
+                    - target_url
+                required:
+                - webhook
+              example:
+                webhook:
+                  id: 9
+                  account_id: 1643
+                  event:
+                    name: subscriber_activate
+                    initiator_value: null
+                  target_url: https://example.convertkit.dev/
+        '401':
+          description: Returns a 401 if the token and/or account cannot be authenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - errors
+              example:
+                errors:
+                - The access token is invalid
+        '422':
+          description: Returns an error when missing required params
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - errors
+              example:
+                errors:
+                - '`event` and `target` parameters must be provided'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                target_url:
+                  type: string
+                event:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    form_id:
+                      nullable: true
+                    tag_id:
+                      nullable: true
+                    sequence_id:
+                      nullable: true
+                    product_id:
+                      nullable: true
+                    initiator_value:
+                      nullable: true
+                    custom_field_id:
+                      nullable: true
+                  required:
+                  - name
+                  - form_id
+                  - tag_id
+                  - sequence_id
+                  - product_id
+                  - initiator_value
+              required:
+              - target_url
+              - event
+            example:
+              target_url: https://example.convertkit.dev/
+              event:
+                name: subscriber.subscriber_activate
+                form_id: null
+                tag_id: null
+                sequence_id: null
+                product_id: null
+                initiator_value: null
+                custom_field_id: null
+      x-mcp:
+        enabled: true
+  /v4/webhooks/{id}:
+    delete:
+      summary: Delete a webhook
+      tags:
+      - Webhooks
+      security:
+      - API Key: []
+      - OAuth2: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+        example: 31
+      responses:
+        '204':
+          description: Deletes the webhook
+        '401':
+          description: Returns a 401 if the token and/or account cannot be authenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - errors
+              example:
+                errors:
+                - The access token is invalid
+        '404':
+          description: Returns a 404 when the provided id does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - errors
+              example:
+                errors:
+                - Not Found
+        '422':
+          description: Returns a 422 when the webhook cannot be deleted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - errors
+              example:
+                errors:
+                - Unable to destroy the webhook.
+      x-mcp:
+        enabled: true
+components:
+  securitySchemes:
+    API Key:
+      description: Authenticate API requests via an API Key
+      type: apiKey
+      in: header
+      name: X-Kit-Api-Key
+    OAuth2:
+      description: Authenticate API requests via an OAuth token
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://api.kit.com/v4/oauth/authorize
+          tokenUrl: https://api.kit.com/v4/oauth/token
+          refreshUrl: https://api.kit.com/v4/oauth/token
+          scopes:
+            read: Read access to Kit API v4
+            write: Write access to Kit API v4
+x-mint:
+  mcp:
+    enabled: true
