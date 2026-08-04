@@ -1,0 +1,40 @@
+{
+  "provider": "convertkit",
+  "sources": [
+    "convertkit-accounts-api-openapi.yml",
+    "convertkit-broadcasts-api-openapi.yml",
+    "convertkit-custom-fields-api-openapi.yml",
+    "convertkit-email-templates-api-openapi.yml",
+    "convertkit-forms-api-openapi.yml",
+    "convertkit-posts-api-openapi.yml",
+    "convertkit-purchases-api-openapi.yml",
+    "convertkit-segments-api-openapi.yml",
+    "convertkit-sequence-emails-api-openapi.yml",
+    "convertkit-sequences-api-openapi.yml",
+    "convertkit-snippets-api-openapi.yml",
+    "convertkit-subscribers-api-openapi.yml",
+    "convertkit-tags-api-openapi.yml",
+    "convertkit-webhooks-api-openapi.yml"
+  ],
+  "outputs": [
+    "convertkit-accounts-api-openapi.yml",
+    "convertkit-broadcasts-api-openapi.yml",
+    "convertkit-custom-fields-api-openapi.yml",
+    "convertkit-email-templates-api-openapi.yml",
+    "convertkit-forms-api-openapi.yml",
+    "convertkit-posts-api-openapi.yml",
+    "convertkit-purchases-api-openapi.yml",
+    "convertkit-segments-api-openapi.yml",
+    "convertkit-sequence-emails-api-openapi.yml",
+    "convertkit-sequences-api-openapi.yml",
+    "convertkit-snippets-api-openapi.yml",
+    "convertkit-subscribers-api-openapi.yml",
+    "convertkit-tags-api-openapi.yml",
+    "convertkit-webhooks-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
