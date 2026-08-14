@@ -1,9 +1,14 @@
 aid: convertkit
 name: Kit
-description: Kit (formerly ConvertKit) is a creator email marketing platform with
-  a REST API for managing subscribers, tags, sequences, forms, broadcasts, and automation
-  rules. The API supports both API key and OAuth 2.0 authentication, with v4 as the
-  current version featuring cursor-based pagination, bulk operations, and async processing.
+description: Kit (formerly ConvertKit) is a creator email marketing platform whose REST API v4 covers
+  subscribers, tags, custom fields, forms and landing pages, sequences, broadcasts, snippets, posts, purchases,
+  segments and webhooks across 72 operations on https://api.kit.com/v4. It authenticates with an X-Kit-Api-Key
+  header for personal automation or OAuth 2.0 (PKCE, dynamic client registration, rotating single-use
+  refresh tokens) for apps published to the Kit App Store, and uses cursor-based pagination, an OAuth-only
+  bulk namespace with async callbacks, and eventually-consistent list reads. Kit also runs two remote
+  MCP servers - an OAuth-gated one that acts on a creator's account and an anonymous read-only documentation
+  server - publishes an A2A agent card and an Agent Skill from its developer docs host, and ships llms.txt.
+  Its only first-party API client is a PHP SDK.
 accessModel:
   pricing: paid
   onboarding: self-serve
@@ -20,7 +25,7 @@ accessModel:
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/convertkit.png
 url: https://raw.githubusercontent.com/api-evangelist/convertkit/refs/heads/main/apis.yml
 created: '2026-06-13'
-modified: '2026-06-13'
+modified: '2026-08-13'
 specificationVersion: '0.19'
 tags:
 - Email Marketing
@@ -31,6 +36,16 @@ tags:
 - Sequences
 - Forms
 - Broadcasts
+- Webhooks
+- MCP
+- Agents
+- OAuth
+- Marketing Automation
+- Landing Pages
+- Segmentation
+- Email Campaigns
+- SaaS
+- Commerce
 apis:
 - aid: convertkit:convertkit-accounts-api
   name: Kit Accounts API
@@ -48,8 +63,8 @@ apis:
     url: https://developers.kit.com/api-reference/authentication
   - type: ChangeLog
     url: https://developers.kit.com/changelog
-  - type: GraphQL
-    url: graphql/convertkit-graphql.md
+  - type: Overlay
+    url: overlays/convertkit-accounts-overlay.yaml
 - aid: convertkit:convertkit-broadcasts-api
   name: Kit Broadcasts API
   description: The Broadcasts API from Kit — 5 operation(s) for broadcasts.
@@ -66,8 +81,8 @@ apis:
     url: https://developers.kit.com/api-reference/authentication
   - type: ChangeLog
     url: https://developers.kit.com/changelog
-  - type: GraphQL
-    url: graphql/convertkit-graphql.md
+  - type: Overlay
+    url: overlays/convertkit-broadcasts-overlay.yaml
 - aid: convertkit:convertkit-custom-fields-api
   name: Kit Custom Fields API
   description: The Custom Fields API from Kit — 4 operation(s) for custom fields.
@@ -84,8 +99,8 @@ apis:
     url: https://developers.kit.com/api-reference/authentication
   - type: ChangeLog
     url: https://developers.kit.com/changelog
-  - type: GraphQL
-    url: graphql/convertkit-graphql.md
+  - type: Overlay
+    url: overlays/convertkit-custom-fields-overlay.yaml
 - aid: convertkit:convertkit-email-templates-api
   name: Kit Email Templates API
   description: The Email Templates API from Kit — 1 operation(s) for email templates.
@@ -102,8 +117,8 @@ apis:
     url: https://developers.kit.com/api-reference/authentication
   - type: ChangeLog
     url: https://developers.kit.com/changelog
-  - type: GraphQL
-    url: graphql/convertkit-graphql.md
+  - type: Overlay
+    url: overlays/convertkit-email-templates-overlay.yaml
 - aid: convertkit:convertkit-forms-api
   name: Kit Forms API
   description: The Forms API from Kit — 4 operation(s) for forms.
@@ -120,8 +135,8 @@ apis:
     url: https://developers.kit.com/api-reference/authentication
   - type: ChangeLog
     url: https://developers.kit.com/changelog
-  - type: GraphQL
-    url: graphql/convertkit-graphql.md
+  - type: Overlay
+    url: overlays/convertkit-forms-overlay.yaml
 - aid: convertkit:convertkit-posts-api
   name: Kit Posts API
   description: The Posts API from Kit — 2 operation(s) for posts.
@@ -138,8 +153,8 @@ apis:
     url: https://developers.kit.com/api-reference/authentication
   - type: ChangeLog
     url: https://developers.kit.com/changelog
-  - type: GraphQL
-    url: graphql/convertkit-graphql.md
+  - type: Overlay
+    url: overlays/convertkit-posts-overlay.yaml
 - aid: convertkit:convertkit-purchases-api
   name: Kit Purchases API
   description: The Purchases API from Kit — 2 operation(s) for purchases.
@@ -156,8 +171,8 @@ apis:
     url: https://developers.kit.com/api-reference/authentication
   - type: ChangeLog
     url: https://developers.kit.com/changelog
-  - type: GraphQL
-    url: graphql/convertkit-graphql.md
+  - type: Overlay
+    url: overlays/convertkit-purchases-overlay.yaml
 - aid: convertkit:convertkit-segments-api
   name: Kit Segments API
   description: The Segments API from Kit — 1 operation(s) for segments.
@@ -174,8 +189,8 @@ apis:
     url: https://developers.kit.com/api-reference/authentication
   - type: ChangeLog
     url: https://developers.kit.com/changelog
-  - type: GraphQL
-    url: graphql/convertkit-graphql.md
+  - type: Overlay
+    url: overlays/convertkit-segments-overlay.yaml
 - aid: convertkit:convertkit-sequence-emails-api
   name: Kit Sequence Emails API
   description: The Sequence Emails API from Kit — 2 operation(s) for sequence emails.
@@ -192,8 +207,8 @@ apis:
     url: https://developers.kit.com/api-reference/authentication
   - type: ChangeLog
     url: https://developers.kit.com/changelog
-  - type: GraphQL
-    url: graphql/convertkit-graphql.md
+  - type: Overlay
+    url: overlays/convertkit-sequence-emails-overlay.yaml
 - aid: convertkit:convertkit-sequences-api
   name: Kit Sequences API
   description: The Sequences API from Kit — 4 operation(s) for sequences.
@@ -210,8 +225,8 @@ apis:
     url: https://developers.kit.com/api-reference/authentication
   - type: ChangeLog
     url: https://developers.kit.com/changelog
-  - type: GraphQL
-    url: graphql/convertkit-graphql.md
+  - type: Overlay
+    url: overlays/convertkit-sequences-overlay.yaml
 - aid: convertkit:convertkit-snippets-api
   name: Kit Snippets API
   description: The Snippets API from Kit — 2 operation(s) for snippets.
@@ -228,8 +243,8 @@ apis:
     url: https://developers.kit.com/api-reference/authentication
   - type: ChangeLog
     url: https://developers.kit.com/changelog
-  - type: GraphQL
-    url: graphql/convertkit-graphql.md
+  - type: Overlay
+    url: overlays/convertkit-snippets-overlay.yaml
 - aid: convertkit:convertkit-subscribers-api
   name: Kit Subscribers API
   description: The Subscribers API from Kit — 7 operation(s) for subscribers.
@@ -246,8 +261,8 @@ apis:
     url: https://developers.kit.com/api-reference/authentication
   - type: ChangeLog
     url: https://developers.kit.com/changelog
-  - type: GraphQL
-    url: graphql/convertkit-graphql.md
+  - type: Overlay
+    url: overlays/convertkit-subscribers-overlay.yaml
 - aid: convertkit:convertkit-tags-api
   name: Kit Tags API
   description: The Tags API from Kit — 6 operation(s) for tags.
@@ -264,8 +279,8 @@ apis:
     url: https://developers.kit.com/api-reference/authentication
   - type: ChangeLog
     url: https://developers.kit.com/changelog
-  - type: GraphQL
-    url: graphql/convertkit-graphql.md
+  - type: Overlay
+    url: overlays/convertkit-tags-overlay.yaml
 - aid: convertkit:convertkit-webhooks-api
   name: Kit Webhooks API
   description: The Webhooks API from Kit — 2 operation(s) for webhooks.
@@ -282,8 +297,8 @@ apis:
     url: https://developers.kit.com/api-reference/authentication
   - type: ChangeLog
     url: https://developers.kit.com/changelog
-  - type: GraphQL
-    url: graphql/convertkit-graphql.md
+  - type: Overlay
+    url: overlays/convertkit-webhooks-overlay.yaml
 common:
 - type: AgenticAccess
   url: agentic-access/convertkit-agentic-access.yml
@@ -301,8 +316,8 @@ common:
   url: https://kit.com
 - type: Documentation
   url: https://developers.kit.com
-- type: GitHubOrg
-  url: https://github.com/convertkit
+- type: GitHubOrganization
+  url: https://github.com/Kit
 - type: LinkedIn
   url: https://www.linkedin.com/company/kit.com
 - type: Blog
@@ -319,6 +334,217 @@ common:
   url: rate-limits/convertkit-rate-limits.yml
 - type: FinOps
   url: finops/convertkit-finops.yml
+- type: AgentCard
+  url: a2a/convertkit-a2a.yml
+- type: WellKnown
+  url: well-known/convertkit-well-known.yml
+- type: MCPServer
+  url: mcp/convertkit-mcp.yml
+- type: ToolCrosswalk
+  url: mcp/convertkit-tool-crosswalk.yml
+- type: LLMsTxt
+  url: llms/convertkit-llms.txt
+- type: Packages
+  url: packages/convertkit-packages.yml
+- type: SDKs
+  url: packages/convertkit-packages.yml
+- type: Conventions
+  url: conventions/convertkit-conventions.yml
+- type: ErrorCatalog
+  url: errors/convertkit-problem-types.yml
+- type: Lifecycle
+  url: lifecycle/convertkit-lifecycle.yml
+- type: Deprecation
+  url: https://developers.kit.com/api-reference/upgrading-to-v4
+- type: ChangeLog
+  url: changelog/convertkit-changelog.yml
+- type: Conformance
+  url: conformance/convertkit-conformance.yml
+- type: Compliance
+  url: https://kit.com/security
+- type: Security
+  url: https://kit.com/security
+- type: Webhooks
+  url: asyncapi/convertkit-webhooks.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: Components
+  url: components/convertkit-components.yml
+- type: DataModel
+  url: data-model/convertkit-data-model.yml
+- type: Vocabulary
+  url: vocabulary/vocabulary.json
+- type: DeveloperPortal
+  url: https://developers.kit.com
+- type: APIReference
+  url: https://developers.kit.com/api-reference/overview
+- type: GettingStarted
+  url: https://developers.kit.com/kit-app-store/quick-start-guide
+- type: Support
+  url: https://kit.com/support
+- type: HelpCenter
+  url: https://help.kit.com
+- type: TermsOfService
+  url: https://kit.com/terms
+- type: PrivacyPolicy
+  url: https://kit.com/privacy
+- type: SignUp
+  url: https://app.kit.com/users/signup
+- type: SpectralRules
+  url: rules/convertkit-jsonschema-spectral-rules.yml
+- type: Examples
+  url: examples/add-subscriber-to-form-by-email-address.json
+- type: Examples
+  url: examples/add-subscriber-to-form.json
+- type: Examples
+  url: examples/add-subscriber-to-sequence-by-email-address.json
+- type: Examples
+  url: examples/add-subscriber-to-sequence.json
+- type: Examples
+  url: examples/bulk-add-subscribers-to-forms.json
+- type: Examples
+  url: examples/bulk-create-custom-fields.json
+- type: Examples
+  url: examples/bulk-create-subscribers.json
+- type: Examples
+  url: examples/bulk-create-tags.json
+- type: Examples
+  url: examples/bulk-remove-tags-from-subscribers.json
+- type: Examples
+  url: examples/bulk-tag-subscribers.json
+- type: Examples
+  url: examples/bulk-update-subscriber-custom-field-values.json
+- type: Examples
+  url: examples/create-a-broadcast.json
+- type: Examples
+  url: examples/create-a-custom-field.json
+- type: Examples
+  url: examples/create-a-purchase.json
+- type: Examples
+  url: examples/create-a-sequence-email.json
+- type: Examples
+  url: examples/create-a-sequence.json
+- type: Examples
+  url: examples/create-a-snippet.json
+- type: Examples
+  url: examples/create-a-subscriber.json
+- type: Examples
+  url: examples/create-a-tag.json
+- type: Examples
+  url: examples/create-a-webhook.json
+- type: Examples
+  url: examples/delete-a-broadcast.json
+- type: Examples
+  url: examples/delete-a-sequence-email.json
+- type: Examples
+  url: examples/delete-a-sequence.json
+- type: Examples
+  url: examples/delete-a-webhook.json
+- type: Examples
+  url: examples/delete-custom-field.json
+- type: Examples
+  url: examples/filter-subscribers-based-on-engagement.json
+- type: Examples
+  url: examples/get-a-broadcast.json
+- type: Examples
+  url: examples/get-a-post.json
+- type: Examples
+  url: examples/get-a-purchase.json
+- type: Examples
+  url: examples/get-a-sequence-email.json
+- type: Examples
+  url: examples/get-a-sequence.json
+- type: Examples
+  url: examples/get-a-snippet.json
+- type: Examples
+  url: examples/get-a-subscriber.json
+- type: Examples
+  url: examples/get-creator-profile.json
+- type: Examples
+  url: examples/get-current-account.json
+- type: Examples
+  url: examples/get-email-stats.json
+- type: Examples
+  url: examples/get-growth-stats.json
+- type: Examples
+  url: examples/get-link-clicks-for-a-broadcast.json
+- type: Examples
+  url: examples/get-stats-for-a-broadcast.json
+- type: Examples
+  url: examples/get-stats-for-a-list-of-broadcasts.json
+- type: Examples
+  url: examples/list-broadcasts.json
+- type: Examples
+  url: examples/list-colors.json
+- type: Examples
+  url: examples/list-custom-fields.json
+- type: Examples
+  url: examples/list-email-templates.json
+- type: Examples
+  url: examples/list-forms.json
+- type: Examples
+  url: examples/list-posts.json
+- type: Examples
+  url: examples/list-purchases.json
+- type: Examples
+  url: examples/list-segments.json
+- type: Examples
+  url: examples/list-sequence-emails.json
+- type: Examples
+  url: examples/list-sequences.json
+- type: Examples
+  url: examples/list-snippets.json
+- type: Examples
+  url: examples/list-stats-for-a-subscriber.json
+- type: Examples
+  url: examples/list-subscribers-for-a-form.json
+- type: Examples
+  url: examples/list-subscribers-for-a-sequence.json
+- type: Examples
+  url: examples/list-subscribers-for-a-tag.json
+- type: Examples
+  url: examples/list-subscribers.json
+- type: Examples
+  url: examples/list-tags-for-a-subscriber.json
+- type: Examples
+  url: examples/list-tags.json
+- type: Examples
+  url: examples/list-webhooks.json
+- type: Examples
+  url: examples/remove-tag-from-subscriber-by-email-address.json
+- type: Examples
+  url: examples/remove-tag-from-subscriber.json
+- type: Examples
+  url: examples/tag-a-subscriber-by-email-address.json
+- type: Examples
+  url: examples/tag-a-subscriber.json
+- type: Examples
+  url: examples/unsubscribe-subscriber.json
+- type: Examples
+  url: examples/update-a-broadcast.json
+- type: Examples
+  url: examples/update-a-custom-field.json
+- type: Examples
+  url: examples/update-a-sequence-email.json
+- type: Examples
+  url: examples/update-a-sequence.json
+- type: Examples
+  url: examples/update-a-snippet.json
+- type: Examples
+  url: examples/update-a-subscriber.json
+- type: Examples
+  url: examples/update-colors.json
+- type: Examples
+  url: examples/update-tag-name.json
+- type: JSONLD
+  url: json-ld/api.json
+- type: JSONLDContext
+  url: json-ld/context.json
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
+x-enrichment:
+  date: '2026-08-13'
+  status: enriched
+  artifacts_added: 38
+  pass: local-v1
