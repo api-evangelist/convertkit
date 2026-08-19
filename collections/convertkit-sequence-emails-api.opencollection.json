@@ -1,0 +1,191 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Kit Accounts Sequence Emails API",
+    "version": "4.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Sequence Emails",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List sequence emails",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.kit.com/v4/sequences/:sequence_id/emails",
+            "params": [
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "To fetch next page of results, use `?after=<end_cursor>`"
+              },
+              {
+                "name": "before",
+                "value": "",
+                "type": "query",
+                "description": "To fetch previous page of results, use `?before=<start_cursor>`"
+              },
+              {
+                "name": "include_content",
+                "value": "",
+                "type": "query",
+                "description": "Pass `true` to include the `content` field on each email in the response. Omitted by default because it increases response size for large sequences."
+              },
+              {
+                "name": "include_total_count",
+                "value": "false",
+                "type": "query",
+                "description": "Set to `true` to include the `total_count` in the response. This option can cause slow responses; if paging through results, request it only on the first page and reuse the value for subsequent pages."
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "Number of results per page. Default 500, maximum 1000."
+              },
+              {
+                "name": "sequence_id",
+                "value": "108",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Kit-Api-Key",
+              "value": "{{X-Kit-Api-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns every email inside a sequence, ordered by `position` (the order subscribers receive them). Each entry carries timing (`delay_value`, `delay_unit`, `send_days`), publish state (`published`), and metadata (`subject`, `preview_text`, `email_template_id`).\n\n**Tip:** the heavier `content` field is omitted by default to keep responses fast on sequences with many emails. Pass `include_content=true` when you need the body — for example, to render a preview, audit Liquid usage, or sync an externa"
+        },
+        {
+          "info": {
+            "name": "Create a sequence email",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.kit.com/v4/sequences/:sequence_id/emails",
+            "params": [
+              {
+                "name": "sequence_id",
+                "value": "154",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-Kit-Api-Key",
+              "value": "{{X-Kit-Api-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Adds a single email to a sequence. Each sequence email represents one step subscribers receive on their journey through the sequence — its `position` determines order, and `delay_value` / `delay_unit` / `send_days` determine when it fires relative to either the previous email or the subscriber's entry.\n\n`subject`, `delay_value`, and `delay_unit` are required. **Day-based** emails (`delay_unit: \"days\"`) follow the parent sequence's `send_days` and `send_hour`; their per-email `send_days` (e.g. `["
+        },
+        {
+          "info": {
+            "name": "Get a sequence email",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.kit.com/v4/sequences/:sequence_id/emails/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "26",
+                "type": "path"
+              },
+              {
+                "name": "sequence_id",
+                "value": "129",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Kit-Api-Key",
+              "value": "{{X-Kit-Api-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Fetches a single sequence email by `id`. Unlike [List sequence emails](/api-reference/sequence-emails/list-sequence-emails), this endpoint **always returns the full `content`** — no `include_content` flag needed.\n\nUse this when you have an email's `id` and need the current body, timing, or publish state — for example, to render a preview before pushing an update via [Update a sequence email](/api-reference/sequence-emails/update-a-sequence-email).\n\nFor the field semantics, see [Create a sequence"
+        },
+        {
+          "info": {
+            "name": "Update a sequence email",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.kit.com/v4/sequences/:sequence_id/emails/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "67",
+                "type": "path"
+              },
+              {
+                "name": "sequence_id",
+                "value": "188",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-Kit-Api-Key",
+              "value": "{{X-Kit-Api-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Updates any field on a sequence email — `subject`, `preview_text`, `content`, `delay_value`, `delay_unit`, `send_days`, `position`, `email_template_id`, or `published`. Only fields included in the request body change; everything else is preserved.\n\n**Note:** pass `send_days: null` to revert a per-email schedule override and inherit the parent sequence's `send_days` again. The response will then return all 7 days, indicating no per-email restriction.\n\n**Warning:** sending `send_days` on an email "
+        },
+        {
+          "info": {
+            "name": "Delete a sequence email",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.kit.com/v4/sequences/:sequence_id/emails/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "91",
+                "type": "path"
+              },
+              {
+                "name": "sequence_id",
+                "value": "212",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Kit-Api-Key",
+              "value": "{{X-Kit-Api-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Permanently removes one email from a sequence.\n\n**Warning:** subscribers already queued to receive the deleted email will skip it — they'll continue to the next email in sequence order. This is intentional and not retryable. If subscribers need to receive the email's content, send a broadcast or re-add subscribers to the sequence (with `repeat: true`) before deleting.\n\nIf you want to pause rather than delete, use [Update a sequence email](/api-reference/sequence-emails/update-a-sequence-email) w"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

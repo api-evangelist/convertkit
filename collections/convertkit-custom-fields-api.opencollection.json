@@ -1,0 +1,184 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Kit Accounts Custom Fields API",
+    "version": "4.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Custom Fields",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Bulk create custom fields",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.kit.com/v4/bulk/custom_fields",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://api.kit.com/v4/oauth/authorize",
+              "accessTokenUrl": "https://api.kit.com/v4/oauth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "See \"[Bulk & async processing](#bulk-amp-async-processing)\" for more information."
+        },
+        {
+          "info": {
+            "name": "Bulk update subscriber custom field values",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.kit.com/v4/bulk/custom_fields/subscribers",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://api.kit.com/v4/oauth/authorize",
+              "accessTokenUrl": "https://api.kit.com/v4/oauth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Bulk update subscriber custom field values"
+        },
+        {
+          "info": {
+            "name": "List custom fields",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.kit.com/v4/custom_fields",
+            "params": [
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "To fetch next page of results, use `?after=<end_cursor>`"
+              },
+              {
+                "name": "before",
+                "value": "",
+                "type": "query",
+                "description": "To fetch previous page of results, use `?before=<start_cursor>`"
+              },
+              {
+                "name": "include_total_count",
+                "value": "false",
+                "type": "query",
+                "description": "Set to `true` to include the `total_count` in the response. This option can cause slow responses; if paging through results, request it only on the first page and reuse the value for subsequent pages."
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "Number of results per page. Default 500, maximum 1000."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Kit-Api-Key",
+              "value": "{{X-Kit-Api-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "A custom field allows you to collect subscriber information beyond the standard fields of first name and email address. An example would be a custom field called last name so you can get the full names of your subscribers.<br/><br/>You create a custom field, and then you're able to use that in your forms or emails."
+        },
+        {
+          "info": {
+            "name": "Create a custom field",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.kit.com/v4/custom_fields",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-Kit-Api-Key",
+              "value": "{{X-Kit-Api-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Create a custom field for your account. The label field must be unique to your account. Whitespace will be removed from the beginning and the end of your label.<br/><br/>Additionally, a key field and a name field will be generated for you. The key is an ASCII-only, lowercased, underscored representation of your label. This key must be unique to your account. Keys are used in personalization tags in sequences and broadcasts. Names are unique identifiers for use in the HTML of custom forms. They a"
+        },
+        {
+          "info": {
+            "name": "Update a custom field",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.kit.com/v4/custom_fields/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "29",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-Kit-Api-Key",
+              "value": "{{X-Kit-Api-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Updates a custom field label (see [Create a custom field](/api-reference/custom-fields/create-a-custom-field) for more information on labels). Note that the key will change but the name remains the same when the label is updated.<br/><br/><strong>Warning: </strong>An update to a custom field will break all of the liquid personalization tags in emails that reference it - e.g. if you update a `Zip_Code` custom field to `Post_Code`, all liquid tags referencing `{{ subscriber.Zip_Code }}` would no l"
+        },
+        {
+          "info": {
+            "name": "Delete custom field",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.kit.com/v4/custom_fields/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "50",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Kit-Api-Key",
+              "value": "{{X-Kit-Api-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "This will remove all data in this field from your subscribers."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

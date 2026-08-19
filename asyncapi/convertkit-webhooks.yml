@@ -1,0 +1,105 @@
+generated: '2026-08-13'
+method: searched
+source: https://developers.kit.com/api-reference/webhooks/create-a-webhook
+spec_type: none
+asyncapi_published: false
+asyncapi_note: >-
+  Kit publishes NO AsyncAPI document. Probed the docs host, the api host, the
+  Kit GitHub organisation and /asyncapi.yaml — all miss. Kit does ship a real,
+  documented webhook surface, so the event catalogue below is captured verbatim
+  from the Create-a-webhook reference and wired as type: Webhooks. No AsyncAPI
+  was fabricated.
+transport: http-callback
+delivery:
+  method: POST
+  target: The subscriber-supplied target_url
+  subscription_model: Per-event registration — one webhook record per event type, created through the API.
+management:
+  create: POST /v4/webhooks
+  list: GET /v4/webhooks
+  delete: DELETE /v4/webhooks/{id}
+  spec: openapi/convertkit-webhooks-api-openapi.yml
+  request_shape:
+    target_url: string (required)
+    event:
+      name: string (required)
+      form_id: integer or null
+      tag_id: integer or null
+      sequence_id: integer or null
+      product_id: integer or null
+      initiator_value: string or null
+      custom_field_id: integer or null
+security:
+  signing: null
+  verification: null
+  note: >-
+    Kit documents no webhook signing secret, HMAC signature header, or replay
+    protection for webhook deliveries. Recorded as a gap.
+events:
+- name: subscriber.subscriber_activate
+  domain: subscriber
+  required_parameter: null
+- name: subscriber.subscriber_unsubscribe
+  domain: subscriber
+  required_parameter: null
+- name: subscriber.subscriber_bounce
+  domain: subscriber
+  required_parameter: null
+- name: subscriber.subscriber_complain
+  domain: subscriber
+  required_parameter: null
+- name: subscriber.form_subscribe
+  domain: subscriber
+  required_parameter: form_id
+  parameter_type: integer
+- name: subscriber.course_subscribe
+  domain: subscriber
+  required_parameter: sequence_id
+  parameter_type: integer
+  note: "\"Course\" is Kit's legacy name for a sequence."
+- name: subscriber.course_complete
+  domain: subscriber
+  required_parameter: sequence_id
+  parameter_type: integer
+- name: subscriber.link_click
+  domain: subscriber
+  required_parameter: initiator_value
+  parameter_type: string
+  note: initiator_value is the link URL to watch.
+- name: subscriber.product_purchase
+  domain: subscriber
+  required_parameter: product_id
+  parameter_type: integer
+- name: subscriber.tag_add
+  domain: subscriber
+  required_parameter: tag_id
+  parameter_type: integer
+- name: subscriber.tag_remove
+  domain: subscriber
+  required_parameter: tag_id
+  parameter_type: integer
+- name: purchase.purchase_create
+  domain: purchase
+  required_parameter: null
+- name: custom_field.field_created
+  domain: custom_field
+  required_parameter: null
+- name: custom_field.field_deleted
+  domain: custom_field
+  required_parameter: null
+- name: custom_field.field_value_updated
+  domain: custom_field
+  required_parameter: custom_field_id
+  parameter_type: integer
+event_count: 15
+domains:
+- subscriber
+- purchase
+- custom_field
+related_async:
+  bulk_callback:
+    param: callback_url
+    description: >-
+      Separate from webhooks: bulk endpoints accept a callback_url and POST the
+      synchronous 200-OK response shape to it when async processing completes.
+    docs: https://developers.kit.com/api-reference/bulk-and-async-processing

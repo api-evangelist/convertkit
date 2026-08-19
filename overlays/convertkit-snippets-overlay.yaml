@@ -1,0 +1,45 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Kit Accounts Snippets API
+  version: 1.0.0
+extends: openapi/convertkit-snippets-api-openapi.yml
+x-generated: '2026-08-13'
+x-method: generated
+x-source: apis.yml + repo artifacts (conventions/, errors/, lifecycle/, rate-limits/, authentication/, asyncapi/,
+  mcp/, a2a/)
+actions:
+- target: $.info
+  update:
+    x-apievangelist-provider: convertkit
+    x-apievangelist-provider-name: Kit
+    x-apievangelist-api-key: snippets
+    x-apievangelist-operations: 4
+    x-apievangelist-artifacts:
+      conventions: conventions/convertkit-conventions.yml
+      errors: errors/convertkit-problem-types.yml
+      lifecycle: lifecycle/convertkit-lifecycle.yml
+      rate_limits: rate-limits/convertkit-rate-limits.yml
+      authentication: authentication/convertkit-authentication.yml
+      scopes: scopes/convertkit-scopes.yml
+      data_model: data-model/convertkit-data-model.yml
+      webhooks: asyncapi/convertkit-webhooks.yml
+      mcp: mcp/convertkit-mcp.yml
+      agent_card: a2a/convertkit-a2a.yml
+      skills: skills/_index.yml
+    x-apievangelist-conventions:
+      pagination: cursor (before/after/per_page; default 500, max 1000)
+      idempotency: none published — no Idempotency-Key contract
+      error_envelope: '{"errors":[string]} — not RFC 9457'
+      rate_limit_headers: none published; 429 on exhaustion
+      consistency: list/filter reads are eventually consistent (p50 ~30s, p99 5m)
+      dates: ISO 8601 UTC
+    x-apievangelist-note: Overlay records API Evangelist derivations only. It never mutates Kit's published spec;
+      the harvested original is openapi/_original/openapi.json.
+- target: $.info
+  update:
+    x-apievangelist-gaps:
+    - No operationId on any operation in the published spec
+    - No 429 or 5xx responses declared on any operation despite both being documented
+    - No RFC 9457 problem+json
+    - No idempotency key contract
+    - No rate-limit response headers

@@ -1,0 +1,121 @@
+generated: '2026-08-13'
+method: searched
+source: https://developers.kit.com/plugins/component-library/overview
+docs:
+- https://developers.kit.com/plugins/overview
+- https://developers.kit.com/plugins/component-library/overview
+- https://developers.kit.com/plugins/component-library/dependencies
+- https://developers.kit.com/plugins/content-blocks/overview
+- https://developers.kit.com/plugins/media-source/overview
+note: >-
+  Kit's client-side component surface is unusual: the documented library is not a
+  set of components you embed in YOUR app, but the settings UI Kit renders inside
+  ITS OWN editor from your plugin's JSON configuration. It is declarative — you
+  ship JSON, Kit renders the widget — so there is no loader script or npm import.
+  Kit separately publishes framework packages for embedding Kit FORMS in a
+  third-party site; those are recorded under the form-embeds family.
+families:
+- name: Plugin component library
+  kind: declarative-settings-ui
+  rendered_by: Kit editor
+  configuration: JSON in the plugin definition
+  loader: null
+  docs: https://developers.kit.com/plugins/component-library/overview
+  description: >-
+    Configurable UI elements creators use to customize a plugin's behaviour and
+    appearance inside Kit's plugin environments. Declared in the plugin's JSON
+    configuration; Kit renders them.
+  components:
+  - name: Color picker
+    type: color
+    docs: https://developers.kit.com/plugins/component-library/color-picker
+  - name: Date picker
+    docs: https://developers.kit.com/plugins/component-library/date-picker
+    note: Dates returned in standardized UTC format.
+  - name: Dynamic select input
+    docs: https://developers.kit.com/plugins/component-library/dynamic-select-input
+    note: Dropdown of server-fetched options, resolved in real time.
+  - name: Font picker
+    docs: https://developers.kit.com/plugins/component-library/font-picker
+  - name: Group
+    docs: https://developers.kit.com/plugins/component-library/group
+    note: Collapsible sections for organising complex configurations.
+  - name: Numerical input
+    docs: https://developers.kit.com/plugins/component-library/numerical-input
+  - name: Radio group
+    docs: https://developers.kit.com/plugins/component-library/radio-group
+  - name: Search input
+    docs: https://developers.kit.com/plugins/component-library/search-input
+  - name: Select input
+    docs: https://developers.kit.com/plugins/component-library/select-input
+  - name: Slider
+    docs: https://developers.kit.com/plugins/component-library/slider
+  - name: Textarea
+    docs: https://developers.kit.com/plugins/component-library/textarea
+  - name: Text input
+    type: text
+    docs: https://developers.kit.com/plugins/component-library/text-input
+  - name: Toggle
+    docs: https://developers.kit.com/plugins/component-library/toggle
+  features:
+  - name: dependencies
+    docs: https://developers.kit.com/plugins/component-library/dependencies
+    description: >-
+      A `dependencies` array on any component conditionally reveals it based on
+      other fields — presence of a value, an exact `value` match, or `null` for
+      "only when empty".
+- name: Plugin surfaces
+  kind: embeddable-plugin-types
+  docs: https://developers.kit.com/plugins/overview
+  description: The three plugin types a Kit App Store app can ship, each rendering inside a Kit surface.
+  components:
+  - name: Content block
+    docs: https://developers.kit.com/plugins/content-blocks/overview
+    description: An HTML element rendered inside the Kit email editor.
+  - name: Dynamic content block
+    docs: https://developers.kit.com/plugins/content-blocks/dynamic-blocks/overview
+    description: Subscriber-personalized content block powered by Liquid templates.
+  - name: Media source
+    docs: https://developers.kit.com/plugins/media-source/overview
+    description: An external gallery surfaced in Kit's media picker.
+  - name: Automation node
+    docs: https://developers.kit.com/plugins/automation-nodes
+    description: A custom trigger or action node in a Visual Automation.
+- name: Form embeds
+  kind: framework-packages
+  description: >-
+    First-party framework wrappers for embedding a Kit form in a third-party
+    site. Distinct from server-side SDKs (there is only one of those — the PHP
+    SDK) and from the plugin component library above.
+  components:
+  - name: convertkit-react
+    registry: npm
+    version: 1.5.5
+    published: '2021-06-13'
+    url: https://www.npmjs.com/package/convertkit-react
+    repository: https://github.com/Kit/convertkit-react
+    note: Last released 2021. Predates the v4 API and the Kit rebrand.
+  - name: convertkit-vue
+    registry: npm
+    version: 0.1.6
+    published: '2021-02-12'
+    url: https://www.npmjs.com/package/convertkit-vue
+    repository: https://github.com/Kit/convertkit-vue
+    note: Last released 2021.
+  - name: convertkit-svelte
+    registry: null
+    version: null
+    published: null
+    repository: https://github.com/Kit/convertkit-svelte
+    note: Source only; never published to a registry.
+  - name: Hosted form / landing page
+    registry: null
+    description: >-
+      Kit renders hosted landing pages and embeddable forms directly. Both are
+      the same v4 resource (GET /v4/forms), discriminated by `type`
+      (embed | hosted); a hosted form has its own public URL.
+loader_libraries: []
+loader_note: >-
+  No first-party JS loader/element library (no <script src="…kit.js"> web
+  component bundle). The plugin library is JSON-declared and Kit-rendered; the
+  form embeds are per-framework npm packages.

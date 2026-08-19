@@ -1,0 +1,88 @@
+generated: '2026-08-13'
+method: probed
+source: live GET of /.well-known/* on every Kit host in apis.yml + OpenAPI servers[]
+summary:
+  hosts_probed: 4
+  paths_probed: 24
+  documents_found: 3
+  note: >-
+    Three real documents were served: the A2A agent card on the developer docs
+    host, and RFC 8414 / RFC 9728 OAuth metadata on the API host. The agent card
+    is indexed here but its canonical artifact lives in a2a/. kit.com answers
+    every /.well-known/* path with a Next.js 404 HTML shell — recorded as a miss,
+    not a document.
+hosts:
+- host: https://api.kit.com
+  documents:
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    content_type: application/json
+    file: convertkit-oauth-authorization-server.json
+    spec: RFC 8414
+  - path: /.well-known/oauth-protected-resource
+    status: 200
+    content_type: application/json
+    file: convertkit-oauth-protected-resource.json
+    spec: RFC 9728
+    note: Names https://app.kit.com/mcp as the protected resource — this is how the Kit MCP server is discoverable anonymously.
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: https://app.kit.com
+  documents:
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    content_type: application/json
+    note: Byte-identical to the api.kit.com document; not saved twice.
+  - path: /.well-known/oauth-protected-resource
+    status: 200
+    content_type: application/json
+    note: Byte-identical to the api.kit.com document; not saved twice.
+  - path: /.well-known/agent-card.json
+    status: 404
+- host: https://developers.kit.com
+  documents:
+  - path: /.well-known/agent-card.json
+    status: 200
+    content_type: application/json
+    file: ../a2a/convertkit-agent-card.json
+    spec: A2A 1.0.0
+  - path: /.well-known/agent-skills/kit/skill.md
+    status: 200
+    content_type: text/markdown
+    file: ../skills/convertkit-kit-provider-skill.md
+    note: Referenced from the agent card's skills[0].url. A provider-published Agent Skill, saved verbatim.
+  - path: /.well-known/security.txt
+    status: 404
+- host: https://kit.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+    note: Returns the site's HTML 404 shell.
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+security_txt:
+  served: false
+  note: >-
+    No RFC 9116 security.txt on any Kit host. Kit does publish a security page
+    at https://kit.com/security — captured in security/convertkit-vulnerability-disclosure.yml —
+    but not at the well-known path, so no SecurityTxt pointer is emitted.

@@ -1,0 +1,2061 @@
+{
+  "item": [
+    {
+      "id": "fac6d888-b6c2-4ef4-b29a-822e126bcbfa",
+      "name": "Broadcasts",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "e773602c-cc24-4a98-b59c-88ded10f8619",
+          "name": "List broadcasts",
+          "request": {
+            "name": "List broadcasts",
+            "description": {},
+            "url": {
+              "path": [
+                "v4",
+                "broadcasts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "include_total_count",
+                  "value": "<boolean>",
+                  "description": "Set to `true` to include the `total_count` in the response. This option can cause slow responses; if paging through results, request it only on the first page and reuse the value for subsequent pages."
+                },
+                {
+                  "disabled": false,
+                  "key": "slim",
+                  "value": "<boolean>",
+                  "description": "When `true`, omits expensive optional fields from the response. Produces a faster, smaller response — useful when extra fields are not needed."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-Kit-Api-Key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "6c74aa8a-4248-4e3f-9f27-82e0c1513b08",
+              "name": "Returns a paginated list of all broadcasts for your account (including draft, scheduled, and already sent)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "broadcasts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include_total_count",
+                      "value": "false"
+                    },
+                    {
+                      "key": "slim",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Kit-Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"broadcasts\": [\n    {\n      \"id\": 3,\n      \"publication_id\": 3,\n      \"created_at\": \"2023-02-17T11:43:55Z\",\n      \"subject\": \"Campaign subject 3\",\n      \"preview_text\": null,\n      \"description\": null,\n      \"public\": false,\n      \"published_at\": null,\n      \"send_at\": null,\n      \"status\": \"draft\",\n      \"thumbnail_alt\": null,\n      \"thumbnail_url\": null,\n      \"content\": null,\n      \"public_url\": null,\n      \"email_address\": \"greetings@kit.dev\",\n      \"email_template\": {\n        \"id\": 6,\n        \"name\": \"Text Only\"\n      },\n      \"subscriber_filter\": [\n        {\n          \"all\": [\n            {\n              \"type\": \"all_subscribers\"\n            }\n          ]\n        }\n      ]\n    },\n    {\n      \"id\": 2,\n      \"publication_id\": 2,\n      \"created_at\": \"2023-02-17T11:43:55Z\",\n      \"subject\": \"Campaign subject 2\",\n      \"preview_text\": null,\n      \"description\": null,\n      \"public\": false,\n      \"published_at\": null,\n      \"send_at\": null,\n      \"status\": \"draft\",\n      \"thumbnail_alt\": null,\n      \"thumbnail_url\": null,\n      \"content\": null,\n      \"public_url\": null,\n      \"email_address\": \"greetings@kit.dev\",\n      \"email_template\": {\n        \"id\": 6,\n        \"name\": \"Text Only\"\n      },\n      \"subscriber_filter\": [\n        {\n          \"all\": [\n            {\n              \"type\": \"all_subscribers\"\n            }\n          ]\n        }\n      ]\n    },\n    {\n      \"id\": 1,\n      \"publication_id\": 1,\n      \"created_at\": \"2023-02-17T11:43:55Z\",\n      \"subject\": \"Campaign subject 1\",\n      \"preview_text\": null,\n      \"description\": null,\n      \"public\": false,\n      \"published_at\": null,\n      \"send_at\": null,\n      \"status\": \"draft\",\n      \"thumbnail_alt\": null,\n      \"thumbnail_url\": null,\n      \"content\": null,\n      \"public_url\": null,\n      \"email_address\": \"greetings@kit.dev\",\n      \"email_template\": {\n        \"id\": 6,\n        \"name\": \"Text Only\"\n      },\n      \"subscriber_filter\": [\n        {\n          \"all\": [\n            {\n              \"type\": \"all_subscribers\"\n            }\n          ]\n        }\n      ]\n    }\n  ],\n  \"pagination\": {\n    \"has_previous_page\": false,\n    \"has_next_page\": false,\n    \"start_cursor\": \"WzNd\",\n    \"end_cursor\": \"WzFd\",\n    \"per_page\": 500\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a5a398b1-a023-4e55-a50c-6a1f4fe11734",
+              "name": "Returns a 401 if the token and/or account cannot be authenticated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "broadcasts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include_total_count",
+                      "value": "false"
+                    },
+                    {
+                      "key": "slim",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Kit-Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    \"The access token is invalid\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ce05ccc7-571e-417f-8752-ca554d055cc6",
+          "name": "Create a broadcast",
+          "request": {
+            "name": "Create a broadcast",
+            "description": {
+              "content": "Draft or schedule to send a broadcast to all or a subset of your subscribers.<br/><br/>To save a draft, set `send_at` to `null`.<br/><br/>To publish to the web, set `public` to `true`.<br/><br/>To schedule the broadcast for sending, provide a `send_at` timestamp. Scheduled broadcasts should contain a subject and your content, at a minimum.<br/><br/>We currently support targeting your subscribers based on segment or tag ids.<aside class='notice'>Starting point templates are not currently supported.</aside>",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v4",
+                "broadcasts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-Kit-Api-Key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"content\": \"<string>\",\n  \"description\": \"<string>\",\n  \"public\": \"<boolean>\",\n  \"published_at\": \"<string>\",\n  \"preview_text\": \"<string>\",\n  \"subject\": \"<string>\",\n  \"subscriber_filter\": [\n    {\n      \"all\": [\n        {\n          \"type\": \"<string>\",\n          \"ids\": [\n            \"<integer>\",\n            \"<integer>\"\n          ]\n        },\n        {\n          \"type\": \"<string>\",\n          \"ids\": [\n            \"<integer>\",\n            \"<integer>\"\n          ]\n        }\n      ],\n      \"any\": [\n        {\n          \"type\": \"<string>\",\n          \"ids\": [\n            \"<integer>\",\n            \"<integer>\"\n          ]\n        },\n        {\n          \"type\": \"<string>\",\n          \"ids\": [\n            \"<integer>\",\n            \"<integer>\"\n          ]\n        }\n      ],\n      \"none\": [\n        {\n          \"type\": \"<string>\",\n          \"ids\": [\n            \"<integer>\",\n            \"<integer>\"\n          ]\n        },\n        {\n          \"type\": \"<string>\",\n          \"ids\": [\n            \"<integer>\",\n            \"<integer>\"\n          ]\n        }\n      ]\n    },\n    {\n      \"all\": [\n        {\n          \"type\": \"<string>\",\n          \"ids\": [\n            \"<integer>\",\n            \"<integer>\"\n          ]\n        },\n        {\n          \"type\": \"<string>\",\n          \"ids\": [\n            \"<integer>\",\n            \"<integer>\"\n          ]\n        }\n      ],\n      \"any\": [\n        {\n          \"type\": \"<string>\",\n          \"ids\": [\n            \"<integer>\",\n            \"<integer>\"\n          ]\n        },\n        {\n          \"type\": \"<string>\",\n          \"ids\": [\n            \"<integer>\",\n            \"<integer>\"\n          ]\n        }\n      ],\n      \"none\": [\n        {\n          \"type\": \"<string>\",\n          \"ids\": [\n            \"<integer>\",\n            \"<integer>\"\n          ]\n        },\n        {\n          \"type\": \"<string>\",\n          \"ids\": [\n            \"<integer>\",\n            \"<integer>\"\n          ]\n        }\n      ]\n    }\n  ],\n  \"email_template_id\": \"<integer>\",\n  \"email_address\": \"<string>\",\n  \"send_at\": \"<string>\",\n  \"thumbnail_alt\": \"<string>\",\n  \"thumbnail_url\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "2962b1f4-b0d5-4a5e-ac18-e8714fd2a0d6",
+              "name": "Creates a new broadcast",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "broadcasts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Kit-Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email_template_id\": 2,\n  \"email_address\": null,\n  \"content\": \"<p>Let me introduce myself</p>\",\n  \"description\": \"Intro email\",\n  \"public\": true,\n  \"published_at\": \"2023-02-17T11:43:55+00:00\",\n  \"send_at\": null,\n  \"thumbnail_alt\": null,\n  \"thumbnail_url\": null,\n  \"preview_text\": \"Pleased to meet you!\",\n  \"subject\": \"Hello!\",\n  \"subscriber_filter\": [\n    {\n      \"all\": [\n        {\n          \"type\": \"segment\",\n          \"ids\": [\n            18\n          ]\n        }\n      ],\n      \"any\": null,\n      \"none\": null\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"broadcast\": {\n    \"id\": 64,\n    \"publication_id\": 55,\n    \"created_at\": \"2023-02-17T11:43:55Z\",\n    \"subject\": \"Hello!\",\n    \"preview_text\": \"Pleased to meet you!\",\n    \"description\": \"Intro email\",\n    \"content\": \"<p>Let me introduce myself</p>\",\n    \"public\": true,\n    \"published_at\": \"2023-02-17T11:43:55Z\",\n    \"send_at\": null,\n    \"thumbnail_alt\": null,\n    \"thumbnail_url\": null,\n    \"public_url\": \"https://kit-greetings.kit.com/posts/\",\n    \"email_address\": \"greetings@kit.dev\",\n    \"email_template\": {\n      \"id\": 2,\n      \"name\": \"Classic\"\n    },\n    \"subscriber_filter\": [\n      {\n        \"all\": [\n          {\n            \"type\": \"segment\",\n            \"ids\": [\n              18\n            ]\n          }\n        ]\n      }\n    ],\n    \"status\": \"draft\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b02541db-b89c-4b2a-9c4b-21765328bb99",
+              "name": "Returns a 401 if the token and/or account cannot be authenticated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "broadcasts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Kit-Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email_template_id\": 2,\n  \"email_address\": null,\n  \"content\": \"<p>Let me introduce myself</p>\",\n  \"description\": \"Intro email\",\n  \"public\": true,\n  \"published_at\": \"2023-02-17T11:43:55+00:00\",\n  \"send_at\": null,\n  \"thumbnail_alt\": null,\n  \"thumbnail_url\": null,\n  \"preview_text\": \"Pleased to meet you!\",\n  \"subject\": \"Hello!\",\n  \"subscriber_filter\": [\n    {\n      \"all\": [\n        {\n          \"type\": \"segment\",\n          \"ids\": [\n            18\n          ]\n        }\n      ],\n      \"any\": null,\n      \"none\": null\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    \"The access token is invalid\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e361d945-e088-4bca-9cec-767be2869faf",
+              "name": "Returns a 403 with an error message if the current account is unauthorized to create a broadcast",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "broadcasts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Kit-Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email_template_id\": 2,\n  \"email_address\": null,\n  \"content\": \"<p>Let me introduce myself</p>\",\n  \"description\": \"Intro email\",\n  \"public\": true,\n  \"published_at\": \"2023-02-17T11:43:55+00:00\",\n  \"send_at\": null,\n  \"thumbnail_alt\": null,\n  \"thumbnail_url\": null,\n  \"preview_text\": \"Pleased to meet you!\",\n  \"subject\": \"Hello!\",\n  \"subscriber_filter\": [\n    {\n      \"all\": [\n        {\n          \"type\": \"segment\",\n          \"ids\": [\n            18\n          ]\n        }\n      ],\n      \"any\": null,\n      \"none\": null\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    \"You do not have sufficient permissions to access this resource. Please contact support.\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ef2cc586-f6de-46c1-a102-b1a9206a55b2",
+              "name": "Returns a 422 with an error message when one or more of the parameters were invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "broadcasts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Kit-Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email_template_id\": 2,\n  \"email_address\": null,\n  \"content\": \"<p>Let me introduce myself</p>\",\n  \"description\": \"Intro email\",\n  \"public\": true,\n  \"published_at\": \"2023-02-17T11:43:55+00:00\",\n  \"send_at\": null,\n  \"thumbnail_alt\": null,\n  \"thumbnail_url\": null,\n  \"preview_text\": \"Pleased to meet you!\",\n  \"subject\": \"Hello!\",\n  \"subscriber_filter\": [\n    {\n      \"all\": [\n        {\n          \"type\": \"segment\",\n          \"ids\": [\n            18\n          ]\n        }\n      ],\n      \"any\": null,\n      \"none\": null\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    \"Email template not found\",\n    \"Only a single filter group is supported. Use one of `all`, `any`, or `none`.\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9003d4c6-e2c2-4260-8ce8-dfacb3869bfe",
+          "name": "Get stats for a list of broadcasts",
+          "request": {
+            "name": "Get stats for a list of broadcasts",
+            "description": {},
+            "url": {
+              "path": [
+                "v4",
+                "broadcasts",
+                "stats"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "include_total_count",
+                  "value": "<boolean>",
+                  "description": "Set to `true` to include the `total_count` in the response. This option can cause slow responses; if paging through results, request it only on the first page and reuse the value for subsequent pages."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-Kit-Api-Key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "115edbcb-ecad-4dd1-8794-ab62b4587522",
+              "name": "Returns stats for all broadcasts on the account",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "broadcasts",
+                    "stats"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include_total_count",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Kit-Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"broadcasts\": [\n    {\n      \"id\": 208,\n      \"subject\": \"... or will you\",\n      \"send_at\": null,\n      \"stats\": {\n        \"recipients\": 0,\n        \"open_rate\": 0,\n        \"emails_opened\": 0,\n        \"click_rate\": 0,\n        \"unsubscribe_rate\": 0,\n        \"unsubscribes\": 0,\n        \"total_clicks\": 0,\n        \"show_total_clicks\": false,\n        \"status\": \"draft\",\n        \"progress\": 0,\n        \"open_tracking_disabled\": false,\n        \"click_tracking_disabled\": false\n      }\n    },\n    {\n      \"id\": 207,\n      \"subject\": \"You'll never guess...\",\n      \"send_at\": null,\n      \"stats\": {\n        \"recipients\": 0,\n        \"open_rate\": 0,\n        \"emails_opened\": 0,\n        \"click_rate\": 0,\n        \"unsubscribe_rate\": 0,\n        \"unsubscribes\": 0,\n        \"total_clicks\": 0,\n        \"show_total_clicks\": false,\n        \"status\": \"draft\",\n        \"progress\": 0,\n        \"open_tracking_disabled\": false,\n        \"click_tracking_disabled\": false\n      }\n    }\n  ],\n  \"pagination\": {\n    \"has_previous_page\": false,\n    \"has_next_page\": false,\n    \"start_cursor\": \"WzIwOF0=\",\n    \"end_cursor\": \"WzIwN10=\",\n    \"per_page\": 500\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bd65e7a7-6daf-47d7-878f-05355c484c20",
+              "name": "Returns a 401 if the token and/or account cannot be authenticated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "broadcasts",
+                    "stats"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include_total_count",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Kit-Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    \"The access token is invalid\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "652f367d-1960-4c55-ba5f-f2dce856b106",
+              "name": "Returns 403 if the account is not on a pro plan and has the feature flag disabled",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "broadcasts",
+                    "stats"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include_total_count",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Kit-Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3cca3af2-9ab5-4c24-a2d4-4991ef573718",
+          "name": "Get link clicks for a broadcast",
+          "request": {
+            "name": "Get link clicks for a broadcast",
+            "description": {
+              "content": "NOTE: Pagination parameters control the list of clicks for the top level broadcast.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v4",
+                "broadcasts",
+                ":broadcast_id",
+                "clicks"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "broadcast_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-Kit-Api-Key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "631cae44-712d-4071-a91a-9fdefdfc8f18",
+              "name": "Returns clicks for a broadcast",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "broadcasts",
+                    ":broadcast_id",
+                    "clicks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "broadcast_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Kit-Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"broadcast\": {\n    \"id\": 166,\n    \"clicks\": [\n      {\n        \"url\": \"https://example.com/52\",\n        \"unique_clicks\": 3,\n        \"click_to_delivery_rate\": 0.006,\n        \"click_to_open_rate\": 0.03\n      },\n      {\n        \"url\": \"https://example.com/53\",\n        \"unique_clicks\": 3,\n        \"click_to_delivery_rate\": 0.006,\n        \"click_to_open_rate\": 0.03\n      },\n      {\n        \"url\": \"https://example.com/54\",\n        \"unique_clicks\": 3,\n        \"click_to_delivery_rate\": 0.006,\n        \"click_to_open_rate\": 0.03\n      }\n    ]\n  },\n  \"pagination\": {\n    \"has_previous_page\": false,\n    \"has_next_page\": false,\n    \"start_cursor\": \"WzE4XQ==\",\n    \"end_cursor\": \"WzE4XQ==\",\n    \"per_page\": 500\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "589eaee8-b8f5-4316-98a0-b60aaf64ee6e",
+              "name": "Returns a 401 if the token and/or account cannot be authenticated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "broadcasts",
+                    ":broadcast_id",
+                    "clicks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "broadcast_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Kit-Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    \"The access token is invalid\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f7fef7ea-8387-45ef-a142-7b56d3aebccc",
+              "name": "Returns a 404 when the provided id does not exist",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "broadcasts",
+                    ":broadcast_id",
+                    "clicks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "broadcast_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Kit-Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    \"Not Found\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "65eb949a-fbea-47d9-a89d-c65a6741a601",
+          "name": "Get stats for a broadcast",
+          "request": {
+            "name": "Get stats for a broadcast",
+            "description": {},
+            "url": {
+              "path": [
+                "v4",
+                "broadcasts",
+                ":broadcast_id",
+                "stats"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "broadcast_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-Kit-Api-Key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "15714bf2-ddce-4187-9dab-996350f411bc",
+              "name": "Returns stats for a broadcast",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "broadcasts",
+                    ":broadcast_id",
+                    "stats"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "broadcast_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Kit-Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"broadcast\": {\n    \"id\": 276,\n    \"stats\": {\n      \"recipients\": 0,\n      \"open_rate\": 0,\n      \"emails_opened\": 0,\n      \"click_rate\": 0,\n      \"unsubscribe_rate\": 0,\n      \"unsubscribes\": 0,\n      \"total_clicks\": 0,\n      \"show_total_clicks\": false,\n      \"status\": \"draft\",\n      \"progress\": 0,\n      \"open_tracking_disabled\": false,\n      \"click_tracking_disabled\": false\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5f9436da-eb1f-4a76-9292-fb5ce1fddbfc",
+              "name": "Returns a 401 if the token and/or account cannot be authenticated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "broadcasts",
+                    ":broadcast_id",
+                    "stats"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "broadcast_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Kit-Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    \"The access token is invalid\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "909287e8-5aa3-4858-9512-b330102c2afe",
+              "name": "Returns a 404 when the provided id does not exist",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "broadcasts",
+                    ":broadcast_id",
+                    "stats"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "broadcast_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Kit-Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    \"Not Found\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7946b6a4-0c2b-4264-9d1e-3116912a4751",
+          "name": "Delete a broadcast",
+          "request": {
+            "name": "Delete a broadcast",
+            "description": {},
+            "url": {
+              "path": [
+                "v4",
+                "broadcasts",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-Kit-Api-Key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "3ae72b12-fa46-410f-8a56-2e1ad8400e68",
+              "name": "Deletes the broadcast",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "broadcasts",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Kit-Api-Key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "e7b9d394-395e-4780-ab51-5ad2a7b3a6b0",
+              "name": "Returns a 401 if the token and/or account cannot be authenticated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "broadcasts",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Kit-Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    \"The access token is invalid\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5e344040-2351-48a8-b3d6-8751e0189be7",
+              "name": "Returns a 403 with an error message if the current account is unauthorized to update a broadcast",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "broadcasts",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Kit-Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    \"You do not have sufficient permissions to access this resource. Please contact support.\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ddd6a844-dfb6-4a48-a6dd-596e32e24cf4",
+              "name": "Returns a 404 when the provided id does not exist",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "broadcasts",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Kit-Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    \"Not Found\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ec488fe1-7fd8-491d-95ef-97e3648d5e07",
+              "name": "Returns a 422 with an error message if the broadcast has already started sending or already sent",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "broadcasts",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Kit-Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    \"Broadcast is already sending.\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "cf19ad44-c9df-4351-8daa-5af30444784f",
+          "name": "Get a broadcast",
+          "request": {
+            "name": "Get a broadcast",
+            "description": {},
+            "url": {
+              "path": [
+                "v4",
+                "broadcasts",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "[]",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-Kit-Api-Key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "bf9a4a96-72cb-4bc9-ae18-171c2e38dab0",
+              "name": "Returns the broadcast details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "broadcasts",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "[]",
+                      "value": ""
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Kit-Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"broadcast\": {\n    \"id\": 57,\n    \"publication_id\": 48,\n    \"created_at\": \"2023-02-17T11:43:55Z\",\n    \"subject\": \"You'll never guess...\",\n    \"preview_text\": null,\n    \"description\": null,\n    \"content\": null,\n    \"public\": false,\n    \"published_at\": null,\n    \"send_at\": null,\n    \"thumbnail_alt\": null,\n    \"thumbnail_url\": null,\n    \"public_url\": null,\n    \"email_address\": \"greetings@kit.dev\",\n    \"email_template\": {\n      \"id\": 6,\n      \"name\": \"Text Only\"\n    },\n    \"subscriber_filter\": [\n      {\n        \"all\": [\n          {\n            \"type\": \"all_subscribers\"\n          }\n        ]\n      }\n    ],\n    \"status\": \"draft\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "caf56a55-1f9f-409a-adef-f0f1f6fdd7a8",
+              "name": "Returns a 401 if the token and/or account cannot be authenticated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "broadcasts",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "[]",
+                      "value": ""
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Kit-Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    \"The access token is invalid\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4eb5cab8-3e1a-4c0e-bd07-15dfdb8f1e11",
+              "name": "Returns a 404 when the provided id does not exist",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "broadcasts",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "[]",
+                      "value": ""
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Kit-Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    \"Not Found\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f5b056f2-22f3-4b31-94ab-d34fc9d740f6",
+          "name": "Update a broadcast",
+          "request": {
+            "name": "Update a broadcast",
+            "description": {
+              "content": "Update an existing broadcast. Continue to draft or schedule to send a broadcast to all or a subset of your subscribers.<br/><br/>To save a draft, set `public` to false.<br/><br/>To schedule the broadcast for sending, set `public` to true and provide `send_at`. Scheduled broadcasts should contain a subject and your content, at a minimum.<br/><br/>We currently support targeting your subscribers based on segment or tag ids.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v4",
+                "broadcasts",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-Kit-Api-Key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email_template_id\": \"<integer>\",\n  \"email_address\": \"<string>\",\n  \"content\": \"<string>\",\n  \"description\": \"<string>\",\n  \"public\": \"<boolean>\",\n  \"published_at\": \"<string>\",\n  \"send_at\": \"<string>\",\n  \"thumbnail_alt\": {},\n  \"thumbnail_url\": {},\n  \"preview_text\": \"<string>\",\n  \"subject\": \"<string>\",\n  \"subscriber_filter\": [\n    {\n      \"all\": [\n        {\n          \"type\": \"<string>\",\n          \"ids\": [\n            \"<integer>\",\n            \"<integer>\"\n          ]\n        },\n        {\n          \"type\": \"<string>\",\n          \"ids\": [\n            \"<integer>\",\n            \"<integer>\"\n          ]\n        }\n      ],\n      \"any\": [\n        {\n          \"type\": \"<string>\",\n          \"ids\": [\n            \"<integer>\",\n            \"<integer>\"\n          ]\n        },\n        {\n          \"type\": \"<string>\",\n          \"ids\": [\n            \"<integer>\",\n            \"<integer>\"\n          ]\n        }\n      ],\n      \"none\": [\n        {\n          \"type\": \"<string>\",\n          \"ids\": [\n            \"<integer>\",\n            \"<integer>\"\n          ]\n        },\n        {\n          \"type\": \"<string>\",\n          \"ids\": [\n            \"<integer>\",\n            \"<integer>\"\n          ]\n        }\n      ]\n    },\n    {\n      \"all\": [\n        {\n          \"type\": \"<string>\",\n          \"ids\": [\n            \"<integer>\",\n            \"<integer>\"\n          ]\n        },\n        {\n          \"type\": \"<string>\",\n          \"ids\": [\n            \"<integer>\",\n            \"<integer>\"\n          ]\n        }\n      ],\n      \"any\": [\n        {\n          \"type\": \"<string>\",\n          \"ids\": [\n            \"<integer>\",\n            \"<integer>\"\n          ]\n        },\n        {\n          \"type\": \"<string>\",\n          \"ids\": [\n            \"<integer>\",\n            \"<integer>\"\n          ]\n        }\n      ],\n      \"none\": [\n        {\n          \"type\": \"<string>\",\n          \"ids\": [\n            \"<integer>\",\n            \"<integer>\"\n          ]\n        },\n        {\n          \"type\": \"<string>\",\n          \"ids\": [\n            \"<integer>\",\n            \"<integer>\"\n          ]\n        }\n      ]\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "f00f89b6-4e37-4368-bc63-e7e69b9c8a14",
+              "name": "Updates the broadcast and returns its details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "broadcasts",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Kit-Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email_template_id\": 2,\n  \"email_address\": null,\n  \"content\": \"<p>Let me introduce myself</p>\",\n  \"description\": \"Intro email\",\n  \"public\": true,\n  \"published_at\": \"2023-02-17T11:43:55+00:00\",\n  \"send_at\": \"2023-02-17T11:43:55+00:00\",\n  \"thumbnail_alt\": null,\n  \"thumbnail_url\": null,\n  \"preview_text\": \"Pleased to meet you!\",\n  \"subject\": \"Hello!\",\n  \"subscriber_filter\": [\n    {\n      \"all\": [\n        {\n          \"type\": \"segment\",\n          \"ids\": [\n            54\n          ]\n        }\n      ],\n      \"any\": null,\n      \"none\": null\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"broadcast\": {\n    \"id\": 92,\n    \"publication_id\": 83,\n    \"created_at\": \"2023-02-17T11:43:55Z\",\n    \"subject\": \"Hello!\",\n    \"preview_text\": \"Pleased to meet you!\",\n    \"description\": \"Intro email\",\n    \"content\": \"<p>Let me introduce myself</p>\",\n    \"public\": true,\n    \"published_at\": \"2023-02-17T11:43:55Z\",\n    \"send_at\": \"2023-02-17T11:43:55Z\",\n    \"thumbnail_alt\": null,\n    \"thumbnail_url\": null,\n    \"public_url\": \"https://kit-greetings.kit.com/posts/hello\",\n    \"email_address\": \"greetings@kit.dev\",\n    \"email_template\": {\n      \"id\": 2,\n      \"name\": \"Classic\"\n    },\n    \"subscriber_filter\": [\n      {\n        \"all\": [\n          {\n            \"type\": \"segment\",\n            \"ids\": [\n              54\n            ]\n          }\n        ]\n      }\n    ],\n    \"status\": \"sending\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "605c73b7-3379-439f-97b9-3bcf35c213fb",
+              "name": "Returns a 401 if the token and/or account cannot be authenticated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "broadcasts",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Kit-Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email_template_id\": 2,\n  \"email_address\": null,\n  \"content\": \"<p>Let me introduce myself</p>\",\n  \"description\": \"Intro email\",\n  \"public\": true,\n  \"published_at\": \"2023-02-17T11:43:55+00:00\",\n  \"send_at\": \"2023-02-17T11:43:55+00:00\",\n  \"thumbnail_alt\": null,\n  \"thumbnail_url\": null,\n  \"preview_text\": \"Pleased to meet you!\",\n  \"subject\": \"Hello!\",\n  \"subscriber_filter\": [\n    {\n      \"all\": [\n        {\n          \"type\": \"segment\",\n          \"ids\": [\n            54\n          ]\n        }\n      ],\n      \"any\": null,\n      \"none\": null\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    \"The access token is invalid\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4f4841aa-20b8-4cdd-a210-7ba9e2e9f1a7",
+              "name": "Returns a 403 with an error message if the current account is unauthorized to create a broadcast",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "broadcasts",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Kit-Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email_template_id\": 2,\n  \"email_address\": null,\n  \"content\": \"<p>Let me introduce myself</p>\",\n  \"description\": \"Intro email\",\n  \"public\": true,\n  \"published_at\": \"2023-02-17T11:43:55+00:00\",\n  \"send_at\": \"2023-02-17T11:43:55+00:00\",\n  \"thumbnail_alt\": null,\n  \"thumbnail_url\": null,\n  \"preview_text\": \"Pleased to meet you!\",\n  \"subject\": \"Hello!\",\n  \"subscriber_filter\": [\n    {\n      \"all\": [\n        {\n          \"type\": \"segment\",\n          \"ids\": [\n            54\n          ]\n        }\n      ],\n      \"any\": null,\n      \"none\": null\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    \"You do not have sufficient permissions to access this resource. Please contact support.\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2bb37f95-ba0f-4066-a159-6015b5a775e9",
+              "name": "Returns a 404 when the provided id does not exist",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "broadcasts",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Kit-Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email_template_id\": 2,\n  \"email_address\": null,\n  \"content\": \"<p>Let me introduce myself</p>\",\n  \"description\": \"Intro email\",\n  \"public\": true,\n  \"published_at\": \"2023-02-17T11:43:55+00:00\",\n  \"send_at\": \"2023-02-17T11:43:55+00:00\",\n  \"thumbnail_alt\": null,\n  \"thumbnail_url\": null,\n  \"preview_text\": \"Pleased to meet you!\",\n  \"subject\": \"Hello!\",\n  \"subscriber_filter\": [\n    {\n      \"all\": [\n        {\n          \"type\": \"segment\",\n          \"ids\": [\n            54\n          ]\n        }\n      ],\n      \"any\": null,\n      \"none\": null\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    \"Not Found\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "22d86059-392e-4fcf-be42-c99c7af9a293",
+              "name": "Returns a 422 with an error message when one or more of the parameters are invalid or the campaign has already started sending",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "broadcasts",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Kit-Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email_template_id\": 2,\n  \"email_address\": null,\n  \"content\": \"<p>Let me introduce myself</p>\",\n  \"description\": \"Intro email\",\n  \"public\": true,\n  \"published_at\": \"2023-02-17T11:43:55+00:00\",\n  \"send_at\": \"2023-02-17T11:43:55+00:00\",\n  \"thumbnail_alt\": null,\n  \"thumbnail_url\": null,\n  \"preview_text\": \"Pleased to meet you!\",\n  \"subject\": \"Hello!\",\n  \"subscriber_filter\": [\n    {\n      \"all\": [\n        {\n          \"type\": \"segment\",\n          \"ids\": [\n            54\n          ]\n        }\n      ],\n      \"any\": null,\n      \"none\": null\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    \"Email template not found\",\n    \"Only a single filter group is supported. Use one of `all`, `any`, or `none`.\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.kit.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "0b02d526-24f2-466b-9e44-6492333006b1",
+    "name": "Kit Accounts Broadcasts API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

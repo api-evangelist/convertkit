@@ -1,0 +1,96 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  openapi/_original/openapi.json, https://api.kit.com/.well-known/oauth-authorization-server,
+  https://api.kit.com/.well-known/oauth-protected-resource, https://kit.com/security,
+  https://developers.kit.com/api-reference/*
+standards:
+- id: openapi-3.0
+  conforms: true
+  evidence: openapi/_original/openapi.json declares openapi 3.0.3 with 47 paths / 72 operations.
+- id: oauth2
+  conforms: true
+  evidence: components.securitySchemes declares an oauth2 authorizationCode flow; authorize/token/revoke endpoints are live.
+- id: rfc8414-oauth-authorization-server-metadata
+  conforms: true
+  evidence: https://api.kit.com/.well-known/oauth-authorization-server returns 200 with issuer, authorization_endpoint, token_endpoint, registration_endpoint, revocation_endpoint, scopes_supported.
+- id: rfc9728-oauth-protected-resource-metadata
+  conforms: true
+  evidence: https://api.kit.com/.well-known/oauth-protected-resource returns 200 naming https://app.kit.com/mcp; the MCP 401 also emits WWW-Authenticate with resource_metadata.
+- id: rfc7591-dynamic-client-registration
+  conforms: true
+  evidence: registration_endpoint https://app.kit.com/oauth/register; the 2026-05-20 changelog entry records aligning the DCR response with RFC 7591 for public clients.
+- id: rfc7636-pkce
+  conforms: true
+  evidence: code_challenge_methods_supported ["S256"]; Kit documents a PKCE flow for SPAs and mobile apps.
+- id: rfc7009-token-revocation
+  conforms: true
+  evidence: revocation_endpoint https://api.kit.com/oauth/revoke, documented at /api-reference/oauth-token-revocation.
+- id: oidc
+  conforms: false
+  evidence: /.well-known/openid-configuration returns 404 on every Kit host; no openIdConnect security scheme in the spec.
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: No application/problem+json response in any of the 153 declared 4xx responses. Kit uses a custom {"errors":[string]} envelope.
+- id: rfc9116-security-txt
+  conforms: false
+  evidence: /.well-known/security.txt returns 404 on kit.com, api.kit.com and developers.kit.com.
+- id: rfc8594-sunset-header
+  conforms: false
+  evidence: No Sunset or Deprecation header is documented or observed; V3 deprecation is announced only in prose with no date.
+- id: rfc6585-429
+  conforms: true
+  evidence: Documented 429 on rate-limit exhaustion at /api-reference/response-codes.
+  note: Status code only — Kit publishes no Retry-After or RateLimit-* response header.
+- id: ietf-ratelimit-headers
+  conforms: false
+  evidence: No RateLimit-Limit/Remaining/Reset or X-RateLimit-* header documented or present in the spec.
+- id: idempotency-key
+  conforms: false
+  evidence: No Idempotency-Key header or client request token in the docs or the spec. See conventions/convertkit-conventions.yml.
+- id: cursor-pagination
+  conforms: true
+  evidence: All list endpoints return a `pagination` object with start_cursor/end_cursor/has_next_page; before/after/per_page params. Documented at /api-reference/pagination.
+- id: iso8601-utc-timestamps
+  conforms: true
+  evidence: /api-reference/dates — all dates returned in UTC ISO 8601 (e.g. 2023-07-17T16:48:20Z).
+  note: GET /v4/account/growth_stats is a documented exception and returns account-timezone timestamps.
+- id: mcp
+  conforms: true
+  evidence: >-
+    Two live remote MCP servers. https://developers.kit.com/mcp answers
+    initialize + tools/list anonymously with protocolVersion 2025-06-18 and 3
+    tools carrying MCP tool annotations; https://app.kit.com/mcp is OAuth-gated
+    and advertises RFC 9728 resource metadata on its 401.
+- id: a2a-1.0.0
+  conforms: true
+  grade: conformant
+  evidence: https://developers.kit.com/.well-known/agent-card.json — capabilities object, protocolVersion 0.3, skills array. See a2a/convertkit-a2a.yml for graded deviations.
+- id: llms-txt
+  conforms: true
+  evidence: https://developers.kit.com/llms.txt returns 200 (32KB) and llms-full.txt returns 200 (412KB).
+- id: agent-skills
+  conforms: true
+  evidence: Kit publishes an Agent Skill at https://developers.kit.com/.well-known/agent-skills/kit/skill.md, referenced from its agent card.
+- id: json-api
+  conforms: false
+  evidence: Responses are plain application/json with resource-named top-level keys, not a JSON:API document structure.
+- id: graphql
+  conforms: false
+  evidence: Kit publishes no GraphQL endpoint; the graphql/ artifact in this repo is an API Evangelist conceptual schema, not a Kit surface.
+- id: asyncapi
+  conforms: false
+  evidence: Kit ships webhooks (15 event types) but publishes no AsyncAPI document. See asyncapi/convertkit-webhooks.yml.
+- id: grpc
+  conforms: false
+  evidence: No .proto published in the Kit GitHub org, on buf.build, or in the docs.
+compliance:
+  published: true
+  url: https://kit.com/security
+  certifications:
+  - SOC 2
+  - ISO 27001
+  - ISO 27018
+  - GDPR
+  source: security/convertkit-trust-center.yml
+  note: Verified by probe-security-programs.py against https://kit.com/security.

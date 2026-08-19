@@ -1,0 +1,65 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  https://developers.kit.com/.well-known/agent-skills/kit/skill.md (provider-published,
+  saved verbatim) plus API Evangelist skills generated from openapi/_original/openapi.json,
+  conventions/, errors/ and asyncapi/.
+note: >-
+  Kit's OpenAPI declares NO operationId on any of its 72 operations, so every
+  generated skill is grounded in METHOD + path — the only identifiers the
+  published spec contains. No operationIds were invented.
+skills:
+- file: convertkit-kit-provider-skill.md
+  name: Kit
+  method: searched
+  source: https://developers.kit.com/.well-known/agent-skills/kit/skill.md
+  http_status: 200
+  publisher: Kit
+  verbatim: true
+  description: >-
+    Kit's own published Agent Skill, referenced from its A2A agent card. Covers
+    building Kit App Store apps, plugins, API integration and OAuth flows.
+- file: convertkit-subscriber-onboarding.md
+  name: Onboard a subscriber into Kit
+  method: generated
+  api: openapi/convertkit-subscribers-api-openapi.yml
+  operations:
+  - POST /v4/subscribers
+  - GET /v4/custom_fields
+  - POST /v4/custom_fields
+  - POST /v4/tags
+  - POST /v4/tags/{tag_id}/subscribers
+  - POST /v4/sequences/{sequence_id}/subscribers
+  - GET /v4/subscribers/{id}
+- file: convertkit-broadcast-send.md
+  name: Draft, target and send a Kit broadcast
+  method: generated
+  api: openapi/convertkit-broadcasts-api-openapi.yml
+  operations:
+  - GET /v4/email_templates
+  - POST /v4/subscribers/filter
+  - POST /v4/broadcasts
+  - PUT /v4/broadcasts/{id}
+  - GET /v4/broadcasts/{id}
+  - GET /v4/broadcasts/{broadcast_id}/stats
+  - GET /v4/broadcasts/{broadcast_id}/clicks
+  - DELETE /v4/broadcasts/{id}
+- file: convertkit-bulk-import.md
+  name: Bulk import subscribers and tags into Kit
+  method: generated
+  api: openapi/convertkit-subscribers-api-openapi.yml
+  operations:
+  - POST /v4/bulk/subscribers
+  - POST /v4/bulk/tags
+  - POST /v4/bulk/tags/subscribers
+  - POST /v4/bulk/custom_fields
+  - POST /v4/bulk/custom_fields/subscribers
+  - POST /v4/bulk/forms/subscribers
+- file: convertkit-webhook-subscriptions.md
+  name: Subscribe to Kit events with webhooks
+  method: generated
+  api: openapi/convertkit-webhooks-api-openapi.yml
+  operations:
+  - POST /v4/webhooks
+  - GET /v4/webhooks
+  - DELETE /v4/webhooks/{id}

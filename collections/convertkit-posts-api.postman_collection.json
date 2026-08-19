@@ -1,0 +1,311 @@
+{
+  "item": [
+    {
+      "id": "4c54a7c2-32b9-4d45-860d-44e1cd917e30",
+      "name": "Posts",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "9f2f6b1d-c5c0-4ae8-be31-8bc2024ca529",
+          "name": "List posts",
+          "request": {
+            "name": "List posts",
+            "description": {},
+            "url": {
+              "path": [
+                "v4",
+                "posts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "include_content",
+                  "value": "<boolean>",
+                  "description": "To include the `content` field on each post in the response, use `true`. Omitted by default because it significantly increases response size and latency for large collections."
+                },
+                {
+                  "disabled": false,
+                  "key": "include_total_count",
+                  "value": "<boolean>",
+                  "description": "Set to `true` to include the `total_count` in the response. This option can cause slow responses; if paging through results, request it only on the first page and reuse the value for subsequent pages."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-Kit-Api-Key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "3d3396ad-d86a-45fd-a4de-48f11f822120",
+              "name": "Returns a paginated list of all posts for your account",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "posts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include_content",
+                      "value": "false"
+                    },
+                    {
+                      "key": "include_total_count",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Kit-Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"posts\": [\n    {\n      \"id\": 3,\n      \"publication_id\": 127,\n      \"created_at\": \"2026-06-11T16:15:02Z\",\n      \"title\": \"Draft Post\",\n      \"slug\": null,\n      \"description\": null,\n      \"meta_description\": null,\n      \"status\": \"draft\",\n      \"published_at\": null,\n      \"sent_at\": null,\n      \"thumbnail_alt\": null,\n      \"thumbnail_url\": null,\n      \"is_paid\": false,\n      \"public_url\": null\n    },\n    {\n      \"id\": 2,\n      \"publication_id\": 126,\n      \"created_at\": \"2026-06-11T16:15:02Z\",\n      \"title\": \"Email and Web Post\",\n      \"slug\": \"email-and-web-post\",\n      \"description\": null,\n      \"meta_description\": null,\n      \"status\": \"published\",\n      \"published_at\": \"2026-06-09T16:15:02Z\",\n      \"sent_at\": \"2026-06-11T16:15:02Z\",\n      \"thumbnail_alt\": null,\n      \"thumbnail_url\": null,\n      \"is_paid\": false,\n      \"public_url\": \"https://asdf.kit.com/posts/email-and-web-post\"\n    },\n    {\n      \"id\": 1,\n      \"publication_id\": 125,\n      \"created_at\": \"2026-06-11T16:15:02Z\",\n      \"title\": \"Web Only Post\",\n      \"slug\": \"web-only-post\",\n      \"description\": null,\n      \"meta_description\": null,\n      \"status\": \"published\",\n      \"published_at\": \"2026-06-10T16:15:02Z\",\n      \"sent_at\": null,\n      \"thumbnail_alt\": null,\n      \"thumbnail_url\": null,\n      \"is_paid\": false,\n      \"public_url\": \"https://asdf.kit.com/posts/web-only-post\"\n    }\n  ],\n  \"pagination\": {\n    \"has_previous_page\": false,\n    \"has_next_page\": false,\n    \"start_cursor\": \"WzNd\",\n    \"end_cursor\": \"WzFd\",\n    \"per_page\": 500\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "228cc30c-91e8-4f95-966c-37d5d1adc905",
+          "name": "Get a post",
+          "request": {
+            "name": "Get a post",
+            "description": {},
+            "url": {
+              "path": [
+                "v4",
+                "posts",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-Kit-Api-Key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "1fa77da6-6ffe-466a-b1f3-fd759e9dd47b",
+              "name": "Returns the post details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "posts",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Kit-Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"post\": {\n    \"id\": 25,\n    \"publication_id\": 149,\n    \"created_at\": \"2026-06-11T16:15:07Z\",\n    \"title\": \"My Newsletter Post\",\n    \"slug\": \"my-newsletter-post\",\n    \"description\": null,\n    \"meta_description\": null,\n    \"status\": \"published\",\n    \"published_at\": \"2026-06-10T16:15:07Z\",\n    \"sent_at\": null,\n    \"thumbnail_alt\": null,\n    \"thumbnail_url\": null,\n    \"is_paid\": false,\n    \"public_url\": \"https://asdf.kit.com/posts/my-newsletter-post\",\n    \"content\": \"<!DOCTYPE html PUBLIC \\\"-//W3C//DTD HTML 4.0 Transitional//EN\\\" \\\"http://www.w3.org/TR/REC-html40/loose.dtd\\\">\\n<!-- -->\\n\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9d1c7a30-6237-4f1b-9b7f-87c77d3b07e5",
+              "name": "Returns a 404 when the provided id does not exist",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "posts",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Kit-Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    \"Not Found\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.kit.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "712e94d0-a60c-4587-baed-2b52d500434a",
+    "name": "Kit Accounts Posts API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,297 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Kit Accounts Sequences API",
+    "version": "4.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Sequences",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List sequences",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.kit.com/v4/sequences",
+            "params": [
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "To fetch next page of results, use `?after=<end_cursor>`"
+              },
+              {
+                "name": "before",
+                "value": "",
+                "type": "query",
+                "description": "To fetch previous page of results, use `?before=<start_cursor>`"
+              },
+              {
+                "name": "include_total_count",
+                "value": "false",
+                "type": "query",
+                "description": "Set to `true` to include the `total_count` in the response. This option can cause slow responses; if paging through results, request it only on the first page and reuse the value for subsequent pages."
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "Number of results per page. Default 500, maximum 1000."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Kit-Api-Key",
+              "value": "{{X-Kit-Api-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns every sequence on the account. A sequence is a self-contained set of automated emails — subscribers join, then receive each email in order, governed by per-email `delay_value` / `delay_unit` and the sequence's overall `send_days`, `send_hour`, and `time_zone` schedule.\n\nEach entry carries the schedule defaults plus three behavioural toggles: `active` (whether the sequence is delivering), `repeat` (whether subscribers can re-enter), and `hold` (whether subscribers stay active after receiv"
+        },
+        {
+          "info": {
+            "name": "Create a sequence",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.kit.com/v4/sequences",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-Kit-Api-Key",
+              "value": "{{X-Kit-Api-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Creates an empty sequence — the container that holds sequence emails. After creating the shell, use [Create a sequence email](/api-reference/sequence-emails/create-a-sequence-email) to populate it.\n\nOnly `name` is required. Every other field has a sensible default: Kit fills in the account's default sending address, a daily send schedule, and the account time zone — and any of these can be tuned later via [Update a sequence](/api-reference/sequences/update-a-sequence).\n\nTwo behavioural toggles w"
+        },
+        {
+          "info": {
+            "name": "Get a sequence",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.kit.com/v4/sequences/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "23",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Kit-Api-Key",
+              "value": "{{X-Kit-Api-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Fetches a single sequence by `id`. Use this when you need the current schedule, the `active` / `repeat` / `hold` flags, the configured `email_address` and `email_template_id`, or `exclude_subscriber_sources` for a known sequence — for example, to confirm settings before adding subscribers or to render an editor.\n\nFor the individual emails inside the sequence, use [List sequence emails](/api-reference/sequence-emails/list-sequence-emails). For the sequence model and field semantics, see [Create a"
+        },
+        {
+          "info": {
+            "name": "Update a sequence",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.kit.com/v4/sequences/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "60",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-Kit-Api-Key",
+              "value": "{{X-Kit-Api-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Updates any sequence settings — `name`, `email_address`, schedule (`send_days`, `send_hour`, `time_zone`), `email_template_id`, `exclude_subscriber_sources`, or the `active` / `repeat` / `hold` flags. Only fields included in the request body change; everything else is preserved.\n\nSome changes have user-visible side effects on subscribers already in the sequence:\n\n**Note:** flipping `active` from `false` to `true` resumes delivery for queued subscribers. Flipping it back to `false` pauses the seq"
+        },
+        {
+          "info": {
+            "name": "Delete a sequence",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.kit.com/v4/sequences/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "81",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Kit-Api-Key",
+              "value": "{{X-Kit-Api-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Soft-deletes a sequence. The sequence is removed from active delivery immediately, with cleanup of associated state happening in the background.\n\n**Warning:** deleting a sequence with active subscribers stops deliveries to those subscribers — they will not receive remaining emails, and any Visual Automations referencing the sequence will need to be updated. Confirm the sequence is not in active use before deleting.\n\nIf you want to pause rather than delete, use [Update a sequence](/api-reference/"
+        },
+        {
+          "info": {
+            "name": "List subscribers for a sequence",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.kit.com/v4/sequences/:sequence_id/subscribers",
+            "params": [
+              {
+                "name": "added_after",
+                "value": "2023-02-14T11:43:55Z",
+                "type": "query",
+                "description": "Filter subscribers who have been added to the form after this date (format yyyy-mm-dd)"
+              },
+              {
+                "name": "added_before",
+                "value": "2023-02-18T11:43:55Z",
+                "type": "query",
+                "description": "Filter subscribers who have been added to the form before this date (format yyyy-mm-dd)"
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "To fetch next page of results, use `?after=<end_cursor>`"
+              },
+              {
+                "name": "before",
+                "value": "",
+                "type": "query",
+                "description": "To fetch previous page of results, use `?before=<start_cursor>`"
+              },
+              {
+                "name": "created_after",
+                "value": "2023-01-17T11:43:55Z",
+                "type": "query",
+                "description": "Filter subscribers who have been created after this date (format yyyy-mm-dd)"
+              },
+              {
+                "name": "created_before",
+                "value": "2023-02-18T11:43:55Z",
+                "type": "query",
+                "description": "Filter subscribers who have been created before this date (format yyyy-mm-dd)"
+              },
+              {
+                "name": "include_total_count",
+                "value": "false",
+                "type": "query",
+                "description": "Set to `true` to include the `total_count` in the response. This option can cause slow responses; if paging through results, request it only on the first page and reuse the value for subsequent pages."
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "Number of results per page. Default 500, maximum 1000."
+              },
+              {
+                "name": "sequence_id",
+                "value": "255",
+                "type": "path"
+              },
+              {
+                "name": "status",
+                "value": "all",
+                "type": "query",
+                "description": "Filter subscribers who have this status (`active`, `inactive`, `bounced`, `complained`, `cancelled` or `all`). Defaults to `active`."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Kit-Api-Key",
+              "value": "{{X-Kit-Api-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "List subscribers for a sequence"
+        },
+        {
+          "info": {
+            "name": "Add subscriber to sequence by email address",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.kit.com/v4/sequences/:sequence_id/subscribers",
+            "params": [
+              {
+                "name": "sequence_id",
+                "value": "324",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-Kit-Api-Key",
+              "value": "{{X-Kit-Api-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "The subscriber being added to the sequence must already exist. Subscribers can be created using the \"[Create a subscriber](#create-a-subscriber)\" endpoint."
+        },
+        {
+          "info": {
+            "name": "Add subscriber to sequence",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.kit.com/v4/sequences/:sequence_id/subscribers/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "1006",
+                "type": "path"
+              },
+              {
+                "name": "sequence_id",
+                "value": "293",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-Kit-Api-Key",
+              "value": "{{X-Kit-Api-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "The subscriber being added to the sequence must already exist. Subscribers can be created using the \"[Create a subscriber](#create-a-subscriber)\" endpoint."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

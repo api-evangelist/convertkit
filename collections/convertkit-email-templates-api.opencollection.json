@@ -1,0 +1,61 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Kit Accounts Email Templates API",
+    "version": "4.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Email Templates",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List email templates",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.kit.com/v4/email_templates",
+            "params": [
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "To fetch next page of results, use `?after=<end_cursor>`"
+              },
+              {
+                "name": "before",
+                "value": "",
+                "type": "query",
+                "description": "To fetch previous page of results, use `?before=<start_cursor>`"
+              },
+              {
+                "name": "include_total_count",
+                "value": "false",
+                "type": "query",
+                "description": "Set to `true` to include the `total_count` in the response. This option can cause slow responses; if paging through results, request it only on the first page and reuse the value for subsequent pages."
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "Number of results per page. Default 500, maximum 1000."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Kit-Api-Key",
+              "value": "{{X-Kit-Api-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "List email templates"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

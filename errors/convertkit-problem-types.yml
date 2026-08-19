@@ -1,0 +1,113 @@
+generated: '2026-08-13'
+method: searched
+source: openapi/_original/openapi.json
+docs: https://developers.kit.com/api-reference/response-codes
+format: custom
+rfc9457: false
+envelope:
+  media_type: application/json
+  shape: '{"errors": ["Human-readable message", ...]}'
+  fields:
+  - name: errors
+    type: array of string
+    description: >-
+      The only documented field. Kit V4 returns a single top-level `errors`
+      array of human-readable strings — there is no machine-readable error
+      `code`, `type` URI, `title`, `detail`, or `instance`. An agent cannot
+      branch on a stable error identifier; it can only branch on the HTTP status
+      and string-match the message.
+  note: >-
+    Not RFC 9457. No application/problem+json response appears anywhere in the
+    72-operation spec; every 4xx/5xx body is application/json carrying this
+    envelope. Recorded as the gap it is.
+coverage:
+  operations_total: 72
+  error_responses_declared: 153
+  statuses_declared: [401, 403, 404, 413, 422]
+  server_errors_declared_in_spec: 0
+  note: >-
+    The spec declares no 429 and no 5xx responses on any operation, even though
+    the docs document both. Both are captured below from the docs so the catalog
+    is complete.
+problems:
+- status: 401
+  title: Unauthorized
+  occurrences: 70
+  source: openapi + docs
+  description: The token and/or account cannot be authenticated.
+  causes:
+  - The authentication method is configured incorrectly or omitted from the call.
+  - The wrong authentication method was used — some endpoints require OAuth and reject API keys.
+  - The account no longer has API access (lapsed trial, free plan, failed payment).
+  remediation: Read the message string; it states which of the three applies. Re-check the X-Kit-Api-Key header or the OAuth bearer token, and confirm the account is on a paid plan.
+  example_operation: GET /v4/account
+- status: 403
+  title: Forbidden
+  occurrences: 6
+  source: openapi
+  description: The authenticated account is not authorized to perform this action.
+  example_operation: POST /v4/broadcasts
+  remediation: Authenticated but not entitled — check the account's plan and the app's granted access rather than the credential itself.
+- status: 404
+  title: Not Found
+  occurrences: 37
+  source: openapi
+  description: The addressed resource does not exist on this account.
+  example_operation: GET /v4/account/creator_profile
+  remediation: >-
+    Beware eventual consistency — a resource created seconds ago may 404 on a
+    list/filter read for up to 5 minutes. Direct id lookups are strongly
+    consistent, so a 404 on GET /v4/{resource}/{id} is authoritative.
+- status: 413
+  title: Payload Too Large — bulk queue limit
+  occurrences: 7
+  source: openapi + docs
+  description: >-
+    Too many bulk requests enqueued at once. Kit accepts up to 300MB of request
+    data per app, per creator account, shared across all bulk endpoints.
+  example_operation: POST /v4/bulk/custom_fields
+  remediation: Back off and retry after a short period; drain the existing queue before enqueuing more.
+- status: 422
+  title: Unprocessable Entity — bad or missing data
+  occurrences: 33
+  source: openapi + docs
+  description: A field contains bad data or a required field is missing.
+  known_cases:
+  - operation: PUT /v4/account/colors
+    cause: An invalid hex colour code was supplied.
+  - operation: POST /v4/tags
+    cause: name is missing.
+  - operation: PUT /v4/tags/{id}
+    cause: The new name is blank or already used by another tag (names are unique, case-insensitively).
+  - operation: POST|PUT /v4/sequences/{sequence_id}/emails
+    cause: The requested position is already taken by another email in that sequence.
+  - operation: GET /v4/broadcasts?status=
+    cause: An unknown status value; the response lists the accepted statuses.
+  remediation: Fix the field named in the errors array. These are deterministic — do not retry unchanged.
+- status: 429
+  title: Too Many Requests — rate limited
+  occurrences: 0
+  source: docs
+  description: >-
+    Documented in the response-codes reference but declared on zero operations
+    in the OpenAPI. 600 requests / rolling 60s for an OAuth access token; 120 /
+    rolling 60s for an API key; 120/min per token on the Kit MCP.
+  remediation: Space requests out and apply exponential backoff. Kit publishes no Retry-After or RateLimit-* response header, so the backoff must be client-side.
+- status: 500
+  title: Internal Server Error
+  occurrences: 0
+  source: docs
+  description: The server is overloaded or a bug was hit. Documented but declared on zero operations in the OpenAPI.
+  remediation: Retry after a short period; if it persists, raise with support.
+oauth_errors:
+- error: invalid_grant
+  context: POST /oauth/token with grant_type=refresh_token
+  description: >-
+    Refresh tokens are single-use since 2026-05-20. Each refresh issues a new
+    refresh token and revokes the previous one; replaying a stale refresh token
+    returns invalid_grant.
+  source: https://developers.kit.com/api-reference/oauth-refresh-token-flow
+gaps:
+- No error `code` or `type` field — errors are unstructured human-readable strings.
+- No RFC 9457 application/problem+json anywhere in the spec.
+- 429 and 5xx are documented in prose but absent from every operation's responses block.

@@ -1,0 +1,243 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Kit Accounts Forms API",
+    "version": "4.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Forms",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Bulk add subscribers to forms",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.kit.com/v4/bulk/forms/subscribers",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://api.kit.com/v4/oauth/authorize",
+              "accessTokenUrl": "https://api.kit.com/v4/oauth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Adding subscribers to double opt-in forms will trigger sending an Incentive Email. Subscribers already added to the specified form will not receive the Incentive Email again. For more information about double opt-in see \"[Double opt-in](#double-opt-in)\". <br/><br/>The subscribers being added to the form must already exist. Subscribers can be created in bulk using the \"[Bulk create subscriber](#bulk-create-subscribers)\" endpoint.<br/><br/>See \"[Bulk & async processing](#bulk-amp-async-processing)"
+        },
+        {
+          "info": {
+            "name": "List forms",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.kit.com/v4/forms",
+            "params": [
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "To fetch next page of results, use `?after=<end_cursor>`"
+              },
+              {
+                "name": "before",
+                "value": "",
+                "type": "query",
+                "description": "To fetch previous page of results, use `?before=<start_cursor>`"
+              },
+              {
+                "name": "include_total_count",
+                "value": "false",
+                "type": "query",
+                "description": "Set to `true` to include the `total_count` in the response. This option can cause slow responses; if paging through results, request it only on the first page and reuse the value for subsequent pages."
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "Number of results per page. Default 500, maximum 1000."
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter forms that have this status (`active`, `archived`, `trashed`, or `all`). Defaults to `active`."
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "Filter forms and landing pages by type. Use `embed` for embedded forms. Use `hosted` for landing pages."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Kit-Api-Key",
+              "value": "{{X-Kit-Api-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "List forms"
+        },
+        {
+          "info": {
+            "name": "List subscribers for a form",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.kit.com/v4/forms/:form_id/subscribers",
+            "params": [
+              {
+                "name": "added_after",
+                "value": "2023-02-14T11:43:55Z",
+                "type": "query",
+                "description": "Filter subscribers who have been added to the form after this date (format yyyy-mm-dd)"
+              },
+              {
+                "name": "added_before",
+                "value": "2023-02-18T11:43:55Z",
+                "type": "query",
+                "description": "Filter subscribers who have been added to the form before this date (format yyyy-mm-dd)"
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "To fetch next page of results, use `?after=<end_cursor>`"
+              },
+              {
+                "name": "before",
+                "value": "",
+                "type": "query",
+                "description": "To fetch previous page of results, use `?before=<start_cursor>`"
+              },
+              {
+                "name": "created_after",
+                "value": "2023-01-17T11:43:55Z",
+                "type": "query",
+                "description": "Filter subscribers who have been created after this date (format yyyy-mm-dd)"
+              },
+              {
+                "name": "created_before",
+                "value": "2023-02-18T11:43:55Z",
+                "type": "query",
+                "description": "Filter subscribers who have been created before this date (format yyyy-mm-dd)"
+              },
+              {
+                "name": "form_id",
+                "value": "169",
+                "type": "path"
+              },
+              {
+                "name": "include_total_count",
+                "value": "false",
+                "type": "query",
+                "description": "Set to `true` to include the `total_count` in the response. This option can cause slow responses; if paging through results, request it only on the first page and reuse the value for subsequent pages."
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "Number of results per page. Default 500, maximum 1000."
+              },
+              {
+                "name": "slim",
+                "value": "false",
+                "type": "query",
+                "description": "When `true`, omits expensive optional fields from the response. Produces a faster, smaller response — useful when extra fields are not needed."
+              },
+              {
+                "name": "status",
+                "value": "all",
+                "type": "query",
+                "description": "Filter subscribers who have this status (`active`, `inactive`, `bounced`, `complained`, `cancelled` or `all`). Defaults to `active`."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Kit-Api-Key",
+              "value": "{{X-Kit-Api-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "List subscribers for a form"
+        },
+        {
+          "info": {
+            "name": "Add subscriber to form by email address",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.kit.com/v4/forms/:form_id/subscribers",
+            "params": [
+              {
+                "name": "form_id",
+                "value": "234",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-Kit-Api-Key",
+              "value": "{{X-Kit-Api-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "The subscriber being added to the form must already exist. Subscribers can be created using the \"[Create a subscriber](#create-a-subscriber)\" endpoint."
+        },
+        {
+          "info": {
+            "name": "Add subscriber to form",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.kit.com/v4/forms/:form_id/subscribers/:id",
+            "params": [
+              {
+                "name": "form_id",
+                "value": "210",
+                "type": "path"
+              },
+              {
+                "name": "id",
+                "value": "767",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-Kit-Api-Key",
+              "value": "{{X-Kit-Api-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "The subscriber being added to the form must already exist. Subscribers can be created using the \"[Create a subscriber](#create-a-subscriber)\" endpoint."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

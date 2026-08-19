@@ -1,6 +1,10 @@
-generated: '2026-07-11'
-method: derived
-source: openapi/openapi.json
+generated: '2026-08-13'
+method: searched
+source: openapi/convertkit-accounts-api-openapi.yml, openapi/convertkit-broadcasts-api-openapi.yml, openapi/convertkit-custom-fields-api-openapi.yml,
+  openapi/convertkit-email-templates-api-openapi.yml, openapi/convertkit-forms-api-openapi.yml, openapi/convertkit-posts-api-openapi.yml,
+  openapi/convertkit-purchases-api-openapi.yml, openapi/convertkit-segments-api-openapi.yml, openapi/convertkit-sequence-emails-api-openapi.yml,
+  openapi/convertkit-sequences-api-openapi.yml, openapi/convertkit-snippets-api-openapi.yml, openapi/convertkit-subscribers-api-openapi.yml
+  ...
 summary:
   types:
   - apiKey
@@ -16,7 +20,20 @@ schemes:
   parameter: X-Kit-Api-Key
   description: Authenticate API requests via an API Key
   sources:
-  - openapi/openapi.json
+  - openapi/convertkit-accounts-api-openapi.yml
+  - openapi/convertkit-broadcasts-api-openapi.yml
+  - openapi/convertkit-custom-fields-api-openapi.yml
+  - openapi/convertkit-email-templates-api-openapi.yml
+  - openapi/convertkit-forms-api-openapi.yml
+  - openapi/convertkit-posts-api-openapi.yml
+  - openapi/convertkit-purchases-api-openapi.yml
+  - openapi/convertkit-segments-api-openapi.yml
+  - openapi/convertkit-sequence-emails-api-openapi.yml
+  - openapi/convertkit-sequences-api-openapi.yml
+  - openapi/convertkit-snippets-api-openapi.yml
+  - openapi/convertkit-subscribers-api-openapi.yml
+  - openapi/convertkit-tags-api-openapi.yml
+  - openapi/convertkit-webhooks-api-openapi.yml
 - name: OAuth2
   type: oauth2
   flows:
@@ -26,4 +43,61 @@ schemes:
     scopes: 2
   description: Authenticate API requests via an OAuth token
   sources:
-  - openapi/openapi.json
+  - openapi/convertkit-accounts-api-openapi.yml
+  - openapi/convertkit-broadcasts-api-openapi.yml
+  - openapi/convertkit-custom-fields-api-openapi.yml
+  - openapi/convertkit-email-templates-api-openapi.yml
+  - openapi/convertkit-forms-api-openapi.yml
+  - openapi/convertkit-posts-api-openapi.yml
+  - openapi/convertkit-purchases-api-openapi.yml
+  - openapi/convertkit-segments-api-openapi.yml
+  - openapi/convertkit-sequence-emails-api-openapi.yml
+  - openapi/convertkit-sequences-api-openapi.yml
+  - openapi/convertkit-snippets-api-openapi.yml
+  - openapi/convertkit-subscribers-api-openapi.yml
+  - openapi/convertkit-tags-api-openapi.yml
+  - openapi/convertkit-webhooks-api-openapi.yml
+docs: https://developers.kit.com/api-reference/authentication
+searched_note: Upgraded from the mechanical derive with Kit's published auth docs and the live RFC 8414
+  / RFC 9728 well-known documents. Note the OpenAPI oauth2 endpoint URLs (api.kit.com/v4/oauth/*) disagree
+  with the live authorization-server metadata (authorize on app.kit.com, no /v4 prefix) — see scopes/convertkit-scopes.yml.
+live_metadata:
+  authorization_server: https://api.kit.com/.well-known/oauth-authorization-server
+  protected_resource: https://api.kit.com/.well-known/oauth-protected-resource
+  probed: '2026-08-13'
+  http_status: 200
+  issuer: https://api.kit.com
+  authorization_endpoint: https://app.kit.com/oauth/authorize
+  token_endpoint: https://api.kit.com/oauth/token
+  revocation_endpoint: https://api.kit.com/oauth/revoke
+  registration_endpoint: https://app.kit.com/oauth/register
+  dynamic_client_registration: true
+  pkce: S256
+  grant_types_supported:
+  - authorization_code
+  - refresh_token
+  token_endpoint_auth_methods_supported:
+  - client_secret_post
+  - none
+usage_policy:
+  api_key:
+    header: X-Kit-Api-Key
+    intended_use: Personal automation and pre-launch testing only
+    rate_limit: 120 requests / rolling 60s
+    restrictions: Rejected by every /v4/bulk/ endpoint and by POST /v4/purchases
+    retrievability: Shown once at creation in account settings > Developer; not retrievable later
+  oauth:
+    required_for: Any app published to the Kit App Store, all bulk endpoints, purchase creation, and the
+      Kit MCP
+    rate_limit: 600 requests / rolling 60s
+    flows:
+    - authorization_code
+    - authorization_code + PKCE (SPAs and mobile)
+    - refresh_token
+    refresh_token_rotation: Single-use since 2026-05-20; each refresh issues a new refresh token and revokes
+      the previous. Reuse returns invalid_grant.
+    docs:
+    - https://developers.kit.com/api-reference/oauth-refresh-token-flow
+    - https://developers.kit.com/api-reference/oauth-proof-key-for-code-exchange-flow
+    - https://developers.kit.com/api-reference/oauth-token-revocation
+scopes_artifact: scopes/convertkit-scopes.yml

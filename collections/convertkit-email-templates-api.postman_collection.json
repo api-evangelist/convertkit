@@ -1,0 +1,186 @@
+{
+  "item": [
+    {
+      "id": "4a758230-0d28-4b41-9080-02f12edc3552",
+      "name": "Email Templates",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "dae3336a-7efc-4ef8-a862-ac693a9d1c0a",
+          "name": "List email templates",
+          "request": {
+            "name": "List email templates",
+            "description": {},
+            "url": {
+              "path": [
+                "v4",
+                "email_templates"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "include_total_count",
+                  "value": "<boolean>",
+                  "description": "Set to `true` to include the `total_count` in the response. This option can cause slow responses; if paging through results, request it only on the first page and reuse the value for subsequent pages."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-Kit-Api-Key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "8990604a-23b8-4a79-8fbb-9c2008baaa9b",
+              "name": "Returns a paginated list of all email templates for your account",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "email_templates"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include_total_count",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Kit-Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"email_templates\": [\n    {\n      \"id\": 36,\n      \"name\": \"Custom HTML Template\",\n      \"is_default\": false,\n      \"category\": \"HTML\"\n    },\n    {\n      \"id\": 35,\n      \"name\": \"Story\",\n      \"is_default\": false,\n      \"category\": \"Starting point\"\n    },\n    {\n      \"id\": 6,\n      \"name\": \"Text Only\",\n      \"is_default\": true,\n      \"category\": \"HTML\"\n    },\n    {\n      \"id\": 4,\n      \"name\": \"Modern\",\n      \"is_default\": false,\n      \"category\": \"HTML\"\n    },\n    {\n      \"id\": 2,\n      \"name\": \"Classic\",\n      \"is_default\": false,\n      \"category\": \"HTML\"\n    },\n    {\n      \"id\": 1,\n      \"name\": \"Card\",\n      \"is_default\": false,\n      \"category\": \"HTML\"\n    }\n  ],\n  \"pagination\": {\n    \"has_previous_page\": false,\n    \"has_next_page\": false,\n    \"start_cursor\": \"WzM2XQ==\",\n    \"end_cursor\": \"WzFd\",\n    \"per_page\": 500\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3ee494b1-486d-44b6-8b72-a232eeaf1e22",
+              "name": "Returns a 401 if the token and/or account cannot be authenticated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "email_templates"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include_total_count",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Kit-Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    \"The access token is invalid\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.kit.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "4b5c9914-edc1-4906-9484-61031a20d749",
+    "name": "Kit Accounts Email Templates API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

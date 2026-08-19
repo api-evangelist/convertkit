@@ -1,0 +1,1730 @@
+{
+  "item": [
+    {
+      "id": "28b070c5-bebd-4a62-a383-02f5d0f5f34e",
+      "name": "Custom Fields",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "0eb18c81-93dd-40da-b562-20ccf5fd5893",
+          "name": "Bulk create custom fields",
+          "request": {
+            "name": "Bulk create custom fields",
+            "description": {
+              "content": "See \"[Bulk & async processing](#bulk-amp-async-processing)\" for more information.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v4",
+                "bulk",
+                "custom_fields"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "read write"
+                },
+                {
+                  "key": "redirect_uri",
+                  "value": "https://api.kit.com/v4/oauth/token"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://api.kit.com/v4/oauth/token"
+                },
+                {
+                  "key": "authUrl",
+                  "value": "https://api.kit.com/v4/oauth/authorize"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "authorization_code"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"custom_fields\": [\n    {\n      \"label\": \"<string>\"\n    },\n    {\n      \"label\": \"<string>\"\n    }\n  ],\n  \"callback_url\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "8718de4d-9803-4cc5-b8aa-5645a39370a5",
+              "name": "Creates the custom_fields synchronously when 100 or less custom fields are requested",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "bulk",
+                    "custom_fields"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"custom_fields\": [\n    {\n      \"label\": \"Test Custom Field 0\"\n    },\n    {\n      \"label\": \"Test Custom Field 1\"\n    },\n    {\n      \"label\": \"Test Custom Field 2\"\n    },\n    {\n      \"label\": \"Test Custom Field 3\"\n    }\n  ],\n  \"callback_url\": null\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"custom_fields\": [\n    {\n      \"id\": 143,\n      \"key\": \"existing_custom_field\",\n      \"label\": \"Existing Custom Field\",\n      \"name\": \"ck_field_143_existing_custom_field\",\n      \"created_at\": \"2023-02-17T11:43:55Z\"\n    },\n    {\n      \"id\": 145,\n      \"key\": \"interests\",\n      \"label\": \"Interests\",\n      \"name\": \"ck_field_145_interests\",\n      \"created_at\": \"2023-02-17T11:43:55Z\"\n    },\n    {\n      \"id\": 144,\n      \"key\": \"last_name\",\n      \"label\": \"Last name\",\n      \"name\": \"ck_field_144_last_name\",\n      \"created_at\": \"2023-02-17T11:43:55Z\"\n    }\n  ],\n  \"failures\": []\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5873495e-ae55-4448-b0a7-3114f1b6b35b",
+              "name": "Creates or updates custom_fields asynchronously when more than 100 custom fields are requested",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "bulk",
+                    "custom_fields"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"custom_fields\": [\n    {\n      \"label\": \"Test Custom Field 0\"\n    },\n    {\n      \"label\": \"Test Custom Field 1\"\n    },\n    {\n      \"label\": \"Test Custom Field 2\"\n    },\n    {\n      \"label\": \"Test Custom Field 3\"\n    }\n  ],\n  \"callback_url\": null\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6d64f047-b150-4b61-a2d0-8b18ae1ec0ea",
+              "name": "Returns a 401 if the token and/or account cannot be authenticated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "bulk",
+                    "custom_fields"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"custom_fields\": [\n    {\n      \"label\": \"Test Custom Field 0\"\n    },\n    {\n      \"label\": \"Test Custom Field 1\"\n    },\n    {\n      \"label\": \"Test Custom Field 2\"\n    },\n    {\n      \"label\": \"Test Custom Field 3\"\n    }\n  ],\n  \"callback_url\": null\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    \"The access token is invalid\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "38fa1c69-ee85-4f66-969f-43c6e3ffc2b6",
+              "name": "Returns a 413 when the size of the request would exceed the account's data limit for enqueued bulk requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "bulk",
+                    "custom_fields"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"custom_fields\": [\n    {\n      \"label\": \"Test Custom Field 0\"\n    },\n    {\n      \"label\": \"Test Custom Field 1\"\n    },\n    {\n      \"label\": \"Test Custom Field 2\"\n    },\n    {\n      \"label\": \"Test Custom Field 3\"\n    }\n  ],\n  \"callback_url\": null\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Request Entity Too Large",
+              "code": 413,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    \"This request exceeds your queued bulk requests limit. Please wait while we process your existing requests and try again later.\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "efe85321-eb38-46d0-88b2-43fe137bc176",
+              "name": "Returns a 422 when `custom_fields` is empty or not an array",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "bulk",
+                    "custom_fields"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"custom_fields\": [\n    {\n      \"label\": \"Test Custom Field 0\"\n    },\n    {\n      \"label\": \"Test Custom Field 1\"\n    },\n    {\n      \"label\": \"Test Custom Field 2\"\n    },\n    {\n      \"label\": \"Test Custom Field 3\"\n    }\n  ],\n  \"callback_url\": null\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    \"No custom fields included for processing\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "fe0ab4b1-c8c9-438f-8ceb-1eca7e3bf949",
+          "name": "Bulk update subscriber custom field values",
+          "request": {
+            "name": "Bulk update subscriber custom field values",
+            "description": {},
+            "url": {
+              "path": [
+                "v4",
+                "bulk",
+                "custom_fields",
+                "subscribers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "read write"
+                },
+                {
+                  "key": "redirect_uri",
+                  "value": "https://api.kit.com/v4/oauth/token"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://api.kit.com/v4/oauth/token"
+                },
+                {
+                  "key": "authUrl",
+                  "value": "https://api.kit.com/v4/oauth/authorize"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "authorization_code"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"custom_field_values\": [\n    {\n      \"subscriber_id\": \"<integer>\",\n      \"subscriber_custom_field_id\": \"<integer>\",\n      \"value\": \"<string>\"\n    },\n    {\n      \"subscriber_id\": \"<integer>\",\n      \"subscriber_custom_field_id\": \"<integer>\",\n      \"value\": \"<string>\"\n    }\n  ],\n  \"callback_url\": {}\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "7fe2c4f0-f439-43a5-9587-c91fdbe4e794",
+              "name": "Creates or updates custom field values synchronously when 100 or less values are requested",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "bulk",
+                    "custom_fields",
+                    "subscribers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"custom_field_values\": [\n    {\n      \"subscriber_id\": 0,\n      \"subscriber_custom_field_id\": 0,\n      \"value\": \"value_0\"\n    },\n    {\n      \"subscriber_id\": 1,\n      \"subscriber_custom_field_id\": 1,\n      \"value\": \"value_1\"\n    },\n    {\n      \"subscriber_id\": 2,\n      \"subscriber_custom_field_id\": 2,\n      \"value\": \"value_2\"\n    },\n    {\n      \"subscriber_id\": 3,\n      \"subscriber_custom_field_id\": 3,\n      \"value\": \"value_3\"\n    }\n  ],\n  \"callback_url\": null\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"custom_field_values\": [\n    {\n      \"subscriber_id\": 615,\n      \"subscriber_custom_field_id\": 156,\n      \"value\": \"Smith\"\n    },\n    {\n      \"subscriber_id\": 615,\n      \"subscriber_custom_field_id\": 157,\n      \"value\": \"Acme Inc\"\n    }\n  ],\n  \"failures\": [\n    {\n      \"errors\": [\n        \"Subscriber does not exist\"\n      ],\n      \"custom_field_value\": {\n        \"subscriber_id\": null,\n        \"subscriber_custom_field_id\": 156,\n        \"value\": \"Jones\"\n      }\n    },\n    {\n      \"errors\": [\n        \"Custom field does not exist\"\n      ],\n      \"custom_field_value\": {\n        \"subscriber_id\": 615,\n        \"subscriber_custom_field_id\": 999999,\n        \"value\": \"Test\"\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "741b2c0b-fdfb-4150-abac-5d5aab511cd5",
+              "name": "Creates or updates custom field values asynchronously when more than 100 values are requested",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "bulk",
+                    "custom_fields",
+                    "subscribers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"custom_field_values\": [\n    {\n      \"subscriber_id\": 0,\n      \"subscriber_custom_field_id\": 0,\n      \"value\": \"value_0\"\n    },\n    {\n      \"subscriber_id\": 1,\n      \"subscriber_custom_field_id\": 1,\n      \"value\": \"value_1\"\n    },\n    {\n      \"subscriber_id\": 2,\n      \"subscriber_custom_field_id\": 2,\n      \"value\": \"value_2\"\n    },\n    {\n      \"subscriber_id\": 3,\n      \"subscriber_custom_field_id\": 3,\n      \"value\": \"value_3\"\n    }\n  ],\n  \"callback_url\": null\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b9f09064-0094-4d4b-a7f4-50f4f380057d",
+              "name": "Returns a 401 if the token and/or account cannot be authenticated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "bulk",
+                    "custom_fields",
+                    "subscribers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"custom_field_values\": [\n    {\n      \"subscriber_id\": 0,\n      \"subscriber_custom_field_id\": 0,\n      \"value\": \"value_0\"\n    },\n    {\n      \"subscriber_id\": 1,\n      \"subscriber_custom_field_id\": 1,\n      \"value\": \"value_1\"\n    },\n    {\n      \"subscriber_id\": 2,\n      \"subscriber_custom_field_id\": 2,\n      \"value\": \"value_2\"\n    },\n    {\n      \"subscriber_id\": 3,\n      \"subscriber_custom_field_id\": 3,\n      \"value\": \"value_3\"\n    }\n  ],\n  \"callback_url\": null\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    \"The access token is invalid\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d6cff1d0-7947-459a-8173-d325987ef6af",
+              "name": "Returns a 413 when the size of the request would exceed the account's data limit for enqueued bulk requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "bulk",
+                    "custom_fields",
+                    "subscribers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"custom_field_values\": [\n    {\n      \"subscriber_id\": 0,\n      \"subscriber_custom_field_id\": 0,\n      \"value\": \"value_0\"\n    },\n    {\n      \"subscriber_id\": 1,\n      \"subscriber_custom_field_id\": 1,\n      \"value\": \"value_1\"\n    },\n    {\n      \"subscriber_id\": 2,\n      \"subscriber_custom_field_id\": 2,\n      \"value\": \"value_2\"\n    },\n    {\n      \"subscriber_id\": 3,\n      \"subscriber_custom_field_id\": 3,\n      \"value\": \"value_3\"\n    }\n  ],\n  \"callback_url\": null\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Request Entity Too Large",
+              "code": 413,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    \"This request exceeds your queued bulk requests limit. Please wait while we process your existing requests and try again later.\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8ab72717-c7ec-470a-8c45-be6ba60bbe14",
+              "name": "Returns a 422 when `custom_field_values` is empty or not an array",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "bulk",
+                    "custom_fields",
+                    "subscribers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"custom_field_values\": [\n    {\n      \"subscriber_id\": 0,\n      \"subscriber_custom_field_id\": 0,\n      \"value\": \"value_0\"\n    },\n    {\n      \"subscriber_id\": 1,\n      \"subscriber_custom_field_id\": 1,\n      \"value\": \"value_1\"\n    },\n    {\n      \"subscriber_id\": 2,\n      \"subscriber_custom_field_id\": 2,\n      \"value\": \"value_2\"\n    },\n    {\n      \"subscriber_id\": 3,\n      \"subscriber_custom_field_id\": 3,\n      \"value\": \"value_3\"\n    }\n  ],\n  \"callback_url\": null\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    \"No custom field values included for processing\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b8084f5b-aec8-4472-8e96-5193b2a6525b",
+          "name": "List custom fields",
+          "request": {
+            "name": "List custom fields",
+            "description": {
+              "content": "A custom field allows you to collect subscriber information beyond the standard fields of first name and email address. An example would be a custom field called last name so you can get the full names of your subscribers.<br/><br/>You create a custom field, and then you're able to use that in your forms or emails.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v4",
+                "custom_fields"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "include_total_count",
+                  "value": "<boolean>",
+                  "description": "Set to `true` to include the `total_count` in the response. This option can cause slow responses; if paging through results, request it only on the first page and reuse the value for subsequent pages."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-Kit-Api-Key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "f75ae5aa-2214-4aa0-a57c-258a48665f5e",
+              "name": "Returns a paginated list of all custom fields for your account",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "custom_fields"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include_total_count",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Kit-Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"custom_fields\": [\n    {\n      \"id\": 1,\n      \"name\": \"ck_field_1_last_name\",\n      \"key\": \"last_name\",\n      \"label\": \"Last name\"\n    }\n  ],\n  \"pagination\": {\n    \"has_previous_page\": false,\n    \"has_next_page\": false,\n    \"start_cursor\": \"WzFd\",\n    \"end_cursor\": \"WzFd\",\n    \"per_page\": 500\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bb76e03a-3f44-4886-934f-fdaa176553c3",
+              "name": "Returns a 401 if the token and/or account cannot be authenticated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "custom_fields"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include_total_count",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Kit-Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    \"The access token is invalid\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "bbf9305c-d723-4896-bf33-517d13f488cc",
+          "name": "Create a custom field",
+          "request": {
+            "name": "Create a custom field",
+            "description": {
+              "content": "Create a custom field for your account. The label field must be unique to your account. Whitespace will be removed from the beginning and the end of your label.<br/><br/>Additionally, a key field and a name field will be generated for you. The key is an ASCII-only, lowercased, underscored representation of your label. This key must be unique to your account. Keys are used in personalization tags in sequences and broadcasts. Names are unique identifiers for use in the HTML of custom forms. They are made up of a combination of ID and the key of the custom field prefixed with \"ck_field\".",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v4",
+                "custom_fields"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-Kit-Api-Key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"label\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "d47164ff-c81c-458c-977b-0d36a879b513",
+              "name": "Returns a 200 and the custom field if it already exists",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "custom_fields"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Kit-Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"label\": \"Interests\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"custom_field\": {\n    \"id\": 8,\n    \"name\": \"ck_field_8_interests\",\n    \"key\": \"interests\",\n    \"label\": \"Interests\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "915d9595-b4e7-4b13-87dd-cbe87f1cbdf0",
+              "name": "Creates a new custom field and returns its details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "custom_fields"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Kit-Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"label\": \"Interests\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"custom_field\": {\n    \"id\": 6,\n    \"name\": \"ck_field_6_interests\",\n    \"key\": \"interests\",\n    \"label\": \"Interests\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "68343d92-2e7a-4a9b-b037-1149583dbe65",
+              "name": "Returns a 401 if the token and/or account cannot be authenticated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "custom_fields"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Kit-Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"label\": \"Interests\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    \"The access token is invalid\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2797b425-0360-40d5-9f70-fba2ce48ba72",
+              "name": "Returns a 422 with an error message when the label is missing",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "custom_fields"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Kit-Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"label\": \"Interests\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    \"Label can't be blank\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f840d532-4e87-48ec-bbc0-a34138d009a0",
+          "name": "Delete custom field",
+          "request": {
+            "name": "Delete custom field",
+            "description": {
+              "content": "This will remove all data in this field from your subscribers.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v4",
+                "custom_fields",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-Kit-Api-Key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "e1b77e08-1ebe-4b9a-b9ea-67e7560fcaa4",
+              "name": "Deletes the custom field",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "custom_fields",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Kit-Api-Key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "46d3a492-63d7-4138-8061-ffc31208468c",
+              "name": "Returns a 401 if the token and/or account cannot be authenticated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "custom_fields",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Kit-Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    \"The access token is invalid\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2b73a932-3d37-467d-9ab6-b2f51fc2c0d7",
+              "name": "Returns a 404 when the provided id does not exist",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "custom_fields",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Kit-Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    \"Not Found\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5ad31181-34c0-4b18-9640-27f5ebacee80",
+              "name": "Returns a 422 when the custom field cannot be deleted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "custom_fields",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Kit-Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    \"Unable to destroy the custom field.\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e3983876-a6b9-4ca7-a0d5-43a8a91571c9",
+          "name": "Update a custom field",
+          "request": {
+            "name": "Update a custom field",
+            "description": {
+              "content": "Updates a custom field label (see [Create a custom field](/api-reference/custom-fields/create-a-custom-field) for more information on labels). Note that the key will change but the name remains the same when the label is updated.<br/><br/><strong>Warning: </strong>An update to a custom field will break all of the liquid personalization tags in emails that reference it - e.g. if you update a `Zip_Code` custom field to `Post_Code`, all liquid tags referencing `{{ subscriber.Zip_Code }}` would no longer work and need to be replaced with `{{ subscriber.Post_Code }}`.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v4",
+                "custom_fields",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-Kit-Api-Key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"label\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "4398692d-a135-4c55-9139-51db980653fd",
+              "name": "Updates the custom field and returns its details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "custom_fields",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Kit-Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"label\": \"Last name\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"custom_field\": {\n    \"id\": 27,\n    \"name\": \"ck_field_27_last_name\",\n    \"key\": \"lastname\",\n    \"label\": \"Last name\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "430982f5-2a9e-48d3-b4e3-f43ec7b11bc8",
+              "name": "Returns a 401 if the token and/or account cannot be authenticated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "custom_fields",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Kit-Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"label\": \"Last name\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    \"The access token is invalid\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1d4a7f98-d8fe-44ed-be14-083ad47c5ed5",
+              "name": "Returns a 404 when the provided id does not exist",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "custom_fields",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Kit-Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"label\": \"Last name\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    \"Not Found\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "82b211f6-79d3-412a-860f-0c2aa291ed54",
+              "name": "Returns a 422 with an error mesage when one or more of the parameters are invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "custom_fields",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Kit-Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"label\": \"Last name\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    \"Label can't be blank\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.kit.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "53275f96-bf6e-4f09-ba27-98566dc63cee",
+    "name": "Kit Accounts Custom Fields API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

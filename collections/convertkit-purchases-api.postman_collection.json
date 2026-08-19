@@ -1,0 +1,645 @@
+{
+  "item": [
+    {
+      "id": "0de23c2d-2f7a-4fb7-ab65-199e64cabe2f",
+      "name": "Purchases",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "258fba7f-c65c-40af-9c2c-2e8c5a658cc1",
+          "name": "List purchases",
+          "request": {
+            "name": "List purchases",
+            "description": {},
+            "url": {
+              "path": [
+                "v4",
+                "purchases"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "include_total_count",
+                  "value": "<boolean>",
+                  "description": "Set to `true` to include the `total_count` in the response. This option can cause slow responses; if paging through results, request it only on the first page and reuse the value for subsequent pages."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "read write"
+                },
+                {
+                  "key": "redirect_uri",
+                  "value": "https://api.kit.com/v4/oauth/token"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://api.kit.com/v4/oauth/token"
+                },
+                {
+                  "key": "authUrl",
+                  "value": "https://api.kit.com/v4/oauth/authorize"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "authorization_code"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "1cfffe64-8453-4bfd-85e3-f82f6dc8897e",
+              "name": "Returns a paginated list of all purchases for your account",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "purchases"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include_total_count",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"purchases\": [\n    {\n      \"id\": 3,\n      \"transaction_id\": \"512-41-4101\",\n      \"status\": \"paid\",\n      \"email_address\": \"pru.magoo@convertkit.dev\",\n      \"subscriber_id\": 12,\n      \"currency\": \"USD\",\n      \"transaction_time\": \"2023-02-17T11:43:55Z\",\n      \"subtotal\": 5,\n      \"discount\": 0,\n      \"tax\": 0,\n      \"total\": 5,\n      \"products\": [\n        {\n          \"quantity\": 1,\n          \"lid\": \"000-13-0000\",\n          \"unit_price\": 0.05,\n          \"sku\": null,\n          \"name\": \"Tip\",\n          \"pid\": \"111-75-7524\"\n        }\n      ]\n    },\n    {\n      \"id\": 2,\n      \"transaction_id\": \"323-79-5320\",\n      \"status\": \"paid\",\n      \"email_address\": \"pru.magoo@convertkit.dev\",\n      \"subscriber_id\": 12,\n      \"currency\": \"USD\",\n      \"transaction_time\": \"2023-02-17T11:43:55Z\",\n      \"subtotal\": 10,\n      \"discount\": 0,\n      \"tax\": 1.05,\n      \"total\": 11.05,\n      \"products\": [\n        {\n          \"quantity\": 1,\n          \"lid\": \"000-12-0000\",\n          \"unit_price\": 0.1,\n          \"sku\": null,\n          \"name\": \"Monthly Game Review\",\n          \"pid\": \"000-11-0000\"\n        }\n      ]\n    },\n    {\n      \"id\": 1,\n      \"transaction_id\": \"796-92-4892\",\n      \"status\": \"paid\",\n      \"email_address\": \"pru.magoo@convertkit.dev\",\n      \"subscriber_id\": 12,\n      \"currency\": \"USD\",\n      \"transaction_time\": \"2023-02-17T11:43:55Z\",\n      \"subtotal\": 78.66,\n      \"discount\": 5,\n      \"tax\": 7.87,\n      \"total\": 81.53,\n      \"products\": [\n        {\n          \"quantity\": 1,\n          \"lid\": \"811-75-7900\",\n          \"unit_price\": 23.22,\n          \"sku\": null,\n          \"name\": \"Phantom Hourglass\",\n          \"pid\": \"804-02-4430\"\n        },\n        {\n          \"quantity\": 1,\n          \"lid\": \"766-49-1241\",\n          \"unit_price\": 32.22,\n          \"sku\": null,\n          \"name\": \"Twilight Princess\",\n          \"pid\": \"833-51-1151\"\n        }\n      ]\n    }\n  ],\n  \"pagination\": {\n    \"has_previous_page\": false,\n    \"has_next_page\": false,\n    \"start_cursor\": \"WzNd\",\n    \"end_cursor\": \"WzFd\",\n    \"per_page\": 500\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "00fc2274-a270-4116-9f14-b6c5e6459d7c",
+              "name": "Returns a 401 if the token and/or account cannot be authenticated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "purchases"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include_total_count",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    \"The access token is invalid\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "cdab1aaa-25fe-4ba9-9cf4-73c66445e9ac",
+          "name": "Create a purchase",
+          "request": {
+            "name": "Create a purchase",
+            "description": {},
+            "url": {
+              "path": [
+                "v4",
+                "purchases"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "read write"
+                },
+                {
+                  "key": "redirect_uri",
+                  "value": "https://api.kit.com/v4/oauth/token"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://api.kit.com/v4/oauth/token"
+                },
+                {
+                  "key": "authUrl",
+                  "value": "https://api.kit.com/v4/oauth/authorize"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "authorization_code"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"purchase\": {\n    \"email_address\": \"<string>\",\n    \"transaction_id\": \"<string>\",\n    \"status\": \"<string>\",\n    \"subtotal\": \"<float>\",\n    \"tax\": \"<float>\",\n    \"shipping\": \"<integer>\",\n    \"discount\": \"<float>\",\n    \"total\": \"<float>\",\n    \"currency\": \"<string>\",\n    \"transaction_time\": \"<string>\",\n    \"products\": [\n      {\n        \"name\": \"<string>\",\n        \"pid\": \"<string>\",\n        \"lid\": \"<string>\",\n        \"quantity\": \"<integer>\",\n        \"unit_price\": \"<float>\",\n        \"sku\": \"<string>\"\n      },\n      {\n        \"name\": \"<string>\",\n        \"pid\": \"<string>\",\n        \"lid\": \"<string>\",\n        \"quantity\": \"<integer>\",\n        \"unit_price\": \"<float>\",\n        \"sku\": \"<string>\"\n      }\n    ]\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "1db11edf-6582-4d33-b157-c512ea3c17f4",
+              "name": "Creates a purchase for the provided subscriber and returns its details. It also creates products if they don't exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "purchases"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"purchase\": {\n    \"email_address\": \"pru.magoo@convertkit.dev\",\n    \"transaction_id\": \"796-92-4892\",\n    \"status\": \"paid\",\n    \"subtotal\": 78.66,\n    \"tax\": 7.87,\n    \"shipping\": 0,\n    \"discount\": 5,\n    \"total\": 81.53,\n    \"currency\": \"USD\",\n    \"transaction_time\": \"2023-02-17T11:43:55Z\",\n    \"products\": [\n      {\n        \"name\": \"Phantom Hourglass\",\n        \"pid\": \"804-02-4430\",\n        \"lid\": \"811-75-7900\",\n        \"quantity\": 1,\n        \"unit_price\": 23.22,\n        \"sku\": \"SM21-SH-M02-RD-S-001\"\n      },\n      {\n        \"name\": \"Twilight Princess\",\n        \"pid\": \"833-51-1151\",\n        \"lid\": \"766-49-1241\",\n        \"quantity\": 1,\n        \"unit_price\": 32.22,\n        \"sku\": \"WT21-JK-M03-BK-L-012\"\n      },\n      {\n        \"name\": \"Four Swords\",\n        \"pid\": \"217-99-4325\",\n        \"lid\": \"563-95-8878\",\n        \"quantity\": 1,\n        \"unit_price\": 23.22,\n        \"sku\": \"FL21-TS-M01-BL-M-020\"\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"purchase\": {\n    \"id\": 21,\n    \"transaction_id\": \"796-92-4892\",\n    \"subscriber_id\": 40,\n    \"status\": \"paid\",\n    \"email_address\": \"pru.magoo@convertkit.dev\",\n    \"currency\": \"USD\",\n    \"transaction_time\": \"2023-02-17T11:43:55Z\",\n    \"subtotal\": 78.66,\n    \"discount\": 5,\n    \"tax\": 7.87,\n    \"total\": 81.53,\n    \"products\": [\n      {\n        \"quantity\": 1,\n        \"lid\": \"811-75-7900\",\n        \"unit_price\": 23.22,\n        \"sku\": \"SM21-SH-M02-RD-S-001\",\n        \"name\": \"Phantom Hourglass\",\n        \"pid\": \"804-02-4430\"\n      },\n      {\n        \"quantity\": 1,\n        \"lid\": \"766-49-1241\",\n        \"unit_price\": 32.22,\n        \"sku\": \"WT21-JK-M03-BK-L-012\",\n        \"name\": \"Twilight Princess\",\n        \"pid\": \"833-51-1151\"\n      },\n      {\n        \"quantity\": 1,\n        \"lid\": \"563-95-8878\",\n        \"unit_price\": 23.22,\n        \"sku\": \"FL21-TS-M01-BL-M-020\",\n        \"name\": \"Four Swords\",\n        \"pid\": \"217-99-4325\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9154248e-307d-469d-92bf-ed5d750be0e1",
+              "name": "Returns a 401 if the token and/or account cannot be authenticated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "purchases"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"purchase\": {\n    \"email_address\": \"pru.magoo@convertkit.dev\",\n    \"transaction_id\": \"796-92-4892\",\n    \"status\": \"paid\",\n    \"subtotal\": 78.66,\n    \"tax\": 7.87,\n    \"shipping\": 0,\n    \"discount\": 5,\n    \"total\": 81.53,\n    \"currency\": \"USD\",\n    \"transaction_time\": \"2023-02-17T11:43:55Z\",\n    \"products\": [\n      {\n        \"name\": \"Phantom Hourglass\",\n        \"pid\": \"804-02-4430\",\n        \"lid\": \"811-75-7900\",\n        \"quantity\": 1,\n        \"unit_price\": 23.22,\n        \"sku\": \"SM21-SH-M02-RD-S-001\"\n      },\n      {\n        \"name\": \"Twilight Princess\",\n        \"pid\": \"833-51-1151\",\n        \"lid\": \"766-49-1241\",\n        \"quantity\": 1,\n        \"unit_price\": 32.22,\n        \"sku\": \"WT21-JK-M03-BK-L-012\"\n      },\n      {\n        \"name\": \"Four Swords\",\n        \"pid\": \"217-99-4325\",\n        \"lid\": \"563-95-8878\",\n        \"quantity\": 1,\n        \"unit_price\": 23.22,\n        \"sku\": \"FL21-TS-M01-BL-M-020\"\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    \"The access token is invalid\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8a688c0e-1d06-48e3-b8b3-898a8c98ff21",
+              "name": "Returns a 422 when one or more of the parameters are invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "purchases"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"purchase\": {\n    \"email_address\": \"pru.magoo@convertkit.dev\",\n    \"transaction_id\": \"796-92-4892\",\n    \"status\": \"paid\",\n    \"subtotal\": 78.66,\n    \"tax\": 7.87,\n    \"shipping\": 0,\n    \"discount\": 5,\n    \"total\": 81.53,\n    \"currency\": \"USD\",\n    \"transaction_time\": \"2023-02-17T11:43:55Z\",\n    \"products\": [\n      {\n        \"name\": \"Phantom Hourglass\",\n        \"pid\": \"804-02-4430\",\n        \"lid\": \"811-75-7900\",\n        \"quantity\": 1,\n        \"unit_price\": 23.22,\n        \"sku\": \"SM21-SH-M02-RD-S-001\"\n      },\n      {\n        \"name\": \"Twilight Princess\",\n        \"pid\": \"833-51-1151\",\n        \"lid\": \"766-49-1241\",\n        \"quantity\": 1,\n        \"unit_price\": 32.22,\n        \"sku\": \"WT21-JK-M03-BK-L-012\"\n      },\n      {\n        \"name\": \"Four Swords\",\n        \"pid\": \"217-99-4325\",\n        \"lid\": \"563-95-8878\",\n        \"quantity\": 1,\n        \"unit_price\": 23.22,\n        \"sku\": \"FL21-TS-M01-BL-M-020\"\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    \"Transaction cannot be blank\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3676e5e1-cbb5-4be7-b282-06e82b107ec4",
+          "name": "Get a purchase",
+          "request": {
+            "name": "Get a purchase",
+            "description": {},
+            "url": {
+              "path": [
+                "v4",
+                "purchases",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "read write"
+                },
+                {
+                  "key": "redirect_uri",
+                  "value": "https://api.kit.com/v4/oauth/token"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://api.kit.com/v4/oauth/token"
+                },
+                {
+                  "key": "authUrl",
+                  "value": "https://api.kit.com/v4/oauth/authorize"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "authorization_code"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "ce68a05c-1629-4e0d-927a-914bce92afae",
+              "name": "Returns the purchase details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "purchases",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"purchase\": {\n    \"id\": 14,\n    \"transaction_id\": \"796-92-4892\",\n    \"subscriber_id\": 23,\n    \"status\": \"paid\",\n    \"email_address\": \"pru.magoo@convertkit.dev\",\n    \"currency\": \"USD\",\n    \"transaction_time\": \"2023-02-17T11:43:55Z\",\n    \"subtotal\": 78.66,\n    \"discount\": 5,\n    \"tax\": 7.87,\n    \"total\": 81.53,\n    \"products\": [\n      {\n        \"quantity\": 1,\n        \"lid\": \"811-75-7900\",\n        \"unit_price\": 23.22,\n        \"sku\": null,\n        \"name\": \"Phantom Hourglass\",\n        \"pid\": \"804-02-4430\"\n      },\n      {\n        \"quantity\": 1,\n        \"lid\": \"766-49-1241\",\n        \"unit_price\": 32.22,\n        \"sku\": null,\n        \"name\": \"Twilight Princess\",\n        \"pid\": \"833-51-1151\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2dc1038d-0f35-47ea-9961-bae38d1cef95",
+              "name": "Returns a 401 if the token and/or account cannot be authenticated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "purchases",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    \"The access token is invalid\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "570bb47a-9178-4903-b54e-44221242a67d",
+              "name": "Returns a 404 when the provided id does not exist",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "purchases",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    \"Not Found\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.kit.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "d8c4d89c-0f72-4dca-afaa-2f1dd9843679",
+    "name": "Kit Accounts Purchases API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

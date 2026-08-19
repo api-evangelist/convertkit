@@ -1,0 +1,2646 @@
+{
+  "item": [
+    {
+      "id": "cccb182b-72c8-40f4-beb6-30b26c495118",
+      "name": "Subscribers",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "fac52749-68ae-4016-9d7f-6ae0e8c4495a",
+          "name": "Bulk create subscribers",
+          "request": {
+            "name": "Bulk create subscribers",
+            "description": {
+              "content": "See \"[Bulk & async processing](#bulk-amp-async-processing)\" for more information.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v4",
+                "bulk",
+                "subscribers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "read write"
+                },
+                {
+                  "key": "redirect_uri",
+                  "value": "https://api.kit.com/v4/oauth/token"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://api.kit.com/v4/oauth/token"
+                },
+                {
+                  "key": "authUrl",
+                  "value": "https://api.kit.com/v4/oauth/authorize"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "authorization_code"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"subscribers\": [\n    {\n      \"first_name\": \"<string>\",\n      \"email_address\": \"<string>\",\n      \"state\": \"<string>\"\n    },\n    {\n      \"first_name\": \"<string>\",\n      \"email_address\": \"<string>\",\n      \"state\": \"<string>\"\n    }\n  ],\n  \"callback_url\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "35faa9c7-eaf6-46a8-b0f7-2d35b69137db",
+              "name": "Creates or updates the subscribers synchronously when 100 or less subscribers are requested",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "bulk",
+                    "subscribers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"subscribers\": [\n    {\n      \"first_name\": \"Test Subscriber 0\",\n      \"email_address\": \"subscriber_0@convertkit.dev\"\n    },\n    {\n      \"first_name\": \"Test Subscriber 1\",\n      \"email_address\": \"subscriber_1@convertkit.dev\"\n    },\n    {\n      \"first_name\": \"Test Subscriber 2\",\n      \"email_address\": \"subscriber_2@convertkit.dev\"\n    },\n    {\n      \"first_name\": \"Test Subscriber 3\",\n      \"email_address\": \"subscriber_3@convertkit.dev\"\n    }\n  ],\n  \"callback_url\": null\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"subscribers\": [\n    {\n      \"id\": 596,\n      \"first_name\": null,\n      \"email_address\": \"brooke@convertkit.dev\",\n      \"state\": \"active\",\n      \"created_at\": \"2023-02-17T11:43:55Z\"\n    },\n    {\n      \"id\": 597,\n      \"first_name\": \"Camille\",\n      \"email_address\": \"camille@convertkit.dev\",\n      \"state\": \"active\",\n      \"created_at\": \"2023-02-17T11:43:55Z\"\n    },\n    {\n      \"id\": 595,\n      \"first_name\": \"Alice\",\n      \"email_address\": \"alice@convertkit.dev\",\n      \"state\": \"active\",\n      \"created_at\": \"2023-02-17T11:43:55Z\"\n    }\n  ],\n  \"failures\": [\n    {\n      \"subscriber\": {\n        \"first_name\": \"Benito\",\n        \"email_address\": null,\n        \"state\": \"active\",\n        \"created_at\": null\n      },\n      \"errors\": [\n        \"Email address is invalid\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d73cefae-4d83-4c8e-8d6d-3da47354653f",
+              "name": "Creates or updates subscribers asynchronously when more than 100 subscribers are requested",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "bulk",
+                    "subscribers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"subscribers\": [\n    {\n      \"first_name\": \"Test Subscriber 0\",\n      \"email_address\": \"subscriber_0@convertkit.dev\"\n    },\n    {\n      \"first_name\": \"Test Subscriber 1\",\n      \"email_address\": \"subscriber_1@convertkit.dev\"\n    },\n    {\n      \"first_name\": \"Test Subscriber 2\",\n      \"email_address\": \"subscriber_2@convertkit.dev\"\n    },\n    {\n      \"first_name\": \"Test Subscriber 3\",\n      \"email_address\": \"subscriber_3@convertkit.dev\"\n    }\n  ],\n  \"callback_url\": null\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bd9ed392-21a2-4e6e-afe8-80e79e350bf7",
+              "name": "Returns a 401 if the token and/or account cannot be authenticated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "bulk",
+                    "subscribers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"subscribers\": [\n    {\n      \"first_name\": \"Test Subscriber 0\",\n      \"email_address\": \"subscriber_0@convertkit.dev\"\n    },\n    {\n      \"first_name\": \"Test Subscriber 1\",\n      \"email_address\": \"subscriber_1@convertkit.dev\"\n    },\n    {\n      \"first_name\": \"Test Subscriber 2\",\n      \"email_address\": \"subscriber_2@convertkit.dev\"\n    },\n    {\n      \"first_name\": \"Test Subscriber 3\",\n      \"email_address\": \"subscriber_3@convertkit.dev\"\n    }\n  ],\n  \"callback_url\": null\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    \"The access token is invalid\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "beb9e61c-c41c-424b-82a6-4b91408b9e60",
+              "name": "Returns a 403 when the number of subscribers in the request would exceed the account's subscriber limit",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "bulk",
+                    "subscribers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"subscribers\": [\n    {\n      \"first_name\": \"Test Subscriber 0\",\n      \"email_address\": \"subscriber_0@convertkit.dev\"\n    },\n    {\n      \"first_name\": \"Test Subscriber 1\",\n      \"email_address\": \"subscriber_1@convertkit.dev\"\n    },\n    {\n      \"first_name\": \"Test Subscriber 2\",\n      \"email_address\": \"subscriber_2@convertkit.dev\"\n    },\n    {\n      \"first_name\": \"Test Subscriber 3\",\n      \"email_address\": \"subscriber_3@convertkit.dev\"\n    }\n  ],\n  \"callback_url\": null\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    \"This request would exceed your subscriber limit\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2a1ffb89-9649-45d3-9714-26c49207be5e",
+              "name": "Returns a 413 when the size of the request would exceed the account's data limit for enqueued bulk requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "bulk",
+                    "subscribers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"subscribers\": [\n    {\n      \"first_name\": \"Test Subscriber 0\",\n      \"email_address\": \"subscriber_0@convertkit.dev\"\n    },\n    {\n      \"first_name\": \"Test Subscriber 1\",\n      \"email_address\": \"subscriber_1@convertkit.dev\"\n    },\n    {\n      \"first_name\": \"Test Subscriber 2\",\n      \"email_address\": \"subscriber_2@convertkit.dev\"\n    },\n    {\n      \"first_name\": \"Test Subscriber 3\",\n      \"email_address\": \"subscriber_3@convertkit.dev\"\n    }\n  ],\n  \"callback_url\": null\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Request Entity Too Large",
+              "code": 413,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    \"This request exceeds your queued bulk requests limit. Please wait while we process your existing requests and try again later.\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "072b9641-5aa0-4cb3-a719-87e3f3c9927f",
+              "name": "Returns a 422 when `subscribers` is empty or not an array",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "bulk",
+                    "subscribers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"subscribers\": [\n    {\n      \"first_name\": \"Test Subscriber 0\",\n      \"email_address\": \"subscriber_0@convertkit.dev\"\n    },\n    {\n      \"first_name\": \"Test Subscriber 1\",\n      \"email_address\": \"subscriber_1@convertkit.dev\"\n    },\n    {\n      \"first_name\": \"Test Subscriber 2\",\n      \"email_address\": \"subscriber_2@convertkit.dev\"\n    },\n    {\n      \"first_name\": \"Test Subscriber 3\",\n      \"email_address\": \"subscriber_3@convertkit.dev\"\n    }\n  ],\n  \"callback_url\": null\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    \"No subscribers included for processing\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d5d46c58-28da-4c3b-9ef7-e7a6347fb282",
+          "name": "List subscribers",
+          "request": {
+            "name": "List subscribers",
+            "description": {},
+            "url": {
+              "path": [
+                "v4",
+                "subscribers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "after",
+                  "value": "<string>",
+                  "description": "To fetch next page of results, use `?after=<end_cursor>`"
+                },
+                {
+                  "disabled": false,
+                  "key": "before",
+                  "value": "<string>",
+                  "description": "To fetch previous page of results, use `?before=<start_cursor>`"
+                },
+                {
+                  "disabled": false,
+                  "key": "created_after",
+                  "value": "<string>",
+                  "description": "Filter subscribers who have been created after this date (format yyyy-mm-dd)"
+                },
+                {
+                  "disabled": false,
+                  "key": "created_before",
+                  "value": "<string>",
+                  "description": "Filter subscribers who have been created before this date (format yyyy-mm-dd)"
+                },
+                {
+                  "disabled": false,
+                  "key": "email_address",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "include",
+                  "value": "<string>",
+                  "description": "Comma-separated list of additional fields to include on each subscriber. Valid options: `attribution`, `tags`, `location`, `canceled_at`. `canceled_at` may only be used together with `status=cancelled`."
+                },
+                {
+                  "disabled": false,
+                  "key": "include_total_count",
+                  "value": "<boolean>",
+                  "description": "Set to `true` to include the `total_count` in the response. This option can cause slow responses; if paging through results, request it only on the first page and reuse the value for subsequent pages."
+                },
+                {
+                  "disabled": false,
+                  "key": "per_page",
+                  "value": "<number>",
+                  "description": "Number of results per page. Default 500, maximum 1000."
+                },
+                {
+                  "disabled": false,
+                  "key": "slim",
+                  "value": "<boolean>",
+                  "description": "When `true`, omits expensive optional fields from the response. Produces a faster, smaller response — useful when extra fields are not needed."
+                },
+                {
+                  "disabled": false,
+                  "key": "sort_field",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "sort_order",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>",
+                  "description": "Filter subscribers who have this status (`active`, `inactive`, `bounced`, `complained`, `cancelled` or `all`). Defaults to `active`."
+                },
+                {
+                  "disabled": false,
+                  "key": "updated_after",
+                  "value": "<string>",
+                  "description": "Filter subscribers who have been updated after this date (format yyyy-mm-dd)"
+                },
+                {
+                  "disabled": false,
+                  "key": "updated_before",
+                  "value": "<string>",
+                  "description": "Filter subscribers who have been updated before this date (format yyyy-mm-dd)"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-Kit-Api-Key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "aa32dd09-e7c7-403c-8ddb-39a9e1a89d0e",
+              "name": "Returns subscriber attribution, tags, and primary location when requested via the include param",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "subscribers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "after",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "before",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "created_after",
+                      "value": "2023-01-17T11:43:55Z"
+                    },
+                    {
+                      "key": "created_before",
+                      "value": "2023-02-18T11:43:55Z"
+                    },
+                    {
+                      "key": "email_address",
+                      "value": "subscriber89@kit.dev,subscriber90@kit.dev,subscriber91@kit.dev"
+                    },
+                    {
+                      "key": "include",
+                      "value": "attribution,tags,location"
+                    },
+                    {
+                      "key": "include_total_count",
+                      "value": "false"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "10"
+                    },
+                    {
+                      "key": "slim",
+                      "value": "false"
+                    },
+                    {
+                      "key": "sort_field",
+                      "value": "cancelled_at"
+                    },
+                    {
+                      "key": "sort_order",
+                      "value": "asc"
+                    },
+                    {
+                      "key": "status",
+                      "value": "bounced"
+                    },
+                    {
+                      "key": "updated_after",
+                      "value": "2023-01-17T11:43:55Z"
+                    },
+                    {
+                      "key": "updated_before",
+                      "value": "2023-02-18T11:43:55Z"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Kit-Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"subscribers\": [\n    {\n      \"id\": 200,\n      \"state\": \"active\",\n      \"first_name\": \"Alice\",\n      \"email_address\": \"alice@convertkit.dev\",\n      \"created_at\": \"2023-01-27T11:43:55Z\",\n      \"fields\": {\n        \"category\": \"One\"\n      },\n      \"attribution\": {\n        \"referrer\": \"https://t.co/abc123\",\n        \"utm_source\": \"twitter\",\n        \"utm_medium\": \"cpc\",\n        \"utm_campaign\": \"spring_launch\",\n        \"utm_term\": \"newsletter+for+creators\",\n        \"utm_content\": \"hero_cta\",\n        \"source_type\": \"form_subscription\",\n        \"source_name\": \"Welcome Form\",\n        \"source_mechanism\": \"landing_page\",\n        \"source_mechanism_id\": null\n      },\n      \"tags\": [\n        {\n          \"id\": 1,\n          \"name\": \"VIP\"\n        }\n      ],\n      \"location\": {\n        \"city\": \"Portland\",\n        \"state\": \"OR\",\n        \"country\": \"US\",\n        \"latitude\": 45.5,\n        \"longitude\": -122.6,\n        \"timezone\": \"America/Los_Angeles\"\n      }\n    },\n    {\n      \"id\": 201,\n      \"state\": \"active\",\n      \"first_name\": \"Benito\",\n      \"email_address\": \"benito@convertkit.dev\",\n      \"created_at\": \"2023-02-03T11:43:55Z\",\n      \"fields\": {},\n      \"attribution\": {\n        \"referrer\": \"https://creator.kit.com/jane-smith\",\n        \"utm_source\": \"kit\",\n        \"utm_medium\": \"referral\",\n        \"utm_campaign\": null,\n        \"utm_term\": null,\n        \"utm_content\": null,\n        \"source_type\": \"form_subscription\",\n        \"source_name\": \"Jane Smith's Recommendations\",\n        \"source_mechanism\": \"recommendations\",\n        \"source_mechanism_id\": null\n      },\n      \"tags\": [\n        {\n          \"id\": 2,\n          \"name\": \"Newsletter\"\n        }\n      ],\n      \"location\": {\n        \"city\": \"Austin\",\n        \"state\": \"TX\",\n        \"country\": \"US\",\n        \"latitude\": 30.27,\n        \"longitude\": -97.74,\n        \"timezone\": \"America/Chicago\"\n      }\n    },\n    {\n      \"id\": 202,\n      \"state\": \"active\",\n      \"first_name\": \"Camille\",\n      \"email_address\": \"camille@convertkit.dev\",\n      \"created_at\": \"2023-02-10T11:43:55Z\",\n      \"fields\": {},\n      \"attribution\": {\n        \"referrer\": null,\n        \"utm_source\": null,\n        \"utm_medium\": null,\n        \"utm_campaign\": null,\n        \"utm_term\": null,\n        \"utm_content\": null,\n        \"source_type\": \"api_subscription\",\n        \"source_name\": \"Partner Integration\",\n        \"source_mechanism\": \"api\",\n        \"source_mechanism_id\": 12345\n      },\n      \"tags\": [],\n      \"location\": null\n    },\n    {\n      \"id\": 203,\n      \"state\": \"active\",\n      \"first_name\": \"Elliot\",\n      \"email_address\": \"elliot@convertkit.dev\",\n      \"created_at\": \"2023-02-13T11:43:55Z\",\n      \"fields\": {},\n      \"attribution\": {\n        \"referrer\": null,\n        \"utm_source\": null,\n        \"utm_medium\": null,\n        \"utm_campaign\": null,\n        \"utm_term\": null,\n        \"utm_content\": null,\n        \"source_type\": null,\n        \"source_name\": null,\n        \"source_mechanism\": null,\n        \"source_mechanism_id\": null\n      },\n      \"tags\": [\n        {\n          \"id\": 3,\n          \"name\": \"Imported\"\n        }\n      ],\n      \"location\": {\n        \"city\": null,\n        \"state\": null,\n        \"country\": null,\n        \"latitude\": null,\n        \"longitude\": null,\n        \"timezone\": null\n      }\n    }\n  ],\n  \"pagination\": {\n    \"has_previous_page\": false,\n    \"has_next_page\": false,\n    \"start_cursor\": \"MjAyMy0wMS0yNyAxMTo0Mzo1NSBVVEM=\",\n    \"end_cursor\": \"MjAyMy0wMi0xMyAxMTo0Mzo1NSBVVEM=\",\n    \"per_page\": 500\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "aa0270eb-bf6b-4053-b99c-f5eb78d83a95",
+              "name": "Returns a 401 if the token and/or account cannot be authenticated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "subscribers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "after",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "before",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "created_after",
+                      "value": "2023-01-17T11:43:55Z"
+                    },
+                    {
+                      "key": "created_before",
+                      "value": "2023-02-18T11:43:55Z"
+                    },
+                    {
+                      "key": "email_address",
+                      "value": "subscriber89@kit.dev,subscriber90@kit.dev,subscriber91@kit.dev"
+                    },
+                    {
+                      "key": "include",
+                      "value": "attribution,tags,location"
+                    },
+                    {
+                      "key": "include_total_count",
+                      "value": "false"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "10"
+                    },
+                    {
+                      "key": "slim",
+                      "value": "false"
+                    },
+                    {
+                      "key": "sort_field",
+                      "value": "cancelled_at"
+                    },
+                    {
+                      "key": "sort_order",
+                      "value": "asc"
+                    },
+                    {
+                      "key": "status",
+                      "value": "bounced"
+                    },
+                    {
+                      "key": "updated_after",
+                      "value": "2023-01-17T11:43:55Z"
+                    },
+                    {
+                      "key": "updated_before",
+                      "value": "2023-02-18T11:43:55Z"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Kit-Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    \"The access token is invalid\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e2fc0501-4557-4397-9763-dd9af0200417",
+              "name": "raises an error when sorting on cancelled_at without the cancelled status",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "subscribers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "after",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "before",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "created_after",
+                      "value": "2023-01-17T11:43:55Z"
+                    },
+                    {
+                      "key": "created_before",
+                      "value": "2023-02-18T11:43:55Z"
+                    },
+                    {
+                      "key": "email_address",
+                      "value": "subscriber89@kit.dev,subscriber90@kit.dev,subscriber91@kit.dev"
+                    },
+                    {
+                      "key": "include",
+                      "value": "attribution,tags,location"
+                    },
+                    {
+                      "key": "include_total_count",
+                      "value": "false"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "10"
+                    },
+                    {
+                      "key": "slim",
+                      "value": "false"
+                    },
+                    {
+                      "key": "sort_field",
+                      "value": "cancelled_at"
+                    },
+                    {
+                      "key": "sort_order",
+                      "value": "asc"
+                    },
+                    {
+                      "key": "status",
+                      "value": "bounced"
+                    },
+                    {
+                      "key": "updated_after",
+                      "value": "2023-01-17T11:43:55Z"
+                    },
+                    {
+                      "key": "updated_before",
+                      "value": "2023-02-18T11:43:55Z"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Kit-Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    \"The status param must be `cancelled` if sort_field is `cancelled_at`\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3531909a-1cea-4614-9481-700760131f76",
+          "name": "Create a subscriber",
+          "request": {
+            "name": "Create a subscriber",
+            "description": {
+              "content": "Behaves as an upsert. If a subscriber with the provided email address does not exist, it creates one with the specified first name and state. If a subscriber with the provided email address already exists, it updates the first name.<br/><br/>If you include a custom field key that does not exist on your account, the request returns an error. Use [List custom fields](/api-reference/custom-fields/list-custom-fields) to retrieve existing keys, or [Create a custom field](/api-reference/custom-fields/create-a-custom-field) to add new fields before setting them for subscribers.<br/><br/><strong>NOTE:</strong> Updating the subscriber state with this endpoint is not supported at this time.<br/><strong>NOTE:</strong> We support creating/updating a maximum of 140 custom fields at a time.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v4",
+                "subscribers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-Kit-Api-Key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email_address\": \"<string>\",\n  \"first_name\": \"<string>\",\n  \"state\": \"<string>\",\n  \"fields\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "268e79ef-aa13-4440-bcc6-a5e5ad2dd111",
+              "name": "Returns a 200 and updates the subscriber first name when a subscriber with provided email already exists",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "subscribers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Kit-Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"first_name\": \"Alice\",\n  \"email_address\": \"alice@convertkit.dev\",\n  \"state\": \"active\",\n  \"fields\": {\n    \"last_name\": \"Lamarr\",\n    \"birthday\": \"Feb 17\",\n    \"source\": \"landing page\",\n    \"role\": \"Software developer\",\n    \"company\": \"Convertkit\",\n    \"postal_code\": \"83702\",\n    \"website\": \"convertkit.com\",\n    \"social_media\": \"https://www.linkedin.com/company/convertkit\",\n    \"how_did_you_hear_about_us\": \"Social media\",\n    \"interests\": \"Monetization\",\n    \"coupon\": \"\",\n    \"phone_number\": \"555-555-5555\",\n    \"enrolled_in_coaching\": \"true\",\n    \"lead_score\": \"87\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"subscriber\": {\n    \"id\": 353,\n    \"first_name\": \"Alice\",\n    \"email_address\": \"alice@convertkit.dev\",\n    \"state\": \"inactive\",\n    \"created_at\": \"2023-02-17T11:43:55Z\",\n    \"fields\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "eb686af3-b709-4c27-9014-68cc79d2287a",
+              "name": "Creates a new subscriber",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "subscribers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Kit-Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"first_name\": \"Alice\",\n  \"email_address\": \"alice@convertkit.dev\",\n  \"state\": \"active\",\n  \"fields\": {\n    \"last_name\": \"Lamarr\",\n    \"birthday\": \"Feb 17\",\n    \"source\": \"landing page\",\n    \"role\": \"Software developer\",\n    \"company\": \"Convertkit\",\n    \"postal_code\": \"83702\",\n    \"website\": \"convertkit.com\",\n    \"social_media\": \"https://www.linkedin.com/company/convertkit\",\n    \"how_did_you_hear_about_us\": \"Social media\",\n    \"interests\": \"Monetization\",\n    \"coupon\": \"\",\n    \"phone_number\": \"555-555-5555\",\n    \"enrolled_in_coaching\": \"true\",\n    \"lead_score\": \"87\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"subscriber\": {\n    \"id\": 349,\n    \"first_name\": \"Alice\",\n    \"email_address\": \"alice@convertkit.dev\",\n    \"state\": \"active\",\n    \"created_at\": \"2023-02-17T11:43:55Z\",\n    \"fields\": {\n      \"birthday\": \"Feb 17\",\n      \"last_name\": \"Lamarr\",\n      \"source\": \"landing page\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9331722e-1d64-423d-adca-23be6e661710",
+              "name": "Returns a 202 and asynchronously adds custom fields for the new subscriber when more than 10 custom fields are included in the request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "subscribers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Kit-Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"first_name\": \"Alice\",\n  \"email_address\": \"alice@convertkit.dev\",\n  \"state\": \"active\",\n  \"fields\": {\n    \"last_name\": \"Lamarr\",\n    \"birthday\": \"Feb 17\",\n    \"source\": \"landing page\",\n    \"role\": \"Software developer\",\n    \"company\": \"Convertkit\",\n    \"postal_code\": \"83702\",\n    \"website\": \"convertkit.com\",\n    \"social_media\": \"https://www.linkedin.com/company/convertkit\",\n    \"how_did_you_hear_about_us\": \"Social media\",\n    \"interests\": \"Monetization\",\n    \"coupon\": \"\",\n    \"phone_number\": \"555-555-5555\",\n    \"enrolled_in_coaching\": \"true\",\n    \"lead_score\": \"87\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"subscriber\": {\n    \"id\": 351,\n    \"first_name\": \"Alice\",\n    \"email_address\": \"alice@convertkit.dev\",\n    \"state\": \"active\",\n    \"created_at\": \"2023-02-17T11:43:55Z\",\n    \"fields\": {\n      \"company\": null,\n      \"coupon\": null,\n      \"enrolled_in_coaching\": null,\n      \"how_did_you_hear_about_us\": null,\n      \"interests\": null,\n      \"lead_score\": null,\n      \"phone_number\": null,\n      \"postal_code\": null,\n      \"role\": null,\n      \"social_media\": null,\n      \"website\": null\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "21f071e5-61a0-4990-81bf-ece14446bcbe",
+              "name": "Returns a 401 if the token and/or account cannot be authenticated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "subscribers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Kit-Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"first_name\": \"Alice\",\n  \"email_address\": \"alice@convertkit.dev\",\n  \"state\": \"active\",\n  \"fields\": {\n    \"last_name\": \"Lamarr\",\n    \"birthday\": \"Feb 17\",\n    \"source\": \"landing page\",\n    \"role\": \"Software developer\",\n    \"company\": \"Convertkit\",\n    \"postal_code\": \"83702\",\n    \"website\": \"convertkit.com\",\n    \"social_media\": \"https://www.linkedin.com/company/convertkit\",\n    \"how_did_you_hear_about_us\": \"Social media\",\n    \"interests\": \"Monetization\",\n    \"coupon\": \"\",\n    \"phone_number\": \"555-555-5555\",\n    \"enrolled_in_coaching\": \"true\",\n    \"lead_score\": \"87\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    \"The access token is invalid\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "34e3b539-c729-41a2-bab9-e0937f353931",
+              "name": "Returns a 422 with an error message when one or more of the parameters are invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "subscribers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Kit-Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"first_name\": \"Alice\",\n  \"email_address\": \"alice@convertkit.dev\",\n  \"state\": \"active\",\n  \"fields\": {\n    \"last_name\": \"Lamarr\",\n    \"birthday\": \"Feb 17\",\n    \"source\": \"landing page\",\n    \"role\": \"Software developer\",\n    \"company\": \"Convertkit\",\n    \"postal_code\": \"83702\",\n    \"website\": \"convertkit.com\",\n    \"social_media\": \"https://www.linkedin.com/company/convertkit\",\n    \"how_did_you_hear_about_us\": \"Social media\",\n    \"interests\": \"Monetization\",\n    \"coupon\": \"\",\n    \"phone_number\": \"555-555-5555\",\n    \"enrolled_in_coaching\": \"true\",\n    \"lead_score\": \"87\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    \"Email address is invalid\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "81e19d5d-5172-4eec-b308-9e0cd2281631",
+          "name": "Filter subscribers based on engagement",
+          "request": {
+            "name": "Filter subscribers based on engagement",
+            "description": {},
+            "url": {
+              "path": [
+                "v4",
+                "subscribers",
+                "filter"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-Kit-Api-Key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"all\": [\n    {\n      \"type\": \"<string>\",\n      \"count_greater_than\": \"<integer>\",\n      \"count_greater_than_or_equal\": \"<integer>\",\n      \"count_less_than\": \"<integer>\",\n      \"count_less_than_or_equal\": \"<integer>\",\n      \"after\": \"<date>\",\n      \"before\": \"<date>\",\n      \"states\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"any\": [\n        {\n          \"type\": \"<string>\",\n          \"ids\": [\n            \"<integer>\",\n            \"<integer>\"\n          ]\n        },\n        {\n          \"type\": \"<string>\",\n          \"ids\": [\n            \"<integer>\",\n            \"<integer>\"\n          ]\n        }\n      ]\n    },\n    {\n      \"type\": \"<string>\",\n      \"count_greater_than\": \"<integer>\",\n      \"count_greater_than_or_equal\": \"<integer>\",\n      \"count_less_than\": \"<integer>\",\n      \"count_less_than_or_equal\": \"<integer>\",\n      \"after\": \"<date>\",\n      \"before\": \"<date>\",\n      \"states\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"any\": [\n        {\n          \"type\": \"<string>\",\n          \"ids\": [\n            \"<integer>\",\n            \"<integer>\"\n          ]\n        },\n        {\n          \"type\": \"<string>\",\n          \"ids\": [\n            \"<integer>\",\n            \"<integer>\"\n          ]\n        }\n      ]\n    }\n  ],\n  \"counting_mode\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "93fbd012-c421-453d-9417-8fa7249369be",
+              "name": "Returns a list of subscribers matching the filters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "subscribers",
+                    "filter"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Kit-Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"all\": [\n    {\n      \"type\": \"opens\",\n      \"count_greater_than\": 5,\n      \"after\": \"2024-01-01\",\n      \"before\": \"2024-12-31\"\n    },\n    {\n      \"type\": \"clicks\",\n      \"count_greater_than\": 2,\n      \"after\": \"2024-01-01\",\n      \"before\": \"2024-12-31\",\n      \"any\": [\n        {\n          \"type\": \"urls\",\n          \"urls\": [\n            \"kit.com\",\n            \"amazon.com\"\n          ],\n          \"matching\": \"contains\"\n        },\n        {\n          \"type\": \"broadcasts\",\n          \"ids\": [\n            1,\n            2,\n            3\n          ]\n        }\n      ]\n    },\n    {\n      \"type\": \"tags\",\n      \"any\": [\n        {\n          \"type\": \"ids\",\n          \"matching\": [\n            123,\n            456\n          ]\n        }\n      ]\n    },\n    {\n      \"type\": \"attribution\",\n      \"any\": [\n        {\n          \"type\": \"forms\",\n          \"ids\": [\n            789,\n            1001\n          ]\n        }\n      ]\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"subscribers\": [\n    {\n      \"id\": \"456\",\n      \"first_name\": \"Jane\",\n      \"email_address\": \"jane@example.com\",\n      \"created_at\": \"2024-12-01T15:45:00Z\",\n      \"tag_names\": [\n        \"newsletter\",\n        \"engaged\"\n      ],\n      \"tag_ids\": [\n        \"123\",\n        \"456\"\n      ]\n    },\n    {\n      \"id\": \"789\",\n      \"first_name\": null,\n      \"email_address\": \"anonymous@example.com\",\n      \"created_at\": \"2024-11-15T10:00:00Z\",\n      \"tag_names\": [],\n      \"tag_ids\": []\n    }\n  ],\n  \"pagination\": {\n    \"has_previous_page\": false,\n    \"has_next_page\": true,\n    \"start_cursor\": \"WzQ1Nl0=\",\n    \"end_cursor\": \"Wzc4OV0=\",\n    \"per_page\": 10,\n    \"total_count\": 42\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "35988aea-c58c-4d10-b107-ef5b9ae6ab5d",
+              "name": "Returns a 401 if the token and/or account cannot be authenticated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "subscribers",
+                    "filter"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Kit-Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"all\": [\n    {\n      \"type\": \"opens\",\n      \"count_greater_than\": 5,\n      \"after\": \"2024-01-01\",\n      \"before\": \"2024-12-31\"\n    },\n    {\n      \"type\": \"clicks\",\n      \"count_greater_than\": 2,\n      \"after\": \"2024-01-01\",\n      \"before\": \"2024-12-31\",\n      \"any\": [\n        {\n          \"type\": \"urls\",\n          \"urls\": [\n            \"kit.com\",\n            \"amazon.com\"\n          ],\n          \"matching\": \"contains\"\n        },\n        {\n          \"type\": \"broadcasts\",\n          \"ids\": [\n            1,\n            2,\n            3\n          ]\n        }\n      ]\n    },\n    {\n      \"type\": \"tags\",\n      \"any\": [\n        {\n          \"type\": \"ids\",\n          \"matching\": [\n            123,\n            456\n          ]\n        }\n      ]\n    },\n    {\n      \"type\": \"attribution\",\n      \"any\": [\n        {\n          \"type\": \"forms\",\n          \"ids\": [\n            789,\n            1001\n          ]\n        }\n      ]\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    \"The access token is invalid\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d7717703-7bb3-446c-8d9a-2994f32dcad6",
+          "name": "Get a subscriber",
+          "request": {
+            "name": "Get a subscriber",
+            "description": {},
+            "url": {
+              "path": [
+                "v4",
+                "subscribers",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-Kit-Api-Key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "51614049-bdc2-41d0-83e5-6fa906014c5a",
+              "name": "Returns the subscriber details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "subscribers",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Kit-Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"subscriber\": {\n    \"id\": 324,\n    \"first_name\": \"Alice\",\n    \"email_address\": \"alice@convertkit.dev\",\n    \"state\": \"active\",\n    \"created_at\": \"2023-02-17T11:43:55Z\",\n    \"fields\": {\n      \"category\": \"One\"\n    },\n    \"canceled_at\": null\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "70a4d502-18f7-4c54-8e6e-3f57c7e3f391",
+              "name": "Returns a 401 if the token and/or account cannot be authenticated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "subscribers",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Kit-Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    \"The access token is invalid\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "388afc73-d058-4040-825d-cf2baaa9102d",
+              "name": "Returns a 404 when the provided id does not exist",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "subscribers",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Kit-Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    \"Not Found\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2439fd78-b3d3-4673-ae5e-93b1d367d777",
+          "name": "Update a subscriber",
+          "request": {
+            "name": "Update a subscriber",
+            "description": {
+              "content": "If you include a custom field key that does not exist on your account, the request returns an error. Use [List custom fields](/api-reference/custom-fields/list-custom-fields) to retrieve existing keys, or [Create a custom field](/api-reference/custom-fields/create-a-custom-field) to add new fields before setting them for subscribers.<br/><br/><strong>NOTE:</strong> We support creating/updating a maximum of 140 custom fields at a time.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v4",
+                "subscribers",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-Kit-Api-Key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email_address\": \"<string>\",\n  \"first_name\": \"<string>\",\n  \"fields\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "df21bc27-e2fc-4700-8903-672a3278962d",
+              "name": "Updates the subscriber's email address and first name",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "subscribers",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Kit-Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"first_name\": \"Alice\",\n  \"email_address\": \"alice@convertkit.dev\",\n  \"fields\": {\n    \"last_name\": \"Lamarr\",\n    \"birthday\": \"Feb 17\",\n    \"source\": \"landing page\",\n    \"role\": \"Software developer\",\n    \"company\": \"Convertkit\",\n    \"postal_code\": \"83702\",\n    \"website\": \"convertkit.com\",\n    \"social_media\": \"https://www.linkedin.com/company/convertkit\",\n    \"how_did_you_hear_about_us\": \"Social media\",\n    \"interests\": \"Monetization\",\n    \"coupon\": \"\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"subscriber\": {\n    \"id\": 378,\n    \"first_name\": \"Alice\",\n    \"email_address\": \"alice@convertkit.dev\",\n    \"state\": \"active\",\n    \"created_at\": \"2023-02-17T11:43:55Z\",\n    \"fields\": {\n      \"birthday\": \"Feb 17\",\n      \"last_name\": \"Lamarr\",\n      \"source\": \"landing page\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7076f19b-bbe1-49da-a804-2f95b72bf766",
+              "name": "Returns a 202 and asynchronously updates custom fields for the subscriber when more than 10 custom fields are included in the request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "subscribers",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Kit-Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"first_name\": \"Alice\",\n  \"email_address\": \"alice@convertkit.dev\",\n  \"fields\": {\n    \"last_name\": \"Lamarr\",\n    \"birthday\": \"Feb 17\",\n    \"source\": \"landing page\",\n    \"role\": \"Software developer\",\n    \"company\": \"Convertkit\",\n    \"postal_code\": \"83702\",\n    \"website\": \"convertkit.com\",\n    \"social_media\": \"https://www.linkedin.com/company/convertkit\",\n    \"how_did_you_hear_about_us\": \"Social media\",\n    \"interests\": \"Monetization\",\n    \"coupon\": \"\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"subscriber\": {\n    \"id\": 380,\n    \"first_name\": \"Alice\",\n    \"email_address\": \"alice@convertkit.dev\",\n    \"state\": \"active\",\n    \"created_at\": \"2023-02-17T11:43:55Z\",\n    \"fields\": {\n      \"birthday\": null,\n      \"company\": null,\n      \"coupon\": null,\n      \"how_did_you_hear_about_us\": null,\n      \"interests\": null,\n      \"last_name\": null,\n      \"postal_code\": null,\n      \"role\": null,\n      \"social_media\": null,\n      \"source\": null,\n      \"website\": null\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "58afb7b2-6c40-452b-a7a5-20d93ee2c518",
+              "name": "Returns a 401 if the token and/or account cannot be authenticated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "subscribers",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Kit-Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"first_name\": \"Alice\",\n  \"email_address\": \"alice@convertkit.dev\",\n  \"fields\": {\n    \"last_name\": \"Lamarr\",\n    \"birthday\": \"Feb 17\",\n    \"source\": \"landing page\",\n    \"role\": \"Software developer\",\n    \"company\": \"Convertkit\",\n    \"postal_code\": \"83702\",\n    \"website\": \"convertkit.com\",\n    \"social_media\": \"https://www.linkedin.com/company/convertkit\",\n    \"how_did_you_hear_about_us\": \"Social media\",\n    \"interests\": \"Monetization\",\n    \"coupon\": \"\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    \"The access token is invalid\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "04cf0485-01e0-4ec1-9010-87f08b3eb631",
+              "name": "Returns a 404 when the provided id does not exist",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "subscribers",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Kit-Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"first_name\": \"Alice\",\n  \"email_address\": \"alice@convertkit.dev\",\n  \"fields\": {\n    \"last_name\": \"Lamarr\",\n    \"birthday\": \"Feb 17\",\n    \"source\": \"landing page\",\n    \"role\": \"Software developer\",\n    \"company\": \"Convertkit\",\n    \"postal_code\": \"83702\",\n    \"website\": \"convertkit.com\",\n    \"social_media\": \"https://www.linkedin.com/company/convertkit\",\n    \"how_did_you_hear_about_us\": \"Social media\",\n    \"interests\": \"Monetization\",\n    \"coupon\": \"\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    \"Not Found\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e8531f34-fea8-4afa-8116-17f927a39b21",
+              "name": "Returns 422 with an error when email address is already in use",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "subscribers",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Kit-Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"first_name\": \"Alice\",\n  \"email_address\": \"alice@convertkit.dev\",\n  \"fields\": {\n    \"last_name\": \"Lamarr\",\n    \"birthday\": \"Feb 17\",\n    \"source\": \"landing page\",\n    \"role\": \"Software developer\",\n    \"company\": \"Convertkit\",\n    \"postal_code\": \"83702\",\n    \"website\": \"convertkit.com\",\n    \"social_media\": \"https://www.linkedin.com/company/convertkit\",\n    \"how_did_you_hear_about_us\": \"Social media\",\n    \"interests\": \"Monetization\",\n    \"coupon\": \"\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    \"Email address has already been taken\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2ae15410-1f3f-48d3-bb32-afe8e27828df",
+          "name": "Unsubscribe subscriber",
+          "request": {
+            "name": "Unsubscribe subscriber",
+            "description": {},
+            "url": {
+              "path": [
+                "v4",
+                "subscribers",
+                ":id",
+                "unsubscribe"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-Kit-Api-Key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "91f16017-5f8c-477c-94b9-a76d939023fc",
+              "name": "Unsubscribes the subscriber",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "subscribers",
+                    ":id",
+                    "unsubscribe"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Kit-Api-Key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "520db2b6-3e2e-4057-bfd4-ec6f0702a563",
+              "name": "Returns a 401 if the token and/or account cannot be authenticated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "subscribers",
+                    ":id",
+                    "unsubscribe"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Kit-Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    \"The access token is invalid\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a3b5b75f-4fe8-44a5-997a-89330f32b462",
+              "name": "Returns a 404 when the provided id does not exist",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "subscribers",
+                    ":id",
+                    "unsubscribe"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Kit-Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    \"Not Found\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a5c5a0ea-82c8-4fdd-a4ed-e2994cd982d8",
+          "name": "List stats for a subscriber",
+          "request": {
+            "name": "List stats for a subscriber",
+            "description": {
+              "content": "Retrieve email stats for a specific subscriber. You can filter the stats by providing `email_sent_after` and/or `email_sent_before` query parameters to limit the stats to emails sent within a specific date range.\nNote: Only data for events in the last 5 years will be included.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v4",
+                "subscribers",
+                ":subscriber_id",
+                "stats"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "email_sent_after",
+                  "value": "<string>",
+                  "description": "Filter to stats for emails sent after this date (YYYY-MM-DD)/nNOTE: This will only include stats for emails sent in the last 5 years."
+                },
+                {
+                  "disabled": false,
+                  "key": "email_sent_before",
+                  "value": "<string>",
+                  "description": "Filter to stats for emails sent before this date (YYYY-MM-DD)/nNote: Only data for events in the last 5 years will be included."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "subscriber_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-Kit-Api-Key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "7762593d-0dbd-4ef7-859b-d279cca7994a",
+              "name": "Returns the stats for a subscriber",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "subscribers",
+                    ":subscriber_id",
+                    "stats"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "email_sent_after",
+                      "value": "2025-07-01"
+                    },
+                    {
+                      "key": "email_sent_before",
+                      "value": "2025-08-31"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "subscriber_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Kit-Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"subscriber\": {\n    \"id\": 1097,\n    \"stats\": {\n      \"sent\": 2,\n      \"opened\": 1,\n      \"clicked\": 1,\n      \"bounced\": 1,\n      \"open_rate\": 0.5,\n      \"click_rate\": 0.5,\n      \"last_sent\": \"2025-07-13T12:00:00Z\",\n      \"last_opened\": \"2025-07-13T12:00:00Z\",\n      \"last_clicked\": \"2025-07-14T12:00:00Z\",\n      \"sends_since_last_open\": 0,\n      \"sends_since_last_click\": 0\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3df814c4-9ec2-415d-bd6f-148a869e7139",
+              "name": "Returns a 401 if the token and/or account cannot be authenticated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "subscribers",
+                    ":subscriber_id",
+                    "stats"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "email_sent_after",
+                      "value": "2025-07-01"
+                    },
+                    {
+                      "key": "email_sent_before",
+                      "value": "2025-08-31"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "subscriber_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Kit-Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    \"The access token is invalid\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "318c1eda-55ac-427f-a294-a14eac474514",
+          "name": "List tags for a subscriber",
+          "request": {
+            "name": "List tags for a subscriber",
+            "description": {},
+            "url": {
+              "path": [
+                "v4",
+                "subscribers",
+                ":subscriber_id",
+                "tags"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "include_total_count",
+                  "value": "<boolean>",
+                  "description": "Set to `true` to include the `total_count` in the response. This option can cause slow responses; if paging through results, request it only on the first page and reuse the value for subsequent pages."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "subscriber_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-Kit-Api-Key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "c98f165c-243a-408a-92dd-c4e20d11a91d",
+              "name": "Returns a paginated list of all tags for a subscriber",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "subscribers",
+                    ":subscriber_id",
+                    "tags"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include_total_count",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "subscriber_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Kit-Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"tags\": [\n    {\n      \"id\": 111,\n      \"name\": \"Tag B\",\n      \"tagged_at\": \"2023-02-17T10:43:55Z\"\n    },\n    {\n      \"id\": 112,\n      \"name\": \"Tag A\",\n      \"tagged_at\": \"2023-02-17T10:43:55Z\"\n    }\n  ],\n  \"pagination\": {\n    \"has_previous_page\": false,\n    \"has_next_page\": false,\n    \"start_cursor\": \"WzExXQ==\",\n    \"end_cursor\": \"WzEwXQ==\",\n    \"per_page\": 500\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d90cbadf-9b4c-4803-948b-9b01ae9c5e91",
+              "name": "Returns a 401 if the token and/or account cannot be authenticated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "subscribers",
+                    ":subscriber_id",
+                    "tags"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include_total_count",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "subscriber_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Kit-Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    \"The access token is invalid\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "92a78071-e7b7-4792-ac68-04daf587324f",
+              "name": "Returns a 404 when the provided id does not exist",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "subscribers",
+                    ":subscriber_id",
+                    "tags"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include_total_count",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "subscriber_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Kit-Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    \"Not Found\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.kit.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "438f173b-41a7-44ef-9b43-f263b58b58e5",
+    "name": "Kit Accounts Subscribers API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

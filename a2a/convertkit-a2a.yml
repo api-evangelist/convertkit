@@ -1,0 +1,71 @@
+generated: '2026-08-13'
+method: probed
+source: https://developers.kit.com/.well-known/agent-card.json
+discovery:
+  path: /.well-known/agent-card.json
+  canonical: true
+  host: developers.kit.com
+  note: >-
+    Served by Kit's own developer documentation host. Probed on kit.com,
+    api.kit.com and app.kit.com as well; all four of those returned 404 on both
+    /.well-known/agent-card.json and the legacy /.well-known/agent.json.
+conformance:
+  spec: A2A 1.0.0
+  grade: conformant
+  protocol_version: '0.3'
+  preferred_transport: HTTP+JSON
+  hard_checks:
+    capabilities_is_object: true
+    protocol_version_present: true
+    skills_is_array: true
+  deviations:
+  - supportedInterfaces-instead-of-additionalInterfaces
+  - interface-uses-protocolBinding-instead-of-transport
+  - protocolVersion-not-full-semver
+  deviation_note: >-
+    Graded conformant against the three hard checks (capabilities object,
+    protocolVersion present, skills array), all of which pass. The card carries
+    a non-spec `supportedInterfaces` array (A2A 1.0.0 names it
+    `additionalInterfaces`) whose entries use `protocolBinding` where the spec
+    uses `transport`, and reports protocolVersion as "0.3" rather than "0.3.0".
+    Recorded here rather than silently dropped.
+card:
+  name: Kit Developer Documentation
+  url: https://developers.kit.com/
+  version: 1.0.0
+  documentation_url: https://developers.kit.com/
+  provider_organization: Kit Developer Documentation
+  streaming: false
+  push_notifications: false
+  default_input_modes:
+  - text/plain
+  default_output_modes:
+  - text/plain
+  skills: 1
+  file: convertkit-agent-card.json
+skills:
+- id: kit
+  name: Kit
+  url: https://developers.kit.com/.well-known/agent-skills/kit/skill.md
+  saved_as: skills/convertkit-kit-provider-skill.md
+  http_status: 200
+related_surfaces:
+  mcp_docs_server: https://developers.kit.com/mcp
+  mcp_account_server: https://app.kit.com/mcp
+  llms_txt: https://developers.kit.com/llms.txt
+x-evidence:
+  fetched: '2026-08-13'
+  url: https://developers.kit.com/.well-known/agent-card.json
+  http_status: 200
+  content_type: application/json
+  misses:
+  - url: https://kit.com/.well-known/agent-card.json
+    http_status: 404
+  - url: https://api.kit.com/.well-known/agent-card.json
+    http_status: 404
+  - url: https://app.kit.com/.well-known/agent-card.json
+    http_status: 404
+  - url: https://kit.com/.well-known/agent.json
+    http_status: 404
+  - url: https://api.kit.com/.well-known/agent.json
+    http_status: 404

@@ -1,0 +1,67 @@
+generated: '2026-08-13'
+method: searched
+source: https://developers.kit.com/api-reference/overview
+versioning:
+  scheme: uri-path
+  current: v4
+  base_url: https://api.kit.com/v4/
+  docs: https://developers.kit.com/api-reference/upgrading-to-v4
+  history:
+  - version: v4
+    status: current
+    base_url: https://api.kit.com/v4/
+    note: Introduced cursor pagination, OAuth apps, bulk/async processing, and a consistent error envelope.
+  - version: v3
+    status: deprecated
+    base_url: https://api.convertkit.com/v3/
+    docs: https://developers.kit.com/api-reference/v3/overview
+    note: >-
+      "API V3 is no longer in active development." Kit's own API overview carries
+      the warning that V3 "is still available for use but is deprecated and will
+      be sunset in the future." V3 also sits on the pre-rebrand
+      api.convertkit.com host; V4 moved to api.kit.com.
+deprecation:
+  policy_url: https://developers.kit.com/api-reference/upgrading-to-v4
+  policy_published: true
+  policy_note: >-
+    Kit publishes a deprecation POSITION and a full V3->V4 migration guide
+    enumerating every changed endpoint, response shape and removed parameter,
+    but does NOT publish a dated sunset commitment, a notice period, or a
+    written deprecation POLICY document. "Will be sunset in the future" is the
+    entirety of the schedule.
+  sunset_header: false
+  deprecation_header: false
+  rfc8594: false
+  sunset_date: null
+  breaking_change_notice_period: null
+deprecated_operations: []
+deprecated_operations_note: >-
+  No operation in openapi/_original/openapi.json carries `deprecated: true`. The
+  deprecation is whole-version (V3), not per-operation, and V3 is not represented
+  in this repo's specs.
+status_page:
+  url: https://status.kit.com
+  http_status: 200
+  verified: '2026-08-13'
+sla:
+  url: null
+  uptime_target: null
+  note: No published SLA or uptime commitment was found on kit.com, developers.kit.com or status.kit.com.
+changelog:
+  url: https://developers.kit.com/changelog
+  artifact: changelog/convertkit-changelog.yml
+  product_changelog: https://updates.kit.com/changelog
+roadmap:
+  url: null
+  note: >-
+    https://kit.com/roadmap returns 200 but redirects to
+    https://updates.kit.com/changelog — a shipped-changes log, not a forward
+    roadmap. No Roadmap pointer is emitted; a redirect to a changelog is not a
+    roadmap.
+data_retention:
+  docs: https://developers.kit.com/api-reference/email-data-retention
+  note: Account-level email stats expose a rolling last-90-day window via the API.
+support:
+  developer_community: https://kit.typeform.com/to/f8urvmPe
+  email: support@kit.com
+  help_center: https://help.kit.com

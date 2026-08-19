@@ -1,0 +1,379 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Kit Accounts Tags API",
+    "version": "4.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Tags",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Bulk create tags",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.kit.com/v4/bulk/tags",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://api.kit.com/v4/oauth/authorize",
+              "accessTokenUrl": "https://api.kit.com/v4/oauth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "See \"[Bulk & async processing](#bulk-amp-async-processing)\" for more information."
+        },
+        {
+          "info": {
+            "name": "Bulk tag subscribers",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.kit.com/v4/bulk/tags/subscribers",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://api.kit.com/v4/oauth/authorize",
+              "accessTokenUrl": "https://api.kit.com/v4/oauth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "The subscribers being tagged must already exist. Subscribers can be created in bulk using the \"[Bulk create subscriber](#bulk-create-subscribers)\" endpoint.<br/><br/>See \"[Bulk & async processing](#bulk-amp-async-processing)\" for more information."
+        },
+        {
+          "info": {
+            "name": "Bulk remove tags from subscribers",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.kit.com/v4/bulk/tags/subscribers",
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://api.kit.com/v4/oauth/authorize",
+              "accessTokenUrl": "https://api.kit.com/v4/oauth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "See \"[Bulk & async processing](#bulk-amp-async-processing)\" for more information."
+        },
+        {
+          "info": {
+            "name": "List tags",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.kit.com/v4/tags",
+            "params": [
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "To fetch next page of results, use `?after=<end_cursor>`"
+              },
+              {
+                "name": "before",
+                "value": "",
+                "type": "query",
+                "description": "To fetch previous page of results, use `?before=<start_cursor>`"
+              },
+              {
+                "name": "include_total_count",
+                "value": "false",
+                "type": "query",
+                "description": "Set to `true` to include the `total_count` in the response. This option can cause slow responses; if paging through results, request it only on the first page and reuse the value for subsequent pages."
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "Number of results per page. Default 500, maximum 1000."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Kit-Api-Key",
+              "value": "{{X-Kit-Api-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "List tags"
+        },
+        {
+          "info": {
+            "name": "Create a tag",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.kit.com/v4/tags",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-Kit-Api-Key",
+              "value": "{{X-Kit-Api-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Create a tag"
+        },
+        {
+          "info": {
+            "name": "Update tag name",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.kit.com/v4/tags/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "40",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-Kit-Api-Key",
+              "value": "{{X-Kit-Api-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Update tag name"
+        },
+        {
+          "info": {
+            "name": "List subscribers for a tag",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.kit.com/v4/tags/:tag_id/subscribers",
+            "params": [
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "To fetch next page of results, use `?after=<end_cursor>`"
+              },
+              {
+                "name": "before",
+                "value": "",
+                "type": "query",
+                "description": "To fetch previous page of results, use `?before=<start_cursor>`"
+              },
+              {
+                "name": "created_after",
+                "value": "2023-01-17T11:43:55Z",
+                "type": "query",
+                "description": "Filter subscribers who have been created after this date (format yyyy-mm-dd)"
+              },
+              {
+                "name": "created_before",
+                "value": "2023-02-18T11:43:55Z",
+                "type": "query",
+                "description": "Filter subscribers who have been created before this date (format yyyy-mm-dd)"
+              },
+              {
+                "name": "include_total_count",
+                "value": "false",
+                "type": "query",
+                "description": "Set to `true` to include the `total_count` in the response. This option can cause slow responses; if paging through results, request it only on the first page and reuse the value for subsequent pages."
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "Number of results per page. Default 500, maximum 1000."
+              },
+              {
+                "name": "slim",
+                "value": "false",
+                "type": "query",
+                "description": "When `true`, omits expensive optional fields from the response. Produces a faster, smaller response — useful when extra fields are not needed."
+              },
+              {
+                "name": "status",
+                "value": "all",
+                "type": "query",
+                "description": "Filter subscribers who have this status (`active`, `inactive`, `bounced`, `complained`, `cancelled` or `all`). Defaults to `active`."
+              },
+              {
+                "name": "tag_id",
+                "value": "141",
+                "type": "path"
+              },
+              {
+                "name": "tagged_after",
+                "value": "2023-02-14T11:43:55Z",
+                "type": "query",
+                "description": "Filter subscribers who have been tagged after this date (format yyyy-mm-dd)"
+              },
+              {
+                "name": "tagged_before",
+                "value": "2023-02-18T11:43:55Z",
+                "type": "query",
+                "description": "Filter subscribers who have been tagged before this date (format yyyy-mm-dd)"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Kit-Api-Key",
+              "value": "{{X-Kit-Api-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "List subscribers for a tag"
+        },
+        {
+          "info": {
+            "name": "Tag a subscriber by email address",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.kit.com/v4/tags/:tag_id/subscribers",
+            "params": [
+              {
+                "name": "tag_id",
+                "value": "207",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-Kit-Api-Key",
+              "value": "{{X-Kit-Api-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "The subscriber being tagged must already exist. Subscribers can be created using the \"[Create a subscriber](#create-a-subscriber)\" endpoint."
+        },
+        {
+          "info": {
+            "name": "Remove tag from subscriber by email address",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.kit.com/v4/tags/:tag_id/subscribers",
+            "params": [
+              {
+                "name": "tag_id",
+                "value": "250",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Kit-Api-Key",
+              "value": "{{X-Kit-Api-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Remove tag from subscriber by email address"
+        },
+        {
+          "info": {
+            "name": "Tag a subscriber",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.kit.com/v4/tags/:tag_id/subscribers/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "1247",
+                "type": "path"
+              },
+              {
+                "name": "tag_id",
+                "value": "184",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-Kit-Api-Key",
+              "value": "{{X-Kit-Api-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "The subscriber being tagged must already exist. Subscribers can be created using the \"[Create a subscriber](#create-a-subscriber)\" endpoint."
+        },
+        {
+          "info": {
+            "name": "Remove tag from subscriber",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.kit.com/v4/tags/:tag_id/subscribers/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "1290",
+                "type": "path"
+              },
+              {
+                "name": "tag_id",
+                "value": "228",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Kit-Api-Key",
+              "value": "{{X-Kit-Api-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Remove tag from subscriber"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,1644 @@
+{
+  "item": [
+    {
+      "id": "a83b9fe5-ad72-467b-bbdd-4f7afa12b14a",
+      "name": "Forms",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "ed0b2c15-6dbc-4cd0-adfc-f36759f2d1be",
+          "name": "Bulk add subscribers to forms",
+          "request": {
+            "name": "Bulk add subscribers to forms",
+            "description": {
+              "content": "Adding subscribers to double opt-in forms will trigger sending an Incentive Email. Subscribers already added to the specified form will not receive the Incentive Email again. For more information about double opt-in see \"[Double opt-in](#double-opt-in)\". <br/><br/>The subscribers being added to the form must already exist. Subscribers can be created in bulk using the \"[Bulk create subscriber](#bulk-create-subscribers)\" endpoint.<br/><br/>See \"[Bulk & async processing](#bulk-amp-async-processing)\" for more information.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v4",
+                "bulk",
+                "forms",
+                "subscribers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "read write"
+                },
+                {
+                  "key": "redirect_uri",
+                  "value": "https://api.kit.com/v4/oauth/token"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://api.kit.com/v4/oauth/token"
+                },
+                {
+                  "key": "authUrl",
+                  "value": "https://api.kit.com/v4/oauth/authorize"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "authorization_code"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"additions\": [\n    {\n      \"form_id\": \"<integer>\",\n      \"subscriber_id\": \"<integer>\",\n      \"referrer\": \"<string>\"\n    },\n    {\n      \"form_id\": \"<integer>\",\n      \"subscriber_id\": \"<integer>\",\n      \"referrer\": \"<string>\"\n    }\n  ],\n  \"callback_url\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "ba2b668e-33f9-4b8a-be3b-493e8a26ad4f",
+              "name": "Adds subscribers to forms synchronously when 100 or less form/subscribers are requested",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "bulk",
+                    "forms",
+                    "subscribers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"additions\": [\n    {\n      \"form_id\": 0,\n      \"subscriber_id\": 0\n    },\n    {\n      \"form_id\": 1,\n      \"subscriber_id\": 1\n    },\n    {\n      \"form_id\": 2,\n      \"subscriber_id\": 2\n    },\n    {\n      \"form_id\": 3,\n      \"subscriber_id\": 3\n    }\n  ],\n  \"callback_url\": null\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"subscribers\": [\n    {\n      \"id\": 633,\n      \"first_name\": \"Sub\",\n      \"email_address\": \"sub@example.com\",\n      \"created_at\": \"2023-02-17T11:43:55Z\",\n      \"added_at\": \"2023-02-17T11:43:55Z\",\n      \"referrer\": \"https://mywebsite.com/bfpromo/?utm_source=facebook&utm_medium=cpc&utm_campaign=black_friday&utm_term=car_owners&utm_content=get_10_off\",\n      \"referrer_utm_parameters\": {\n        \"source\": \"facebook\",\n        \"medium\": \"cpc\",\n        \"campaign\": \"black_friday\",\n        \"term\": \"car_owners\",\n        \"content\": \"get_10_off\"\n      }\n    },\n    {\n      \"id\": 633,\n      \"first_name\": \"Sub\",\n      \"email_address\": \"sub@example.com\",\n      \"created_at\": \"2023-02-17T11:43:55Z\",\n      \"added_at\": \"2023-02-17T11:43:55Z\",\n      \"referrer\": \"https://mywebsite.com/bfpromo/?utm_source=facebook&utm_medium=cpc&utm_campaign=black_friday&utm_term=car_owners&utm_content=get_10_off\",\n      \"referrer_utm_parameters\": {\n        \"source\": \"facebook\",\n        \"medium\": \"cpc\",\n        \"campaign\": \"black_friday\",\n        \"term\": \"car_owners\",\n        \"content\": \"get_10_off\"\n      }\n    }\n  ],\n  \"failures\": [\n    {\n      \"errors\": [\n        \"Subscriber does not exist\"\n      ],\n      \"subscription\": {\n        \"form_id\": 136,\n        \"subscriber_id\": null,\n        \"referrer\": \"https://mywebsite.com/bfpromo/?utm_source=facebook&utm_medium=cpc&utm_campaign=black_friday&utm_term=car_owners&utm_content=get_10_off\"\n      }\n    },\n    {\n      \"errors\": [\n        \"Form does not exist\"\n      ],\n      \"subscription\": {\n        \"form_id\": null,\n        \"subscriber_id\": 633,\n        \"referrer\": \"https://mywebsite.com/bfpromo/?utm_source=facebook&utm_medium=cpc&utm_campaign=black_friday&utm_term=car_owners&utm_content=get_10_off\"\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a0424507-7ee6-44ca-a6f4-efe11037da0c",
+              "name": "Adds subscribers to forms asynchronously when more than 100 form/subscribers are requested",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "bulk",
+                    "forms",
+                    "subscribers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"additions\": [\n    {\n      \"form_id\": 0,\n      \"subscriber_id\": 0\n    },\n    {\n      \"form_id\": 1,\n      \"subscriber_id\": 1\n    },\n    {\n      \"form_id\": 2,\n      \"subscriber_id\": 2\n    },\n    {\n      \"form_id\": 3,\n      \"subscriber_id\": 3\n    }\n  ],\n  \"callback_url\": null\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1255e2ea-70a4-44e7-9070-14693b9b3542",
+              "name": "Returns a 401 if the token and/or account cannot be authenticated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "bulk",
+                    "forms",
+                    "subscribers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"additions\": [\n    {\n      \"form_id\": 0,\n      \"subscriber_id\": 0\n    },\n    {\n      \"form_id\": 1,\n      \"subscriber_id\": 1\n    },\n    {\n      \"form_id\": 2,\n      \"subscriber_id\": 2\n    },\n    {\n      \"form_id\": 3,\n      \"subscriber_id\": 3\n    }\n  ],\n  \"callback_url\": null\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    \"The access token is invalid\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "356b7a6b-1bb2-4e1f-9c01-a4acc05f9261",
+              "name": "Returns a 413 when the size of the request would exceed the account's data limit for enqueued bulk requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "bulk",
+                    "forms",
+                    "subscribers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"additions\": [\n    {\n      \"form_id\": 0,\n      \"subscriber_id\": 0\n    },\n    {\n      \"form_id\": 1,\n      \"subscriber_id\": 1\n    },\n    {\n      \"form_id\": 2,\n      \"subscriber_id\": 2\n    },\n    {\n      \"form_id\": 3,\n      \"subscriber_id\": 3\n    }\n  ],\n  \"callback_url\": null\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Request Entity Too Large",
+              "code": 413,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    \"This request exceeds your queued bulk requests limit. Please wait while we process your existing requests and try again later.\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d6290af0-9b2d-47af-a2e4-d3511bad9860",
+              "name": "Returns a 422 when `additions` is empty or not an array",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "bulk",
+                    "forms",
+                    "subscribers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"additions\": [\n    {\n      \"form_id\": 0,\n      \"subscriber_id\": 0\n    },\n    {\n      \"form_id\": 1,\n      \"subscriber_id\": 1\n    },\n    {\n      \"form_id\": 2,\n      \"subscriber_id\": 2\n    },\n    {\n      \"form_id\": 3,\n      \"subscriber_id\": 3\n    }\n  ],\n  \"callback_url\": null\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    \"No additions included for processing\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c9d8b3be-ae37-40c9-ac5f-813bc26938f9",
+          "name": "List forms",
+          "request": {
+            "name": "List forms",
+            "description": {},
+            "url": {
+              "path": [
+                "v4",
+                "forms"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "include_total_count",
+                  "value": "<boolean>",
+                  "description": "Set to `true` to include the `total_count` in the response. This option can cause slow responses; if paging through results, request it only on the first page and reuse the value for subsequent pages."
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>",
+                  "description": "Filter forms that have this status (`active`, `archived`, `trashed`, or `all`). Defaults to `active`."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-Kit-Api-Key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "9d29ac24-30e8-4b26-b7a2-daee38d1aa6e",
+              "name": "Returns a paginated list of all forms and landing pages (embedded and hosted) for your account (including active and archived)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "forms"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include_total_count",
+                      "value": "false"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Kit-Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"forms\": [\n    {\n      \"id\": 53,\n      \"name\": \"Sign up\",\n      \"created_at\": \"2023-02-17T11:43:55Z\",\n      \"type\": \"embed\",\n      \"format\": null,\n      \"embed_js\": \"https://kit-greetings.kit.com/f049e3d9ab/index.js\",\n      \"embed_url\": \"https://kit-greetings.kit.com/f049e3d9ab\",\n      \"archived\": false,\n      \"uid\": \"f049e3d9ab\",\n      \"subscriber_count\": 0\n    },\n    {\n      \"id\": 52,\n      \"name\": \"Lead gen\",\n      \"created_at\": \"2023-02-17T11:43:55Z\",\n      \"type\": \"hosted\",\n      \"format\": null,\n      \"embed_js\": \"https://kit-greetings.kit.com/ae7c1adaa1/index.js\",\n      \"embed_url\": \"https://kit-greetings.kit.com/ae7c1adaa1\",\n      \"archived\": false,\n      \"uid\": \"ae7c1adaa1\",\n      \"subscriber_count\": 0\n    }\n  ],\n  \"pagination\": {\n    \"has_previous_page\": false,\n    \"has_next_page\": false,\n    \"start_cursor\": \"WzUzXQ==\",\n    \"end_cursor\": \"WzUyXQ==\",\n    \"per_page\": 500\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "11f07955-de64-473d-a8e7-c115a5c818ca",
+              "name": "Returns a 401 if the token and/or account cannot be authenticated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "forms"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include_total_count",
+                      "value": "false"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Kit-Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    \"The access token is invalid\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "073b28bf-b010-40e5-bdee-05f64dd14092",
+          "name": "List subscribers for a form",
+          "request": {
+            "name": "List subscribers for a form",
+            "description": {},
+            "url": {
+              "path": [
+                "v4",
+                "forms",
+                ":form_id",
+                "subscribers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "added_after",
+                  "value": "<string>",
+                  "description": "Filter subscribers who have been added to the form after this date (format yyyy-mm-dd)"
+                },
+                {
+                  "disabled": false,
+                  "key": "added_before",
+                  "value": "<string>",
+                  "description": "Filter subscribers who have been added to the form before this date (format yyyy-mm-dd)"
+                },
+                {
+                  "disabled": false,
+                  "key": "created_after",
+                  "value": "<string>",
+                  "description": "Filter subscribers who have been created after this date (format yyyy-mm-dd)"
+                },
+                {
+                  "disabled": false,
+                  "key": "created_before",
+                  "value": "<string>",
+                  "description": "Filter subscribers who have been created before this date (format yyyy-mm-dd)"
+                },
+                {
+                  "disabled": false,
+                  "key": "include_total_count",
+                  "value": "<boolean>",
+                  "description": "Set to `true` to include the `total_count` in the response. This option can cause slow responses; if paging through results, request it only on the first page and reuse the value for subsequent pages."
+                },
+                {
+                  "disabled": false,
+                  "key": "slim",
+                  "value": "<boolean>",
+                  "description": "When `true`, omits expensive optional fields from the response. Produces a faster, smaller response — useful when extra fields are not needed."
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>",
+                  "description": "Filter subscribers who have this status (`active`, `inactive`, `bounced`, `complained`, `cancelled` or `all`). Defaults to `active`."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "form_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-Kit-Api-Key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "3e6d746e-533e-4e6e-8527-a45d014c60bc",
+              "name": "Returns a paginated list of subscribers for the specified form",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "forms",
+                    ":form_id",
+                    "subscribers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "added_after",
+                      "value": "2023-02-14T11:43:55Z"
+                    },
+                    {
+                      "key": "added_before",
+                      "value": "2023-02-18T11:43:55Z"
+                    },
+                    {
+                      "key": "created_after",
+                      "value": "2023-01-17T11:43:55Z"
+                    },
+                    {
+                      "key": "created_before",
+                      "value": "2023-02-18T11:43:55Z"
+                    },
+                    {
+                      "key": "include_total_count",
+                      "value": "false"
+                    },
+                    {
+                      "key": "slim",
+                      "value": "false"
+                    },
+                    {
+                      "key": "status",
+                      "value": "all"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "form_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Kit-Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"subscribers\": [\n    {\n      \"id\": 673,\n      \"first_name\": null,\n      \"email_address\": \"subscriber357@kit.dev\",\n      \"state\": \"active\",\n      \"created_at\": \"2023-02-17T11:43:55Z\",\n      \"added_at\": \"2023-02-17T11:43:55Z\",\n      \"referrer\": \"https://mywebsite.com/bfpromo/?utm_source=facebook&utm_medium=cpc&utm_campaign=black_friday&utm_term=car_owners&utm_content=get_10_off\",\n      \"referrer_utm_parameters\": {\n        \"source\": \"facebook\",\n        \"medium\": \"cpc\",\n        \"campaign\": \"black_friday\",\n        \"term\": \"car_owners\",\n        \"content\": \"get_10_off\"\n      },\n      \"fields\": {\n        \"category\": \"One\"\n      }\n    },\n    {\n      \"id\": 672,\n      \"first_name\": null,\n      \"email_address\": \"subscriber356@kit.dev\",\n      \"state\": \"active\",\n      \"created_at\": \"2023-02-17T11:43:55Z\",\n      \"added_at\": \"2023-02-17T11:43:55Z\",\n      \"referrer\": \"https://mywebsite.com/bfpromo/?utm_source=facebook&utm_medium=cpc&utm_campaign=black_friday&utm_term=car_owners&utm_content=get_10_off\",\n      \"referrer_utm_parameters\": {\n        \"source\": \"facebook\",\n        \"medium\": \"cpc\",\n        \"campaign\": \"black_friday\",\n        \"term\": \"car_owners\",\n        \"content\": \"get_10_off\"\n      },\n      \"fields\": {\n        \"category\": null\n      }\n    },\n    {\n      \"id\": 671,\n      \"first_name\": null,\n      \"email_address\": \"subscriber355@kit.dev\",\n      \"state\": \"active\",\n      \"created_at\": \"2023-02-17T11:43:55Z\",\n      \"added_at\": \"2023-02-17T11:43:55Z\",\n      \"referrer\": \"https://mywebsite.com/bfpromo/?utm_source=facebook&utm_medium=cpc&utm_campaign=black_friday&utm_term=car_owners&utm_content=get_10_off\",\n      \"referrer_utm_parameters\": {\n        \"source\": \"facebook\",\n        \"medium\": \"cpc\",\n        \"campaign\": \"black_friday\",\n        \"term\": \"car_owners\",\n        \"content\": \"get_10_off\"\n      },\n      \"fields\": {\n        \"category\": null\n      }\n    }\n  ],\n  \"pagination\": {\n    \"has_previous_page\": false,\n    \"has_next_page\": false,\n    \"start_cursor\": \"WzY3M10=\",\n    \"end_cursor\": \"WzY3MV0=\",\n    \"per_page\": 500\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f4a21350-f4e5-4050-8ba2-0e7648c5e04a",
+              "name": "Returns a 401 if the token and/or account cannot be authenticated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "forms",
+                    ":form_id",
+                    "subscribers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "added_after",
+                      "value": "2023-02-14T11:43:55Z"
+                    },
+                    {
+                      "key": "added_before",
+                      "value": "2023-02-18T11:43:55Z"
+                    },
+                    {
+                      "key": "created_after",
+                      "value": "2023-01-17T11:43:55Z"
+                    },
+                    {
+                      "key": "created_before",
+                      "value": "2023-02-18T11:43:55Z"
+                    },
+                    {
+                      "key": "include_total_count",
+                      "value": "false"
+                    },
+                    {
+                      "key": "slim",
+                      "value": "false"
+                    },
+                    {
+                      "key": "status",
+                      "value": "all"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "form_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Kit-Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    \"The access token is invalid\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6e66bb5d-19cb-420c-8e92-e9c610a573a9",
+              "name": "Returns a 404 when the provided id does not exist",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "forms",
+                    ":form_id",
+                    "subscribers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "added_after",
+                      "value": "2023-02-14T11:43:55Z"
+                    },
+                    {
+                      "key": "added_before",
+                      "value": "2023-02-18T11:43:55Z"
+                    },
+                    {
+                      "key": "created_after",
+                      "value": "2023-01-17T11:43:55Z"
+                    },
+                    {
+                      "key": "created_before",
+                      "value": "2023-02-18T11:43:55Z"
+                    },
+                    {
+                      "key": "include_total_count",
+                      "value": "false"
+                    },
+                    {
+                      "key": "slim",
+                      "value": "false"
+                    },
+                    {
+                      "key": "status",
+                      "value": "all"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "form_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Kit-Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    \"Not Found\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8f17d651-8a14-4b9f-bb47-2576dd7fe155",
+          "name": "Add subscriber to form by email address",
+          "request": {
+            "name": "Add subscriber to form by email address",
+            "description": {
+              "content": "The subscriber being added to the form must already exist. Subscribers can be created using the \"[Create a subscriber](#create-a-subscriber)\" endpoint.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v4",
+                "forms",
+                ":form_id",
+                "subscribers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "form_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-Kit-Api-Key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email_address\": \"<string>\",\n  \"referrer\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "d37e7b5b-93bd-4371-8873-b4ea40ee34d9",
+              "name": "Returns a 200 when the subscriber has already been added to the form",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "forms",
+                    ":form_id",
+                    "subscribers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "form_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Kit-Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email_address\": \"alice@convertkit.dev\",\n  \"referrer\": \"https://mywebsite.com/bfpromo/?utm_source=facebook&utm_medium=cpc&utm_campaign=black_friday&utm_term=car_owners&utm_content=get_10_off\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"subscriber\": {\n    \"id\": 785,\n    \"first_name\": \"Alice\",\n    \"email_address\": \"alice@convertkit.dev\",\n    \"state\": \"active\",\n    \"created_at\": \"2023-02-17T11:43:55Z\",\n    \"added_at\": \"2023-02-17T11:43:55Z\",\n    \"fields\": {},\n    \"referrer\": \"https://mywebsite.com/bfpromo/?utm_source=facebook&utm_medium=cpc&utm_campaign=black_friday&utm_term=car_owners&utm_content=get_10_off\",\n    \"referrer_utm_parameters\": {\n      \"source\": \"facebook\",\n      \"medium\": \"cpc\",\n      \"campaign\": \"black_friday\",\n      \"term\": \"car_owners\",\n      \"content\": \"get_10_off\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fee40888-c48b-49c4-a4aa-359e25719358",
+              "name": "Adds the subscriber to the form",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "forms",
+                    ":form_id",
+                    "subscribers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "form_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Kit-Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email_address\": \"alice@convertkit.dev\",\n  \"referrer\": \"https://mywebsite.com/bfpromo/?utm_source=facebook&utm_medium=cpc&utm_campaign=black_friday&utm_term=car_owners&utm_content=get_10_off\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"subscriber\": {\n    \"id\": 786,\n    \"first_name\": \"Alice\",\n    \"email_address\": \"alice@convertkit.dev\",\n    \"state\": \"active\",\n    \"created_at\": \"2023-02-17T11:43:55Z\",\n    \"added_at\": \"2023-02-17T11:43:55Z\",\n    \"fields\": {},\n    \"referrer\": \"https://mywebsite.com/bfpromo/?utm_source=facebook&utm_medium=cpc&utm_campaign=black_friday&utm_term=car_owners&utm_content=get_10_off\",\n    \"referrer_utm_parameters\": {\n      \"source\": \"facebook\",\n      \"medium\": \"cpc\",\n      \"campaign\": \"black_friday\",\n      \"term\": \"car_owners\",\n      \"content\": \"get_10_off\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d1173801-32c8-4529-a2ec-c75e6403396a",
+              "name": "Returns a 401 if the token and/or account cannot be authenticated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "forms",
+                    ":form_id",
+                    "subscribers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "form_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Kit-Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email_address\": \"alice@convertkit.dev\",\n  \"referrer\": \"https://mywebsite.com/bfpromo/?utm_source=facebook&utm_medium=cpc&utm_campaign=black_friday&utm_term=car_owners&utm_content=get_10_off\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    \"The access token is invalid\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "30fd0ff9-4697-4fc6-8c69-eb8e639dd21e",
+              "name": "Returns a 404 when the provided id does not exist",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "forms",
+                    ":form_id",
+                    "subscribers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "form_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Kit-Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email_address\": \"alice@convertkit.dev\",\n  \"referrer\": \"https://mywebsite.com/bfpromo/?utm_source=facebook&utm_medium=cpc&utm_campaign=black_friday&utm_term=car_owners&utm_content=get_10_off\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    \"Not Found\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "eda505dd-04f9-425d-a310-92de0bcc1e39",
+              "name": "Returns a 422 with an error message when missing email address",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "forms",
+                    ":form_id",
+                    "subscribers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "form_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Kit-Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email_address\": \"alice@convertkit.dev\",\n  \"referrer\": \"https://mywebsite.com/bfpromo/?utm_source=facebook&utm_medium=cpc&utm_campaign=black_friday&utm_term=car_owners&utm_content=get_10_off\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    \"Either subscriber id or email address is required to add subscriber to form\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f2849ec9-909b-4281-81a8-a3e2563afb90",
+          "name": "Add subscriber to form",
+          "request": {
+            "name": "Add subscriber to form",
+            "description": {
+              "content": "The subscriber being added to the form must already exist. Subscribers can be created using the \"[Create a subscriber](#create-a-subscriber)\" endpoint.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v4",
+                "forms",
+                ":form_id",
+                "subscribers",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "form_id",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-Kit-Api-Key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"referrer\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "aa314a47-4483-41ba-b5b7-973a01aa88d1",
+              "name": "Returns a 200 when the subscriber has already been added to the form",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "forms",
+                    ":form_id",
+                    "subscribers",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "form_id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Kit-Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"referrer\": \"https://mywebsite.com/bfpromo/?utm_source=facebook&utm_medium=cpc&utm_campaign=black_friday&utm_term=car_owners&utm_content=get_10_off\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"subscriber\": {\n    \"id\": 760,\n    \"first_name\": \"Alice\",\n    \"email_address\": \"alice@convertkit.dev\",\n    \"state\": \"active\",\n    \"created_at\": \"2023-02-17T11:43:55Z\",\n    \"added_at\": \"2023-02-17T11:43:55Z\",\n    \"fields\": {},\n    \"referrer\": \"https://mywebsite.com/bfpromo/?utm_source=facebook&utm_medium=cpc&utm_campaign=black_friday&utm_term=car_owners&utm_content=get_10_off\",\n    \"referrer_utm_parameters\": {\n      \"source\": \"facebook\",\n      \"medium\": \"cpc\",\n      \"campaign\": \"black_friday\",\n      \"term\": \"car_owners\",\n      \"content\": \"get_10_off\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d39a2c4b-3971-4779-80ed-b20c566e4d09",
+              "name": "Adds the subscriber to the form",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "forms",
+                    ":form_id",
+                    "subscribers",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "form_id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Kit-Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"referrer\": \"https://mywebsite.com/bfpromo/?utm_source=facebook&utm_medium=cpc&utm_campaign=black_friday&utm_term=car_owners&utm_content=get_10_off\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"subscriber\": {\n    \"id\": 762,\n    \"first_name\": \"Alice\",\n    \"email_address\": \"alice@convertkit.dev\",\n    \"state\": \"active\",\n    \"created_at\": \"2023-02-17T11:43:55Z\",\n    \"added_at\": \"2023-02-17T11:43:55Z\",\n    \"fields\": {},\n    \"referrer\": \"https://mywebsite.com/bfpromo/?utm_source=facebook&utm_medium=cpc&utm_campaign=black_friday&utm_term=car_owners&utm_content=get_10_off\",\n    \"referrer_utm_parameters\": {\n      \"source\": \"facebook\",\n      \"medium\": \"cpc\",\n      \"campaign\": \"black_friday\",\n      \"term\": \"car_owners\",\n      \"content\": \"get_10_off\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6af21b1d-0b42-4bc2-a5f2-41c974d7cfd3",
+              "name": "Returns a 401 if the token and/or account cannot be authenticated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "forms",
+                    ":form_id",
+                    "subscribers",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "form_id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Kit-Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"referrer\": \"https://mywebsite.com/bfpromo/?utm_source=facebook&utm_medium=cpc&utm_campaign=black_friday&utm_term=car_owners&utm_content=get_10_off\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    \"The access token is invalid\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "032cccbb-af1a-487d-8fff-60950b82274b",
+              "name": "Returns a 404 when the provided id does not exist",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "forms",
+                    ":form_id",
+                    "subscribers",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "form_id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Kit-Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"referrer\": \"https://mywebsite.com/bfpromo/?utm_source=facebook&utm_medium=cpc&utm_campaign=black_friday&utm_term=car_owners&utm_content=get_10_off\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    \"Not Found\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.kit.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "cc4c5801-35cd-4878-8449-9bff1c49b796",
+    "name": "Kit Accounts Forms API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

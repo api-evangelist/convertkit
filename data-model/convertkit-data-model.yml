@@ -1,0 +1,257 @@
+generated: '2026-08-13'
+method: derived
+source: openapi/_original/openapi.json
+docs: https://developers.kit.com/api-reference/overview
+note: >-
+  Derived from the 47 paths / 72 operations in Kit's OpenAPI: path nesting,
+  response schema properties and the id-reference fields the spec actually
+  declares (email_template_id, subscriber_id, publication_id, sequence_id,
+  transaction_id, subscriber_custom_field_id, form_id, tag_id, account_id).
+  Kit's ids are plain integers with no type prefix, so entity type cannot be
+  inferred from an id value alone — every reference must carry its field name.
+id_convention:
+  type: integer
+  prefixed: false
+  note: >-
+    Unlike prefixed-id APIs (Stripe cus_/in_), a Kit id carries no type
+    information. An agent holding a bare integer cannot tell a tag_id from a
+    form_id; the field name is the only type signal.
+root: account
+entities:
+- name: account
+  path: /v4/account
+  operations: [GET /v4/account, GET /v4/account/colors, PUT /v4/account/colors, GET /v4/account/creator_profile, GET /v4/account/email_stats, GET /v4/account/growth_stats]
+  description: The authenticated creator account. The tenancy root — every other entity belongs to exactly one account.
+  key_fields: [id, name, plan_type, plan, timezone, sending addresses]
+- name: subscriber
+  path: /v4/subscribers
+  operations:
+  - 'GET /v4/subscribers'
+  - 'POST /v4/subscribers'
+  - 'POST /v4/subscribers/filter'
+  - 'GET /v4/subscribers/{id}'
+  - 'PUT /v4/subscribers/{id}'
+  - 'POST /v4/subscribers/{id}/unsubscribe'
+  - 'GET /v4/subscribers/{subscriber_id}/stats'
+  - 'GET /v4/subscribers/{subscriber_id}/tags'
+  - 'POST /v4/bulk/subscribers'
+  description: A person on the creator's list. The central entity — tags, forms, sequences and purchases all attach to it.
+  key_fields: [id, first_name, email_address, state, created_at, fields]
+  states: [active, inactive, bounced, complained, cancelled]
+- name: tag
+  path: /v4/tags
+  operations:
+  - 'GET /v4/tags'
+  - 'POST /v4/tags'
+  - 'PUT /v4/tags/{id}'
+  - 'GET /v4/tags/{tag_id}/subscribers'
+  - 'POST /v4/tags/{tag_id}/subscribers'
+  - 'DELETE /v4/tags/{tag_id}/subscribers'
+  - 'POST /v4/tags/{tag_id}/subscribers/{id}'
+  - 'DELETE /v4/tags/{tag_id}/subscribers/{id}'
+  - 'POST /v4/bulk/tags'
+  - 'DELETE /v4/bulk/tags'
+  - 'POST /v4/bulk/tags/subscribers'
+  - 'DELETE /v4/bulk/tags/subscribers'
+  description: A label applied to subscribers. Names are unique per account, case-insensitively.
+  key_fields: [id, name, created_at, subscriber_count]
+- name: custom_field
+  path: /v4/custom_fields
+  operations:
+  - 'GET /v4/custom_fields'
+  - 'POST /v4/custom_fields'
+  - 'PUT /v4/custom_fields/{id}'
+  - 'DELETE /v4/custom_fields/{id}'
+  - 'POST /v4/bulk/custom_fields'
+  - 'POST /v4/bulk/custom_fields/subscribers'
+  description: An account-level extra attribute definition collected on subscribers. Kit derives `key` and `name` from the supplied `label`.
+  key_fields: [id, label, key, name]
+- name: form
+  path: /v4/forms
+  operations:
+  - 'GET /v4/forms'
+  - 'GET /v4/forms/{form_id}/subscribers'
+  - 'POST /v4/forms/{form_id}/subscribers'
+  - 'POST /v4/forms/{form_id}/subscribers/{id}'
+  - 'POST /v4/bulk/forms/subscribers'
+  description: An embedded form or hosted landing page. Both live on the same resource, discriminated by `type` (embed | hosted).
+  key_fields: [id, name, type, status, subscriber_count]
+- name: sequence
+  path: /v4/sequences
+  operations:
+  - 'GET /v4/sequences'
+  - 'POST /v4/sequences'
+  - 'GET /v4/sequences/{id}'
+  - 'PUT /v4/sequences/{id}'
+  - 'DELETE /v4/sequences/{id}'
+  - 'GET /v4/sequences/{sequence_id}/subscribers'
+  - 'POST /v4/sequences/{sequence_id}/subscribers'
+  - 'POST /v4/sequences/{sequence_id}/subscribers/{id}'
+  description: An ordered set of automated emails a subscriber progresses through. Legacy name in webhook events is "course".
+  key_fields: [id, name, send_days, send_hour, time_zone]
+- name: sequence_email
+  path: /v4/sequences/{sequence_id}/emails
+  operations:
+  - 'GET /v4/sequences/{sequence_id}/emails'
+  - 'POST /v4/sequences/{sequence_id}/emails'
+  - 'GET /v4/sequences/{sequence_id}/emails/{id}'
+  - 'PUT /v4/sequences/{sequence_id}/emails/{id}'
+  - 'DELETE /v4/sequences/{sequence_id}/emails/{id}'
+  description: One email within a sequence, ordered by a `position` unique within the sequence.
+  key_fields: [id, position, subject, content, delay_value, delay_unit]
+- name: broadcast
+  path: /v4/broadcasts
+  operations:
+  - 'GET /v4/broadcasts'
+  - 'POST /v4/broadcasts'
+  - 'GET /v4/broadcasts/stats'
+  - 'GET /v4/broadcasts/{id}'
+  - 'PUT /v4/broadcasts/{id}'
+  - 'DELETE /v4/broadcasts/{id}'
+  - 'GET /v4/broadcasts/{broadcast_id}/stats'
+  - 'GET /v4/broadcasts/{broadcast_id}/clicks'
+  description: A one-off email send. Can be targeted with a subscriber_filter and optionally published to the web.
+  key_fields: [id, subject, content, status, send_at, public, public_url, published_at]
+  states: [draft, scheduled, sending, completed, aborted]
+- name: email_template
+  path: /v4/email_templates
+  operations: [GET /v4/email_templates]
+  description: A reusable email layout. Read-only over the API.
+  key_fields: [id, name, is_default, category]
+- name: snippet
+  path: /v4/snippets
+  operations:
+  - 'GET /v4/snippets'
+  - 'POST /v4/snippets'
+  - 'GET /v4/snippets/{id}'
+  - 'PUT /v4/snippets/{id}'
+  description: A reusable block of email content.
+  key_fields: [id, name, content]
+- name: post
+  path: /v4/posts
+  operations:
+  - 'GET /v4/posts'
+  - 'GET /v4/posts/{id}'
+  description: Content published to the creator's Kit site and/or sent by email. Read-only over the API.
+  key_fields: [id, status, slug, public_url, is_paid, content, published_at]
+- name: purchase
+  path: /v4/purchases
+  operations:
+  - 'GET /v4/purchases'
+  - 'POST /v4/purchases'
+  - 'GET /v4/purchases/{id}'
+  description: A commerce transaction synced from an external platform and attributed to a subscriber by email address.
+  key_fields: [transaction_id, status, source, email_address, subscriber_id, subtotal, discount, tax, total, currency, transaction_time, products]
+- name: segment
+  path: /v4/segments
+  operations: [GET /v4/segments]
+  description: A saved dynamic subscriber grouping. Read-only over the API.
+  key_fields: [id, name, created_at]
+- name: webhook
+  path: /v4/webhooks
+  operations:
+  - 'GET /v4/webhooks'
+  - 'POST /v4/webhooks'
+  - 'DELETE /v4/webhooks/{id}'
+  description: An HTTP callback registration for one event type.
+  key_fields: [id, account_id, event, target_url]
+  artifact: asyncapi/convertkit-webhooks.yml
+relationships:
+- from: subscriber
+  to: account
+  type: belongs_to
+  via: account_id
+  evidence: Tenancy — every subscriber is scoped to the authenticated account.
+- from: subscriber
+  to: tag
+  type: has_many
+  via: tag_id
+  evidence: GET /v4/subscribers/{subscriber_id}/tags; POST/DELETE /v4/tags/{tag_id}/subscribers/{id}
+  join: many-to-many, carries a tagged_at timestamp
+- from: tag
+  to: subscriber
+  type: has_many
+  via: subscriber_id
+  evidence: GET /v4/tags/{tag_id}/subscribers
+- from: subscriber
+  to: custom_field
+  type: has_many
+  via: subscriber_custom_field_id
+  evidence: 'Values surface on the subscriber record under `fields`; POST /v4/bulk/custom_fields/subscribers pairs subscriber_id + subscriber_custom_field_id + value.'
+- from: form
+  to: subscriber
+  type: has_many
+  via: subscriber_id
+  evidence: GET/POST /v4/forms/{form_id}/subscribers
+- from: sequence
+  to: sequence_email
+  type: has_many
+  via: sequence_id
+  evidence: Path nesting /v4/sequences/{sequence_id}/emails
+- from: sequence_email
+  to: sequence
+  type: belongs_to
+  via: sequence_id
+  evidence: Path nesting; `position` is unique within the parent sequence.
+- from: sequence
+  to: subscriber
+  type: has_many
+  via: subscriber_id
+  evidence: GET/POST /v4/sequences/{sequence_id}/subscribers
+- from: broadcast
+  to: email_template
+  type: has_one
+  via: email_template_id
+  evidence: email_template_id appears in 8 broadcast/sequence-email schema properties; V4 replaced V3's email_layout_template string with this reference.
+- from: sequence_email
+  to: email_template
+  type: has_one
+  via: email_template_id
+  evidence: Same email_template_id reference on sequence email create/update.
+- from: purchase
+  to: subscriber
+  type: belongs_to
+  via: subscriber_id
+  evidence: Purchase responses carry subscriber_id and email_address; POST /v4/purchases upserts the subscriber when absent.
+- from: post
+  to: publication
+  type: belongs_to
+  via: publication_id
+  evidence: publication_id appears in 6 post schema properties. `publication` is not itself exposed as a v4 resource — an internal reference with no addressable endpoint.
+- from: webhook
+  to: account
+  type: belongs_to
+  via: account_id
+  evidence: The webhook create 201 response declares account_id.
+- from: webhook
+  to: form
+  type: has_one
+  via: form_id
+  evidence: subscriber.form_subscribe requires form_id.
+  optional: true
+- from: webhook
+  to: tag
+  type: has_one
+  via: tag_id
+  evidence: subscriber.tag_add / subscriber.tag_remove require tag_id.
+  optional: true
+- from: webhook
+  to: sequence
+  type: has_one
+  via: sequence_id
+  evidence: subscriber.course_subscribe / subscriber.course_complete require sequence_id.
+  optional: true
+- from: webhook
+  to: custom_field
+  type: has_one
+  via: custom_field_id
+  evidence: custom_field.field_value_updated requires custom_field_id.
+  optional: true
+dangling_references:
+- field: publication_id
+  note: Referenced by post schemas but no /v4/publications resource exists. An agent cannot resolve it.
+- field: product_id
+  note: Required by the subscriber.product_purchase webhook event, and purchases carry `products`, but there is no /v4/products resource to look an id up against.
+- field: source_mechanism_id
+  note: Appears once in a schema with no corresponding resource.
+render: null

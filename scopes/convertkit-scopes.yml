@@ -1,24 +1,82 @@
-generated: '2026-07-11'
-method: derived
-source: openapi/openapi.json
+generated: '2026-08-13'
+method: searched
+source: https://api.kit.com/.well-known/oauth-authorization-server
+docs: https://developers.kit.com/api-reference/authentication
+derived_from: openapi/_original/openapi.json (14 refined per-tag specs declare the same two scopes)
+note: >-
+  Kit publishes NO scopes/permissions reference page. This artifact reconciles
+  the only two machine-readable sources that exist, and they DISAGREE — recorded
+  rather than reconciled away.
+discrepancy:
+  summary: >-
+    The OpenAPI declares scopes `read` and `write` and points at
+    https://api.kit.com/v4/oauth/authorize + /v4/oauth/token. The live RFC 8414
+    authorization-server metadata declares a single scope `public` and points at
+    https://app.kit.com/oauth/authorize + https://api.kit.com/oauth/token — a
+    different host for authorize and no /v4 prefix on either endpoint.
+  authoritative: >-
+    The well-known document is the live runtime contract and should be preferred
+    by a client; the spec's oauth2 block appears stale. Neither has been edited
+    here.
 schemes:
 - name: OAuth2
-  source: openapi/openapi.json
+  source: https://api.kit.com/.well-known/oauth-authorization-server
+  probed: '2026-08-13'
+  http_status: 200
+  issuer: https://api.kit.com
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://app.kit.com/oauth/authorize
+    tokenUrl: https://api.kit.com/oauth/token
+  revocation_endpoint: https://api.kit.com/oauth/revoke
+  registration_endpoint: https://app.kit.com/oauth/register
+  response_types_supported: [code]
+  grant_types_supported: [authorization_code, refresh_token]
+  code_challenge_methods_supported: [S256]
+  token_endpoint_auth_methods_supported: [client_secret_post, none]
+  description: Live OAuth 2.0 authorization server metadata (RFC 8414).
+- name: OAuth2
+  source: openapi/_original/openapi.json
   flows:
   - flow: authorizationCode
     authorizationUrl: https://api.kit.com/v4/oauth/authorize
     tokenUrl: https://api.kit.com/v4/oauth/token
-  description: Authenticate API requests via an OAuth token
+  description: >-
+    As declared in components.securitySchemes across all 14 refined specs.
+    Endpoint URLs conflict with the live well-known document above.
 scopes:
+- scope: public
+  description: >-
+    The only scope Kit's live authorization server advertises
+    (scopes_supported: ["public"]). Kit does not document what it grants; in
+    practice a Kit OAuth token reaches the whole v4 surface the account is
+    entitled to, so this is a coarse, all-or-nothing grant rather than a
+    least-privilege scope model.
+  flows: [authorizationCode]
+  sources: [https://api.kit.com/.well-known/oauth-authorization-server]
+  authoritative: true
 - scope: read
-  description: Read access to Kit API v4
-  flows:
-  - authorizationCode
-  sources:
-  - openapi/openapi.json
+  description: Read access to Kit API v4, as declared in the OpenAPI oauth2 flow scopes map.
+  flows: [authorizationCode]
+  sources: [openapi/_original/openapi.json]
+  authoritative: false
+  note: Not advertised by the live authorization server.
 - scope: write
-  description: Write access to Kit API v4
-  flows:
-  - authorizationCode
-  sources:
-  - openapi/openapi.json
+  description: Write access to Kit API v4, as declared in the OpenAPI oauth2 flow scopes map.
+  flows: [authorizationCode]
+  sources: [openapi/_original/openapi.json]
+  authoritative: false
+  note: Not advertised by the live authorization server.
+granularity:
+  model: coarse
+  per_resource_scopes: false
+  note: >-
+    There is no per-resource or per-verb scope (no subscribers:read,
+    broadcasts:write). An agent granted a Kit token can send broadcasts and
+    delete data with the same credential it uses to read a subscriber count.
+    Kit mitigates this at the MCP layer with per-tool annotation hints
+    (destructiveHint) and client-side confirmation, not with scopes.
+resource_indicators:
+  protected_resource: https://app.kit.com/mcp
+  metadata: https://api.kit.com/.well-known/oauth-protected-resource
+  spec: RFC 9728

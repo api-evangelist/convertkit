@@ -1,0 +1,124 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  Packagist, npm registry, RubyGems, PyPI, crates.io, NuGet and the
+  github.com/Kit organisation (the active Kit org; github.com/convertkit exists
+  but publishes zero public repositories).
+note: >-
+  Kit publishes exactly ONE first-party server-side API SDK — the PHP SDK. There
+  is no official JavaScript, Python, Ruby, Go, Java, or .NET client for the v4
+  API; the developer docs do not link one, and every npm/PyPI/RubyGems package
+  matching "convertkit"/"kit api" is either third-party or a front-end form
+  embed. Recorded as an honest gap rather than padded with community libraries.
+packages:
+- language: php
+  registry: packagist
+  name: convertkit/convertkitapi
+  url: https://packagist.org/packages/convertkit/convertkitapi
+  repository: https://github.com/Kit/ConvertKitSDK-PHP
+  install: composer require convertkit/convertkitapi
+  official: true
+  version: '2.6'
+  published: '2026-07-28'
+  license: GPLv3
+  description: Kit PHP SDK for the Kit API — the only first-party API client Kit ships.
+  evidence: composer.json name convertkit/convertkitapi, homepage https://developers.kit.com/welcome, repo description "Kit official PHP SDK"
+- language: ruby
+  registry: rubygems
+  name: omniauth-kit-oauth2
+  url: https://rubygems.org/gems/omniauth-kit-oauth2
+  repository: https://github.com/Kit/omniauth-kit-oauth2
+  install: gem install omniauth-kit-oauth2
+  official: true
+  version: 0.1.3
+  published: '2025-02-14'
+  kind: oauth-strategy
+  description: >-
+    OmniAuth OAuth2 strategy for Kit. First-party (github.com/Kit org, homepage
+    developers.kit.com) but an auth strategy only — it is not a client for the
+    v4 resource API.
+- language: javascript
+  registry: npm
+  name: convertkit-react
+  url: https://www.npmjs.com/package/convertkit-react
+  repository: https://github.com/Kit/convertkit-react
+  install: npm install convertkit-react
+  official: true
+  kind: form-embed
+  version: 1.5.5
+  published: '2021-06-13'
+  description: React component for embedding Kit forms. Front-end embed, not an API client.
+  note: Last published 2021-06-13 — five years before the v4 API this repo profiles. Unmaintained relative to the current API.
+- language: javascript
+  registry: npm
+  name: convertkit-vue
+  url: https://www.npmjs.com/package/convertkit-vue
+  repository: https://github.com/Kit/convertkit-vue
+  install: npm install convertkit-vue
+  official: true
+  kind: form-embed
+  version: 0.1.6
+  published: '2021-02-12'
+  description: Vue component for embedding Kit forms. Front-end embed, not an API client.
+  note: Last published 2021-02-12. Unmaintained relative to the v4 API.
+- language: javascript
+  registry: null
+  name: convertkit-svelte
+  url: https://github.com/Kit/convertkit-svelte
+  repository: https://github.com/Kit/convertkit-svelte
+  official: true
+  kind: form-embed
+  version: null
+  published: null
+  note: >-
+    Source-only in the Kit GitHub org; never published to npm, so there is no
+    registry metadata endpoint to read a version or release date from. A
+    consumer must vendor the source. Checked, nothing to record.
+- language: javascript
+  registry: npm
+  name: '@convertkit/cloudkit'
+  url: https://www.npmjs.com/package/@convertkit/cloudkit
+  repository: https://github.com/Kit/cloudkit-cli
+  install: npm install -g @convertkit/cloudkit
+  official: true
+  kind: internal-cli
+  version: 0.0.40
+  published: '2026-04-27'
+  description: >-
+    A CLI published under Kit's own npm scope and actively released. Its source
+    repository (github.com/Kit/cloudkit-cli) returns HTTP 404 — it is private —
+    and no Kit developer documentation references it. Catalogued as a real
+    first-party artifact, but NOT treated as a documented developer CLI surface,
+    which is why this repo emits no cli/ artifact or CLI pointer.
+- language: php
+  registry: null
+  name: convertkit-wordpress
+  url: https://wordpress.org/plugins/convertkit/
+  repository: https://github.com/Kit/convertkit-wordpress
+  official: true
+  kind: platform-plugin
+  version: null
+  published: null
+  note: >-
+    Distributed through the WordPress.org plugin directory, not a language
+    package registry, so there is no registry metadata endpoint to query for a
+    pinned version. Kit maintains a family of these (WooCommerce, WPForms,
+    Gravity Forms, MemberMouse), all actively pushed in August 2026.
+registries_checked:
+- registry: packagist
+  result: 1 first-party package (convertkit/convertkitapi)
+- registry: npm
+  result: form-embed + design-system + CLI packages under the @convertkit scope and Kit org; no first-party v4 API client
+- registry: rubygems
+  result: omniauth-kit-oauth2 only; the "convertkit"/"convertkit-ruby" gems are third-party wrappers of the retired v3 API
+- registry: pypi
+  result: no first-party package (the "convertkit" project on PyPI is third-party)
+- registry: crates.io
+  result: none
+- registry: nuget
+  result: none first-party (convertkitsharp is third-party)
+- registry: maven-central
+  result: none
+- registry: pkg.go.dev
+  result: none
+official_sdk_count: 1

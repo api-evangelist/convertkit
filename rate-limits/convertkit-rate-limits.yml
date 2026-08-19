@@ -1,40 +1,69 @@
+generated: '2026-08-13'
+method: searched
+source: https://developers.kit.com/api-reference/response-codes
+docs:
+- https://developers.kit.com/api-reference/response-codes
+- https://developers.kit.com/api-reference/authentication
+- https://developers.kit.com/mcp/kit-mcp
+limit_count: 3
 name: Kit API Rate Limits
 description: Rate limits enforced by the Kit (formerly ConvertKit) REST API v4.
 url: https://developers.kit.com/api-reference/authentication
-
 limits:
-
-  - authentication: API Key
-    header: X-Kit-Api-Key
-    requests: 120
-    window: 60 seconds
-    window_type: rolling
-    notes:
-      - Suitable for personal account automation and simple integrations.
-      - Some endpoints (bulk operations, purchase creation) require OAuth exclusively.
-
-  - authentication: OAuth 2.0
-    requests: 600
-    window: 60 seconds
-    window_type: rolling
-    notes:
-      - Required for apps distributed through the Kit App Store.
-      - Supports Authorization Code Grant flow.
-      - Web servers use the refresh token flow.
-      - SPAs and mobile apps use PKCE flow.
-      - Recommended for public integrations needing higher throughput.
-
+- authentication: API Key
+  header: X-Kit-Api-Key
+  requests: 120
+  window: 60 seconds
+  window_type: rolling
+  notes:
+  - Suitable for personal account automation and simple integrations.
+  - Some endpoints (bulk operations, purchase creation) require OAuth exclusively.
+  scope: per API key
+- authentication: OAuth 2.0
+  requests: 600
+  window: 60 seconds
+  window_type: rolling
+  notes:
+  - Required for apps distributed through the Kit App Store.
+  - Supports Authorization Code Grant flow.
+  - Web servers use the refresh token flow.
+  - SPAs and mobile apps use PKCE flow.
+  - Recommended for public integrations needing higher throughput.
+  scope: per OAuth access token
+- authentication: OAuth 2.0 (Kit MCP)
+  surface: https://app.kit.com/mcp
+  scope: per token
+  requests: 120
+  window: 60 seconds
+  window_type: rolling
+  source: https://developers.kit.com/mcp/kit-mcp
+  notes:
+  - The Kit MCP server is rate-limited to 120 req/min per token — one fifth of the 600/60s an OAuth token
+    gets against the REST API directly.
 oauth:
   flows:
-    - type: authorization_code
-      description: Standard Authorization Code Grant for web server apps.
-    - type: pkce
-      description: Proof Key for Code Exchange for SPAs and mobile apps.
+  - type: authorization_code
+    description: Standard Authorization Code Grant for web server apps.
+  - type: pkce
+    description: Proof Key for Code Exchange for SPAs and mobile apps.
   token_rotation:
     refresh_tokens: single-use with automatic rotation
   scopes: See developers.kit.com for current scope definitions.
-
 notes:
-  - Rate limits are per API key or per OAuth token, evaluated over a rolling 60-second window.
-  - Exceeding limits results in 429 Too Many Requests responses.
-  - API is versioned; V4 is current; V3 is deprecated and scheduled for sunset.
+- Re-verified against the Kit docs on 2026-08-13.
+- Limits are per API key or per OAuth access token, over a rolling 60-second window.
+- Exceeding a limit returns 429 Too Many Requests. The 429 is documented in the response-codes reference
+  but declared on ZERO operations in the OpenAPI.
+- 'Separate from request-rate limiting: bulk endpoints share a 300MB request-data budget per app, per
+  creator account, and return 413 when exceeded.'
+- V4 is current; V3 is deprecated and scheduled for sunset.
+response_headers:
+  documented: []
+  x_ratelimit: null
+  ratelimit: null
+  retry_after: null
+  status_on_exhaustion: 429
+  note: Kit publishes NO rate-limit response headers. No X-RateLimit-*, no RFC-draft RateLimit-*, no Retry-After
+    — none documented and none present in the OpenAPI. An agent gets the 429 status and nothing else,
+    so budget tracking and backoff must be entirely client-side. Kit's own documented remedy is "spacing
+    out your requests and performing an exponential backoff".

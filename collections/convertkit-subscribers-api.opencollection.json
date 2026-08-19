@@ -1,0 +1,349 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Kit Accounts Subscribers API",
+    "version": "4.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Subscribers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Bulk create subscribers",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.kit.com/v4/bulk/subscribers",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://api.kit.com/v4/oauth/authorize",
+              "accessTokenUrl": "https://api.kit.com/v4/oauth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "See \"[Bulk & async processing](#bulk-amp-async-processing)\" for more information."
+        },
+        {
+          "info": {
+            "name": "List subscribers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.kit.com/v4/subscribers",
+            "params": [
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "To fetch next page of results, use `?after=<end_cursor>`"
+              },
+              {
+                "name": "before",
+                "value": "",
+                "type": "query",
+                "description": "To fetch previous page of results, use `?before=<start_cursor>`"
+              },
+              {
+                "name": "created_after",
+                "value": "2023-01-17T11:43:55Z",
+                "type": "query",
+                "description": "Filter subscribers who have been created after this date (format yyyy-mm-dd)"
+              },
+              {
+                "name": "created_before",
+                "value": "2023-02-18T11:43:55Z",
+                "type": "query",
+                "description": "Filter subscribers who have been created before this date (format yyyy-mm-dd)"
+              },
+              {
+                "name": "email_address",
+                "value": "subscriber89@kit.dev,subscriber90@kit.dev,subscriber91@kit.dev",
+                "type": "query"
+              },
+              {
+                "name": "include",
+                "value": "attribution,tags,location",
+                "type": "query",
+                "description": "Comma-separated list of additional fields to include on each subscriber. Valid options: `attribution`, `tags`, `location`, `canceled_at`. `canceled_at` may only be used together with `status=cancelled`."
+              },
+              {
+                "name": "include_total_count",
+                "value": "false",
+                "type": "query",
+                "description": "Set to `true` to include the `total_count` in the response. This option can cause slow responses; if paging through results, request it only on the first page and reuse the value for subsequent pages."
+              },
+              {
+                "name": "per_page",
+                "value": "10",
+                "type": "query",
+                "description": "Number of results per page. Default 500, maximum 1000."
+              },
+              {
+                "name": "slim",
+                "value": "false",
+                "type": "query",
+                "description": "When `true`, omits expensive optional fields from the response. Produces a faster, smaller response — useful when extra fields are not needed."
+              },
+              {
+                "name": "sort_field",
+                "value": "cancelled_at",
+                "type": "query"
+              },
+              {
+                "name": "sort_order",
+                "value": "asc",
+                "type": "query"
+              },
+              {
+                "name": "status",
+                "value": "bounced",
+                "type": "query",
+                "description": "Filter subscribers who have this status (`active`, `inactive`, `bounced`, `complained`, `cancelled` or `all`). Defaults to `active`."
+              },
+              {
+                "name": "updated_after",
+                "value": "2023-01-17T11:43:55Z",
+                "type": "query",
+                "description": "Filter subscribers who have been updated after this date (format yyyy-mm-dd)"
+              },
+              {
+                "name": "updated_before",
+                "value": "2023-02-18T11:43:55Z",
+                "type": "query",
+                "description": "Filter subscribers who have been updated before this date (format yyyy-mm-dd)"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Kit-Api-Key",
+              "value": "{{X-Kit-Api-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "List subscribers"
+        },
+        {
+          "info": {
+            "name": "Create a subscriber",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.kit.com/v4/subscribers",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-Kit-Api-Key",
+              "value": "{{X-Kit-Api-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Behaves as an upsert. If a subscriber with the provided email address does not exist, it creates one with the specified first name and state. If a subscriber with the provided email address already exists, it updates the first name.<br/><br/>If you include a custom field key that does not exist on your account, the request returns an error. Use [List custom fields](/api-reference/custom-fields/list-custom-fields) to retrieve existing keys, or [Create a custom field](/api-reference/custom-fields/"
+        },
+        {
+          "info": {
+            "name": "Filter subscribers based on engagement",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.kit.com/v4/subscribers/filter",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-Kit-Api-Key",
+              "value": "{{X-Kit-Api-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Filter subscribers based on engagement"
+        },
+        {
+          "info": {
+            "name": "Get a subscriber",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.kit.com/v4/subscribers/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "325",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Kit-Api-Key",
+              "value": "{{X-Kit-Api-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get a subscriber"
+        },
+        {
+          "info": {
+            "name": "Update a subscriber",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.kit.com/v4/subscribers/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "387",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-Kit-Api-Key",
+              "value": "{{X-Kit-Api-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "If you include a custom field key that does not exist on your account, the request returns an error. Use [List custom fields](/api-reference/custom-fields/list-custom-fields) to retrieve existing keys, or [Create a custom field](/api-reference/custom-fields/create-a-custom-field) to add new fields before setting them for subscribers.<br/><br/><strong>NOTE:</strong> We support creating/updating a maximum of 140 custom fields at a time."
+        },
+        {
+          "info": {
+            "name": "Unsubscribe subscriber",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.kit.com/v4/subscribers/:id/unsubscribe",
+            "params": [
+              {
+                "name": "id",
+                "value": "344",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-Kit-Api-Key",
+              "value": "{{X-Kit-Api-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Unsubscribe subscriber"
+        },
+        {
+          "info": {
+            "name": "List stats for a subscriber",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.kit.com/v4/subscribers/:subscriber_id/stats",
+            "params": [
+              {
+                "name": "email_sent_after",
+                "value": "2025-07-01",
+                "type": "query",
+                "description": "Filter to stats for emails sent after this date (YYYY-MM-DD)/nNOTE: This will only include stats for emails sent in the last 5 years."
+              },
+              {
+                "name": "email_sent_before",
+                "value": "2025-08-31",
+                "type": "query",
+                "description": "Filter to stats for emails sent before this date (YYYY-MM-DD)/nNote: Only data for events in the last 5 years will be included."
+              },
+              {
+                "name": "subscriber_id",
+                "value": "1097",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Kit-Api-Key",
+              "value": "{{X-Kit-Api-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieve email stats for a specific subscriber. You can filter the stats by providing `email_sent_after` and/or `email_sent_before` query parameters to limit the stats to emails sent within a specific date range.\nNote: Only data for events in the last 5 years will be included."
+        },
+        {
+          "info": {
+            "name": "List tags for a subscriber",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.kit.com/v4/subscribers/:subscriber_id/tags",
+            "params": [
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "To fetch next page of results, use `?after=<end_cursor>`"
+              },
+              {
+                "name": "before",
+                "value": "",
+                "type": "query",
+                "description": "To fetch previous page of results, use `?before=<start_cursor>`"
+              },
+              {
+                "name": "include_total_count",
+                "value": "false",
+                "type": "query",
+                "description": "Set to `true` to include the `total_count` in the response. This option can cause slow responses; if paging through results, request it only on the first page and reuse the value for subsequent pages."
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "Number of results per page. Default 500, maximum 1000."
+              },
+              {
+                "name": "subscriber_id",
+                "value": "1131",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Kit-Api-Key",
+              "value": "{{X-Kit-Api-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "List tags for a subscriber"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

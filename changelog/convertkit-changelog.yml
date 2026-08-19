@@ -1,0 +1,119 @@
+generated: '2026-08-13'
+method: searched
+source: https://developers.kit.com/changelog
+scheme: dated-entries
+current_version: v4
+cadence: continuous; entries are dated and tagged (API, Authentication, Analytics, Commerce, Kit App Store)
+window: 2026-05-20 through 2026-07-17 (recent window only; the live changelog is the source of truth)
+note: >-
+  Kit runs two changelogs. This artifact captures the DEVELOPER changelog at
+  developers.kit.com/changelog. A separate product changelog for creators lives
+  at https://updates.kit.com/changelog.
+entries:
+- date: '2026-07-17'
+  area: Sequences
+  tags: [API, Analytics]
+  breaking: false
+  type: addition
+  highlight: >-
+    Sequence and sequence-email stats via `include=stats` on GET /v4/sequences,
+    GET /v4/sequences/{id}, GET /v4/sequences/{id}/emails and
+    GET /v4/sequences/{id}/emails/{id}. Fully opt-in; responses unchanged without it.
+- date: '2026-07-09'
+  area: Accounts
+  tags: [API]
+  breaking: false
+  type: addition
+  highlight: >-
+    New nested `plan` object on GET /v4/account — plan_type, interval,
+    subscriber_limit, on_trial, trial_lapse_date, renews_at, cancels_at. Lets an
+    integration tell paying accounts from trialing ones without extra lookups.
+- date: '2026-07-09'
+  area: Kit App Store
+  tags: [Kit App Store]
+  breaking: false
+  type: addition
+  highlight: Preview button in the app details editor renders an unsaved App Store listing exactly as creators will see it.
+- date: '2026-07-07'
+  area: Sequence Emails
+  tags: [API]
+  breaking: true
+  type: fix
+  highlight: >-
+    Sequence email `position` is now enforced unique at every write path. POST
+    and PUT on /v4/sequences/{sequence_id}/emails return 422 when the requested
+    position is taken; omitting position now appends to the end.
+- date: '2026-06-30'
+  area: Subscribers
+  tags: [API]
+  breaking: false
+  type: addition
+  highlight: >-
+    POST /v4/subscribers/filter gained custom_field, location and attribution
+    filters, counting_mode (raw | unique_email) on engagement filters, and an
+    `include` body param (stats, custom_fields).
+- date: '2026-06-30'
+  area: Purchases
+  tags: [API, Commerce]
+  breaking: false
+  type: addition
+  highlight: Purchase responses now carry a `source` field (originating integration, e.g. Gumroad/Stripe/Teachable) and include subscription and tip line items.
+- date: '2026-06-18'
+  area: Tags
+  tags: [API]
+  breaking: false
+  type: addition
+  highlight: New endpoint DELETE /v4/bulk/tags — delete multiple tags in one request.
+- date: '2026-06-11'
+  area: Tags, Forms
+  tags: [API]
+  breaking: false
+  type: addition
+  highlight: Opt-in `?include=subscriber_count` on GET /v4/tags and GET /v4/forms.
+- date: '2026-05-29'
+  area: Accounts
+  tags: [API, Analytics]
+  breaking: false
+  type: addition
+  highlight: GET /v4/account/email_stats now returns open_rate, click_rate, unsubscribe_rate and bounce_rate alongside the raw counts.
+- date: '2026-05-26'
+  area: Authentication
+  tags: [Authentication]
+  breaking: false
+  type: change
+  highlight: >-
+    POST /oauth/revoke now performs full partner-side cleanup — stored partner
+    credentials are queued for deletion and the installation record is marked
+    uninstalled. HTTP contract unchanged.
+- date: '2026-05-26'
+  area: Broadcasts
+  tags: [API]
+  breaking: false
+  type: addition
+  highlight: >-
+    Every V4 broadcast response now includes a `status` field (draft, scheduled,
+    sending, completed, aborted), and GET /v4/broadcasts and
+    GET /v4/broadcasts/stats accept a ?status= filter (422 on an unknown value).
+- date: '2026-05-21'
+  area: Subscribers, Forms
+  tags: [API]
+  breaking: false
+  type: addition
+  highlight: '?slim=true on /v4/subscribers and /v4/forms/{form_id}/subscribers omits the custom-field `fields` object and skips the join.'
+- date: '2026-05-21'
+  area: Filters
+  tags: [API]
+  breaking: false
+  type: addition
+  highlight: New `subscriber_state` filter type on POST /v4/subscribers/filter (active, inactive, bounced, cancelled, complained).
+- date: '2026-05-20'
+  area: Authentication
+  tags: [Authentication]
+  breaking: true
+  type: change
+  highlight: >-
+    OAuth refresh tokens are now SINGLE-USE and rotate on every refresh; reusing
+    an old one returns invalid_grant. Affects every OAuth client including App
+    Store integrations and MCP clients. Public DCR clients no longer receive a
+    client_secret, and token_endpoint_auth_methods_supported now advertises
+    ["client_secret_post", "none"] (RFC 7591-aligned).

@@ -1,70 +1,90 @@
+generated: '2026-08-13'
+method: searched
+source: https://kit.com/pricing
+verified: '2026-08-13'
+http_status: 200
+plan_count: 3
 name: Kit Plans and Pricing
-description: Pricing plans for Kit (formerly ConvertKit), a creator email marketing platform with REST API access.
+description: Pricing plans for Kit (formerly ConvertKit), a creator email marketing platform with REST
+  API access.
 url: https://kit.com/pricing
 plans:
-
-  - name: Newsletter
-    description: Free plan for creators just starting out, with basic email and landing page features.
-    price:
-      monthly: 0
-      annual: 0
-      currency: USD
-    limits:
-      subscribers: 10000
-      email_sequences: 1
-      visual_automations: 1
-      team_users: 1
-    features:
-      - Unlimited emails
-      - Unlimited landing pages
-      - Unlimited forms
-      - 1 basic Visual Automation
-      - API access
-      - Single user account
-
-  - name: Creator
-    description: For growing creators who need unlimited automations, sequences, and premium support.
-    price:
-      monthly: 39
-      annual: 33
-      currency: USD
-      note: Monthly price shown for 1,000 subscribers; scales with subscriber count. Annual price reflects per-month cost when billed yearly (16% discount).
-    limits:
-      subscribers: Scales (starting at 1,000)
-      visual_automations: Unlimited
-      email_sequences: Unlimited
-    features:
-      - Everything in Newsletter
-      - Unlimited Visual Automations
-      - Unlimited email sequences
-      - Kit MCP (AI integration)
-      - SMS marketing access
-      - 24/7 support
-      - API access
-
-  - name: Pro
-    description: For scaling creators who need advanced analytics, team collaboration, and priority support.
-    price:
-      monthly: 79
-      annual: 66
-      currency: USD
-      note: Monthly price shown for 1,000 subscribers; scales with subscriber count. Annual price reflects per-month cost when billed yearly (16% discount).
-    limits:
-      subscribers: Scales (starting at 1,000)
-      team_users: Unlimited
-    features:
-      - Everything in Creator
-      - Subscriber Signals and engagement analytics
-      - Unlimited team users
-      - Advanced A/B testing (5 variations)
-      - Collaborative editing
-      - Post-send link editing
-      - Deliverability reporting
-      - Priority support
-      - API access
-
+- name: Newsletter
+  description: Free plan for creators just starting out, with basic email and landing page features.
+  price:
+    monthly: 0
+    annual: 0
+    currency: USD
+    note: Free at every subscriber tier up to the 10,000 cap. Pricing table renders at the 1,000-subscriber
+      slider position.
+  limits:
+    subscribers: 10000
+    email_sequences: 1
+    visual_automations: 1
+    team_users: 1
+  features:
+  - Unlimited emails
+  - Unlimited landing pages
+  - Unlimited forms
+  - 1 basic Visual Automation
+  - API access
+  - Single user account
+- name: Creator
+  description: For growing creators who need unlimited automations, sequences, and premium support.
+  price:
+    monthly: 39
+    annual: 33
+    currency: USD
+    note: Monthly price shown for 1,000 subscribers; scales with subscriber count. Annual price reflects
+      per-month cost when billed yearly (16% discount).
+    annual_total: 390
+    annual_savings: 78
+  limits:
+    subscribers: Scales (starting at 1,000)
+    visual_automations: Unlimited
+    email_sequences: Unlimited
+  features:
+  - Everything in Newsletter
+  - Unlimited Visual Automations
+  - Unlimited email sequences
+  - Kit MCP (AI integration)
+  - SMS marketing access
+  - 24/7 support
+  - API access
+  - Kit MCP (https://app.kit.com/mcp) — paid plans only
+- name: Pro
+  description: For scaling creators who need advanced analytics, team collaboration, and priority support.
+  price:
+    monthly: 79
+    annual: 66
+    currency: USD
+    note: Monthly price shown for 1,000 subscribers; scales with subscriber count. Annual price reflects
+      per-month cost when billed yearly (16% discount).
+    annual_total: 790
+    annual_savings: 158
+  limits:
+    subscribers: Scales (starting at 1,000)
+    team_users: Unlimited
+  features:
+  - Everything in Creator
+  - Subscriber Signals and engagement analytics
+  - Unlimited team users
+  - Advanced A/B testing (5 variations)
+  - Collaborative editing
+  - Post-send link editing
+  - Deliverability reporting
+  - Priority support
+  - API access
+  - Kit MCP (https://app.kit.com/mcp)
 notes:
-  - All plans include API access; no API-specific tier restrictions documented.
-  - Pricing scales with subscriber count; custom enterprise pricing available for 500K+ subscribers.
-  - Annual billing provides approximately a 16% discount (equivalent to 2 free months).
-  - ConvertKit rebranded to Kit in 2024.
+- Re-verified against https://kit.com/pricing on 2026-08-13 (HTTP 200).
+- Newsletter (free) is capped at 10,000 subscribers; the comparison table row reads "Up to 10,000". Creator
+  and Pro scale with subscriber count.
+- Monthly prices are $39 (Creator) and $79 (Pro) at 1,000 subscribers; annual billing is $390 and $790
+  per year, shown as $33/mo and $66/mo — a 17% saving per Kit's own toggle.
+- All plans, including the free Newsletter plan, include API access; there is no API-specific tier restriction.
+  The API returns 401 when an account loses access (lapsed trial, failed payment).
+- The Kit MCP server (https://app.kit.com/mcp) is the one developer surface gated by plan — available
+  on Creator and Pro only, not on the free Newsletter plan.
+- Custom enterprise pricing is available above 500K subscribers; no published figure.
+- ConvertKit rebranded to Kit in 2024.
