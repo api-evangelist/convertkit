@@ -36,6 +36,25 @@ tags:
 - Sequences
 - Forms
 - Broadcasts
+- Webhook
+- MCP
+- Agents
+- Authentication
+- Marketing Automation
+- Landing Pages
+- Segmentation
+- Email Campaigns
+- Software-as-a-Service
+- Commerce
+tags_raw:
+- Email Marketing
+- Creator Economy
+- Subscribers
+- Automation
+- Newsletters
+- Sequences
+- Forms
+- Broadcasts
 - Webhooks
 - MCP
 - Agents
@@ -53,6 +72,8 @@ apis:
   humanURL: https://developers.kit.com
   baseURL: https://api.kit.com/v4
   tags:
+  - Account
+  tags_raw:
   - Accounts
   properties:
   - type: OpenAPI
@@ -287,6 +308,8 @@ apis:
   humanURL: https://developers.kit.com
   baseURL: https://api.kit.com/v4
   tags:
+  - Webhook
+  tags_raw:
   - Webhooks
   properties:
   - type: OpenAPI
