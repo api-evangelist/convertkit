@@ -9,6 +9,18 @@ description: Kit (formerly ConvertKit) is a creator email marketing platform who
   MCP servers - an OAuth-gated one that acts on a creator's account and an anonymous read-only documentation
   server - publishes an A2A agent card and an Agent Skill from its developer docs host, and ships llms.txt.
   Its only first-party API client is a PHP SDK.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: paid
   onboarding: self-serve
