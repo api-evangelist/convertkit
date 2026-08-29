@@ -1,0 +1,74 @@
+slug: convertkit
+provider: Kit
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Media, Entertainment & Telecom Content
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 6
+edges:
+- tag: Sequences
+  spec_file: convertkit-sequences-api-openapi.yml
+  capability_id: BC-400.40
+  capability_id_l1: BC-400
+  capability_name: Demand Generation Management
+  confidence: 0.8
+  evidence: POST /v4/sequences  Create a sequence; POST /v4/sequences/{sequence_id}/subscribers  Add subscriber
+    to sequence
+  reason: Automated email sequences with subscriber enrolment are classic lifecycle/drip demand-generation
+    campaigns.
+- tag: Subscribers
+  spec_file: convertkit-subscribers-api-openapi.yml
+  capability_id: BC-420.10
+  capability_id_l1: BC-420
+  capability_name: Customer Data Management
+  confidence: 0.8
+  evidence: POST /v4/subscribers  Create a subscriber; POST /v4/subscribers/filter  Filter subscribers
+    based on engagement
+  reason: CRUD over the subscriber (contact) master record including unsubscribe state and engagement
+    filtering — customer/contact data management for marketing.
+- tag: Broadcasts
+  spec_file: convertkit-broadcasts-api-openapi.yml
+  capability_id: BC-400.60
+  capability_id_l1: BC-400
+  capability_name: Digital Marketing Management
+  confidence: 0.75
+  evidence: POST /v4/broadcasts Create a broadcast; GET /v4/broadcasts/{broadcast_id}/clicks Get link
+    clicks for a broadcast
+  reason: Creating, sending and measuring email broadcasts to a subscriber list is email/digital marketing
+    campaign execution on a creator email marketing platform. Some ambiguity between digital marketing
+    and demand generation, hence not higher.
+- tag: Sequence Emails
+  spec_file: convertkit-sequence-emails-api-openapi.yml
+  capability_id: BC-400.40
+  capability_id_l1: BC-400
+  capability_name: Demand Generation Management
+  confidence: 0.75
+  evidence: POST /v4/sequences/{sequence_id}/emails  Create a sequence email
+  reason: Authoring of automated email sequence steps is lifecycle/drip marketing content within demand
+    generation.
+- tag: Forms
+  spec_file: convertkit-forms-api-openapi.yml
+  capability_id: BC-400.40
+  capability_id_l1: BC-400
+  capability_name: Demand Generation Management
+  confidence: 0.7
+  evidence: POST /v4/forms/{form_id}/subscribers  Add subscriber to form by email address; GET /v4/forms  List
+    forms
+  reason: Email-marketing signup forms used to capture and add subscribers — lead capture / demand generation
+    within Marketing Management. Sub-capability somewhat uncertain (could be digital marketing).
+- tag: Tags
+  spec_file: convertkit-tags-api-openapi.yml
+  capability_id: BC-420.20
+  capability_id_l1: BC-420
+  capability_name: Customer Segmentation Management
+  confidence: 0.7
+  evidence: POST /v4/bulk/tags/subscribers  Bulk tag subscribers; GET /v4/tags/{tag_id}/subscribers  List
+    subscribers for a tag
+  reason: Tagging subscribers to group them for targeting is marketing segmentation of the contact base.

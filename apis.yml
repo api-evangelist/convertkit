@@ -335,6 +335,9 @@ apis:
   - type: Overlay
     url: overlays/convertkit-webhooks-overlay.yaml
 common:
+- type: CapabilityMap
+  url: capabilities/convertkit-capability-edges.yml
+  name: Kit Business Capability Map
 - type: AgenticAccess
   url: agentic-access/convertkit-agentic-access.yml
 - type: TrustCenter
