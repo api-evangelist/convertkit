@@ -1,14 +1,6 @@
 aid: convertkit
 name: Kit
-description: Kit (formerly ConvertKit) is a creator email marketing platform whose REST API v4 covers
-  subscribers, tags, custom fields, forms and landing pages, sequences, broadcasts, snippets, posts, purchases,
-  segments and webhooks across 72 operations on https://api.kit.com/v4. It authenticates with an X-Kit-Api-Key
-  header for personal automation or OAuth 2.0 (PKCE, dynamic client registration, rotating single-use
-  refresh tokens) for apps published to the Kit App Store, and uses cursor-based pagination, an OAuth-only
-  bulk namespace with async callbacks, and eventually-consistent list reads. Kit also runs two remote
-  MCP servers - an OAuth-gated one that acts on a creator's account and an anonymous read-only documentation
-  server - publishes an A2A agent card and an Agent Skill from its developer docs host, and ships llms.txt.
-  Its only first-party API client is a PHP SDK.
+description: Kit (formerly ConvertKit) is a creator email marketing platform whose REST API v4 covers subscribers, tags, custom fields, forms and landing pages, sequences, broadcasts, snippets, posts, purchases, segments and webhooks across 72 operations on https://api.kit.com/v4. It authenticates with an X-Kit-Api-Key header for personal automation or OAuth 2.0 (PKCE, dynamic client registration, rotating single-use refresh tokens) for apps published to the Kit App Store, and uses cursor-based pagination, an OAuth-only bulk namespace with async callbacks, and eventually-consistent list reads. Kit also runs two remote MCP servers - an OAuth-gated one that acts on a creator's account and an anonymous read-only documentation server - publishes an A2A agent card and an Agent Skill from its developer docs host, and ships llms.txt. Its only first-party API client is a PHP SDK.
 deliveryModel:
   model: saas
   open_source: false
@@ -334,6 +326,40 @@ apis:
     url: https://developers.kit.com/changelog
   - type: Overlay
     url: overlays/convertkit-webhooks-overlay.yaml
+- aid: convertkit:kit-api-v3
+  name: Kit API V3 (Deprecated)
+  humanURL: https://developers.kit.com/v3/api-reference
+  baseURL: https://api.convertkit.com/v3
+  tags:
+  - Email Marketing
+  - Subscribers
+  - Deprecated
+  description: The legacy ConvertKit V3 API is deprecated and slated for discontinuation; new integrations should target V4.
+  properties:
+  - type: Documentation
+    url: https://developers.kit.com/v3/api-reference
+  - type: Deprecation
+    url: https://developers.kit.com/v4/api-reference/v3-to-v4-upgrade-guide
+- aid: convertkit:kit-account-api
+  name: Kit Account API
+  description: Account, creator profile, and account-level statistics
+  humanURL: https://developers.kit.com/v4/api-reference
+  baseURL: https://api.kit.com/v4
+  tags:
+  - Account
+  properties:
+  - type: OpenAPI
+    url: openapi/kit-account-api-openapi.yml
+  - type: Documentation
+    url: https://developers.kit.com/v4/api-reference
+  - type: Authentication
+    url: https://developers.kit.com/v4/api-reference/authentication
+  - type: Webhooks
+    url: https://developers.kit.com/v4/api-reference/webhooks
+  - type: Migration
+    url: https://developers.kit.com/v4/api-reference/v3-to-v4-upgrade-guide
+  - type: AsyncAPI
+    url: asyncapi/kit-webhooks-asyncapi.yml
 common:
 - type: CapabilityMap
   url: capabilities/convertkit-capability-edges.yml
