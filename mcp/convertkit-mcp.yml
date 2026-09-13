@@ -7,20 +7,21 @@ docs:
 - https://developers.kit.com/mcp/kit-mcp
 - https://developers.kit.com/mcp/kit-developer-docs-mcp
 - https://help.kit.com/en/articles/14827557-how-to-connect-the-kit-mcp-to-your-ai-tools
-
 deployment:
   mode: remote
   endpoint: https://app.kit.com/mcp
   auth: oauth
   verified: probed
-  note: >-
-    Kit ships TWO remote MCP servers and no stdio package. The primary
-    (account-acting) server is https://app.kit.com/mcp; a second, anonymous,
-    read-only documentation server is https://developers.kit.com/mcp. Both are
-    URLs an MCP client POSTs to — there is nothing to npx or pip install.
-    `endpoint` names the account server because that is the one that reaches Kit
-    data; the docs server is recorded in servers[] below.
-
+  note: Kit ships TWO remote MCP servers and no stdio package. The primary (account-acting) server is
+    https://app.kit.com/mcp; a second, anonymous, read-only documentation server is https://developers.kit.com/mcp.
+    Both are URLs an MCP client POSTs to — there is nothing to npx or pip install. `endpoint` names the
+    account server because that is the one that reaches Kit data; the docs server is recorded in servers[]
+    below.
+  probe_prior: (never probed)
+  probe: gated
+  probe_why: RFC 9728 challenge on the MCP path only
+  checked: '2026-09-11'
+  source: claimed-backlog re-probe 2026-09-11
 servers:
 - name: Kit MCP
   key: kit-mcp
@@ -37,14 +38,11 @@ servers:
     body: '{"error":"Bearer token required"}'
     www_authenticate: Bearer resource_metadata="https://app.kit.com/.well-known/oauth-protected-resource/mcp"
     gated: true
-    note: >-
-      tools/list is OAuth-gated, so the live tool schemas could not be
-      introspected anonymously. Kit's own docs state the server is "essentially a
-      one-to-one mapping of Kit's v4 API surface — every endpoint in the API
-      reference is exposed as an MCP tool", so the crosswalk in
-      convertkit-tool-crosswalk.yml maps the REST surface rather than a fetched
-      tool list, and marks confidence accordingly. Tool names and input schemas
-      require an authenticated introspection.
+    note: tools/list is OAuth-gated, so the live tool schemas could not be introspected anonymously. Kit's
+      own docs state the server is "essentially a one-to-one mapping of Kit's v4 API surface — every endpoint
+      in the API reference is exposed as an MCP tool", so the crosswalk in convertkit-tool-crosswalk.yml
+      maps the REST surface rather than a fetched tool list, and marks confidence accordingly. Tool names
+      and input schemas require an authenticated introspection.
   discovery:
     oauth_protected_resource: https://app.kit.com/.well-known/oauth-protected-resource
     authorization_server: https://api.kit.com
@@ -62,10 +60,9 @@ servers:
     - destructiveHint
     - idempotentHint
     - openWorldHint
-    note: >-
-      Kit documents that every tool carries an MCP annotation hint, and that
-      destructive or external actions (sending broadcasts, deleting data) always
-      require explicit user confirmation in supporting clients.
+    note: Kit documents that every tool carries an MCP annotation hint, and that destructive or external
+      actions (sending broadcasts, deleting data) always require explicit user confirmation in supporting
+      clients.
 - name: Kit Developer Docs MCP
   key: kit-docs
   url: https://developers.kit.com/mcp
@@ -91,12 +88,12 @@ servers:
   install_examples:
     claude_code: claude mcp add --transport http kit-docs https://developers.kit.com/mcp
     json_config: '{"mcpServers":{"kit-docs":{"url":"https://developers.kit.com/mcp"}}}'
-
 tools:
 - name: search_kit_developer_documentation
   server: kit-docs
   title: Search documentation
-  description: Search across the Kit Developer Documentation knowledge base for docs, code examples and API references.
+  description: Search across the Kit Developer Documentation knowledge base for docs, code examples and
+    API references.
   annotations:
     readOnlyHint: true
     destructiveHint: false
@@ -105,10 +102,8 @@ tools:
   source: probed tools/list (mcp/convertkit-docs-mcp-tools.json)
 - name: query_docs_filesystem_kit_developer_documentation
   server: kit-docs
-  description: >-
-    Read-only shell-like query (rg/grep/find/tree/ls/cat/head/tail/jq) against a
-    virtualized in-memory filesystem containing only the Kit developer docs pages
-    and OpenAPI specs.
+  description: Read-only shell-like query (rg/grep/find/tree/ls/cat/head/tail/jq) against a virtualized
+    in-memory filesystem containing only the Kit developer docs pages and OpenAPI specs.
   annotations:
     readOnlyHint: true
     destructiveHint: false
@@ -125,7 +120,8 @@ tools:
     idempotentHint: false
     openWorldHint: true
   source: probed tools/list (mcp/convertkit-docs-mcp-tools.json)
-
 notes:
-- The Kit MCP tool catalogue is published in the Kit help centre, not in the developer docs; it is not machine-readable and was not fabricated here.
-- Kit also ships a first-party Cursor plugin (github.com/Kit/cursor-plugin) that connects a Kit account over MCP.
+- The Kit MCP tool catalogue is published in the Kit help centre, not in the developer docs; it is not
+  machine-readable and was not fabricated here.
+- Kit also ships a first-party Cursor plugin (github.com/Kit/cursor-plugin) that connects a Kit account
+  over MCP.
