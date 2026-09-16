@@ -604,6 +604,8 @@ common:
   url: json-ld/api.json
 - type: JSONLDContext
   url: json-ld/context.json
+- type: Contact
+  url: mailto:help@kit.com
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
