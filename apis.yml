@@ -334,22 +334,24 @@ apis:
   - Email Marketing
   - Subscribers
   - Deprecated
-  description: The legacy ConvertKit V3 API is deprecated and slated for discontinuation; new integrations should target V4.
+  description: >-
+    The legacy ConvertKit V3 API is deprecated and slated for discontinuation; new integrations should
+    target V4.
   properties:
   - type: Documentation
     url: https://developers.kit.com/v3/api-reference
   - type: Deprecation
     url: https://developers.kit.com/v4/api-reference/v3-to-v4-upgrade-guide
-- aid: convertkit:kit-account-api
+- aid: convertkit:convertkit-account-api
   name: Kit Account API
   description: Account, creator profile, and account-level statistics
-  humanURL: https://developers.kit.com/v4/api-reference
+  humanURL: https://developers.kit.com
   baseURL: https://api.kit.com/v4
   tags:
   - Account
   properties:
   - type: OpenAPI
-    url: openapi/kit-account-api-openapi.yml
+    url: openapi/convertkit-account-api-openapi.yml
   - type: Documentation
     url: https://developers.kit.com/v4/api-reference
   - type: Authentication
