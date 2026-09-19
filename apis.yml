@@ -39,7 +39,7 @@ tags:
 - Newsletters
 - Sequences
 - Forms
-- Broadcasts
+- Broadcast
 - Webhook
 - MCP
 - Agents
@@ -96,6 +96,8 @@ apis:
   humanURL: https://developers.kit.com
   baseURL: https://api.kit.com/v4
   tags:
+  - Broadcast
+  tags_raw:
   - Broadcasts
   properties:
   - type: OpenAPI
