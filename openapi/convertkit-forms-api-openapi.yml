@@ -1,6 +1,6 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Kit Accounts Forms API
+  title: Kit Forms API
   version: '4.0'
 servers:
 - url: https://api.kit.com
@@ -10,7 +10,13 @@ paths:
   /v4/bulk/forms/subscribers:
     post:
       summary: Bulk add subscribers to forms
-      description: Adding subscribers to double opt-in forms will trigger sending an Incentive Email. Subscribers already added to the specified form will not receive the Incentive Email again. For more information about double opt-in see "[Double opt-in](#double-opt-in)". <br/><br/>The subscribers being added to the form must already exist. Subscribers can be created in bulk using the "[Bulk create subscriber](#bulk-create-subscribers)" endpoint.<br/><br/>See "[Bulk & async processing](#bulk-amp-async-processing)" for more information.
+      description: 'Adding subscribers to double opt-in forms will trigger sending an Incentive Email. Subscribers already added to the specified form will not receive the Incentive Email again. For more information about double opt-in see "Double opt-in".
+
+
+        The subscribers being added to the form must already exist. Subscribers can be created in bulk using the "Bulk create subscriber" endpoint.
+
+
+        See "Bulk & async processing" for more information.'
       tags:
       - Forms
       security:
@@ -81,11 +87,13 @@ paths:
                           type: object
                           properties:
                             form_id:
-                              type: integer
-                              nullable: true
+                              type:
+                              - integer
+                              - 'null'
                             subscriber_id:
-                              nullable: true
-                              type: integer
+                              type:
+                              - integer
+                              - 'null'
                             referrer:
                               type: string
                           required:
@@ -205,19 +213,22 @@ paths:
                     type: object
                     properties:
                       form_id:
-                        type: integer
-                        nullable: true
+                        type:
+                        - integer
+                        - 'null'
                       subscriber_id:
-                        type: integer
-                        nullable: true
+                        type:
+                        - integer
+                        - 'null'
                       referrer:
                         type: string
                     required:
                     - form_id
                     - subscriber_id
                 callback_url:
-                  type: string
-                  nullable: true
+                  type:
+                  - string
+                  - 'null'
               required:
               - additions
             example:
@@ -231,6 +242,8 @@ paths:
               - form_id: 3
                 subscriber_id: 3
               callback_url: null
+      operationId: postV4BulkFormsSubscribers
+      x-operation-id-source: derived
   /v4/forms:
     get:
       summary: List forms
@@ -244,14 +257,12 @@ paths:
         description: To fetch next page of results, use `?after=<end_cursor>`
         in: query
         required: false
-        schema:
-          nullable: true
+        schema: {}
       - name: before
         description: To fetch previous page of results, use `?before=<start_cursor>`
         in: query
         required: false
-        schema:
-          nullable: true
+        schema: {}
       - name: include_total_count
         description: Set to `true` to include the `total_count` in the response. This option can cause slow responses; if paging through results, request it only on the first page and reuse the value for subsequent pages.
         in: query
@@ -263,26 +274,25 @@ paths:
         description: Number of results per page. Default 500, maximum 1000.
         in: query
         required: false
-        schema:
-          nullable: true
+        schema: {}
       - name: status
         description: Filter forms that have this status (`active`, `archived`, `trashed`, or `all`). Defaults to `active`.
         in: query
         required: false
         schema:
-          type: string
+          type:
+          - string
+          - 'null'
           enum:
           - active
           - archived
           - trashed
           - all
-          nullable: true
       - name: type
         description: Filter forms and landing pages by type. Use `embed` for embedded forms. Use `hosted` for landing pages.
         in: query
         required: false
-        schema:
-          nullable: true
+        schema: {}
       responses:
         '200':
           description: Returns a paginated list of all forms and landing pages (embedded and hosted) for your account (including active and archived)
@@ -304,8 +314,7 @@ paths:
                           type: string
                         type:
                           type: string
-                        format:
-                          nullable: true
+                        format: {}
                         embed_js:
                           type: string
                         embed_url:
@@ -394,6 +403,8 @@ paths:
                 - The access token is invalid
       x-mcp:
         enabled: true
+      operationId: getV4Forms
+      x-operation-id-source: derived
   /v4/forms/{form_id}/subscribers:
     get:
       summary: List subscribers for a form
@@ -408,44 +419,46 @@ paths:
         in: query
         required: false
         schema:
-          nullable: true
-          type: string
+          type:
+          - string
+          - 'null'
         example: '2023-02-14T11:43:55Z'
       - name: added_before
         description: Filter subscribers who have been added to the form before this date (format yyyy-mm-dd)
         in: query
         required: false
         schema:
-          nullable: true
-          type: string
+          type:
+          - string
+          - 'null'
         example: '2023-02-18T11:43:55Z'
       - name: after
         description: To fetch next page of results, use `?after=<end_cursor>`
         in: query
         required: false
-        schema:
-          nullable: true
+        schema: {}
       - name: before
         description: To fetch previous page of results, use `?before=<start_cursor>`
         in: query
         required: false
-        schema:
-          nullable: true
+        schema: {}
       - name: created_after
         description: Filter subscribers who have been created after this date (format yyyy-mm-dd)
         in: query
         required: false
         schema:
-          nullable: true
-          type: string
+          type:
+          - string
+          - 'null'
         example: '2023-01-17T11:43:55Z'
       - name: created_before
         description: Filter subscribers who have been created before this date (format yyyy-mm-dd)
         in: query
         required: false
         schema:
-          nullable: true
-          type: string
+          type:
+          - string
+          - 'null'
         example: '2023-02-18T11:43:55Z'
       - name: form_id
         in: path
@@ -464,8 +477,7 @@ paths:
         description: Number of results per page. Default 500, maximum 1000.
         in: query
         required: false
-        schema:
-          nullable: true
+        schema: {}
       - name: slim
         in: query
         required: false
@@ -503,8 +515,9 @@ paths:
                         id:
                           type: integer
                         first_name:
-                          type: string
-                          nullable: true
+                          type:
+                          - string
+                          - 'null'
                         email_address:
                           type: string
                         state:
@@ -523,8 +536,9 @@ paths:
                           type: object
                           properties:
                             category:
-                              type: string
-                              nullable: true
+                              type:
+                              - string
+                              - 'null'
                           required:
                           - category
                         referrer:
@@ -667,9 +681,11 @@ paths:
                 - Not Found
       x-mcp:
         enabled: true
+      operationId: getV4FormsByFormIdSubscribers
+      x-operation-id-source: derived
     post:
       summary: Add subscriber to form by email address
-      description: The subscriber being added to the form must already exist. Subscribers can be created using the "[Create a subscriber](#create-a-subscriber)" endpoint.
+      description: The subscriber being added to the form must already exist. Subscribers can be created using the "Create a subscriber" endpoint.
       tags:
       - Forms
       security:
@@ -696,8 +712,9 @@ paths:
                       id:
                         type: integer
                       first_name:
-                        type: string
-                        nullable: true
+                        type:
+                        - string
+                        - 'null'
                       email_address:
                         type: string
                       state:
@@ -777,8 +794,9 @@ paths:
                       id:
                         type: integer
                       first_name:
-                        type: string
-                        nullable: true
+                        type:
+                        - string
+                        - 'null'
                       email_address:
                         type: string
                       state:
@@ -902,8 +920,9 @@ paths:
                 email_address:
                   type: string
                 referrer:
-                  type: string
-                  nullable: true
+                  type:
+                  - string
+                  - 'null'
               required:
               - email_address
             example:
@@ -911,10 +930,12 @@ paths:
               referrer: https://mywebsite.com/bfpromo/?utm_source=facebook&utm_medium=cpc&utm_campaign=black_friday&utm_term=car_owners&utm_content=get_10_off
       x-mcp:
         enabled: true
+      operationId: postV4FormsByFormIdSubscribers
+      x-operation-id-source: derived
   /v4/forms/{form_id}/subscribers/{id}:
     post:
       summary: Add subscriber to form
-      description: The subscriber being added to the form must already exist. Subscribers can be created using the "[Create a subscriber](#create-a-subscriber)" endpoint.
+      description: The subscriber being added to the form must already exist. Subscribers can be created using the "Create a subscriber" endpoint.
       tags:
       - Forms
       security:
@@ -947,8 +968,9 @@ paths:
                       id:
                         type: integer
                       first_name:
-                        type: string
-                        nullable: true
+                        type:
+                        - string
+                        - 'null'
                       email_address:
                         type: string
                       state:
@@ -1028,13 +1050,15 @@ paths:
                       id:
                         type: integer
                       first_name:
-                        type: string
-                        nullable: true
+                        type:
+                        - string
+                        - 'null'
                       email_address:
                         type: string
                       state:
-                        type: string
-                        nullable: true
+                        type:
+                        - string
+                        - 'null'
                         enum:
                         - active
                         - cancelled
@@ -1143,9 +1167,11 @@ paths:
               referrer: https://mywebsite.com/bfpromo/?utm_source=facebook&utm_medium=cpc&utm_campaign=black_friday&utm_term=car_owners&utm_content=get_10_off
       x-mcp:
         enabled: true
+      operationId: postV4FormsByFormIdSubscribersById
+      x-operation-id-source: derived
 components:
   securitySchemes:
-    API Key:
+    API_Key:
       description: Authenticate API requests via an API Key
       type: apiKey
       in: header

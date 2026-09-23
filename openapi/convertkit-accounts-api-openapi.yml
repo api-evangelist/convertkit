@@ -1,4 +1,4 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
   title: Kit Accounts API
   version: '4.0'
@@ -133,6 +133,8 @@ paths:
                 - The access token is invalid
       x-mcp:
         enabled: true
+      operationId: getV4Account
+      x-operation-id-source: derived
   /v4/account/colors:
     get:
       summary: List colors
@@ -178,6 +180,8 @@ paths:
                 - The access token is invalid
       x-mcp:
         enabled: true
+      operationId: getV4AccountColors
+      x-operation-id-source: derived
     put:
       summary: Update colors
       tags:
@@ -255,6 +259,8 @@ paths:
               - '#ffffff'
       x-mcp:
         enabled: true
+      operationId: putV4AccountColors
+      x-operation-id-source: derived
   /v4/account/creator_profile:
     get:
       summary: Get Creator Profile
@@ -334,6 +340,8 @@ paths:
                 - Not Found
       x-mcp:
         enabled: true
+      operationId: getV4AccountCreatorProfile
+      x-operation-id-source: derived
   /v4/account/email_stats:
     get:
       summary: Get email stats
@@ -425,10 +433,15 @@ paths:
                 - The access token is invalid
       x-mcp:
         enabled: true
+      operationId: getV4AccountEmailStats
+      x-operation-id-source: derived
   /v4/account/growth_stats:
     get:
       summary: Get growth stats
-      description: 'Get growth stats for a specific time period. Defaults to last 90 days.<br/><br/>NOTE: We return your stats in your sending time zone. This endpoint does not return timestamps in UTC.'
+      description: 'Get growth stats for a specific time period. Defaults to last 90 days.
+
+
+        NOTE: We return your stats in your sending time zone. This endpoint does not return timestamps in UTC.'
       tags:
       - Accounts
       security:
@@ -525,9 +538,11 @@ paths:
                 - Starting date must be before the ending date.
       x-mcp:
         enabled: true
+      operationId: getV4AccountGrowthStats
+      x-operation-id-source: derived
 components:
   securitySchemes:
-    API Key:
+    API_Key:
       description: Authenticate API requests via an API Key
       type: apiKey
       in: header

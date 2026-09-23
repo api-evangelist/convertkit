@@ -1,6 +1,6 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Kit Accounts Sequences API
+  title: Kit Sequences API
   version: '4.0'
 servers:
 - url: https://api.kit.com
@@ -13,13 +13,13 @@ paths:
       description: 'Returns every sequence on the account. A sequence is a self-contained set of automated emails — subscribers join, then receive each email in order, governed by per-email `delay_value` / `delay_unit` and the sequence''s overall `send_days`, `send_hour`, and `time_zone` schedule.
 
 
-        Each entry carries the schedule defaults plus three behavioural toggles: `active` (whether the sequence is delivering), `repeat` (whether subscribers can re-enter), and `hold` (whether subscribers stay active after receiving every published email — an evergreen pattern). See [Create a sequence](/api-reference/sequences/create-a-sequence) for the full sequence model.
+        Each entry carries the schedule defaults plus three behavioural toggles: `active` (whether the sequence is delivering), `repeat` (whether subscribers can re-enter), and `hold` (whether subscribers stay active after receiving every published email — an evergreen pattern). See Create a sequence for the full sequence model.
 
 
-        Once you have a sequence''s `id`, [List sequence emails](/api-reference/sequence-emails/list-sequence-emails) returns the individual emails inside it.
+        Once you have a sequence''s `id`, List sequence emails returns the individual emails inside it.
 
 
-        For end-user context on how creators build sequences, see the help articles on [creating and sending a sequence](https://help.kit.com/en/articles/2502629-creating-and-sending-a-sequence-in-kit) and [evergreen content](https://help.kit.com/en/articles/2502575-what-is-evergreen-content).'
+        For end-user context on how creators build sequences, see the help articles on creating and sending a sequence and evergreen content.'
       tags:
       - Sequences
       security:
@@ -30,14 +30,12 @@ paths:
         description: To fetch next page of results, use `?after=<end_cursor>`
         in: query
         required: false
-        schema:
-          nullable: true
+        schema: {}
       - name: before
         description: To fetch previous page of results, use `?before=<start_cursor>`
         in: query
         required: false
-        schema:
-          nullable: true
+        schema: {}
       - name: include_total_count
         description: Set to `true` to include the `total_count` in the response. This option can cause slow responses; if paging through results, request it only on the first page and reuse the value for subsequent pages.
         in: query
@@ -49,8 +47,7 @@ paths:
         description: Number of results per page. Default 500, maximum 1000.
         in: query
         required: false
-        schema:
-          nullable: true
+        schema: {}
       responses:
         '200':
           description: Returns a paginated list of all sequences for your account
@@ -76,10 +73,8 @@ paths:
                           type: string
                         updated_at:
                           type: string
-                        email_address:
-                          nullable: true
-                        email_template_id:
-                          nullable: true
+                        email_address: {}
+                        email_template_id: {}
                         send_days:
                           type: array
                           items:
@@ -173,12 +168,14 @@ paths:
                 - The access token is invalid
       x-mcp:
         enabled: true
+      operationId: getV4Sequences
+      x-operation-id-source: derived
     post:
       summary: Create a sequence
-      description: 'Creates an empty sequence — the container that holds sequence emails. After creating the shell, use [Create a sequence email](/api-reference/sequence-emails/create-a-sequence-email) to populate it.
+      description: 'Creates an empty sequence — the container that holds sequence emails. After creating the shell, use Create a sequence email to populate it.
 
 
-        Only `name` is required. Every other field has a sensible default: Kit fills in the account''s default sending address, a daily send schedule, and the account time zone — and any of these can be tuned later via [Update a sequence](/api-reference/sequences/update-a-sequence).
+        Only `name` is required. Every other field has a sensible default: Kit fills in the account''s default sending address, a daily send schedule, and the account time zone — and any of these can be tuned later via Update a sequence.
 
 
         Two behavioural toggles worth flagging up front. `repeat` controls whether a subscriber can re-enter the sequence: by default a subscriber receives the emails once and is marked complete, but with `repeat: true`, re-adding the same subscriber via a Visual Automation, Rule, Bulk Action, or Import resets their position to the start. Filters and exclusions still apply across restarts. `hold` (evergreen) keeps subscribers active in the sequence after they''ve received every published email — useful when you plan to add more emails later. Without `hold`, subscribers transition to Completed and won''t pick up future additions.
@@ -187,7 +184,7 @@ paths:
         `exclude_subscriber_sources` lets you exclude subscribers acquired via specific tags, sequences, forms, or segments — they''ll skip this sequence entirely.
 
 
-        For end-user context, see the help articles on [creating and sending a sequence](https://help.kit.com/en/articles/2502629-creating-and-sending-a-sequence-in-kit), [restarting a sequence](https://help.kit.com/en/articles/5022528-restart-a-sequence), and [holding subscribers in evergreen sequences](https://help.kit.com/en/articles/5192801-how-to-hold-subscribers-in-evergreen-sequences).'
+        For end-user context, see the help articles on creating and sending a sequence, restarting a sequence, and holding subscribers in evergreen sequences.'
       tags:
       - Sequences
       security:
@@ -413,6 +410,8 @@ paths:
                 - 29
       x-mcp:
         enabled: true
+      operationId: postV4Sequences
+      x-operation-id-source: derived
   /v4/sequences/{id}:
     delete:
       summary: Delete a sequence
@@ -422,7 +421,7 @@ paths:
         **Warning:** deleting a sequence with active subscribers stops deliveries to those subscribers — they will not receive remaining emails, and any Visual Automations referencing the sequence will need to be updated. Confirm the sequence is not in active use before deleting.
 
 
-        If you want to pause rather than delete, use [Update a sequence](/api-reference/sequences/update-a-sequence) with `active: false` instead.'
+        If you want to pause rather than delete, use Update a sequence with `active: false` instead.'
       tags:
       - Sequences
       security:
@@ -472,12 +471,14 @@ paths:
                 - Not Found
       x-mcp:
         enabled: true
+      operationId: deleteV4SequencesById
+      x-operation-id-source: derived
     get:
       summary: Get a sequence
       description: 'Fetches a single sequence by `id`. Use this when you need the current schedule, the `active` / `repeat` / `hold` flags, the configured `email_address` and `email_template_id`, or `exclude_subscriber_sources` for a known sequence — for example, to confirm settings before adding subscribers or to render an editor.
 
 
-        For the individual emails inside the sequence, use [List sequence emails](/api-reference/sequence-emails/list-sequence-emails). For the sequence model and field semantics, see [Create a sequence](/api-reference/sequences/create-a-sequence).'
+        For the individual emails inside the sequence, use List sequence emails. For the sequence model and field semantics, see Create a sequence.'
       tags:
       - Sequences
       security:
@@ -513,10 +514,8 @@ paths:
                         type: string
                       updated_at:
                         type: string
-                      email_address:
-                        nullable: true
-                      email_template_id:
-                        nullable: true
+                      email_address: {}
+                      email_template_id: {}
                       send_days:
                         type: array
                         items:
@@ -608,6 +607,8 @@ paths:
                 - Not Found
       x-mcp:
         enabled: true
+      operationId: getV4SequencesById
+      x-operation-id-source: derived
     put:
       summary: Update a sequence
       description: 'Updates any sequence settings — `name`, `email_address`, schedule (`send_days`, `send_hour`, `time_zone`), `email_template_id`, `exclude_subscriber_sources`, or the `active` / `repeat` / `hold` flags. Only fields included in the request body change; everything else is preserved.
@@ -625,7 +626,7 @@ paths:
         **Warning:** turning off `repeat` while subscribers are mid-sequence does not stop them from finishing — but they won''t be re-eligible to start over after completing.
 
 
-        See [Create a sequence](/api-reference/sequences/create-a-sequence) for the full sequence model and what each field controls.'
+        See Create a sequence for the full sequence model and what each field controls.'
       tags:
       - Sequences
       security:
@@ -855,6 +856,8 @@ paths:
                 - 48
       x-mcp:
         enabled: true
+      operationId: putV4SequencesById
+      x-operation-id-source: derived
   /v4/sequences/{sequence_id}/subscribers:
     get:
       summary: List subscribers for a sequence
@@ -869,44 +872,46 @@ paths:
         in: query
         required: false
         schema:
-          nullable: true
-          type: string
+          type:
+          - string
+          - 'null'
         example: '2023-02-14T11:43:55Z'
       - name: added_before
         description: Filter subscribers who have been added to the form before this date (format yyyy-mm-dd)
         in: query
         required: false
         schema:
-          nullable: true
-          type: string
+          type:
+          - string
+          - 'null'
         example: '2023-02-18T11:43:55Z'
       - name: after
         description: To fetch next page of results, use `?after=<end_cursor>`
         in: query
         required: false
-        schema:
-          nullable: true
+        schema: {}
       - name: before
         description: To fetch previous page of results, use `?before=<start_cursor>`
         in: query
         required: false
-        schema:
-          nullable: true
+        schema: {}
       - name: created_after
         description: Filter subscribers who have been created after this date (format yyyy-mm-dd)
         in: query
         required: false
         schema:
-          nullable: true
-          type: string
+          type:
+          - string
+          - 'null'
         example: '2023-01-17T11:43:55Z'
       - name: created_before
         description: Filter subscribers who have been created before this date (format yyyy-mm-dd)
         in: query
         required: false
         schema:
-          nullable: true
-          type: string
+          type:
+          - string
+          - 'null'
         example: '2023-02-18T11:43:55Z'
       - name: include_total_count
         description: Set to `true` to include the `total_count` in the response. This option can cause slow responses; if paging through results, request it only on the first page and reuse the value for subsequent pages.
@@ -919,8 +924,7 @@ paths:
         description: Number of results per page. Default 500, maximum 1000.
         in: query
         required: false
-        schema:
-          nullable: true
+        schema: {}
       - name: sequence_id
         in: path
         required: true
@@ -957,8 +961,9 @@ paths:
                         id:
                           type: integer
                         first_name:
-                          type: string
-                          nullable: true
+                          type:
+                          - string
+                          - 'null'
                         email_address:
                           type: string
                         state:
@@ -977,8 +982,9 @@ paths:
                           type: object
                           properties:
                             category:
-                              type: string
-                              nullable: true
+                              type:
+                              - string
+                              - 'null'
                           required:
                           - category
                       required:
@@ -1077,9 +1083,11 @@ paths:
                 - Not Found
       x-mcp:
         enabled: true
+      operationId: getV4SequencesBySequenceIdSubscribers
+      x-operation-id-source: derived
     post:
       summary: Add subscriber to sequence by email address
-      description: The subscriber being added to the sequence must already exist. Subscribers can be created using the "[Create a subscriber](#create-a-subscriber)" endpoint.
+      description: The subscriber being added to the sequence must already exist. Subscribers can be created using the "Create a subscriber" endpoint.
       tags:
       - Sequences
       security:
@@ -1106,8 +1114,9 @@ paths:
                       id:
                         type: integer
                       first_name:
-                        type: string
-                        nullable: true
+                        type:
+                        - string
+                        - 'null'
                       email_address:
                         type: string
                       state:
@@ -1157,8 +1166,9 @@ paths:
                       id:
                         type: integer
                       first_name:
-                        type: string
-                        nullable: true
+                        type:
+                        - string
+                        - 'null'
                       email_address:
                         type: string
                       state:
@@ -1257,10 +1267,12 @@ paths:
               email_address: alice@convertkit.dev
       x-mcp:
         enabled: true
+      operationId: postV4SequencesBySequenceIdSubscribers
+      x-operation-id-source: derived
   /v4/sequences/{sequence_id}/subscribers/{id}:
     post:
       summary: Add subscriber to sequence
-      description: The subscriber being added to the sequence must already exist. Subscribers can be created using the "[Create a subscriber](#create-a-subscriber)" endpoint.
+      description: The subscriber being added to the sequence must already exist. Subscribers can be created using the "Create a subscriber" endpoint.
       tags:
       - Sequences
       security:
@@ -1293,8 +1305,9 @@ paths:
                       id:
                         type: integer
                       first_name:
-                        type: string
-                        nullable: true
+                        type:
+                        - string
+                        - 'null'
                       email_address:
                         type: string
                       state:
@@ -1344,8 +1357,9 @@ paths:
                       id:
                         type: integer
                       first_name:
-                        type: string
-                        nullable: true
+                        type:
+                        - string
+                        - 'null'
                       email_address:
                         type: string
                       state:
@@ -1423,9 +1437,11 @@ paths:
             example: {}
       x-mcp:
         enabled: true
+      operationId: postV4SequencesBySequenceIdSubscribersById
+      x-operation-id-source: derived
 components:
   securitySchemes:
-    API Key:
+    API_Key:
       description: Authenticate API requests via an API Key
       type: apiKey
       in: header

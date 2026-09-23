@@ -1,6 +1,6 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Kit Accounts Tags API
+  title: Kit Tags API
   version: '4.0'
 servers:
 - url: https://api.kit.com
@@ -10,7 +10,7 @@ paths:
   /v4/bulk/tags:
     post:
       summary: Bulk create tags
-      description: See "[Bulk & async processing](#bulk-amp-async-processing)" for more information.
+      description: See "Bulk & async processing" for more information.
       tags:
       - Tags
       security:
@@ -132,8 +132,9 @@ paths:
                     required:
                     - name
                 callback_url:
-                  type: string
-                  nullable: true
+                  type:
+                  - string
+                  - 'null'
               required:
               - tags
             example:
@@ -143,10 +144,12 @@ paths:
               - name: Test Tag 2
               - name: Test Tag 3
               callback_url: null
+      operationId: postV4BulkTags
+      x-operation-id-source: derived
   /v4/bulk/tags/subscribers:
     delete:
       summary: Bulk remove tags from subscribers
-      description: See "[Bulk & async processing](#bulk-amp-async-processing)" for more information.
+      description: See "Bulk & async processing" for more information.
       tags:
       - Tags
       security:
@@ -223,9 +226,14 @@ paths:
               example:
                 errors:
                 - No taggings included for processing
+      operationId: deleteV4BulkTagsSubscribers
+      x-operation-id-source: derived
     post:
       summary: Bulk tag subscribers
-      description: The subscribers being tagged must already exist. Subscribers can be created in bulk using the "[Bulk create subscriber](#bulk-create-subscribers)" endpoint.<br/><br/>See "[Bulk & async processing](#bulk-amp-async-processing)" for more information.
+      description: 'The subscribers being tagged must already exist. Subscribers can be created in bulk using the "Bulk create subscriber" endpoint.
+
+
+        See "Bulk & async processing" for more information.'
       tags:
       - Tags
       security:
@@ -273,11 +281,13 @@ paths:
                           type: object
                           properties:
                             tag_id:
-                              type: integer
-                              nullable: true
+                              type:
+                              - integer
+                              - 'null'
                             subscriber_id:
-                              nullable: true
-                              type: integer
+                              type:
+                              - integer
+                              - 'null'
                           required:
                           - tag_id
                           - subscriber_id
@@ -378,17 +388,20 @@ paths:
                     type: object
                     properties:
                       tag_id:
-                        type: integer
-                        nullable: true
+                        type:
+                        - integer
+                        - 'null'
                       subscriber_id:
-                        type: integer
-                        nullable: true
+                        type:
+                        - integer
+                        - 'null'
                     required:
                     - tag_id
                     - subscriber_id
                 callback_url:
-                  type: string
-                  nullable: true
+                  type:
+                  - string
+                  - 'null'
               required:
               - taggings
             example:
@@ -402,6 +415,8 @@ paths:
               - tag_id: 3
                 subscriber_id: 3
               callback_url: null
+      operationId: postV4BulkTagsSubscribers
+      x-operation-id-source: derived
   /v4/tags:
     get:
       summary: List tags
@@ -415,14 +430,12 @@ paths:
         description: To fetch next page of results, use `?after=<end_cursor>`
         in: query
         required: false
-        schema:
-          nullable: true
+        schema: {}
       - name: before
         description: To fetch previous page of results, use `?before=<start_cursor>`
         in: query
         required: false
-        schema:
-          nullable: true
+        schema: {}
       - name: include_total_count
         description: Set to `true` to include the `total_count` in the response. This option can cause slow responses; if paging through results, request it only on the first page and reuse the value for subsequent pages.
         in: query
@@ -434,8 +447,7 @@ paths:
         description: Number of results per page. Default 500, maximum 1000.
         in: query
         required: false
-        schema:
-          nullable: true
+        schema: {}
       responses:
         '200':
           description: Returns a paginated list of all tags for your account
@@ -517,6 +529,8 @@ paths:
                 - The access token is invalid
       x-mcp:
         enabled: true
+      operationId: getV4Tags
+      x-operation-id-source: derived
     post:
       summary: Create a tag
       tags:
@@ -626,6 +640,8 @@ paths:
               name: Completed
       x-mcp:
         enabled: true
+      operationId: postV4Tags
+      x-operation-id-source: derived
   /v4/tags/{id}:
     put:
       summary: Update tag name
@@ -731,6 +747,8 @@ paths:
               name: signed up
       x-mcp:
         enabled: true
+      operationId: putV4TagsById
+      x-operation-id-source: derived
   /v4/tags/{tag_id}/subscribers:
     delete:
       summary: Remove tag from subscriber by email address
@@ -799,6 +817,8 @@ paths:
                 - Either subscriber id or email address is required to remove tag from subscriber
       x-mcp:
         enabled: true
+      operationId: deleteV4TagsByTagIdSubscribers
+      x-operation-id-source: derived
     get:
       summary: List subscribers for a tag
       tags:
@@ -811,29 +831,29 @@ paths:
         description: To fetch next page of results, use `?after=<end_cursor>`
         in: query
         required: false
-        schema:
-          nullable: true
+        schema: {}
       - name: before
         description: To fetch previous page of results, use `?before=<start_cursor>`
         in: query
         required: false
-        schema:
-          nullable: true
+        schema: {}
       - name: created_after
         description: Filter subscribers who have been created after this date (format yyyy-mm-dd)
         in: query
         required: false
         schema:
-          nullable: true
-          type: string
+          type:
+          - string
+          - 'null'
         example: '2023-01-17T11:43:55Z'
       - name: created_before
         description: Filter subscribers who have been created before this date (format yyyy-mm-dd)
         in: query
         required: false
         schema:
-          nullable: true
-          type: string
+          type:
+          - string
+          - 'null'
         example: '2023-02-18T11:43:55Z'
       - name: include_total_count
         description: Set to `true` to include the `total_count` in the response. This option can cause slow responses; if paging through results, request it only on the first page and reuse the value for subsequent pages.
@@ -846,8 +866,7 @@ paths:
         description: Number of results per page. Default 500, maximum 1000.
         in: query
         required: false
-        schema:
-          nullable: true
+        schema: {}
       - name: slim
         in: query
         required: false
@@ -880,16 +899,18 @@ paths:
         in: query
         required: false
         schema:
-          nullable: true
-          type: string
+          type:
+          - string
+          - 'null'
         example: '2023-02-14T11:43:55Z'
       - name: tagged_before
         description: Filter subscribers who have been tagged before this date (format yyyy-mm-dd)
         in: query
         required: false
         schema:
-          nullable: true
-          type: string
+          type:
+          - string
+          - 'null'
         example: '2023-02-18T11:43:55Z'
       responses:
         '200':
@@ -907,8 +928,9 @@ paths:
                         id:
                           type: integer
                         first_name:
-                          type: string
-                          nullable: true
+                          type:
+                          - string
+                          - 'null'
                         email_address:
                           type: string
                         state:
@@ -927,8 +949,9 @@ paths:
                           type: object
                           properties:
                             category:
-                              type: string
-                              nullable: true
+                              type:
+                              - string
+                              - 'null'
                           required:
                           - category
                       required:
@@ -1027,9 +1050,11 @@ paths:
                 - Not Found
       x-mcp:
         enabled: true
+      operationId: getV4TagsByTagIdSubscribers
+      x-operation-id-source: derived
     post:
       summary: Tag a subscriber by email address
-      description: The subscriber being tagged must already exist. Subscribers can be created using the "[Create a subscriber](#create-a-subscriber)" endpoint.
+      description: The subscriber being tagged must already exist. Subscribers can be created using the "Create a subscriber" endpoint.
       tags:
       - Tags
       security:
@@ -1056,8 +1081,9 @@ paths:
                       id:
                         type: integer
                       first_name:
-                        type: string
-                        nullable: true
+                        type:
+                        - string
+                        - 'null'
                       email_address:
                         type: string
                       state:
@@ -1107,8 +1133,9 @@ paths:
                       id:
                         type: integer
                       first_name:
-                        type: string
-                        nullable: true
+                        type:
+                        - string
+                        - 'null'
                       email_address:
                         type: string
                       state:
@@ -1207,6 +1234,8 @@ paths:
               email_address: alice@convertkit.dev
       x-mcp:
         enabled: true
+      operationId: postV4TagsByTagIdSubscribers
+      x-operation-id-source: derived
   /v4/tags/{tag_id}/subscribers/{id}:
     delete:
       summary: Remove tag from subscriber
@@ -1265,9 +1294,11 @@ paths:
                 - Not Found
       x-mcp:
         enabled: true
+      operationId: deleteV4TagsByTagIdSubscribersById
+      x-operation-id-source: derived
     post:
       summary: Tag a subscriber
-      description: The subscriber being tagged must already exist. Subscribers can be created using the "[Create a subscriber](#create-a-subscriber)" endpoint.
+      description: The subscriber being tagged must already exist. Subscribers can be created using the "Create a subscriber" endpoint.
       tags:
       - Tags
       security:
@@ -1300,8 +1331,9 @@ paths:
                       id:
                         type: integer
                       first_name:
-                        type: string
-                        nullable: true
+                        type:
+                        - string
+                        - 'null'
                       email_address:
                         type: string
                       state:
@@ -1351,8 +1383,9 @@ paths:
                       id:
                         type: integer
                       first_name:
-                        type: string
-                        nullable: true
+                        type:
+                        - string
+                        - 'null'
                       email_address:
                         type: string
                       state:
@@ -1430,9 +1463,11 @@ paths:
             example: {}
       x-mcp:
         enabled: true
+      operationId: postV4TagsByTagIdSubscribersById
+      x-operation-id-source: derived
 components:
   securitySchemes:
-    API Key:
+    API_Key:
       description: Authenticate API requests via an API Key
       type: apiKey
       in: header

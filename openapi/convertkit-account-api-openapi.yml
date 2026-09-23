@@ -1,0 +1,181 @@
+openapi: 3.2.0
+info:
+  title: Kit API V4 Account API
+  description: Kit (formerly ConvertKit) API V4 for email marketing and the creator economy. Manage subscribers, broadcasts, tags, custom fields, forms, and account-level statistics. Supports OAuth 2.0 and API key authentication.
+  version: v4
+  contact:
+    name: Kit Developer Support
+    url: https://developers.kit.com/v4/api-reference
+servers:
+- url: https://api.kit.com/v4
+  description: Kit API V4 production server
+security:
+- ApiKeyAuth: []
+- OAuth2: []
+tags:
+- name: Account
+  description: Account, creator profile, and account-level statistics
+paths:
+  /account:
+    get:
+      operationId: getAccount
+      summary: Get Account
+      description: Retrieve the current Kit account and associated user information.
+      tags:
+      - Account
+      responses:
+        '200':
+          description: Successful response with account details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /account/colors:
+    get:
+      operationId: getAccountColors
+      summary: Get Account Colors
+      description: List configured color preferences for the account.
+      tags:
+      - Account
+      responses:
+        '200':
+          description: Successful response with color preferences
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ColorsResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    put:
+      operationId: updateAccountColors
+      summary: Update Account Colors
+      description: Update the color preferences for the account.
+      tags:
+      - Account
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ColorsRequest'
+      responses:
+        '200':
+          description: Updated color preferences
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ColorsResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /account/email_stats:
+    get:
+      operationId: getAccountEmailStats
+      summary: Get Email Stats
+      description: Retrieve email statistics for the last 90 days.
+      tags:
+      - Account
+      responses:
+        '200':
+          description: Successful response with email statistics
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatsResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /account/growth_stats:
+    get:
+      operationId: getAccountGrowthStats
+      summary: Get Growth Stats
+      description: Retrieve subscriber growth metrics for a specified period.
+      tags:
+      - Account
+      parameters:
+      - name: starting
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date
+        description: Start of the reporting window (YYYY-MM-DD)
+      - name: ending
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date
+        description: End of the reporting window (YYYY-MM-DD)
+      responses:
+        '200':
+          description: Successful response with growth statistics
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatsResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  schemas:
+    StatsResponse:
+      type: object
+      properties:
+        stats:
+          type: object
+          additionalProperties: true
+    AccountResponse:
+      type: object
+      properties:
+        account:
+          $ref: '#/components/schemas/Account'
+    ColorsResponse:
+      type: object
+      properties:
+        colors:
+          type: array
+          items:
+            type: string
+    ErrorResponse:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: string
+    Account:
+      type: object
+      properties:
+        name:
+          type: string
+        plan_type:
+          type: string
+        primary_email_address:
+          type: string
+    ColorsRequest:
+      type: object
+      properties:
+        colors:
+          type: array
+          items:
+            type: string
+  responses:
+    Unauthorized:
+      description: Missing or invalid credentials
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-Kit-Api-Key
+      description: Personal API key issued from the Kit developer portal
+    OAuth2:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://app.kit.com/oauth/authorize
+          tokenUrl: https://api.kit.com/oauth/token
+          scopes: {}

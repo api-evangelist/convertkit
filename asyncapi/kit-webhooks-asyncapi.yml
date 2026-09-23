@@ -1,0 +1,396 @@
+asyncapi: 2.6.0
+info:
+  title: Kit Webhooks
+  version: v4
+  description: |
+    AsyncAPI 2.6 description of the Kit (formerly ConvertKit) webhook surface.
+
+    Kit delivers webhook notifications via HTTP `POST` requests with a JSON body
+    to a `target_url` registered through the Kit API V4 webhooks endpoints
+    (`POST /v4/webhooks`, `GET /v4/webhooks`, `DELETE /v4/webhooks/{id}`).
+    Subscribers, purchases, and custom-field lifecycle changes are the primary
+    event categories. Some events require an additional scoping parameter
+    (e.g. `form_id`, `tag_id`, `sequence_id`, `product_id`, `initiator_value`,
+    or `custom_field_id`) supplied at subscription creation time.
+
+    Authoritative payload shapes beyond the documented webhook subscription
+    object are not fully published by Kit; properties shown here are modeled
+    from the public V4 API resource shapes referenced by each event. Consumers
+    SHOULD treat payloads as additive and tolerate unknown fields.
+  contact:
+    name: Kit Developer Support
+    url: https://developers.kit.com/v4/api-reference/webhooks
+  tags:
+    - name: Kit
+    - name: ConvertKit
+    - name: Email Marketing
+    - name: Creator Economy
+    - name: Webhooks
+    - name: Subscribers
+    - name: Purchases
+
+defaultContentType: application/json
+
+servers:
+  consumer:
+    url: '{target_url}'
+    protocol: https
+    description: |
+      The consumer-controlled HTTPS endpoint registered as `target_url` when the
+      webhook is created. Kit issues `POST` requests with `Content-Type:
+      application/json` to this URL whenever the configured event fires.
+    variables:
+      target_url:
+        description: Fully qualified HTTPS URL that will receive webhook deliveries.
+        default: https://example.com/webhooks/kit
+
+channels:
+  subscriber.subscriber_activate:
+    description: |
+      Fires when a subscriber becomes active (confirmed/opted-in) in the Kit
+      account. Configured by creating a webhook with
+      `event.name = "subscriber.subscriber_activate"`.
+    bindings:
+      http:
+        type: request
+        method: POST
+    subscribe:
+      operationId: onSubscriberActivate
+      summary: Subscriber activated
+      message:
+        $ref: '#/components/messages/SubscriberEvent'
+
+  subscriber.subscriber_unsubscribe:
+    description: |
+      Fires when a subscriber unsubscribes from the Kit account.
+    bindings:
+      http:
+        type: request
+        method: POST
+    subscribe:
+      operationId: onSubscriberUnsubscribe
+      summary: Subscriber unsubscribed
+      message:
+        $ref: '#/components/messages/SubscriberEvent'
+
+  subscriber.subscriber_bounce:
+    description: |
+      Fires when a subscriber's email bounces.
+    bindings:
+      http:
+        type: request
+        method: POST
+    subscribe:
+      operationId: onSubscriberBounce
+      summary: Subscriber email bounced
+      message:
+        $ref: '#/components/messages/SubscriberEvent'
+
+  subscriber.subscriber_complain:
+    description: |
+      Fires when a subscriber marks email from the Kit account as spam.
+    bindings:
+      http:
+        type: request
+        method: POST
+    subscribe:
+      operationId: onSubscriberComplain
+      summary: Subscriber complained
+      message:
+        $ref: '#/components/messages/SubscriberEvent'
+
+  subscriber.form_subscribe:
+    description: |
+      Fires when a subscriber subscribes through a specific form. Requires the
+      `form_id` parameter on the webhook subscription.
+    bindings:
+      http:
+        type: request
+        method: POST
+    subscribe:
+      operationId: onFormSubscribe
+      summary: Subscriber joined a form
+      message:
+        $ref: '#/components/messages/SubscriberEvent'
+
+  subscriber.course_subscribe:
+    description: |
+      Fires when a subscriber is added to a sequence (course). Requires the
+      `sequence_id` parameter on the webhook subscription.
+    bindings:
+      http:
+        type: request
+        method: POST
+    subscribe:
+      operationId: onCourseSubscribe
+      summary: Subscriber added to sequence
+      message:
+        $ref: '#/components/messages/SubscriberEvent'
+
+  subscriber.course_complete:
+    description: |
+      Fires when a subscriber completes a sequence (course). Requires the
+      `sequence_id` parameter on the webhook subscription.
+    bindings:
+      http:
+        type: request
+        method: POST
+    subscribe:
+      operationId: onCourseComplete
+      summary: Subscriber completed sequence
+      message:
+        $ref: '#/components/messages/SubscriberEvent'
+
+  subscriber.link_click:
+    description: |
+      Fires when a subscriber clicks a specific tracked link. Requires the
+      `initiator_value` parameter (the URL) on the webhook subscription.
+    bindings:
+      http:
+        type: request
+        method: POST
+    subscribe:
+      operationId: onLinkClick
+      summary: Subscriber clicked link
+      message:
+        $ref: '#/components/messages/SubscriberEvent'
+
+  subscriber.product_purchase:
+    description: |
+      Fires when a subscriber purchases a specific Kit Commerce product.
+      Requires the `product_id` parameter on the webhook subscription.
+    bindings:
+      http:
+        type: request
+        method: POST
+    subscribe:
+      operationId: onProductPurchase
+      summary: Subscriber purchased product
+      message:
+        $ref: '#/components/messages/SubscriberEvent'
+
+  subscriber.tag_add:
+    description: |
+      Fires when a tag is added to a subscriber. Requires the `tag_id`
+      parameter on the webhook subscription.
+    bindings:
+      http:
+        type: request
+        method: POST
+    subscribe:
+      operationId: onTagAdd
+      summary: Tag added to subscriber
+      message:
+        $ref: '#/components/messages/SubscriberEvent'
+
+  subscriber.tag_remove:
+    description: |
+      Fires when a tag is removed from a subscriber. Requires the `tag_id`
+      parameter on the webhook subscription.
+    bindings:
+      http:
+        type: request
+        method: POST
+    subscribe:
+      operationId: onTagRemove
+      summary: Tag removed from subscriber
+      message:
+        $ref: '#/components/messages/SubscriberEvent'
+
+  purchase.purchase_create:
+    description: |
+      Fires when a purchase is recorded in the Kit account (typically via the
+      Purchases API or an e-commerce integration).
+    bindings:
+      http:
+        type: request
+        method: POST
+    subscribe:
+      operationId: onPurchaseCreate
+      summary: Purchase created
+      message:
+        $ref: '#/components/messages/PurchaseEvent'
+
+  custom_field.field_created:
+    description: |
+      Fires when a new custom field is created in the Kit account.
+    bindings:
+      http:
+        type: request
+        method: POST
+    subscribe:
+      operationId: onCustomFieldCreated
+      summary: Custom field created
+      message:
+        $ref: '#/components/messages/CustomFieldEvent'
+
+  custom_field.field_deleted:
+    description: |
+      Fires when a custom field is deleted from the Kit account.
+    bindings:
+      http:
+        type: request
+        method: POST
+    subscribe:
+      operationId: onCustomFieldDeleted
+      summary: Custom field deleted
+      message:
+        $ref: '#/components/messages/CustomFieldEvent'
+
+  custom_field.field_value_updated:
+    description: |
+      Fires when the value of a specific custom field changes for a subscriber.
+      Requires the `custom_field_id` parameter on the webhook subscription.
+    bindings:
+      http:
+        type: request
+        method: POST
+    subscribe:
+      operationId: onCustomFieldValueUpdated
+      summary: Custom field value updated
+      message:
+        $ref: '#/components/messages/CustomFieldEvent'
+
+components:
+  messages:
+    SubscriberEvent:
+      name: SubscriberEvent
+      title: Subscriber Webhook Event
+      summary: Webhook payload delivered for `subscriber.*` events.
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/SubscriberEventPayload'
+    PurchaseEvent:
+      name: PurchaseEvent
+      title: Purchase Webhook Event
+      summary: Webhook payload delivered for `purchase.purchase_create`.
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/PurchaseEventPayload'
+    CustomFieldEvent:
+      name: CustomFieldEvent
+      title: Custom Field Webhook Event
+      summary: Webhook payload delivered for `custom_field.*` events.
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/CustomFieldEventPayload'
+
+  schemas:
+    Subscriber:
+      type: object
+      description: |
+        Subscriber resource as exposed by Kit API V4. Additional fields may be
+        present; consumers should ignore unknown properties.
+      properties:
+        id:
+          type: integer
+        first_name:
+          type: string
+          nullable: true
+        email_address:
+          type: string
+          format: email
+        state:
+          type: string
+          description: Subscriber state (e.g. `active`, `inactive`, `bounced`, `complained`).
+        created_at:
+          type: string
+          format: date-time
+        fields:
+          type: object
+          additionalProperties: true
+          description: Custom field values keyed by field label.
+
+    SubscriberEventPayload:
+      type: object
+      description: |
+        Envelope delivered for `subscriber.*` webhook events. The exact key used
+        for the subscriber object is not exhaustively documented; modeled here
+        as `subscriber` with the V4 Subscriber shape.
+      properties:
+        subscriber:
+          $ref: '#/components/schemas/Subscriber'
+
+    Purchase:
+      type: object
+      description: |
+        Purchase resource as exposed by Kit API V4. Properties shown reflect
+        commonly documented fields; additional fields may be present.
+      properties:
+        id:
+          type: integer
+        transaction_id:
+          type: string
+        status:
+          type: string
+        email_address:
+          type: string
+          format: email
+        first_name:
+          type: string
+          nullable: true
+        currency:
+          type: string
+          description: ISO 4217 currency code.
+        transaction_time:
+          type: string
+          format: date-time
+        subtotal:
+          type: number
+        tax:
+          type: number
+        shipping:
+          type: number
+        discount:
+          type: number
+        total:
+          type: number
+        products:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              sku:
+                type: string
+              pid:
+                type: string
+              lid:
+                type: integer
+              unit_price:
+                type: number
+              quantity:
+                type: integer
+
+    PurchaseEventPayload:
+      type: object
+      description: Envelope delivered for `purchase.purchase_create`.
+      properties:
+        purchase:
+          $ref: '#/components/schemas/Purchase'
+
+    CustomField:
+      type: object
+      description: Custom field resource as exposed by Kit API V4.
+      properties:
+        id:
+          type: integer
+        label:
+          type: string
+        key:
+          type: string
+        name:
+          type: string
+
+    CustomFieldEventPayload:
+      type: object
+      description: |
+        Envelope delivered for `custom_field.*` webhook events. For
+        `custom_field.field_value_updated` the affected subscriber may also be
+        included.
+      properties:
+        custom_field:
+          $ref: '#/components/schemas/CustomField'
+        subscriber:
+          $ref: '#/components/schemas/Subscriber'

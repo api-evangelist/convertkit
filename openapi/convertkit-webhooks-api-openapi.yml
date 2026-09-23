@@ -1,6 +1,6 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Kit Accounts Webhooks API
+  title: Kit Webhooks API
   version: '4.0'
 servers:
 - url: https://api.kit.com
@@ -10,7 +10,10 @@ paths:
   /v4/webhooks:
     get:
       summary: List webhooks
-      description: Webhooks are automations that will receive subscriber data when a subscriber event is triggered, such as when a subscriber completes a sequence.<br/><br/>When a webhook is triggered, a `POST` request will be made to your URL with a JSON payload.
+      description: 'Webhooks are automations that will receive subscriber data when a subscriber event is triggered, such as when a subscriber completes a sequence.
+
+
+        When a webhook is triggered, a `POST` request will be made to your URL with a JSON payload.'
       tags:
       - Webhooks
       security:
@@ -21,14 +24,12 @@ paths:
         description: To fetch next page of results, use `?after=<end_cursor>`
         in: query
         required: false
-        schema:
-          nullable: true
+        schema: {}
       - name: before
         description: To fetch previous page of results, use `?before=<start_cursor>`
         in: query
         required: false
-        schema:
-          nullable: true
+        schema: {}
       - name: include_total_count
         description: Set to `true` to include the `total_count` in the response. This option can cause slow responses; if paging through results, request it only on the first page and reuse the value for subsequent pages.
         in: query
@@ -40,8 +41,7 @@ paths:
         description: Number of results per page. Default 500, maximum 1000.
         in: query
         required: false
-        schema:
-          nullable: true
+        schema: {}
       responses:
         '200':
           description: Returns a paginated list of webhooks
@@ -66,11 +66,13 @@ paths:
                               type: string
                               description: Product name
                             tag_id:
-                              type: integer
-                              nullable: true
+                              type:
+                              - integer
+                              - 'null'
                             form_id:
-                              type: integer
-                              nullable: true
+                              type:
+                              - integer
+                              - 'null'
                           required:
                           - name
                         target_url:
@@ -140,9 +142,41 @@ paths:
                 - The access token is invalid
       x-mcp:
         enabled: true
+      operationId: getV4Webhooks
+      x-operation-id-source: derived
     post:
       summary: Create a webhook
-      description: Available event types:<br/>- `subscriber.subscriber_activate`<br/>- `subscriber.subscriber_unsubscribe`<br/>- `subscriber.subscriber_bounce`<br/>- `subscriber.subscriber_complain`<br/>- `subscriber.form_subscribe`, required parameter `form_id` [Integer]<br/>- `subscriber.course_subscribe`, required parameter `sequence_id` [Integer]<br/>- `subscriber.course_complete`, required parameter `sequence_id` [Integer]<br/>- `subscriber.link_click`, required parameter `initiator_value` [String] as a link URL<br/>- `subscriber.product_purchase`, required parameter `product_id` [Integer]<br/>- `subscriber.tag_add`, required parameter `tag_id` [Integer]<br/>- `subscriber.tag_remove`, required parameter `tag_id` [Integer]<br/>- `purchase.purchase_create`<br/>- `custom_field.field_created`<br/>- `custom_field.field_deleted`<br/>- `custom_field.field_value_updated`, required parameter `custom_field_id` [Integer]
+      description: 'Available event types:
+
+        - `subscriber.subscriber_activate`
+
+        - `subscriber.subscriber_unsubscribe`
+
+        - `subscriber.subscriber_bounce`
+
+        - `subscriber.subscriber_complain`
+
+        - `subscriber.form_subscribe`, required parameter `form_id` [Integer]
+
+        - `subscriber.course_subscribe`, required parameter `sequence_id` [Integer]
+
+        - `subscriber.course_complete`, required parameter `sequence_id` [Integer]
+
+        - `subscriber.link_click`, required parameter `initiator_value` [String] as a link URL
+
+        - `subscriber.product_purchase`, required parameter `product_id` [Integer]
+
+        - `subscriber.tag_add`, required parameter `tag_id` [Integer]
+
+        - `subscriber.tag_remove`, required parameter `tag_id` [Integer]
+
+        - `purchase.purchase_create`
+
+        - `custom_field.field_created`
+
+        - `custom_field.field_deleted`
+
+        - `custom_field.field_value_updated`, required parameter `custom_field_id` [Integer]'
       tags:
       - Webhooks
       security:
@@ -170,8 +204,7 @@ paths:
                           name:
                             type: string
                             description: Product name
-                          initiator_value:
-                            nullable: true
+                          initiator_value: {}
                         required:
                         - name
                         - initiator_value
@@ -237,18 +270,12 @@ paths:
                   properties:
                     name:
                       type: string
-                    form_id:
-                      nullable: true
-                    tag_id:
-                      nullable: true
-                    sequence_id:
-                      nullable: true
-                    product_id:
-                      nullable: true
-                    initiator_value:
-                      nullable: true
-                    custom_field_id:
-                      nullable: true
+                    form_id: {}
+                    tag_id: {}
+                    sequence_id: {}
+                    product_id: {}
+                    initiator_value: {}
+                    custom_field_id: {}
                   required:
                   - name
                   - form_id
@@ -271,6 +298,8 @@ paths:
                 custom_field_id: null
       x-mcp:
         enabled: true
+      operationId: postV4Webhooks
+      x-operation-id-source: derived
   /v4/webhooks/{id}:
     delete:
       summary: Delete a webhook
@@ -339,9 +368,11 @@ paths:
                 - Unable to destroy the webhook.
       x-mcp:
         enabled: true
+      operationId: deleteV4WebhooksById
+      x-operation-id-source: derived
 components:
   securitySchemes:
-    API Key:
+    API_Key:
       description: Authenticate API requests via an API Key
       type: apiKey
       in: header

@@ -1,6 +1,6 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Kit Accounts Sequence Emails API
+  title: Kit Sequence Emails API
   version: '4.0'
 servers:
 - url: https://api.kit.com
@@ -16,7 +16,7 @@ paths:
         **Tip:** the heavier `content` field is omitted by default to keep responses fast on sequences with many emails. Pass `include_content=true` when you need the body — for example, to render a preview, audit Liquid usage, or sync an external draft.
 
 
-        For the field semantics — particularly how `delay_unit` and `send_days` interact, and what happens when subscribers hit a `published: false` email — see [Create a sequence email](/api-reference/sequence-emails/create-a-sequence-email).'
+        For the field semantics — particularly how `delay_unit` and `send_days` interact, and what happens when subscribers hit a `published: false` email — see Create a sequence email.'
       tags:
       - Sequence Emails
       security:
@@ -26,20 +26,17 @@ paths:
       - name: after
         in: query
         required: false
-        schema:
-          nullable: true
+        schema: {}
         description: To fetch next page of results, use `?after=<end_cursor>`
       - name: before
         in: query
         required: false
-        schema:
-          nullable: true
+        schema: {}
         description: To fetch previous page of results, use `?before=<start_cursor>`
       - name: include_content
         in: query
         required: false
-        schema:
-          nullable: true
+        schema: {}
         description: Pass `true` to include the `content` field on each email in the response. Omitted by default because it increases response size for large sequences.
       - name: include_total_count
         in: query
@@ -51,8 +48,7 @@ paths:
       - name: per_page
         in: query
         required: false
-        schema:
-          nullable: true
+        schema: {}
         description: Number of results per page. Default 500, maximum 1000.
       - name: sequence_id
         in: path
@@ -83,8 +79,7 @@ paths:
                           type: string
                         email_address:
                           type: string
-                        email_template_id:
-                          nullable: true
+                        email_template_id: {}
                         published:
                           type: boolean
                         position:
@@ -191,6 +186,8 @@ paths:
                 - Not Found
       x-mcp:
         enabled: true
+      operationId: getV4SequencesBySequenceIdEmails
+      x-operation-id-source: derived
     post:
       summary: Create a sequence email
       description: 'Adds a single email to a sequence. Each sequence email represents one step subscribers receive on their journey through the sequence — its `position` determines order, and `delay_value` / `delay_unit` / `send_days` determine when it fires relative to either the previous email or the subscriber''s entry.
@@ -199,7 +196,7 @@ paths:
         `subject`, `delay_value`, and `delay_unit` are required. **Day-based** emails (`delay_unit: "days"`) follow the parent sequence''s `send_days` and `send_hour`; their per-email `send_days` (e.g. `["monday", "wednesday"]`) overrides the sequence schedule for that one email. **Hour-based** emails (`delay_unit: "hours"`) ignore the sequence schedule and fire once the delay elapses — Kit checks for hour-delayed sends every 15 minutes — and always return `send_days` as `null`.
 
 
-        New emails are created in draft (`published: false`) so they don''t go out until you flip the flag. `position` is auto-assigned to the end of the sequence if omitted. `content` accepts HTML and can embed snippets with `{{ snippet.<key> }}` — see [Create a snippet](/api-reference/snippets/create-a-snippet) — which Kit resolves at send time, so editing a snippet later updates every email referencing it without a re-publish.
+        New emails are created in draft (`published: false`) so they don''t go out until you flip the flag. `position` is auto-assigned to the end of the sequence if omitted. `content` accepts HTML and can embed snippets with `{{ snippet. }}` — see Create a snippet — which Kit resolves at send time, so editing a snippet later updates every email referencing it without a re-publish.
 
 
         **Note:** only the first email in a sequence can be an immediate send (`delay_value: 0` with `delay_unit: "days"`). Subsequent emails need a positive delay.
@@ -208,7 +205,7 @@ paths:
         **Warning:** publishing an immediate first email, or inserting a new email at a `position` earlier than where existing subscribers sit, processes those subscribers and triggers a send right away. Plan around active sequences carefully.
 
 
-        For end-user context on how creators build sequences in the Kit UI, see the help article on [creating and sending a sequence](https://help.kit.com/en/articles/2502629-creating-and-sending-a-sequence-in-kit).'
+        For end-user context on how creators build sequences in the Kit UI, see the help article on creating and sending a sequence.'
       tags:
       - Sequence Emails
       security:
@@ -238,16 +235,13 @@ paths:
                         type: integer
                       subject:
                         type: string
-                      preview_text:
-                        nullable: true
+                      preview_text: {}
                       email_address:
                         type: string
-                      email_template_id:
-                        nullable: true
+                      email_template_id: {}
                       published:
                         type: boolean
-                      position:
-                        nullable: true
+                      position: {}
                       delay_value:
                         type: integer
                       delay_unit:
@@ -256,8 +250,7 @@ paths:
                         type: array
                         items:
                           type: string
-                      content:
-                        nullable: true
+                      content: {}
                     required:
                     - id
                     - sequence_id
@@ -356,12 +349,14 @@ paths:
                   type: string
                   description: Subject line of the email
                 preview_text:
-                  type: string
-                  nullable: true
+                  type:
+                  - string
+                  - 'null'
                   description: Preview text shown in email clients before the email is opened
                 content:
-                  type: string
-                  nullable: true
+                  type:
+                  - string
+                  - 'null'
                   description: HTML body content of the email
                 delay_value:
                   type: integer
@@ -373,21 +368,24 @@ paths:
                   - hours
                   description: Unit for the send delay. Use `days` for schedule-aware delivery, `hours` for a fixed hourly delay
                 email_template_id:
-                  type: integer
-                  nullable: true
+                  type:
+                  - integer
+                  - 'null'
                   description: ID of the email template to use for layout and styling
                 published:
                   type: boolean
                   description: Whether the email is active and will be sent to subscribers. Defaults to `false` (draft)
                 send_days:
-                  type: array
-                  nullable: true
+                  type:
+                  - array
+                  - 'null'
                   items:
                     type: string
                   description: Days of the week this email may be sent. Defaults to all 7 days (inherits the sequence schedule). Pass a subset to restrict delivery, or `null` to reset to all days
                 position:
-                  type: integer
-                  nullable: true
+                  type:
+                  - integer
+                  - 'null'
                   description: Zero-based position of the email in the sequence. Assigned automatically after the last email if omitted
             example:
               subject: Welcome to the sequence
@@ -401,6 +399,8 @@ paths:
               position: null
       x-mcp:
         enabled: true
+      operationId: postV4SequencesBySequenceIdEmails
+      x-operation-id-source: derived
   /v4/sequences/{sequence_id}/emails/{id}:
     delete:
       summary: Delete a sequence email
@@ -410,7 +410,7 @@ paths:
         **Warning:** subscribers already queued to receive the deleted email will skip it — they''ll continue to the next email in sequence order. This is intentional and not retryable. If subscribers need to receive the email''s content, send a broadcast or re-add subscribers to the sequence (with `repeat: true`) before deleting.
 
 
-        If you want to pause rather than delete, use [Update a sequence email](/api-reference/sequence-emails/update-a-sequence-email) with `published: false` instead.'
+        If you want to pause rather than delete, use Update a sequence email with `published: false` instead.'
       tags:
       - Sequence Emails
       security:
@@ -466,15 +466,17 @@ paths:
                 - Not Found
       x-mcp:
         enabled: true
+      operationId: deleteV4SequencesBySequenceIdEmailsById
+      x-operation-id-source: derived
     get:
       summary: Get a sequence email
-      description: 'Fetches a single sequence email by `id`. Unlike [List sequence emails](/api-reference/sequence-emails/list-sequence-emails), this endpoint **always returns the full `content`** — no `include_content` flag needed.
+      description: 'Fetches a single sequence email by `id`. Unlike List sequence emails, this endpoint **always returns the full `content`** — no `include_content` flag needed.
 
 
-        Use this when you have an email''s `id` and need the current body, timing, or publish state — for example, to render a preview before pushing an update via [Update a sequence email](/api-reference/sequence-emails/update-a-sequence-email).
+        Use this when you have an email''s `id` and need the current body, timing, or publish state — for example, to render a preview before pushing an update via Update a sequence email.
 
 
-        For the field semantics, see [Create a sequence email](/api-reference/sequence-emails/create-a-sequence-email).'
+        For the field semantics, see Create a sequence email.'
       tags:
       - Sequence Emails
       security:
@@ -514,8 +516,7 @@ paths:
                         type: string
                       email_address:
                         type: string
-                      email_template_id:
-                        nullable: true
+                      email_template_id: {}
                       published:
                         type: boolean
                       position:
@@ -600,6 +601,8 @@ paths:
                 - Not Found
       x-mcp:
         enabled: true
+      operationId: getV4SequencesBySequenceIdEmailsById
+      x-operation-id-source: derived
     put:
       summary: Update a sequence email
       description: 'Updates any field on a sequence email — `subject`, `preview_text`, `content`, `delay_value`, `delay_unit`, `send_days`, `position`, `email_template_id`, or `published`. Only fields included in the request body change; everything else is preserved.
@@ -614,7 +617,7 @@ paths:
         **Warning:** changing `position` while subscribers are actively progressing through the sequence can cause emails to be sent out of order or skipped. The same caution applies to flipping `published` on a `position: 0` email — it triggers Kit to process all queued subscribers for that email.
 
 
-        For the sequence-email model and how `delay_unit` and `send_days` interact, see [Create a sequence email](/api-reference/sequence-emails/create-a-sequence-email).'
+        For the sequence-email model and how `delay_unit` and `send_days` interact, see Create a sequence email.'
       tags:
       - Sequence Emails
       security:
@@ -654,12 +657,10 @@ paths:
                         type: string
                       email_address:
                         type: string
-                      email_template_id:
-                        nullable: true
+                      email_template_id: {}
                       published:
                         type: boolean
-                      position:
-                        nullable: true
+                      position: {}
                       delay_value:
                         type: integer
                       delay_unit:
@@ -669,8 +670,9 @@ paths:
                         items:
                           type: string
                       content:
-                        nullable: true
-                        type: string
+                        type:
+                        - string
+                        - 'null'
                     required:
                     - id
                     - sequence_id
@@ -761,12 +763,14 @@ paths:
                   type: string
                   description: New subject line for the email
                 preview_text:
-                  type: string
-                  nullable: true
+                  type:
+                  - string
+                  - 'null'
                   description: New preview text shown in email clients before the email is opened
                 content:
-                  type: string
-                  nullable: true
+                  type:
+                  - string
+                  - 'null'
                   description: New HTML body content of the email
                 delay_value:
                   type: integer
@@ -778,21 +782,24 @@ paths:
                   - hours
                   description: New delay unit. Use `days` for schedule-aware delivery, `hours` for a fixed hourly delay
                 email_template_id:
-                  type: integer
-                  nullable: true
+                  type:
+                  - integer
+                  - 'null'
                   description: New email template ID for layout and styling. Pass `null` to clear
                 published:
                   type: boolean
                   description: Pass `true` to publish a draft email or `false` to unpublish it
                 send_days:
-                  type: array
-                  nullable: true
+                  type:
+                  - array
+                  - 'null'
                   items:
                     type: string
                   description: Days of the week this email may be sent. Pass a subset to restrict delivery, or `null` to reset to all days (inherits the sequence schedule)
                 position:
-                  type: integer
-                  nullable: true
+                  type:
+                  - integer
+                  - 'null'
                   description: New zero-based position of the email in the sequence
             example:
               subject: Updated subject
@@ -809,9 +816,11 @@ paths:
               position: null
       x-mcp:
         enabled: true
+      operationId: putV4SequencesBySequenceIdEmailsById
+      x-operation-id-source: derived
 components:
   securitySchemes:
-    API Key:
+    API_Key:
       description: Authenticate API requests via an API Key
       type: apiKey
       in: header

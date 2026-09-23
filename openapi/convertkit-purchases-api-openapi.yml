@@ -1,6 +1,6 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Kit Accounts Purchases API
+  title: Kit Purchases API
   version: '4.0'
 servers:
 - url: https://api.kit.com
@@ -19,14 +19,12 @@ paths:
         description: To fetch next page of results, use `?after=<end_cursor>`
         in: query
         required: false
-        schema:
-          nullable: true
+        schema: {}
       - name: before
         description: To fetch previous page of results, use `?before=<start_cursor>`
         in: query
         required: false
-        schema:
-          nullable: true
+        schema: {}
       - name: include_total_count
         description: Set to `true` to include the `total_count` in the response. This option can cause slow responses; if paging through results, request it only on the first page and reuse the value for subsequent pages.
         in: query
@@ -38,8 +36,7 @@ paths:
         description: Number of results per page. Default 500, maximum 1000.
         in: query
         required: false
-        schema:
-          nullable: true
+        schema: {}
       responses:
         '200':
           description: Returns a paginated list of all purchases for your account
@@ -98,7 +95,6 @@ paths:
                                 format: float
                                 description: Product price
                               sku:
-                                nullable: true
                                 description: Product sku
                               name:
                                 type: string
@@ -232,6 +228,8 @@ paths:
               example:
                 errors:
                 - The access token is invalid
+      operationId: getV4Purchases
+      x-operation-id-source: derived
     post:
       summary: Create a purchase
       tags:
@@ -500,6 +498,8 @@ paths:
                   quantity: 1
                   unit_price: 23.22
                   sku: FL21-TS-M01-BL-M-020
+      operationId: postV4Purchases
+      x-operation-id-source: derived
   /v4/purchases/{id}:
     get:
       summary: Get a purchase
@@ -566,8 +566,7 @@ paths:
                               type: number
                               format: float
                               description: Product price
-                            sku:
-                              nullable: true
+                            sku: {}
                             name:
                               type: string
                               description: Product name
@@ -654,9 +653,11 @@ paths:
               example:
                 errors:
                 - Not Found
+      operationId: getV4PurchasesById
+      x-operation-id-source: derived
 components:
   securitySchemes:
-    API Key:
+    API_Key:
       description: Authenticate API requests via an API Key
       type: apiKey
       in: header

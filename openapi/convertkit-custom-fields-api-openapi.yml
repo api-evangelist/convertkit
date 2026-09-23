@@ -1,6 +1,6 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Kit Accounts Custom Fields API
+  title: Kit Custom Fields API
   version: '4.0'
 servers:
 - url: https://api.kit.com
@@ -10,7 +10,7 @@ paths:
   /v4/bulk/custom_fields:
     post:
       summary: Bulk create custom fields
-      description: See "[Bulk & async processing](#bulk-amp-async-processing)" for more information.
+      description: See "Bulk & async processing" for more information.
       tags:
       - Custom Fields
       security:
@@ -141,8 +141,9 @@ paths:
                     required:
                     - label
                 callback_url:
-                  type: string
-                  nullable: true
+                  type:
+                  - string
+                  - 'null'
               required:
               - custom_fields
             example:
@@ -152,6 +153,8 @@ paths:
               - label: Test Custom Field 2
               - label: Test Custom Field 3
               callback_url: null
+      operationId: postV4BulkCustomFields
+      x-operation-id-source: derived
   /v4/bulk/custom_fields/subscribers:
     post:
       summary: Bulk update subscriber custom field values
@@ -196,8 +199,9 @@ paths:
                           type: object
                           properties:
                             subscriber_id:
-                              type: integer
-                              nullable: true
+                              type:
+                              - integer
+                              - 'null'
                             subscriber_custom_field_id:
                               type: integer
                             value:
@@ -301,8 +305,9 @@ paths:
                     type: object
                     properties:
                       subscriber_id:
-                        type: integer
-                        nullable: true
+                        type:
+                        - integer
+                        - 'null'
                       subscriber_custom_field_id:
                         type: integer
                       value:
@@ -311,8 +316,7 @@ paths:
                     - subscriber_id
                     - subscriber_custom_field_id
                     - value
-                callback_url:
-                  nullable: true
+                callback_url: {}
               required:
               - custom_field_values
               - callback_url
@@ -331,10 +335,15 @@ paths:
                 subscriber_custom_field_id: 3
                 value: value_3
               callback_url: null
+      operationId: postV4BulkCustomFieldsSubscribers
+      x-operation-id-source: derived
   /v4/custom_fields:
     get:
       summary: List custom fields
-      description: A custom field allows you to collect subscriber information beyond the standard fields of first name and email address. An example would be a custom field called last name so you can get the full names of your subscribers.<br/><br/>You create a custom field, and then you're able to use that in your forms or emails.
+      description: 'A custom field allows you to collect subscriber information beyond the standard fields of first name and email address. An example would be a custom field called last name so you can get the full names of your subscribers.
+
+
+        You create a custom field, and then you''re able to use that in your forms or emails.'
       tags:
       - Custom Fields
       security:
@@ -345,14 +354,12 @@ paths:
         description: To fetch next page of results, use `?after=<end_cursor>`
         in: query
         required: false
-        schema:
-          nullable: true
+        schema: {}
       - name: before
         description: To fetch previous page of results, use `?before=<start_cursor>`
         in: query
         required: false
-        schema:
-          nullable: true
+        schema: {}
       - name: include_total_count
         description: Set to `true` to include the `total_count` in the response. This option can cause slow responses; if paging through results, request it only on the first page and reuse the value for subsequent pages.
         in: query
@@ -364,8 +371,7 @@ paths:
         description: Number of results per page. Default 500, maximum 1000.
         in: query
         required: false
-        schema:
-          nullable: true
+        schema: {}
       responses:
         '200':
           description: Returns a paginated list of all custom fields for your account
@@ -444,9 +450,14 @@ paths:
                 - The access token is invalid
       x-mcp:
         enabled: true
+      operationId: getV4CustomFields
+      x-operation-id-source: derived
     post:
       summary: Create a custom field
-      description: Create a custom field for your account. The label field must be unique to your account. Whitespace will be removed from the beginning and the end of your label.<br/><br/>Additionally, a key field and a name field will be generated for you. The key is an ASCII-only, lowercased, underscored representation of your label. This key must be unique to your account. Keys are used in personalization tags in sequences and broadcasts. Names are unique identifiers for use in the HTML of custom forms. They are made up of a combination of ID and the key of the custom field prefixed with "ck_field".
+      description: 'Create a custom field for your account. The label field must be unique to your account. Whitespace will be removed from the beginning and the end of your label.
+
+
+        Additionally, a key field and a name field will be generated for you. The key is an ASCII-only, lowercased, underscored representation of your label. This key must be unique to your account. Keys are used in personalization tags in sequences and broadcasts. Names are unique identifiers for use in the HTML of custom forms. They are made up of a combination of ID and the key of the custom field prefixed with "ck_field".'
       tags:
       - Custom Fields
       security:
@@ -562,6 +573,8 @@ paths:
               label: Interests
       x-mcp:
         enabled: true
+      operationId: postV4CustomFields
+      x-operation-id-source: derived
   /v4/custom_fields/{id}:
     delete:
       summary: Delete custom field
@@ -631,9 +644,14 @@ paths:
                 - Unable to destroy the custom field.
       x-mcp:
         enabled: true
+      operationId: deleteV4CustomFieldsById
+      x-operation-id-source: derived
     put:
       summary: Update a custom field
-      description: 'Updates a custom field label (see [Create a custom field](/api-reference/custom-fields/create-a-custom-field) for more information on labels). Note that the key will change but the name remains the same when the label is updated.<br/><br/><strong>Warning: </strong>An update to a custom field will break all of the liquid personalization tags in emails that reference it - e.g. if you update a `Zip_Code` custom field to `Post_Code`, all liquid tags referencing `{{ subscriber.Zip_Code }}` would no longer work and need to be replaced with `{{ subscriber.Post_Code }}`.'
+      description: 'Updates a custom field label (see Create a custom field for more information on labels). Note that the key will change but the name remains the same when the label is updated.
+
+
+        Warning: An update to a custom field will break all of the liquid personalization tags in emails that reference it - e.g. if you update a `Zip_Code` custom field to `Post_Code`, all liquid tags referencing `{{ subscriber.Zip_Code }}` would no longer work and need to be replaced with `{{ subscriber.Post_Code }}`.'
       tags:
       - Custom Fields
       security:
@@ -740,9 +758,11 @@ paths:
               label: Last name
       x-mcp:
         enabled: true
+      operationId: putV4CustomFieldsById
+      x-operation-id-source: derived
 components:
   securitySchemes:
-    API Key:
+    API_Key:
       description: Authenticate API requests via an API Key
       type: apiKey
       in: header

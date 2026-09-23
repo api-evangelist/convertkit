@@ -1,6 +1,6 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Kit Accounts Subscribers API
+  title: Kit Subscribers API
   version: '4.0'
 servers:
 - url: https://api.kit.com
@@ -10,7 +10,7 @@ paths:
   /v4/bulk/subscribers:
     post:
       summary: Bulk create subscribers
-      description: See "[Bulk & async processing](#bulk-amp-async-processing)" for more information.
+      description: See "Bulk & async processing" for more information.
       tags:
       - Subscribers
       security:
@@ -32,8 +32,9 @@ paths:
                         id:
                           type: integer
                         first_name:
-                          type: string
-                          nullable: true
+                          type:
+                          - string
+                          - 'null'
                         email_address:
                           type: string
                         state:
@@ -63,8 +64,9 @@ paths:
                             first_name:
                               type: string
                             email_address:
-                              type: string
-                              nullable: true
+                              type:
+                              - string
+                              - 'null'
                             state:
                               type: string
                               enum:
@@ -74,8 +76,9 @@ paths:
                               - complained
                               - inactive
                             created_at:
-                              type: string
-                              nullable: true
+                              type:
+                              - string
+                              - 'null'
                           required:
                           - first_name
                           - email_address
@@ -200,14 +203,17 @@ paths:
                     type: object
                     properties:
                       first_name:
-                        type: string
-                        nullable: true
+                        type:
+                        - string
+                        - 'null'
                       email_address:
-                        type: string
-                        nullable: true
+                        type:
+                        - string
+                        - 'null'
                       state:
-                        type: string
-                        nullable: true
+                        type:
+                        - string
+                        - 'null'
                         enum:
                         - active
                         - cancelled
@@ -215,8 +221,9 @@ paths:
                         - complained
                         - inactive
                 callback_url:
-                  type: string
-                  nullable: true
+                  type:
+                  - string
+                  - 'null'
               required:
               - subscribers
             example:
@@ -230,6 +237,8 @@ paths:
               - first_name: Test Subscriber 3
                 email_address: subscriber_3@convertkit.dev
               callback_url: null
+      operationId: postV4BulkSubscribers
+      x-operation-id-source: derived
   /v4/subscribers:
     get:
       summary: List subscribers
@@ -244,15 +253,17 @@ paths:
         in: query
         required: false
         schema:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
       - name: before
         description: To fetch previous page of results, use `?before=<start_cursor>`
         in: query
         required: false
         schema:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
       - name: created_after
         description: Filter subscribers who have been created after this date (format yyyy-mm-dd)
         in: query
@@ -292,8 +303,9 @@ paths:
         in: query
         required: false
         schema:
-          type: number
-          nullable: true
+          type:
+          - number
+          - 'null'
         example: 10
       - name: slim
         in: query
@@ -361,8 +373,9 @@ paths:
                         id:
                           type: integer
                         first_name:
-                          type: string
-                          nullable: true
+                          type:
+                          - string
+                          - 'null'
                         email_address:
                           type: string
                         state:
@@ -379,43 +392,55 @@ paths:
                           type: object
                           properties:
                             category:
-                              type: string
-                              nullable: true
+                              type:
+                              - string
+                              - 'null'
                         attribution:
-                          type: object
+                          type:
+                          - object
+                          - 'null'
                           description: Returned when `include` contains `attribution`.
-                          nullable: true
                           properties:
                             referrer:
-                              type: string
-                              nullable: true
+                              type:
+                              - string
+                              - 'null'
                             utm_source:
-                              type: string
-                              nullable: true
+                              type:
+                              - string
+                              - 'null'
                             utm_medium:
-                              type: string
-                              nullable: true
+                              type:
+                              - string
+                              - 'null'
                             utm_campaign:
-                              type: string
-                              nullable: true
+                              type:
+                              - string
+                              - 'null'
                             utm_term:
-                              type: string
-                              nullable: true
+                              type:
+                              - string
+                              - 'null'
                             utm_content:
-                              type: string
-                              nullable: true
+                              type:
+                              - string
+                              - 'null'
                             source_type:
-                              type: string
-                              nullable: true
+                              type:
+                              - string
+                              - 'null'
                             source_name:
-                              type: string
-                              nullable: true
+                              type:
+                              - string
+                              - 'null'
                             source_mechanism:
-                              type: string
-                              nullable: true
+                              type:
+                              - string
+                              - 'null'
                             source_mechanism_id:
-                              type: integer
-                              nullable: true
+                              type:
+                              - integer
+                              - 'null'
                           required:
                           - referrer
                           - utm_source
@@ -434,36 +459,45 @@ paths:
                             type: object
                             properties:
                               id:
-                                type: integer
-                                nullable: true
+                                type:
+                                - integer
+                                - 'null'
                               name:
-                                type: string
-                                nullable: true
+                                type:
+                                - string
+                                - 'null'
                         location:
-                          type: object
+                          type:
+                          - object
+                          - 'null'
                           description: Returned when `include` contains `location`.
-                          nullable: true
                           properties:
                             city:
-                              type: string
-                              nullable: true
+                              type:
+                              - string
+                              - 'null'
                             state:
-                              type: string
-                              nullable: true
+                              type:
+                              - string
+                              - 'null'
                             country:
-                              type: string
-                              nullable: true
+                              type:
+                              - string
+                              - 'null'
                             latitude:
-                              type: number
-                              nullable: true
+                              type:
+                              - number
+                              - 'null'
                               format: float
                             longitude:
-                              type: number
-                              nullable: true
+                              type:
+                              - number
+                              - 'null'
                               format: float
                             timezone:
-                              type: string
-                              nullable: true
+                              type:
+                              - string
+                              - 'null'
                           required:
                           - city
                           - state
@@ -472,9 +506,10 @@ paths:
                           - longitude
                           - timezone
                         canceled_at:
-                          type: string
+                          type:
+                          - string
+                          - 'null'
                           format: date-time
-                          nullable: true
                           description: Returned when `include` contains `canceled_at`. Requires `status=cancelled`.
                       required:
                       - id
@@ -648,9 +683,19 @@ paths:
                 - The status param must be `cancelled` if sort_field is `cancelled_at`
       x-mcp:
         enabled: true
+      operationId: getV4Subscribers
+      x-operation-id-source: derived
     post:
       summary: Create a subscriber
-      description: Behaves as an upsert. If a subscriber with the provided email address does not exist, it creates one with the specified first name and state. If a subscriber with the provided email address already exists, it updates the first name.<br/><br/>If you include a custom field key that does not exist on your account, the request returns an error. Use [List custom fields](/api-reference/custom-fields/list-custom-fields) to retrieve existing keys, or [Create a custom field](/api-reference/custom-fields/create-a-custom-field) to add new fields before setting them for subscribers.<br/><br/><strong>NOTE:</strong> Updating the subscriber state with this endpoint is not supported at this time.<br/><strong>NOTE:</strong> We support creating/updating a maximum of 140 custom fields at a time.
+      description: 'Behaves as an upsert. If a subscriber with the provided email address does not exist, it creates one with the specified first name and state. If a subscriber with the provided email address already exists, it updates the first name.
+
+
+        If you include a custom field key that does not exist on your account, the request returns an error. Use List custom fields to retrieve existing keys, or Create a custom field to add new fields before setting them for subscribers.
+
+
+        NOTE: Updating the subscriber state with this endpoint is not supported at this time.
+
+        NOTE: We support creating/updating a maximum of 140 custom fields at a time.'
       tags:
       - Subscribers
       security:
@@ -671,8 +716,9 @@ paths:
                       id:
                         type: integer
                       first_name:
-                        type: string
-                        nullable: true
+                        type:
+                        - string
+                        - 'null'
                       email_address:
                         type: string
                       state:
@@ -718,8 +764,9 @@ paths:
                       id:
                         type: integer
                       first_name:
-                        type: string
-                        nullable: true
+                        type:
+                        - string
+                        - 'null'
                       email_address:
                         type: string
                       state:
@@ -775,8 +822,9 @@ paths:
                       id:
                         type: integer
                       first_name:
-                        type: string
-                        nullable: true
+                        type:
+                        - string
+                        - 'null'
                       email_address:
                         type: string
                       state:
@@ -792,28 +840,17 @@ paths:
                       fields:
                         type: object
                         properties:
-                          company:
-                            nullable: true
-                          coupon:
-                            nullable: true
-                          enrolled_in_coaching:
-                            nullable: true
-                          how_did_you_hear_about_us:
-                            nullable: true
-                          interests:
-                            nullable: true
-                          lead_score:
-                            nullable: true
-                          phone_number:
-                            nullable: true
-                          postal_code:
-                            nullable: true
-                          role:
-                            nullable: true
-                          social_media:
-                            nullable: true
-                          website:
-                            nullable: true
+                          company: {}
+                          coupon: {}
+                          enrolled_in_coaching: {}
+                          how_did_you_hear_about_us: {}
+                          interests: {}
+                          lead_score: {}
+                          phone_number: {}
+                          postal_code: {}
+                          role: {}
+                          social_media: {}
+                          website: {}
                         required:
                         - company
                         - coupon
@@ -893,13 +930,15 @@ paths:
               type: object
               properties:
                 first_name:
-                  type: string
-                  nullable: true
+                  type:
+                  - string
+                  - 'null'
                 email_address:
                   type: string
                 state:
-                  type: string
-                  nullable: true
+                  type:
+                  - string
+                  - 'null'
                   enum:
                   - active
                   - cancelled
@@ -935,6 +974,8 @@ paths:
                 lead_score: '87'
       x-mcp:
         enabled: true
+      operationId: postV4Subscribers
+      x-operation-id-source: derived
   /v4/subscribers/filter:
     post:
       summary: Filter subscribers based on engagement
@@ -960,8 +1001,9 @@ paths:
                         id:
                           type: string
                         first_name:
-                          type: string
-                          nullable: true
+                          type:
+                          - string
+                          - 'null'
                         email_address:
                           type: string
                         created_at:
@@ -1084,6 +1126,8 @@ paths:
                   - 1001
       x-mcp:
         enabled: true
+      operationId: postV4SubscribersFilter
+      x-operation-id-source: derived
   /v4/subscribers/{id}:
     get:
       summary: Get a subscriber
@@ -1113,8 +1157,9 @@ paths:
                       id:
                         type: integer
                       first_name:
-                        type: string
-                        nullable: true
+                        type:
+                        - string
+                        - 'null'
                       email_address:
                         type: string
                       state:
@@ -1135,8 +1180,9 @@ paths:
                         required:
                         - category
                       canceled_at:
-                        type: string
-                        nullable: true
+                        type:
+                        - string
+                        - 'null'
                     required:
                     - id
                     - first_name
@@ -1190,9 +1236,14 @@ paths:
                 - Not Found
       x-mcp:
         enabled: true
+      operationId: getV4SubscribersById
+      x-operation-id-source: derived
     put:
       summary: Update a subscriber
-      description: If you include a custom field key that does not exist on your account, the request returns an error. Use [List custom fields](/api-reference/custom-fields/list-custom-fields) to retrieve existing keys, or [Create a custom field](/api-reference/custom-fields/create-a-custom-field) to add new fields before setting them for subscribers.<br/><br/><strong>NOTE:</strong> We support creating/updating a maximum of 140 custom fields at a time.
+      description: 'If you include a custom field key that does not exist on your account, the request returns an error. Use List custom fields to retrieve existing keys, or Create a custom field to add new fields before setting them for subscribers.
+
+
+        NOTE: We support creating/updating a maximum of 140 custom fields at a time.'
       tags:
       - Subscribers
       security:
@@ -1219,8 +1270,9 @@ paths:
                       id:
                         type: integer
                       first_name:
-                        type: string
-                        nullable: true
+                        type:
+                        - string
+                        - 'null'
                       email_address:
                         type: string
                       state:
@@ -1276,8 +1328,9 @@ paths:
                       id:
                         type: integer
                       first_name:
-                        type: string
-                        nullable: true
+                        type:
+                        - string
+                        - 'null'
                       email_address:
                         type: string
                       state:
@@ -1293,28 +1346,17 @@ paths:
                       fields:
                         type: object
                         properties:
-                          birthday:
-                            nullable: true
-                          company:
-                            nullable: true
-                          coupon:
-                            nullable: true
-                          how_did_you_hear_about_us:
-                            nullable: true
-                          interests:
-                            nullable: true
-                          last_name:
-                            nullable: true
-                          postal_code:
-                            nullable: true
-                          role:
-                            nullable: true
-                          social_media:
-                            nullable: true
-                          source:
-                            nullable: true
-                          website:
-                            nullable: true
+                          birthday: {}
+                          company: {}
+                          coupon: {}
+                          how_did_you_hear_about_us: {}
+                          interests: {}
+                          last_name: {}
+                          postal_code: {}
+                          role: {}
+                          social_media: {}
+                          source: {}
+                          website: {}
                         required:
                         - birthday
                         - company
@@ -1410,8 +1452,9 @@ paths:
               type: object
               properties:
                 first_name:
-                  type: string
-                  nullable: true
+                  type:
+                  - string
+                  - 'null'
                 email_address:
                   type: string
                 fields:
@@ -1438,6 +1481,8 @@ paths:
                 coupon: ''
       x-mcp:
         enabled: true
+      operationId: putV4SubscribersById
+      x-operation-id-source: derived
   /v4/subscribers/{id}/unsubscribe:
     post:
       summary: Unsubscribe subscriber
@@ -1497,6 +1542,8 @@ paths:
             example: {}
       x-mcp:
         enabled: true
+      operationId: postV4SubscribersByIdUnsubscribe
+      x-operation-id-source: derived
   /v4/subscribers/{subscriber_id}/stats:
     get:
       summary: List stats for a subscriber
@@ -1619,6 +1666,8 @@ paths:
                 - The access token is invalid
       x-mcp:
         enabled: true
+      operationId: getV4SubscribersBySubscriberIdStats
+      x-operation-id-source: derived
   /v4/subscribers/{subscriber_id}/tags:
     get:
       summary: List tags for a subscriber
@@ -1632,14 +1681,12 @@ paths:
         description: To fetch next page of results, use `?after=<end_cursor>`
         in: query
         required: false
-        schema:
-          nullable: true
+        schema: {}
       - name: before
         description: To fetch previous page of results, use `?before=<start_cursor>`
         in: query
         required: false
-        schema:
-          nullable: true
+        schema: {}
       - name: include_total_count
         description: Set to `true` to include the `total_count` in the response. This option can cause slow responses; if paging through results, request it only on the first page and reuse the value for subsequent pages.
         in: query
@@ -1651,8 +1698,7 @@ paths:
         description: Number of results per page. Default 500, maximum 1000.
         in: query
         required: false
-        schema:
-          nullable: true
+        schema: {}
       - name: subscriber_id
         in: path
         required: true
@@ -1752,8 +1798,27 @@ paths:
                 - Not Found
       x-mcp:
         enabled: true
+      operationId: getV4SubscribersBySubscriberIdTags
+      x-operation-id-source: derived
 components:
   schemas:
+    BroadcastAnyCondition:
+      type: object
+      description: Filter by specific broadcast IDs. Subscriber must have interacted with ANY of the specified broadcasts.
+      properties:
+        type:
+          type: string
+          enum:
+          - broadcasts
+          description: Must be 'broadcasts'
+        ids:
+          type: array
+          items:
+            type: integer
+          description: Array of broadcast IDs. Subscriber must match ANY of these.
+      required:
+      - type
+      - ids
     SubscriberFilterRequest:
       type: object
       description: Filter subscribers based on engagement and subscription criteria using the 'all' array with filter conditions that must all be met (AND logic).
@@ -1771,6 +1836,36 @@ components:
             $ref: '#/components/schemas/FilterCondition'
       required:
       - all
+    UrlAnyCondition:
+      type: object
+      description: Filter by URL patterns. Only applicable for 'clicks' type. Subscriber must have clicked ANY of the specified URLs.
+      properties:
+        type:
+          type: string
+          enum:
+          - urls
+          description: Must be 'urls'
+        ids:
+          type: array
+          items:
+            type: integer
+          description: Array of URL IDs. Subscriber must have clicked ANY of these.
+        urls:
+          type: array
+          items:
+            type: string
+          description: Array of URL patterns. Subscriber must have clicked ANY of these.
+        matching:
+          type: string
+          enum:
+          - exact
+          - contains
+          - starts_with
+          - ends_with
+          description: URL matching strategy
+          default: exact
+      required:
+      - type
     FilterCondition:
       type: object
       description: A filter condition with type and optional parameters. Used within the 'all' array for complex filtering where multiple conditions must be met.
@@ -1833,36 +1928,6 @@ components:
               $ref: '#/components/schemas/FormsAnyCondition'
       required:
       - type
-    UrlAnyCondition:
-      type: object
-      description: Filter by URL patterns. Only applicable for 'clicks' type. Subscriber must have clicked ANY of the specified URLs.
-      properties:
-        type:
-          type: string
-          enum:
-          - urls
-          description: Must be 'urls'
-        ids:
-          type: array
-          items:
-            type: integer
-          description: Array of URL IDs. Subscriber must have clicked ANY of these.
-        urls:
-          type: array
-          items:
-            type: string
-          description: Array of URL patterns. Subscriber must have clicked ANY of these.
-        matching:
-          type: string
-          enum:
-          - exact
-          - contains
-          - starts_with
-          - ends_with
-          description: URL matching strategy
-          default: exact
-      required:
-      - type
     FormsAnyCondition:
       type: object
       description: 'Attribution sub-condition: matches subscribers whose original signup attribution points at one of the given form / landing-page ids. Ids may refer to either a form or a legacy landing page — the attribution source does not distinguish between the two.'
@@ -1897,25 +1962,8 @@ components:
       required:
       - type
       - matching
-    BroadcastAnyCondition:
-      type: object
-      description: Filter by specific broadcast IDs. Subscriber must have interacted with ANY of the specified broadcasts.
-      properties:
-        type:
-          type: string
-          enum:
-          - broadcasts
-          description: Must be 'broadcasts'
-        ids:
-          type: array
-          items:
-            type: integer
-          description: Array of broadcast IDs. Subscriber must match ANY of these.
-      required:
-      - type
-      - ids
   securitySchemes:
-    API Key:
+    API_Key:
       description: Authenticate API requests via an API Key
       type: apiKey
       in: header

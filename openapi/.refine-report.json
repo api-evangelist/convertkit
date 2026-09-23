@@ -1,22 +1,11 @@
 {
   "provider": "convertkit",
   "sources": [
-    "convertkit-accounts-api-openapi.yml",
-    "convertkit-broadcasts-api-openapi.yml",
-    "convertkit-custom-fields-api-openapi.yml",
-    "convertkit-email-templates-api-openapi.yml",
-    "convertkit-forms-api-openapi.yml",
-    "convertkit-posts-api-openapi.yml",
-    "convertkit-purchases-api-openapi.yml",
-    "convertkit-segments-api-openapi.yml",
-    "convertkit-sequence-emails-api-openapi.yml",
-    "convertkit-sequences-api-openapi.yml",
-    "convertkit-snippets-api-openapi.yml",
-    "convertkit-subscribers-api-openapi.yml",
-    "convertkit-tags-api-openapi.yml",
-    "convertkit-webhooks-api-openapi.yml"
+    "_original/kit-account-api-openapi.yml",
+    "_original/openapi.json"
   ],
   "outputs": [
+    "convertkit-account-api-openapi.yml",
     "convertkit-accounts-api-openapi.yml",
     "convertkit-broadcasts-api-openapi.yml",
     "convertkit-custom-fields-api-openapi.yml",
@@ -35,6 +24,40 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (2 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "openapi.json: upgraded openapi 3.0.3 -> OpenAPI 3.2.0; renamed 1 component key(s) illegal in 3.x (e.g. API Key)",
+    "openapi.json: declared missing tag: Accounts",
+    "openapi.json: declared missing tag: Broadcasts",
+    "openapi.json: declared missing tag: Custom Fields",
+    "openapi.json: declared missing tag: Email Templates",
+    "openapi.json: declared missing tag: Forms",
+    "openapi.json: declared missing tag: Posts",
+    "openapi.json: declared missing tag: Purchases",
+    "openapi.json: declared missing tag: Segments",
+    "openapi.json: declared missing tag: Sequence Emails",
+    "openapi.json: declared missing tag: Sequences",
+    "openapi.json: declared missing tag: Snippets",
+    "openapi.json: declared missing tag: Subscribers",
+    "openapi.json: declared missing tag: Tags",
+    "openapi.json: declared missing tag: Webhooks",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "convertkit-account-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "convertkit-accounts-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "convertkit-broadcasts-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "convertkit-custom-fields-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "convertkit-email-templates-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "convertkit-forms-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "convertkit-posts-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "convertkit-purchases-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "convertkit-segments-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "convertkit-sequence-emails-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "convertkit-sequences-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "convertkit-snippets-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "convertkit-subscribers-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "convertkit-tags-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "convertkit-webhooks-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

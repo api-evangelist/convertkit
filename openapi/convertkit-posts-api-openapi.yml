@@ -1,6 +1,6 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Kit Accounts Posts API
+  title: Kit Posts API
   version: '4.0'
 servers:
 - url: https://api.kit.com
@@ -20,14 +20,12 @@ paths:
         description: To fetch next page of results, use `?after=<end_cursor>`
         in: query
         required: false
-        schema:
-          nullable: true
+        schema: {}
       - name: before
         description: To fetch previous page of results, use `?before=<start_cursor>`
         in: query
         required: false
-        schema:
-          nullable: true
+        schema: {}
       - name: include_content
         in: query
         required: false
@@ -46,8 +44,7 @@ paths:
         description: Number of results per page. Default 500, maximum 1000.
         in: query
         required: false
-        schema:
-          nullable: true
+        schema: {}
       responses:
         '200':
           description: Returns a paginated list of all posts for your account
@@ -71,29 +68,29 @@ paths:
                         title:
                           type: string
                         slug:
-                          type: string
-                          nullable: true
-                        description:
-                          nullable: true
-                        meta_description:
-                          nullable: true
+                          type:
+                          - string
+                          - 'null'
+                        description: {}
+                        meta_description: {}
                         status:
                           type: string
                         published_at:
-                          type: string
-                          nullable: true
+                          type:
+                          - string
+                          - 'null'
                         sent_at:
-                          type: string
-                          nullable: true
-                        thumbnail_alt:
-                          nullable: true
-                        thumbnail_url:
-                          nullable: true
+                          type:
+                          - string
+                          - 'null'
+                        thumbnail_alt: {}
+                        thumbnail_url: {}
                         is_paid:
                           type: boolean
                         public_url:
-                          type: string
-                          nullable: true
+                          type:
+                          - string
+                          - 'null'
                       required:
                       - id
                       - publication_id
@@ -183,6 +180,8 @@ paths:
                   per_page: 500
       x-mcp:
         enabled: true
+      operationId: getV4Posts
+      x-operation-id-source: derived
   /v4/posts/{id}:
     get:
       summary: Get a post
@@ -220,20 +219,15 @@ paths:
                         type: string
                       slug:
                         type: string
-                      description:
-                        nullable: true
-                      meta_description:
-                        nullable: true
+                      description: {}
+                      meta_description: {}
                       status:
                         type: string
                       published_at:
                         type: string
-                      sent_at:
-                        nullable: true
-                      thumbnail_alt:
-                        nullable: true
-                      thumbnail_url:
-                        nullable: true
+                      sent_at: {}
+                      thumbnail_alt: {}
+                      thumbnail_url: {}
                       is_paid:
                         type: boolean
                       public_url:
@@ -297,9 +291,11 @@ paths:
                 - Not Found
       x-mcp:
         enabled: true
+      operationId: getV4PostsById
+      x-operation-id-source: derived
 components:
   securitySchemes:
-    API Key:
+    API_Key:
       description: Authenticate API requests via an API Key
       type: apiKey
       in: header
