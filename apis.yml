@@ -31,6 +31,9 @@ url: https://raw.githubusercontent.com/api-evangelist/convertkit/refs/heads/main
 created: '2026-06-13'
 modified: '2026-08-13'
 specificationVersion: '0.23'
+x-docs-platform: mintlify
+x-docs-platform-confidence: medium
+x-docs-platform-checked: 2026-09-24
 tags:
 - Email Marketing
 - Creator Economy
@@ -50,6 +53,8 @@ tags:
 - Email Campaigns
 - Software-as-a-Service
 - Commerce
+- A2A
+- Email
 tags_raw:
 - Email Marketing
 - Creator Economy
@@ -69,6 +74,7 @@ tags_raw:
 - Email Campaigns
 - SaaS
 - Commerce
+- A2A
 apis:
 - aid: convertkit:convertkit-accounts-api
   name: Kit Accounts API
