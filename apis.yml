@@ -75,6 +75,7 @@ tags_raw:
 - SaaS
 - Commerce
 - A2A
+- Email
 apis:
 - aid: convertkit:convertkit-accounts-api
   name: Kit Accounts API
@@ -624,3 +625,10 @@ x-enrichment:
   status: enriched
   artifacts_added: 38
   pass: local-v1
+x-a2a:
+  verified: true
+  probed: '2026-09-26'
+  url: "https://developers.kit.com/.well-known/agent-card.json"
+  grade: "conformant"
+  protocol_version: "0.3"
+  control: 404
