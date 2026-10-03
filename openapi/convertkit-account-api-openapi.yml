@@ -117,7 +117,27 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
+  responses:
+    Unauthorized:
+      description: Missing or invalid credentials
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
   schemas:
+    StatsResponse:
+      type: object
+      properties:
+        stats:
+          type: object
+          additionalProperties: true
+    ColorsResponse:
+      type: object
+      properties:
+        colors:
+          type: array
+          items:
+            type: string
     ErrorResponse:
       type: object
       properties:
@@ -125,7 +145,7 @@ components:
           type: array
           items:
             type: string
-    ColorsResponse:
+    ColorsRequest:
       type: object
       properties:
         colors:
@@ -146,26 +166,6 @@ components:
           type: string
         primary_email_address:
           type: string
-    ColorsRequest:
-      type: object
-      properties:
-        colors:
-          type: array
-          items:
-            type: string
-    StatsResponse:
-      type: object
-      properties:
-        stats:
-          type: object
-          additionalProperties: true
-  responses:
-    Unauthorized:
-      description: Missing or invalid credentials
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
