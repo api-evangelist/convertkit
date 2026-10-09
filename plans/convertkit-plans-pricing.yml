@@ -88,3 +88,28 @@ notes:
   on Creator and Pro only, not on the free Newsletter plan.
 - Custom enterprise pricing is available above 500K subscribers; no published figure.
 - ConvertKit rebranded to Kit in 2024.
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models:
+  - free
+  units: []
+  plans:
+  - name: Newsletter
+    access: other
+    model: free
+    model_how: derived
+    units: []
+    periods: []
+  - name: Creator
+    access: other
+    model: unstated
+    model_how: derived
+    units: []
+    periods: []
+  - name: Pro
+    access: other
+    model: unstated
+    model_how: derived
+    units: []
+    periods: []

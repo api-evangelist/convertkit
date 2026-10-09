@@ -125,3 +125,16 @@ notes:
   machine-readable and was not fabricated here.
 - Kit also ships a first-party Cursor plugin (github.com/Kit/cursor-plugin) that connects a Kit account
   over MCP.
+rfc9728:
+  endpoint: https://app.kit.com/mcp
+  metadata_url: https://app.kit.com/.well-known/oauth-protected-resource/mcp
+  discovered_via: WWW-Authenticate resource_metadata on an anonymous POST initialize
+  fetched: '2026-09-25'
+  http_status: 200
+  content_type: application/json
+  document:
+    resource: https://app.kit.com/mcp
+    authorization_servers:
+    - https://api.kit.com
+    bearer_methods_supported:
+    - header
