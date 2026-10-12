@@ -1,0 +1,314 @@
+# DERIVED by derive-integration-map.py (roadmap#949): each integration workflow, step by step,
+# resolved to spec file -> tag -> business capability (Turbo EA, CC BY 4.0) and the operation's
+# phrasing intent. Read from our own files; an unmapped link says why.
+slug: convertkit
+workflows:
+- file: convertkit-calendly-tag-invitees.yml
+  title: 'Kit Calendly: tag subscribers from new events'
+  partner: calendly
+  template: https://zapier.com/apps/calendly/integrations/kit/11530/add-tagged-subscribers-to-converkit-from-new-calendly-events
+  repos:
+  - calendly
+  - convertkit
+  steps:
+  - step: get-calendly-invitee
+    repo: calendly
+    spec_file: calendly-invitees-api-openapi.yml
+    operationId: getEventInvitee
+    tag: Invitees
+    capability_id: null
+    capability: null
+    capability_l1: null
+    intent: null
+    effect: null
+    unmapped: no capability edge for this spec file
+  - step: upsert-kit-subscriber
+    repo: convertkit
+    spec_file: convertkit-subscribers-api-openapi.yml
+    operationId: postV4Subscribers
+    tag: Subscribers
+    capability_id: BC-420.10
+    capability: Customer Data Management
+    capability_l1: BC-420
+    intent: Create or upsert a subscriber
+    effect: write
+    unmapped: null
+  - step: add-to-tag
+    repo: convertkit
+    spec_file: convertkit-tags-api-openapi.yml
+    operationId: postV4TagsByTagIdSubscribersById
+    tag: Tags
+    capability_id: BC-420.20
+    capability: Customer Segmentation Management
+    capability_l1: BC-420
+    intent: Tag a subscriber by id
+    effect: write
+    unmapped: null
+  connects:
+    calendly:
+      capabilities: []
+      tags:
+      - Invitees
+    convertkit:
+      capabilities:
+      - BC-420.10
+      - BC-420.20
+      tags:
+      - Subscribers
+      - Tags
+  intents:
+  - Create or upsert a subscriber
+  - Tag a subscriber by id
+- file: convertkit-google-sheets-subscribers.yml
+  title: 'Kit Google Sheets: add subscribers from rows'
+  partner: google-sheets
+  template: https://zapier.com/apps/google-sheets/integrations/kit/60847/add-subscribers-to-kit-from-new-google-sheets-spreadsheets-rows
+  repos:
+  - google-sheets
+  - convertkit
+  steps:
+  - step: read-sheet-row
+    repo: google-sheets
+    spec_file: google-sheets-values-api-openapi.yml
+    operationId: getValues
+    tag: Values
+    capability_id: null
+    capability: null
+    capability_l1: null
+    intent: null
+    effect: null
+    unmapped: no capability edge for this spec file
+  - step: upsert-kit-subscriber
+    repo: convertkit
+    spec_file: convertkit-subscribers-api-openapi.yml
+    operationId: postV4Subscribers
+    tag: Subscribers
+    capability_id: BC-420.10
+    capability: Customer Data Management
+    capability_l1: BC-420
+    intent: Create or upsert a subscriber
+    effect: write
+    unmapped: null
+  connects:
+    google-sheets:
+      capabilities: []
+      tags:
+      - Values
+    convertkit:
+      capabilities:
+      - BC-420.10
+      tags:
+      - Subscribers
+  intents:
+  - Create or upsert a subscriber
+- file: convertkit-hubspot-contacts.yml
+  title: 'Kit HubSpot: create contacts for new subscribers'
+  partner: hubspot
+  template: https://zapier.com/apps/hubspot/integrations/kit/174826/create-or-update-hubspot-contacts-for-new-subscribers-in-kit
+  repos:
+  - convertkit
+  - hubspot
+  steps:
+  - step: get-kit-subscriber
+    repo: convertkit
+    spec_file: convertkit-subscribers-api-openapi.yml
+    operationId: getV4SubscribersById
+    tag: Subscribers
+    capability_id: BC-420.10
+    capability: Customer Data Management
+    capability_l1: BC-420
+    intent: Get a subscriber
+    effect: read
+    unmapped: null
+  - step: create-hubspot-contact
+    repo: hubspot
+    spec_file: hubspot-basic-api-openapi.yml
+    operationId: post-/crm/objects/2026-03/contacts_create
+    tag: Basic
+    capability_id: null
+    capability: null
+    capability_l1: null
+    intent: Create a contact
+    effect: write
+    unmapped: no capability edge for this spec file
+  connects:
+    convertkit:
+      capabilities:
+      - BC-420.10
+      tags:
+      - Subscribers
+    hubspot:
+      capabilities: []
+      tags:
+      - Basic
+  intents:
+  - Get a subscriber
+  - Create a contact
+- file: convertkit-jotform-form-subscribers.yml
+  title: 'Kit Jotform: add submissions to a Kit form'
+  partner: jotform
+  template: https://zapier.com/apps/jotform/integrations/kit/1207567/add-subscribers-to-a-kit-form-from-new-jotform-submissions
+  repos:
+  - jotform
+  - convertkit
+  steps:
+  - step: get-jotform-submission
+    repo: jotform
+    spec_file: jotform-submission-api-openapi.yml
+    operationId: getSubmission
+    tag: Submission
+    capability_id: null
+    capability: null
+    capability_l1: null
+    intent: null
+    effect: null
+    unmapped: no capability edge for this spec file
+  - step: upsert-kit-subscriber
+    repo: convertkit
+    spec_file: convertkit-subscribers-api-openapi.yml
+    operationId: postV4Subscribers
+    tag: Subscribers
+    capability_id: BC-420.10
+    capability: Customer Data Management
+    capability_l1: BC-420
+    intent: Create or upsert a subscriber
+    effect: write
+    unmapped: null
+  - step: add-to-form
+    repo: convertkit
+    spec_file: convertkit-forms-api-openapi.yml
+    operationId: postV4FormsByFormIdSubscribersById
+    tag: Forms
+    capability_id: BC-400.40
+    capability: Demand Generation Management
+    capability_l1: BC-400
+    intent: Add an existing subscriber to a form by id
+    effect: write
+    unmapped: null
+  connects:
+    jotform:
+      capabilities: []
+      tags:
+      - Submission
+    convertkit:
+      capabilities:
+      - BC-400.40
+      - BC-420.10
+      tags:
+      - Forms
+      - Subscribers
+  intents:
+  - Create or upsert a subscriber
+  - Add an existing subscriber to a form by id
+- file: convertkit-jotform-sequence.yml
+  title: 'Kit Jotform: add submissions to a sequence'
+  partner: jotform
+  template: https://zapier.com/apps/jotform/integrations/kit/1586721/add-new-jotform-submissions-to-kit-subscribers-sequence
+  repos:
+  - jotform
+  - convertkit
+  steps:
+  - step: get-jotform-submission
+    repo: jotform
+    spec_file: jotform-submission-api-openapi.yml
+    operationId: getSubmission
+    tag: Submission
+    capability_id: null
+    capability: null
+    capability_l1: null
+    intent: null
+    effect: null
+    unmapped: no capability edge for this spec file
+  - step: upsert-kit-subscriber
+    repo: convertkit
+    spec_file: convertkit-subscribers-api-openapi.yml
+    operationId: postV4Subscribers
+    tag: Subscribers
+    capability_id: BC-420.10
+    capability: Customer Data Management
+    capability_l1: BC-420
+    intent: Create or upsert a subscriber
+    effect: write
+    unmapped: null
+  - step: add-to-sequence
+    repo: convertkit
+    spec_file: convertkit-sequences-api-openapi.yml
+    operationId: postV4SequencesBySequenceIdSubscribersById
+    tag: Sequences
+    capability_id: BC-400.40
+    capability: Demand Generation Management
+    capability_l1: BC-400
+    intent: Add a subscriber to a sequence by id
+    effect: write
+    unmapped: null
+  connects:
+    jotform:
+      capabilities: []
+      tags:
+      - Submission
+    convertkit:
+      capabilities:
+      - BC-400.40
+      - BC-420.10
+      tags:
+      - Sequences
+      - Subscribers
+  intents:
+  - Create or upsert a subscriber
+  - Add a subscriber to a sequence by id
+- file: convertkit-jotform-tag-respondents.yml
+  title: 'Kit Jotform: tag form respondents'
+  partner: jotform
+  template: https://zapier.com/apps/jotform/integrations/kit/11723/add-new-jotform-form-respondents-as-subscriber-tags-on-kit
+  repos:
+  - jotform
+  - convertkit
+  steps:
+  - step: get-jotform-submission
+    repo: jotform
+    spec_file: jotform-submission-api-openapi.yml
+    operationId: getSubmission
+    tag: Submission
+    capability_id: null
+    capability: null
+    capability_l1: null
+    intent: null
+    effect: null
+    unmapped: no capability edge for this spec file
+  - step: upsert-kit-subscriber
+    repo: convertkit
+    spec_file: convertkit-subscribers-api-openapi.yml
+    operationId: postV4Subscribers
+    tag: Subscribers
+    capability_id: BC-420.10
+    capability: Customer Data Management
+    capability_l1: BC-420
+    intent: Create or upsert a subscriber
+    effect: write
+    unmapped: null
+  - step: add-to-tag
+    repo: convertkit
+    spec_file: convertkit-tags-api-openapi.yml
+    operationId: postV4TagsByTagIdSubscribersById
+    tag: Tags
+    capability_id: BC-420.20
+    capability: Customer Segmentation Management
+    capability_l1: BC-420
+    intent: Tag a subscriber by id
+    effect: write
+    unmapped: null
+  connects:
+    jotform:
+      capabilities: []
+      tags:
+      - Submission
+    convertkit:
+      capabilities:
+      - BC-420.10
+      - BC-420.20
+      tags:
+      - Subscribers
+      - Tags
+  intents:
+  - Create or upsert a subscriber
+  - Tag a subscriber by id
