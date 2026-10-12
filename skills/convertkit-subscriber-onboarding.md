@@ -1,17 +1,19 @@
 ---
-name: Onboard a subscriber into Kit
-description: Create or upsert a subscriber, apply tags, set custom field values, and enrol them in a sequence — the core Kit list-building flow.
+name: onboard-a-subscriber-into-kit
+description: Create or upsert a subscriber, apply tags, set custom field values, and
+  enrol them in a sequence — the core Kit list-building flow.
 api: openapi/convertkit-subscribers-api-openapi.yml
 operations:
-- POST /v4/subscribers
-- GET /v4/custom_fields
-- POST /v4/custom_fields
-- POST /v4/tags
-- POST /v4/tags/{tag_id}/subscribers
-- POST /v4/sequences/{sequence_id}/subscribers
-- GET /v4/subscribers/{id}
+- postV4Subscribers
+- getV4CustomFields
+- postV4CustomFields
+- postV4Tags
+- postV4TagsByTagIdSubscribers
+- postV4SequencesBySequenceIdSubscribers
+- getV4SubscribersById
 provider: Kit
 base_url: https://api.kit.com/v4
+title: Onboard a subscriber into Kit
 ---
 
 # Onboard a subscriber into Kit

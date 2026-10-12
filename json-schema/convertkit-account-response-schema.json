@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/convertkit/main/json-schema/convertkit-account-response-schema.json",
+  "title": "AccountResponse",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/convertkit-account-api-openapi.yml#/components/schemas/AccountResponse",
+  "type": "object",
+  "properties": {
+    "account": {
+      "$ref": "#/$defs/Account"
+    }
+  },
+  "$defs": {
+    "Account": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "plan_type": {
+          "type": "string"
+        },
+        "primary_email_address": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

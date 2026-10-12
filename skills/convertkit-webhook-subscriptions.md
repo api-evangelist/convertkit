@@ -1,13 +1,15 @@
 ---
-name: Subscribe to Kit events with webhooks
-description: Register, list and delete Kit webhooks across the 15 published event types, including the ones that require an entity id.
+name: subscribe-to-kit-events-with-webhooks
+description: Register, list and delete Kit webhooks across the 15 published event
+  types, including the ones that require an entity id.
 api: openapi/convertkit-webhooks-api-openapi.yml
 operations:
-- POST /v4/webhooks
-- GET /v4/webhooks
-- DELETE /v4/webhooks/{id}
+- postV4Webhooks
+- getV4Webhooks
+- deleteV4WebhooksById
 provider: Kit
 base_url: https://api.kit.com/v4
+title: Subscribe to Kit events with webhooks
 ---
 
 # Subscribe to Kit events with webhooks

@@ -1,12 +1,13 @@
 generated: '2026-08-13'
 method: derived
 source: openapi/_original/openapi.json + mcp/convertkit-mcp.yml + https://developers.kit.com/mcp/kit-mcp
-note: 'Kit''s OpenAPI declares no operationIds on any of its 72 operations, so REST operations are bound
-  here by METHOD + path — the only stable identifiers the spec actually publishes. The Kit MCP (app.kit.com/mcp)
-  is OAuth-gated, so its tool names could not be introspected; Kit''s own documentation states the server
-  is a one-to-one mapping of the v4 API surface ("every endpoint in the API reference is exposed as an
-  MCP tool"). That claim is recorded as the binding with confidence: medium, per-capability, rather than
-  inventing tool names.'
+note: 'Kit''s OpenAPI declares no operationIds on any of its 72 operations, so REST
+  operations are bound here by METHOD + path — the only stable identifiers the spec
+  actually publishes. The Kit MCP (app.kit.com/mcp) is OAuth-gated, so its tool names
+  could not be introspected; Kit''s own documentation states the server is a one-to-one
+  mapping of the v4 API surface ("every endpoint in the API reference is exposed as
+  an MCP tool"). That claim is recorded as the binding with confidence: medium, per-capability,
+  rather than inventing tool names.'
 surfaces:
   openapi:
     files: 14
@@ -18,8 +19,9 @@ surfaces:
     endpoint: null
     artifact: graphql/convertkit-schema.graphql
     gated: null
-    note: Kit publishes no GraphQL endpoint. The graphql/ artifact in this repo is an API Evangelist conceptual
-      schema over the REST API, not a Kit surface — it is excluded from this crosswalk.
+    note: Kit publishes no GraphQL endpoint. The graphql/ artifact in this repo is
+      an API Evangelist conceptual schema over the REST API, not a Kit surface — it
+      is excluded from this crosswalk.
   mcp:
   - name: Kit MCP
     url: https://app.kit.com/mcp
@@ -31,8 +33,39 @@ surfaces:
     auth: none
     tools_list_gated: false
     tools: 3
-    note: Anonymous tools/list returned 200 with 3 tools and full inputSchemas — saved to mcp/convertkit-docs-mcp-tools.json.
-crosswalk:
+    note: Anonymous tools/list returned 200 with 3 tools and full inputSchemas — saved
+      to mcp/convertkit-docs-mcp-tools.json.
+crosswalk: []
+mcp_only:
+- tool: search_kit_developer_documentation
+  server: Kit Developer Docs MCP (https://developers.kit.com/mcp)
+  reason: Documentation-plane tool. Operates on published docs content, not on Kit
+    account data — there is no REST equivalent in the v4 API.
+  description: Full-text search over the Kit developer documentation knowledge base.
+  read_only: true
+  input_schema: mcp/convertkit-docs-mcp-tools.json
+- tool: query_docs_filesystem_kit_developer_documentation
+  server: Kit Developer Docs MCP (https://developers.kit.com/mcp)
+  reason: Documentation-plane tool. Operates on published docs content, not on Kit
+    account data — there is no REST equivalent in the v4 API.
+  description: Read-only rg/grep/cat over a virtualized filesystem of the Kit docs
+    pages and OpenAPI specs.
+  read_only: true
+  input_schema: mcp/convertkit-docs-mcp-tools.json
+- tool: submit_feedback
+  server: Kit Developer Docs MCP (https://developers.kit.com/mcp)
+  reason: Documentation-plane tool. Operates on published docs content, not on Kit
+    account data — there is no REST equivalent in the v4 API.
+  description: Report an incorrect/outdated/confusing documentation page to the Kit
+    docs team.
+  read_only: false
+  input_schema: mcp/convertkit-docs-mcp-tools.json
+rest_only:
+- capability: (none identified)
+  reason: Kit states the MCP server covers the whole v4 surface. Because tools/list
+    is gated, no REST operation can be positively shown to lack a tool — recorded
+    as unknown rather than zero.
+  operations: []
 - tool: null
   tool_family: Accounts
   category: Accounts
@@ -48,10 +81,13 @@ crosswalk:
   - convertkit-accounts-api-openapi.yml
   binding: rest
   confidence: medium
-  note: 6 REST operation(s) under the Accounts capability. Kit documents the MCP server as a 1:1 projection
-    of the v4 API, so each of these is expected to have a backing tool; the tool NAMES are not published
-    machine-readably and are deliberately left null rather than guessed. Each operation's parameters +
-    requestBody in the linked spec is the real input contract.
+  note: 6 REST operation(s) under the Accounts capability. Kit documents the MCP server
+    as a 1:1 projection of the v4 API, so each of these is expected to have a backing
+    tool; the tool NAMES are not published machine-readably and are deliberately left
+    null rather than guessed. Each operation's parameters + requestBody in the linked
+    spec is the real input contract.
+  reason: Kit documents the MCP server as a 1:1 projection of v4 but publishes no
+    tool names; left unbound rather than guessed.
 - tool: null
   tool_family: Broadcasts
   category: Broadcasts
@@ -69,10 +105,13 @@ crosswalk:
   - convertkit-broadcasts-api-openapi.yml
   binding: rest
   confidence: medium
-  note: 8 REST operation(s) under the Broadcasts capability. Kit documents the MCP server as a 1:1 projection
-    of the v4 API, so each of these is expected to have a backing tool; the tool NAMES are not published
-    machine-readably and are deliberately left null rather than guessed. Each operation's parameters +
-    requestBody in the linked spec is the real input contract.
+  note: 8 REST operation(s) under the Broadcasts capability. Kit documents the MCP
+    server as a 1:1 projection of the v4 API, so each of these is expected to have
+    a backing tool; the tool NAMES are not published machine-readably and are deliberately
+    left null rather than guessed. Each operation's parameters + requestBody in the
+    linked spec is the real input contract.
+  reason: Kit documents the MCP server as a 1:1 projection of v4 but publishes no
+    tool names; left unbound rather than guessed.
 - tool: null
   tool_family: Custom Fields
   category: Custom Fields
@@ -88,10 +127,13 @@ crosswalk:
   - convertkit-custom-fields-api-openapi.yml
   binding: rest
   confidence: medium
-  note: 6 REST operation(s) under the Custom Fields capability. Kit documents the MCP server as a 1:1
-    projection of the v4 API, so each of these is expected to have a backing tool; the tool NAMES are
-    not published machine-readably and are deliberately left null rather than guessed. Each operation's
-    parameters + requestBody in the linked spec is the real input contract.
+  note: 6 REST operation(s) under the Custom Fields capability. Kit documents the
+    MCP server as a 1:1 projection of the v4 API, so each of these is expected to
+    have a backing tool; the tool NAMES are not published machine-readably and are
+    deliberately left null rather than guessed. Each operation's parameters + requestBody
+    in the linked spec is the real input contract.
+  reason: Kit documents the MCP server as a 1:1 projection of v4 but publishes no
+    tool names; left unbound rather than guessed.
 - tool: null
   tool_family: Forms
   category: Forms
@@ -106,10 +148,13 @@ crosswalk:
   - convertkit-forms-api-openapi.yml
   binding: rest
   confidence: medium
-  note: 5 REST operation(s) under the Forms capability. Kit documents the MCP server as a 1:1 projection
-    of the v4 API, so each of these is expected to have a backing tool; the tool NAMES are not published
-    machine-readably and are deliberately left null rather than guessed. Each operation's parameters +
-    requestBody in the linked spec is the real input contract.
+  note: 5 REST operation(s) under the Forms capability. Kit documents the MCP server
+    as a 1:1 projection of the v4 API, so each of these is expected to have a backing
+    tool; the tool NAMES are not published machine-readably and are deliberately left
+    null rather than guessed. Each operation's parameters + requestBody in the linked
+    spec is the real input contract.
+  reason: Kit documents the MCP server as a 1:1 projection of v4 but publishes no
+    tool names; left unbound rather than guessed.
 - tool: null
   tool_family: Subscribers
   category: Subscribers
@@ -128,10 +173,13 @@ crosswalk:
   - convertkit-subscribers-api-openapi.yml
   binding: rest
   confidence: medium
-  note: 9 REST operation(s) under the Subscribers capability. Kit documents the MCP server as a 1:1 projection
-    of the v4 API, so each of these is expected to have a backing tool; the tool NAMES are not published
-    machine-readably and are deliberately left null rather than guessed. Each operation's parameters +
-    requestBody in the linked spec is the real input contract.
+  note: 9 REST operation(s) under the Subscribers capability. Kit documents the MCP
+    server as a 1:1 projection of the v4 API, so each of these is expected to have
+    a backing tool; the tool NAMES are not published machine-readably and are deliberately
+    left null rather than guessed. Each operation's parameters + requestBody in the
+    linked spec is the real input contract.
+  reason: Kit documents the MCP server as a 1:1 projection of v4 but publishes no
+    tool names; left unbound rather than guessed.
 - tool: null
   tool_family: Tags
   category: Tags
@@ -152,10 +200,13 @@ crosswalk:
   - convertkit-tags-api-openapi.yml
   binding: rest
   confidence: medium
-  note: 11 REST operation(s) under the Tags capability. Kit documents the MCP server as a 1:1 projection
-    of the v4 API, so each of these is expected to have a backing tool; the tool NAMES are not published
-    machine-readably and are deliberately left null rather than guessed. Each operation's parameters +
-    requestBody in the linked spec is the real input contract.
+  note: 11 REST operation(s) under the Tags capability. Kit documents the MCP server
+    as a 1:1 projection of the v4 API, so each of these is expected to have a backing
+    tool; the tool NAMES are not published machine-readably and are deliberately left
+    null rather than guessed. Each operation's parameters + requestBody in the linked
+    spec is the real input contract.
+  reason: Kit documents the MCP server as a 1:1 projection of v4 but publishes no
+    tool names; left unbound rather than guessed.
 - tool: null
   tool_family: Email Templates
   category: Email Templates
@@ -166,10 +217,13 @@ crosswalk:
   - convertkit-email-templates-api-openapi.yml
   binding: rest
   confidence: medium
-  note: 1 REST operation(s) under the Email Templates capability. Kit documents the MCP server as a 1:1
-    projection of the v4 API, so each of these is expected to have a backing tool; the tool NAMES are
-    not published machine-readably and are deliberately left null rather than guessed. Each operation's
-    parameters + requestBody in the linked spec is the real input contract.
+  note: 1 REST operation(s) under the Email Templates capability. Kit documents the
+    MCP server as a 1:1 projection of the v4 API, so each of these is expected to
+    have a backing tool; the tool NAMES are not published machine-readably and are
+    deliberately left null rather than guessed. Each operation's parameters + requestBody
+    in the linked spec is the real input contract.
+  reason: Kit documents the MCP server as a 1:1 projection of v4 but publishes no
+    tool names; left unbound rather than guessed.
 - tool: null
   tool_family: Posts
   category: Posts
@@ -181,10 +235,13 @@ crosswalk:
   - convertkit-posts-api-openapi.yml
   binding: rest
   confidence: medium
-  note: 2 REST operation(s) under the Posts capability. Kit documents the MCP server as a 1:1 projection
-    of the v4 API, so each of these is expected to have a backing tool; the tool NAMES are not published
-    machine-readably and are deliberately left null rather than guessed. Each operation's parameters +
-    requestBody in the linked spec is the real input contract.
+  note: 2 REST operation(s) under the Posts capability. Kit documents the MCP server
+    as a 1:1 projection of the v4 API, so each of these is expected to have a backing
+    tool; the tool NAMES are not published machine-readably and are deliberately left
+    null rather than guessed. Each operation's parameters + requestBody in the linked
+    spec is the real input contract.
+  reason: Kit documents the MCP server as a 1:1 projection of v4 but publishes no
+    tool names; left unbound rather than guessed.
 - tool: null
   tool_family: Purchases
   category: Purchases
@@ -197,10 +254,13 @@ crosswalk:
   - convertkit-purchases-api-openapi.yml
   binding: rest
   confidence: medium
-  note: 3 REST operation(s) under the Purchases capability. Kit documents the MCP server as a 1:1 projection
-    of the v4 API, so each of these is expected to have a backing tool; the tool NAMES are not published
-    machine-readably and are deliberately left null rather than guessed. Each operation's parameters +
-    requestBody in the linked spec is the real input contract.
+  note: 3 REST operation(s) under the Purchases capability. Kit documents the MCP
+    server as a 1:1 projection of the v4 API, so each of these is expected to have
+    a backing tool; the tool NAMES are not published machine-readably and are deliberately
+    left null rather than guessed. Each operation's parameters + requestBody in the
+    linked spec is the real input contract.
+  reason: Kit documents the MCP server as a 1:1 projection of v4 but publishes no
+    tool names; left unbound rather than guessed.
 - tool: null
   tool_family: Segments
   category: Segments
@@ -211,10 +271,13 @@ crosswalk:
   - convertkit-segments-api-openapi.yml
   binding: rest
   confidence: medium
-  note: 1 REST operation(s) under the Segments capability. Kit documents the MCP server as a 1:1 projection
-    of the v4 API, so each of these is expected to have a backing tool; the tool NAMES are not published
-    machine-readably and are deliberately left null rather than guessed. Each operation's parameters +
-    requestBody in the linked spec is the real input contract.
+  note: 1 REST operation(s) under the Segments capability. Kit documents the MCP server
+    as a 1:1 projection of the v4 API, so each of these is expected to have a backing
+    tool; the tool NAMES are not published machine-readably and are deliberately left
+    null rather than guessed. Each operation's parameters + requestBody in the linked
+    spec is the real input contract.
+  reason: Kit documents the MCP server as a 1:1 projection of v4 but publishes no
+    tool names; left unbound rather than guessed.
 - tool: null
   tool_family: Sequences
   category: Sequences
@@ -232,10 +295,13 @@ crosswalk:
   - convertkit-sequences-api-openapi.yml
   binding: rest
   confidence: medium
-  note: 8 REST operation(s) under the Sequences capability. Kit documents the MCP server as a 1:1 projection
-    of the v4 API, so each of these is expected to have a backing tool; the tool NAMES are not published
-    machine-readably and are deliberately left null rather than guessed. Each operation's parameters +
-    requestBody in the linked spec is the real input contract.
+  note: 8 REST operation(s) under the Sequences capability. Kit documents the MCP
+    server as a 1:1 projection of the v4 API, so each of these is expected to have
+    a backing tool; the tool NAMES are not published machine-readably and are deliberately
+    left null rather than guessed. Each operation's parameters + requestBody in the
+    linked spec is the real input contract.
+  reason: Kit documents the MCP server as a 1:1 projection of v4 but publishes no
+    tool names; left unbound rather than guessed.
 - tool: null
   tool_family: Sequence Emails
   category: Sequence Emails
@@ -250,10 +316,13 @@ crosswalk:
   - convertkit-sequence-emails-api-openapi.yml
   binding: rest
   confidence: medium
-  note: 5 REST operation(s) under the Sequence Emails capability. Kit documents the MCP server as a 1:1
-    projection of the v4 API, so each of these is expected to have a backing tool; the tool NAMES are
-    not published machine-readably and are deliberately left null rather than guessed. Each operation's
-    parameters + requestBody in the linked spec is the real input contract.
+  note: 5 REST operation(s) under the Sequence Emails capability. Kit documents the
+    MCP server as a 1:1 projection of the v4 API, so each of these is expected to
+    have a backing tool; the tool NAMES are not published machine-readably and are
+    deliberately left null rather than guessed. Each operation's parameters + requestBody
+    in the linked spec is the real input contract.
+  reason: Kit documents the MCP server as a 1:1 projection of v4 but publishes no
+    tool names; left unbound rather than guessed.
 - tool: null
   tool_family: Snippets
   category: Snippets
@@ -267,10 +336,13 @@ crosswalk:
   - convertkit-snippets-api-openapi.yml
   binding: rest
   confidence: medium
-  note: 4 REST operation(s) under the Snippets capability. Kit documents the MCP server as a 1:1 projection
-    of the v4 API, so each of these is expected to have a backing tool; the tool NAMES are not published
-    machine-readably and are deliberately left null rather than guessed. Each operation's parameters +
-    requestBody in the linked spec is the real input contract.
+  note: 4 REST operation(s) under the Snippets capability. Kit documents the MCP server
+    as a 1:1 projection of the v4 API, so each of these is expected to have a backing
+    tool; the tool NAMES are not published machine-readably and are deliberately left
+    null rather than guessed. Each operation's parameters + requestBody in the linked
+    spec is the real input contract.
+  reason: Kit documents the MCP server as a 1:1 projection of v4 but publishes no
+    tool names; left unbound rather than guessed.
 - tool: null
   tool_family: Webhooks
   category: Webhooks
@@ -283,37 +355,13 @@ crosswalk:
   - convertkit-webhooks-api-openapi.yml
   binding: rest
   confidence: medium
-  note: 3 REST operation(s) under the Webhooks capability. Kit documents the MCP server as a 1:1 projection
-    of the v4 API, so each of these is expected to have a backing tool; the tool NAMES are not published
-    machine-readably and are deliberately left null rather than guessed. Each operation's parameters +
-    requestBody in the linked spec is the real input contract.
-mcp_only:
-- tool: search_kit_developer_documentation
-  server: Kit Developer Docs MCP (https://developers.kit.com/mcp)
-  reason: Documentation-plane tool. Operates on published docs content, not on Kit account data — there
-    is no REST equivalent in the v4 API.
-  description: Full-text search over the Kit developer documentation knowledge base.
-  read_only: true
-  input_schema: mcp/convertkit-docs-mcp-tools.json
-- tool: query_docs_filesystem_kit_developer_documentation
-  server: Kit Developer Docs MCP (https://developers.kit.com/mcp)
-  reason: Documentation-plane tool. Operates on published docs content, not on Kit account data — there
-    is no REST equivalent in the v4 API.
-  description: Read-only rg/grep/cat over a virtualized filesystem of the Kit docs pages and OpenAPI specs.
-  read_only: true
-  input_schema: mcp/convertkit-docs-mcp-tools.json
-- tool: submit_feedback
-  server: Kit Developer Docs MCP (https://developers.kit.com/mcp)
-  reason: Documentation-plane tool. Operates on published docs content, not on Kit account data — there
-    is no REST equivalent in the v4 API.
-  description: Report an incorrect/outdated/confusing documentation page to the Kit docs team.
-  read_only: false
-  input_schema: mcp/convertkit-docs-mcp-tools.json
-rest_only:
-- capability: (none identified)
-  reason: Kit states the MCP server covers the whole v4 surface. Because tools/list is gated, no REST
-    operation can be positively shown to lack a tool — recorded as unknown rather than zero.
-  operations: []
+  note: 3 REST operation(s) under the Webhooks capability. Kit documents the MCP server
+    as a 1:1 projection of the v4 API, so each of these is expected to have a backing
+    tool; the tool NAMES are not published machine-readably and are deliberately left
+    null rather than guessed. Each operation's parameters + requestBody in the linked
+    spec is the real input contract.
+  reason: Kit documents the MCP server as a 1:1 projection of v4 but publishes no
+    tool names; left unbound rather than guessed.
 coverage:
   rest_operations_total: 72
   rest_operation_ids_declared: 0
@@ -322,4 +370,5 @@ coverage:
   mcp_tools_named_and_bound: 0
   mcp_only: 3
   mcp_tools_gated_unnamed: unknown (Kit MCP tools/list requires OAuth)
-  note: Named-tool coverage is 3/3 for the anonymous docs server and 0 named for the gated account server.
+  note: Named-tool coverage is 3/3 for the anonymous docs server and 0 named for the
+    gated account server.

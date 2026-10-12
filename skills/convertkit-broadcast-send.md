@@ -1,18 +1,20 @@
 ---
-name: Draft, target and send a Kit broadcast
-description: Compose a broadcast against an email template, target it with a subscriber filter, schedule the send, and read back delivery and click performance.
+name: draft-target-and-send-a-kit-broadcast
+description: Compose a broadcast against an email template, target it with a subscriber
+  filter, schedule the send, and read back delivery and click performance.
 api: openapi/convertkit-broadcasts-api-openapi.yml
 operations:
-- GET /v4/email_templates
-- POST /v4/subscribers/filter
-- POST /v4/broadcasts
-- PUT /v4/broadcasts/{id}
-- GET /v4/broadcasts/{id}
-- GET /v4/broadcasts/{broadcast_id}/stats
-- GET /v4/broadcasts/{broadcast_id}/clicks
-- DELETE /v4/broadcasts/{id}
+- getV4EmailTemplates
+- postV4SubscribersFilter
+- postV4Broadcasts
+- putV4BroadcastsById
+- getV4BroadcastsById
+- getV4BroadcastsByBroadcastIdStats
+- getV4BroadcastsByBroadcastIdClicks
+- deleteV4BroadcastsById
 provider: Kit
 base_url: https://api.kit.com/v4
+title: Draft, target and send a Kit broadcast
 ---
 
 # Draft, target and send a Kit broadcast

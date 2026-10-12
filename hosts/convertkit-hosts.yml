@@ -1,0 +1,127 @@
+generated: '2026-10-12'
+method: derived
+source: the pre-flight dossier, apis.yml pointers, spec servers, well-known, vendors -- nothing fetched here
+generator: derive-hosts.py
+summary:
+  hosts: 10
+  own: 6
+  other_domain: 1
+  platform: 3
+  roles:
+  - api
+  - identity
+  - other
+  - portal
+  - source
+  - status
+  - support
+  - website
+hosts:
+- host: api.convertkit.com
+  found_by:
+  - apis[]
+  types: []
+  serves:
+  - api
+  registrable_domain: convertkit.com
+  role: api
+  relation: other-domain
+- host: api.kit.com
+  found_by:
+  - apis[]
+  types: []
+  serves:
+  - api
+  registrable_domain: kit.com
+  role: api
+  relation: own
+- host: app.kit.com
+  found_by:
+  - pointer
+  types:
+  - SignUp
+  serves: []
+  registrable_domain: kit.com
+  role: identity
+  relation: own
+- host: developers.kit.com
+  found_by:
+  - pointer
+  - apis[]
+  types:
+  - Documentation
+  - Deprecation
+  - DeveloperPortal
+  - APIReference
+  - GettingStarted
+  serves:
+  - docs
+  registrable_domain: kit.com
+  role: portal
+  relation: own
+- host: github.com
+  found_by:
+  - pointer
+  types:
+  - GitHubOrganization
+  serves: []
+  registrable_domain: github.com
+  role: source
+  relation: platform
+- host: help.kit.com
+  found_by:
+  - pointer
+  types:
+  - HelpCenter
+  serves: []
+  registrable_domain: kit.com
+  role: support
+  relation: own
+- host: kit.com
+  found_by:
+  - pointer
+  - vendor-detect
+  types:
+  - Newsroom
+  - Website
+  - Blog
+  - Pricing
+  - Compliance
+  - Security
+  - Support
+  - TermsOfService
+  - PrivacyPolicy
+  serves:
+  - cdn
+  - hosting
+  vendor: cloudflare
+  registrable_domain: kit.com
+  role: website
+  relation: own
+- host: status.kit.com
+  found_by:
+  - pointer
+  types:
+  - StatusPage
+  serves: []
+  registrable_domain: kit.com
+  role: status
+  relation: own
+- host: www.linkedin.com
+  found_by:
+  - pointer
+  types:
+  - LinkedIn
+  serves: []
+  registrable_domain: linkedin.com
+  role: other
+  relation: platform
+- host: x.com
+  found_by:
+  - pointer
+  types:
+  - X
+  serves: []
+  registrable_domain: x.com
+  role: other
+  relation: platform

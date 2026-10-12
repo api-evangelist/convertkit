@@ -1,0 +1,87 @@
+arazzo: 1.0.1
+info:
+  title: 'Kit Calendly: tag subscribers from new events'
+  summary: Add tagged subscribers to Kit from new Calendly events.
+  description: Add tagged subscribers to Kit from new Calendly events. Recreated from
+    the Zapier template that names Kit and calendly; every operationId is copied from
+    the catalog specs.
+  version: 1.0.0
+x-integration:
+  partner: calendly
+  template: https://zapier.com/apps/calendly/integrations/kit/11530/add-tagged-subscribers-to-converkit-from-new-calendly-events
+  edge_evidence: https://zapier.com/apps/calendly/integrations/kit/11530/add-tagged-subscribers-to-converkit-from-new-calendly-events
+  edge_type: marketplace
+  method: generated
+  generated: '2026-10-12'
+  generator: claude-enrich local-v5
+  guessed_steps: []
+sourceDescriptions:
+- name: calendlyInvitees
+  url: https://raw.githubusercontent.com/api-evangelist/calendly/refs/heads/main/openapi/calendly-invitees-api-openapi.yml
+  type: openapi
+- name: kitSubscribers
+  url: https://raw.githubusercontent.com/api-evangelist/convertkit/refs/heads/main/openapi/convertkit-subscribers-api-openapi.yml
+  type: openapi
+- name: kitTags
+  url: https://raw.githubusercontent.com/api-evangelist/convertkit/refs/heads/main/openapi/convertkit-tags-api-openapi.yml
+  type: openapi
+workflows:
+- workflowId: calendly-tag-invitees
+  summary: Add tagged subscribers to Kit from new Calendly events.
+  inputs:
+    type: object
+    properties:
+      event_uuid:
+        type: string
+      invitee_uuid:
+        type: string
+      tag_id:
+        type: string
+    required:
+    - event_uuid
+    - invitee_uuid
+    - tag_id
+  steps:
+  - stepId: get-calendly-invitee
+    description: Read the invitee of the new Calendly event.
+    operationId: $sourceDescriptions.calendlyInvitees.getEventInvitee
+    parameters:
+    - name: event_uuid
+      in: path
+      value: $inputs.event_uuid
+    - name: invitee_uuid
+      in: path
+      value: $inputs.invitee_uuid
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      email: $response.body#/resource/email
+      name: $response.body#/resource/first_name
+  - stepId: upsert-kit-subscriber
+    description: Create or update the Kit subscriber (upsert on email_address).
+    operationId: $sourceDescriptions.kitSubscribers.postV4Subscribers
+    requestBody:
+      contentType: application/json
+      payload:
+        email_address: $steps.get-calendly-invitee.outputs.email
+        first_name: $steps.get-calendly-invitee.outputs.name
+    successCriteria:
+    - condition: $statusCode == 201 || $statusCode == 200
+    outputs:
+      subscriberId: $response.body#/subscriber/id
+  - stepId: add-to-tag
+    description: Attach the subscriber to the Kit tag.
+    operationId: $sourceDescriptions.kitTags.postV4TagsByTagIdSubscribersById
+    parameters:
+    - name: tag_id
+      in: path
+      value: $inputs.tag_id
+    - name: id
+      in: path
+      value: $steps.upsert-kit-subscriber.outputs.subscriberId
+    successCriteria:
+    - condition: $statusCode == 201 || $statusCode == 200
+    outputs:
+      subscriberId: $response.body#/subscriber/id
+  outputs:
+    subscriberId: $steps.add-to-tag.outputs.subscriberId

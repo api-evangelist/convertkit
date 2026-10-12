@@ -1,9 +1,7 @@
 generated: '2026-08-13'
 method: searched
-source: >-
-  openapi/_original/openapi.json, https://api.kit.com/.well-known/oauth-authorization-server,
-  https://api.kit.com/.well-known/oauth-protected-resource, https://kit.com/security,
-  https://developers.kit.com/api-reference/*
+source: openapi/_original/openapi.json, https://api.kit.com/.well-known/oauth-authorization-server, https://api.kit.com/.well-known/oauth-protected-resource,
+  https://kit.com/security, https://developers.kit.com/api-reference/*
 standards:
 - id: openapi-3.0
   conforms: true
@@ -13,13 +11,16 @@ standards:
   evidence: components.securitySchemes declares an oauth2 authorizationCode flow; authorize/token/revoke endpoints are live.
 - id: rfc8414-oauth-authorization-server-metadata
   conforms: true
-  evidence: https://api.kit.com/.well-known/oauth-authorization-server returns 200 with issuer, authorization_endpoint, token_endpoint, registration_endpoint, revocation_endpoint, scopes_supported.
+  evidence: https://api.kit.com/.well-known/oauth-authorization-server returns 200 with issuer, authorization_endpoint, token_endpoint, registration_endpoint,
+    revocation_endpoint, scopes_supported.
 - id: rfc9728-oauth-protected-resource-metadata
   conforms: true
-  evidence: https://api.kit.com/.well-known/oauth-protected-resource returns 200 naming https://app.kit.com/mcp; the MCP 401 also emits WWW-Authenticate with resource_metadata.
+  evidence: https://api.kit.com/.well-known/oauth-protected-resource returns 200 naming https://app.kit.com/mcp; the MCP 401 also emits WWW-Authenticate
+    with resource_metadata.
 - id: rfc7591-dynamic-client-registration
   conforms: true
-  evidence: registration_endpoint https://app.kit.com/oauth/register; the 2026-05-20 changelog entry records aligning the DCR response with RFC 7591 for public clients.
+  evidence: registration_endpoint https://app.kit.com/oauth/register; the 2026-05-20 changelog entry records aligning the DCR response with RFC
+    7591 for public clients.
 - id: rfc7636-pkce
   conforms: true
   evidence: code_challenge_methods_supported ["S256"]; Kit documents a PKCE flow for SPAs and mobile apps.
@@ -50,22 +51,21 @@ standards:
   evidence: No Idempotency-Key header or client request token in the docs or the spec. See conventions/convertkit-conventions.yml.
 - id: cursor-pagination
   conforms: true
-  evidence: All list endpoints return a `pagination` object with start_cursor/end_cursor/has_next_page; before/after/per_page params. Documented at /api-reference/pagination.
+  evidence: All list endpoints return a `pagination` object with start_cursor/end_cursor/has_next_page; before/after/per_page params. Documented
+    at /api-reference/pagination.
 - id: iso8601-utc-timestamps
   conforms: true
   evidence: /api-reference/dates — all dates returned in UTC ISO 8601 (e.g. 2023-07-17T16:48:20Z).
   note: GET /v4/account/growth_stats is a documented exception and returns account-timezone timestamps.
 - id: mcp
   conforms: true
-  evidence: >-
-    Two live remote MCP servers. https://developers.kit.com/mcp answers
-    initialize + tools/list anonymously with protocolVersion 2025-06-18 and 3
-    tools carrying MCP tool annotations; https://app.kit.com/mcp is OAuth-gated
-    and advertises RFC 9728 resource metadata on its 401.
+  evidence: Two live remote MCP servers. https://developers.kit.com/mcp answers initialize + tools/list anonymously with protocolVersion 2025-06-18
+    and 3 tools carrying MCP tool annotations; https://app.kit.com/mcp is OAuth-gated and advertises RFC 9728 resource metadata on its 401.
 - id: a2a-1.0.0
   conforms: true
   grade: conformant
-  evidence: https://developers.kit.com/.well-known/agent-card.json — capabilities object, protocolVersion 0.3, skills array. See a2a/convertkit-a2a.yml for graded deviations.
+  evidence: https://developers.kit.com/.well-known/agent-card.json — capabilities object, protocolVersion 0.3, skills array. See a2a/convertkit-a2a.yml
+    for graded deviations.
 - id: llms-txt
   conforms: true
   evidence: https://developers.kit.com/llms.txt returns 200 (32KB) and llms-full.txt returns 200 (412KB).
@@ -84,6 +84,18 @@ standards:
 - id: grpc
   conforms: false
   evidence: No .proto published in the Kit GitHub org, on buf.build, or in the docs.
+- id: openapi-3.2
+  conforms: true
+  evidence: the document declares 3.2.0
+- id: rfc9457
+  conforms: false
+  evidence: no response declares application/problem+json
+- id: idempotency
+  conforms: false
+  evidence: no idempotency key parameter on mutating operations
+- id: pagination
+  conforms: true
+  evidence: list operations take per_page
 compliance:
   published: true
   url: https://kit.com/security

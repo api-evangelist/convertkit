@@ -1,0 +1,78 @@
+generated: '2026-10-12'
+method: derived
+generator: derive-vocabulary.py
+source:
+- openapi/convertkit-account-api-openapi.yml
+- openapi/convertkit-accounts-api-openapi.yml
+- openapi/convertkit-broadcasts-api-openapi.yml
+- openapi/convertkit-custom-fields-api-openapi.yml
+- openapi/convertkit-email-templates-api-openapi.yml
+vocabulary:
+  name: Kit Domain Vocabulary
+  description: 'Terms declared by Kit''s own API contract: its resource groups, objects and enumerations, with the contract''s definitions. Derived,
+    not authored.'
+  version: '2026-10-12'
+  terms:
+  - term: Account
+    definition: Account, creator profile, and account-level statistics
+    tags:
+    - Resource Group
+    source: openapi/convertkit-account-api-openapi.yml
+  - term: ColorsRequest
+    definition: 'Object declared by the contract with fields: colors.'
+    tags:
+    - Object
+    source: openapi/convertkit-account-api-openapi.yml#/components/schemas/ColorsRequest
+  - term: AccountResponse
+    definition: 'Object declared by the contract with fields: account.'
+    tags:
+    - Object
+    source: openapi/convertkit-account-api-openapi.yml#/components/schemas/AccountResponse
+  - term: ColorsResponse
+    definition: 'Object declared by the contract with fields: colors.'
+    tags:
+    - Object
+    source: openapi/convertkit-account-api-openapi.yml#/components/schemas/ColorsResponse
+  - term: ErrorResponse
+    definition: 'Object declared by the contract with fields: errors.'
+    tags:
+    - Object
+    source: openapi/convertkit-account-api-openapi.yml#/components/schemas/ErrorResponse
+  - term: StatsResponse
+    definition: 'Object declared by the contract with fields: stats.'
+    tags:
+    - Object
+    source: openapi/convertkit-account-api-openapi.yml#/components/schemas/StatsResponse
+  - term: BroadcastAnyCondition
+    definition: Filter by specific broadcast IDs. Subscriber must have interacted with ANY of the specified broadcasts.
+    tags:
+    - Object
+    source: openapi/convertkit-subscribers-api-openapi.yml#/components/schemas/BroadcastAnyCondition
+  - term: IdsAnyCondition
+    definition: Match a list of ids. Used by the 'tags' filter to select tag ids.
+    tags:
+    - Object
+    source: openapi/convertkit-subscribers-api-openapi.yml#/components/schemas/IdsAnyCondition
+  - term: FilterCondition
+    definition: A filter condition with type and optional parameters. Used within the 'all' array for complex filtering where multiple conditions
+      must be met.
+    tags:
+    - Object
+    source: openapi/convertkit-subscribers-api-openapi.yml#/components/schemas/FilterCondition
+  - term: FormsAnyCondition
+    definition: 'Attribution sub-condition: matches subscribers whose original signup attribution points at one of the given form / landing-page
+      ids. Ids may refer to either a form or a legacy landing page — the attribution source does not distinguish between the two.'
+    tags:
+    - Object
+    source: openapi/convertkit-subscribers-api-openapi.yml#/components/schemas/FormsAnyCondition
+  - term: SubscriberFilterRequest
+    definition: Filter subscribers based on engagement and subscription criteria using the 'all' array with filter conditions that must all be
+      met (AND logic).
+    tags:
+    - Object
+    source: openapi/convertkit-subscribers-api-openapi.yml#/components/schemas/SubscriberFilterRequest
+  - term: UrlAnyCondition
+    definition: Filter by URL patterns. Only applicable for 'clicks' type. Subscriber must have clicked ANY of the specified URLs.
+    tags:
+    - Object
+    source: openapi/convertkit-subscribers-api-openapi.yml#/components/schemas/UrlAnyCondition

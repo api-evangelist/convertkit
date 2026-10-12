@@ -1,9 +1,13 @@
 ---
-name: Kit
-description: Use when building apps for the Kit App Store, creating plugins to extend Kit's UI, integrating with Kit's API for subscriber and email management, or helping developers understand Kit's authentication flows and best practices.
+name: kit-provider
+description: Use when building apps for the Kit App Store, creating plugins to extend
+  Kit's UI, integrating with Kit's API for subscriber and email management, or helping
+  developers understand Kit's authentication flows and best practices.
 metadata:
-    mintlify-proj: kit
-    version: "1.0"
+  mintlify-proj: kit
+  version: '1.0'
+title: Kit
+operations: []
 ---
 
 # Kit Developer Platform

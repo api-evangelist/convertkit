@@ -1,18 +1,19 @@
 ---
-name: Bulk import subscribers and tags into Kit
-description: Use Kit's OAuth-only bulk namespace with async callbacks to load subscribers, tags, and custom field values at volume without tripping the 413 queue limit.
+name: bulk-import-subscribers-and-tags-into-kit
+description: Use Kit's OAuth-only bulk namespace with async callbacks to load subscribers,
+  tags, and custom field values at volume without tripping the 413 queue limit.
 api: openapi/convertkit-subscribers-api-openapi.yml
 operations:
-- POST /v4/bulk/subscribers
-- POST /v4/bulk/tags
-- DELETE /v4/bulk/tags
-- POST /v4/bulk/tags/subscribers
-- DELETE /v4/bulk/tags/subscribers
-- POST /v4/bulk/custom_fields
-- POST /v4/bulk/custom_fields/subscribers
-- POST /v4/bulk/forms/subscribers
+- postV4BulkSubscribers
+- postV4BulkTags
+- postV4BulkTagsSubscribers
+- deleteV4BulkTagsSubscribers
+- postV4BulkCustomFields
+- postV4BulkCustomFieldsSubscribers
+- postV4BulkFormsSubscribers
 provider: Kit
 base_url: https://api.kit.com/v4
+title: Bulk import subscribers and tags into Kit
 ---
 
 # Bulk import subscribers and tags into Kit

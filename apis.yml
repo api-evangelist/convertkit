@@ -1,6 +1,15 @@
 aid: convertkit
+
 name: Kit
-description: Kit (formerly ConvertKit) is a creator email marketing platform whose REST API v4 covers subscribers, tags, custom fields, forms and landing pages, sequences, broadcasts, snippets, posts, purchases, segments and webhooks across 72 operations on https://api.kit.com/v4. It authenticates with an X-Kit-Api-Key header for personal automation or OAuth 2.0 (PKCE, dynamic client registration, rotating single-use refresh tokens) for apps published to the Kit App Store, and uses cursor-based pagination, an OAuth-only bulk namespace with async callbacks, and eventually-consistent list reads. Kit also runs two remote MCP servers - an OAuth-gated one that acts on a creator's account and an anonymous read-only documentation server - publishes an A2A agent card and an Agent Skill from its developer docs host, and ships llms.txt. Its only first-party API client is a PHP SDK.
+
+description: Kit (formerly ConvertKit) is a creator email marketing platform whose REST API v4 covers subscribers, tags, custom fields, forms
+  and landing pages, sequences, broadcasts, snippets, posts, purchases, segments and webhooks across 72 operations on https://api.kit.com/v4.
+  It authenticates with an X-Kit-Api-Key header for personal automation or OAuth 2.0 (PKCE, dynamic client registration, rotating single-use refresh
+  tokens) for apps published to the Kit App Store, and uses cursor-based pagination, an OAuth-only bulk namespace with async callbacks, and eventually-consistent
+  list reads. Kit also runs two remote MCP servers - an OAuth-gated one that acts on a creator's account and an anonymous read-only documentation
+  server - publishes an A2A agent card and an Agent Skill from its developer docs host, and ships llms.txt. Its only first-party API client is
+  a PHP SDK.
+
 deliveryModel:
   model: saas
   open_source: false
@@ -13,6 +22,7 @@ deliveryModel:
   - pricing
   generated: '2026-08-28'
   method: derived
+
 accessModel:
   pricing: paid
   onboarding: self-serve
@@ -26,14 +36,23 @@ accessModel:
   - authentication
   generated: '2026-07-22'
   method: derived
+
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/convertkit.png
+
 url: https://raw.githubusercontent.com/api-evangelist/convertkit/refs/heads/main/apis.yml
+
 created: '2026-06-13'
+
 modified: '2026-08-13'
+
 specificationVersion: '0.23'
+
 x-docs-platform: mintlify
+
 x-docs-platform-confidence: medium
+
 x-docs-platform-checked: 2026-09-24
+
 tags:
 - Email Marketing
 - Creator Economy
@@ -55,6 +74,7 @@ tags:
 - Commerce
 - A2A
 - Email
+
 tags_raw:
 - Email Marketing
 - Creator Economy
@@ -76,302 +96,32 @@ tags_raw:
 - Commerce
 - A2A
 - Email
-apis:
-- aid: convertkit:convertkit-accounts-api
-  name: Kit Accounts API
-  description: The Accounts API from Kit — 5 operation(s) for accounts.
-  humanURL: https://developers.kit.com
-  baseURL: https://api.kit.com/v4
-  tags:
-  - Account
-  tags_raw:
-  - Accounts
-  properties:
-  - type: OpenAPI
-    url: openapi/convertkit-accounts-api-openapi.yml
-  - type: Documentation
-    url: https://developers.kit.com/docs
-  - type: Authentication
-    url: https://developers.kit.com/api-reference/authentication
-  - type: ChangeLog
-    url: https://developers.kit.com/changelog
-  - type: Overlay
-    url: overlays/convertkit-accounts-overlay.yaml
-- aid: convertkit:convertkit-broadcasts-api
-  name: Kit Broadcasts API
-  description: The Broadcasts API from Kit — 5 operation(s) for broadcasts.
-  humanURL: https://developers.kit.com
-  baseURL: https://api.kit.com/v4
-  tags:
-  - Broadcast
-  tags_raw:
-  - Broadcasts
-  properties:
-  - type: OpenAPI
-    url: openapi/convertkit-broadcasts-api-openapi.yml
-  - type: Documentation
-    url: https://developers.kit.com/docs
-  - type: Authentication
-    url: https://developers.kit.com/api-reference/authentication
-  - type: ChangeLog
-    url: https://developers.kit.com/changelog
-  - type: Overlay
-    url: overlays/convertkit-broadcasts-overlay.yaml
-- aid: convertkit:convertkit-custom-fields-api
-  name: Kit Custom Fields API
-  description: The Custom Fields API from Kit — 4 operation(s) for custom fields.
-  humanURL: https://developers.kit.com
-  baseURL: https://api.kit.com/v4
-  tags:
-  - Custom Fields
-  properties:
-  - type: OpenAPI
-    url: openapi/convertkit-custom-fields-api-openapi.yml
-  - type: Documentation
-    url: https://developers.kit.com/docs
-  - type: Authentication
-    url: https://developers.kit.com/api-reference/authentication
-  - type: ChangeLog
-    url: https://developers.kit.com/changelog
-  - type: Overlay
-    url: overlays/convertkit-custom-fields-overlay.yaml
-- aid: convertkit:convertkit-email-templates-api
-  name: Kit Email Templates API
-  description: The Email Templates API from Kit — 1 operation(s) for email templates.
-  humanURL: https://developers.kit.com
-  baseURL: https://api.kit.com/v4
-  tags:
-  - Email Templates
-  properties:
-  - type: OpenAPI
-    url: openapi/convertkit-email-templates-api-openapi.yml
-  - type: Documentation
-    url: https://developers.kit.com/docs
-  - type: Authentication
-    url: https://developers.kit.com/api-reference/authentication
-  - type: ChangeLog
-    url: https://developers.kit.com/changelog
-  - type: Overlay
-    url: overlays/convertkit-email-templates-overlay.yaml
-- aid: convertkit:convertkit-forms-api
-  name: Kit Forms API
-  description: The Forms API from Kit — 4 operation(s) for forms.
-  humanURL: https://developers.kit.com
-  baseURL: https://api.kit.com/v4
-  tags:
-  - Forms
-  properties:
-  - type: OpenAPI
-    url: openapi/convertkit-forms-api-openapi.yml
-  - type: Documentation
-    url: https://developers.kit.com/docs
-  - type: Authentication
-    url: https://developers.kit.com/api-reference/authentication
-  - type: ChangeLog
-    url: https://developers.kit.com/changelog
-  - type: Overlay
-    url: overlays/convertkit-forms-overlay.yaml
-- aid: convertkit:convertkit-posts-api
-  name: Kit Posts API
-  description: The Posts API from Kit — 2 operation(s) for posts.
-  humanURL: https://developers.kit.com
-  baseURL: https://api.kit.com/v4
-  tags:
-  - Posts
-  properties:
-  - type: OpenAPI
-    url: openapi/convertkit-posts-api-openapi.yml
-  - type: Documentation
-    url: https://developers.kit.com/docs
-  - type: Authentication
-    url: https://developers.kit.com/api-reference/authentication
-  - type: ChangeLog
-    url: https://developers.kit.com/changelog
-  - type: Overlay
-    url: overlays/convertkit-posts-overlay.yaml
-- aid: convertkit:convertkit-purchases-api
-  name: Kit Purchases API
-  description: The Purchases API from Kit — 2 operation(s) for purchases.
-  humanURL: https://developers.kit.com
-  baseURL: https://api.kit.com/v4
-  tags:
-  - Purchases
-  properties:
-  - type: OpenAPI
-    url: openapi/convertkit-purchases-api-openapi.yml
-  - type: Documentation
-    url: https://developers.kit.com/docs
-  - type: Authentication
-    url: https://developers.kit.com/api-reference/authentication
-  - type: ChangeLog
-    url: https://developers.kit.com/changelog
-  - type: Overlay
-    url: overlays/convertkit-purchases-overlay.yaml
-- aid: convertkit:convertkit-segments-api
-  name: Kit Segments API
-  description: The Segments API from Kit — 1 operation(s) for segments.
-  humanURL: https://developers.kit.com
-  baseURL: https://api.kit.com/v4
-  tags:
-  - Segments
-  properties:
-  - type: OpenAPI
-    url: openapi/convertkit-segments-api-openapi.yml
-  - type: Documentation
-    url: https://developers.kit.com/docs
-  - type: Authentication
-    url: https://developers.kit.com/api-reference/authentication
-  - type: ChangeLog
-    url: https://developers.kit.com/changelog
-  - type: Overlay
-    url: overlays/convertkit-segments-overlay.yaml
-- aid: convertkit:convertkit-sequence-emails-api
-  name: Kit Sequence Emails API
-  description: The Sequence Emails API from Kit — 2 operation(s) for sequence emails.
-  humanURL: https://developers.kit.com
-  baseURL: https://api.kit.com/v4
-  tags:
-  - Sequence Emails
-  properties:
-  - type: OpenAPI
-    url: openapi/convertkit-sequence-emails-api-openapi.yml
-  - type: Documentation
-    url: https://developers.kit.com/docs
-  - type: Authentication
-    url: https://developers.kit.com/api-reference/authentication
-  - type: ChangeLog
-    url: https://developers.kit.com/changelog
-  - type: Overlay
-    url: overlays/convertkit-sequence-emails-overlay.yaml
-- aid: convertkit:convertkit-sequences-api
-  name: Kit Sequences API
-  description: The Sequences API from Kit — 4 operation(s) for sequences.
-  humanURL: https://developers.kit.com
-  baseURL: https://api.kit.com/v4
-  tags:
-  - Sequences
-  properties:
-  - type: OpenAPI
-    url: openapi/convertkit-sequences-api-openapi.yml
-  - type: Documentation
-    url: https://developers.kit.com/docs
-  - type: Authentication
-    url: https://developers.kit.com/api-reference/authentication
-  - type: ChangeLog
-    url: https://developers.kit.com/changelog
-  - type: Overlay
-    url: overlays/convertkit-sequences-overlay.yaml
-- aid: convertkit:convertkit-snippets-api
-  name: Kit Snippets API
-  description: The Snippets API from Kit — 2 operation(s) for snippets.
-  humanURL: https://developers.kit.com
-  baseURL: https://api.kit.com/v4
-  tags:
-  - Snippets
-  properties:
-  - type: OpenAPI
-    url: openapi/convertkit-snippets-api-openapi.yml
-  - type: Documentation
-    url: https://developers.kit.com/docs
-  - type: Authentication
-    url: https://developers.kit.com/api-reference/authentication
-  - type: ChangeLog
-    url: https://developers.kit.com/changelog
-  - type: Overlay
-    url: overlays/convertkit-snippets-overlay.yaml
-- aid: convertkit:convertkit-subscribers-api
-  name: Kit Subscribers API
-  description: The Subscribers API from Kit — 7 operation(s) for subscribers.
-  humanURL: https://developers.kit.com
-  baseURL: https://api.kit.com/v4
-  tags:
-  - Subscribers
-  properties:
-  - type: OpenAPI
-    url: openapi/convertkit-subscribers-api-openapi.yml
-  - type: Documentation
-    url: https://developers.kit.com/docs
-  - type: Authentication
-    url: https://developers.kit.com/api-reference/authentication
-  - type: ChangeLog
-    url: https://developers.kit.com/changelog
-  - type: Overlay
-    url: overlays/convertkit-subscribers-overlay.yaml
-- aid: convertkit:convertkit-tags-api
-  name: Kit Tags API
-  description: The Tags API from Kit — 6 operation(s) for tags.
-  humanURL: https://developers.kit.com
-  baseURL: https://api.kit.com/v4
-  tags:
-  - Tags
-  properties:
-  - type: OpenAPI
-    url: openapi/convertkit-tags-api-openapi.yml
-  - type: Documentation
-    url: https://developers.kit.com/docs
-  - type: Authentication
-    url: https://developers.kit.com/api-reference/authentication
-  - type: ChangeLog
-    url: https://developers.kit.com/changelog
-  - type: Overlay
-    url: overlays/convertkit-tags-overlay.yaml
-- aid: convertkit:convertkit-webhooks-api
-  name: Kit Webhooks API
-  description: The Webhooks API from Kit — 2 operation(s) for webhooks.
-  humanURL: https://developers.kit.com
-  baseURL: https://api.kit.com/v4
-  tags:
-  - Webhook
-  tags_raw:
-  - Webhooks
-  properties:
-  - type: OpenAPI
-    url: openapi/convertkit-webhooks-api-openapi.yml
-  - type: Documentation
-    url: https://developers.kit.com/docs
-  - type: Authentication
-    url: https://developers.kit.com/api-reference/authentication
-  - type: ChangeLog
-    url: https://developers.kit.com/changelog
-  - type: Overlay
-    url: overlays/convertkit-webhooks-overlay.yaml
-- aid: convertkit:kit-api-v3
-  name: Kit API V3 (Deprecated)
-  humanURL: https://developers.kit.com/v3/api-reference
-  baseURL: https://api.convertkit.com/v3
-  tags:
-  - Email Marketing
-  - Subscribers
-  - Deprecated
-  description: >-
-    The legacy ConvertKit V3 API is deprecated and slated for discontinuation; new integrations should
-    target V4.
-  properties:
-  - type: Documentation
-    url: https://developers.kit.com/v3/api-reference
-  - type: Deprecation
-    url: https://developers.kit.com/v4/api-reference/v3-to-v4-upgrade-guide
-- aid: convertkit:convertkit-account-api
-  name: Kit Account API
-  description: Account, creator profile, and account-level statistics
-  humanURL: https://developers.kit.com
-  baseURL: https://api.kit.com/v4
-  tags:
-  - Account
-  properties:
-  - type: OpenAPI
-    url: openapi/convertkit-account-api-openapi.yml
-  - type: Documentation
-    url: https://developers.kit.com/v4/api-reference
-  - type: Authentication
-    url: https://developers.kit.com/v4/api-reference/authentication
-  - type: Webhooks
-    url: https://developers.kit.com/v4/api-reference/webhooks
-  - type: Migration
-    url: https://developers.kit.com/v4/api-reference/v3-to-v4-upgrade-guide
-  - type: AsyncAPI
-    url: asyncapi/kit-webhooks-asyncapi.yml
+
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com
+
 common:
+- type: Spectral
+  url: rules/convertkit-rules.yml
+- type: Spectral
+  url: rules/convertkit-jsonschema-spectral-rules.yml
+- type: JSONLD
+  url: json-ld/convertkit-context.jsonld
+- type: Vocabulary
+  url: vocabulary/convertkit-vocabulary.yml
+- type: Webhooks
+  url: asyncapi/kit-webhooks-asyncapi.yml
+- type: Idempotency
+  url: conventions/convertkit-conventions.yml
+- type: Hosts
+  url: hosts/convertkit-hosts.yml
+- type: IntegrationEdges
+  url: integrations/convertkit-integration-edges.yml
+- type: Vendors
+  url: vendors/convertkit-vendors.yml
+- type: Newsroom
+  url: https://kit.com/news
 - type: CapabilityMap
   url: capabilities/convertkit-capability-edges.yml
   name: Kit Business Capability Map
@@ -617,18 +367,321 @@ common:
   url: json-ld/context.json
 - type: Contact
   url: mailto:help@kit.com
-maintainers:
-- FN: Kin Lane
-  email: kin@apievangelist.com
+
+apis:
+- aid: convertkit:convertkit-accounts-api
+  name: Kit Accounts API
+  description: The Accounts API from Kit — 5 operation(s) for accounts.
+  humanURL: https://developers.kit.com
+  baseURL: https://api.kit.com/v4
+  tags:
+  - Account
+  tags_raw:
+  - Accounts
+  properties:
+  - type: OpenAPI
+    url: openapi/convertkit-accounts-api-openapi.yml
+  - type: Documentation
+    url: https://developers.kit.com/docs
+  - type: Authentication
+    url: https://developers.kit.com/api-reference/authentication
+  - type: ChangeLog
+    url: https://developers.kit.com/changelog
+  - type: Overlay
+    url: overlays/convertkit-accounts-overlay.yaml
+- aid: convertkit:convertkit-broadcasts-api
+  name: Kit Broadcasts API
+  description: The Broadcasts API from Kit — 5 operation(s) for broadcasts.
+  humanURL: https://developers.kit.com
+  baseURL: https://api.kit.com/v4
+  tags:
+  - Broadcast
+  tags_raw:
+  - Broadcasts
+  properties:
+  - type: OpenAPI
+    url: openapi/convertkit-broadcasts-api-openapi.yml
+  - type: Documentation
+    url: https://developers.kit.com/docs
+  - type: Authentication
+    url: https://developers.kit.com/api-reference/authentication
+  - type: ChangeLog
+    url: https://developers.kit.com/changelog
+  - type: Overlay
+    url: overlays/convertkit-broadcasts-overlay.yaml
+- aid: convertkit:convertkit-custom-fields-api
+  name: Kit Custom Fields API
+  description: The Custom Fields API from Kit — 4 operation(s) for custom fields.
+  humanURL: https://developers.kit.com
+  baseURL: https://api.kit.com/v4
+  tags:
+  - Custom Fields
+  properties:
+  - type: OpenAPI
+    url: openapi/convertkit-custom-fields-api-openapi.yml
+  - type: Documentation
+    url: https://developers.kit.com/docs
+  - type: Authentication
+    url: https://developers.kit.com/api-reference/authentication
+  - type: ChangeLog
+    url: https://developers.kit.com/changelog
+  - type: Overlay
+    url: overlays/convertkit-custom-fields-overlay.yaml
+- aid: convertkit:convertkit-email-templates-api
+  name: Kit Email Templates API
+  description: The Email Templates API from Kit — 1 operation(s) for email templates.
+  humanURL: https://developers.kit.com
+  baseURL: https://api.kit.com/v4
+  tags:
+  - Email Templates
+  properties:
+  - type: OpenAPI
+    url: openapi/convertkit-email-templates-api-openapi.yml
+  - type: Documentation
+    url: https://developers.kit.com/docs
+  - type: Authentication
+    url: https://developers.kit.com/api-reference/authentication
+  - type: ChangeLog
+    url: https://developers.kit.com/changelog
+  - type: Overlay
+    url: overlays/convertkit-email-templates-overlay.yaml
+- aid: convertkit:convertkit-forms-api
+  name: Kit Forms API
+  description: The Forms API from Kit — 4 operation(s) for forms.
+  humanURL: https://developers.kit.com
+  baseURL: https://api.kit.com/v4
+  tags:
+  - Forms
+  properties:
+  - type: OpenAPI
+    url: openapi/convertkit-forms-api-openapi.yml
+  - type: Documentation
+    url: https://developers.kit.com/docs
+  - type: Authentication
+    url: https://developers.kit.com/api-reference/authentication
+  - type: ChangeLog
+    url: https://developers.kit.com/changelog
+  - type: Overlay
+    url: overlays/convertkit-forms-overlay.yaml
+- aid: convertkit:convertkit-posts-api
+  name: Kit Posts API
+  description: The Posts API from Kit — 2 operation(s) for posts.
+  humanURL: https://developers.kit.com
+  baseURL: https://api.kit.com/v4
+  tags:
+  - Posts
+  properties:
+  - type: OpenAPI
+    url: openapi/convertkit-posts-api-openapi.yml
+  - type: Documentation
+    url: https://developers.kit.com/docs
+  - type: Authentication
+    url: https://developers.kit.com/api-reference/authentication
+  - type: ChangeLog
+    url: https://developers.kit.com/changelog
+  - type: Overlay
+    url: overlays/convertkit-posts-overlay.yaml
+- aid: convertkit:convertkit-purchases-api
+  name: Kit Purchases API
+  description: The Purchases API from Kit — 2 operation(s) for purchases.
+  humanURL: https://developers.kit.com
+  baseURL: https://api.kit.com/v4
+  tags:
+  - Purchases
+  properties:
+  - type: OpenAPI
+    url: openapi/convertkit-purchases-api-openapi.yml
+  - type: Documentation
+    url: https://developers.kit.com/docs
+  - type: Authentication
+    url: https://developers.kit.com/api-reference/authentication
+  - type: ChangeLog
+    url: https://developers.kit.com/changelog
+  - type: Overlay
+    url: overlays/convertkit-purchases-overlay.yaml
+- aid: convertkit:convertkit-segments-api
+  name: Kit Segments API
+  description: The Segments API from Kit — 1 operation(s) for segments.
+  humanURL: https://developers.kit.com
+  baseURL: https://api.kit.com/v4
+  tags:
+  - Segments
+  properties:
+  - type: OpenAPI
+    url: openapi/convertkit-segments-api-openapi.yml
+  - type: Documentation
+    url: https://developers.kit.com/docs
+  - type: Authentication
+    url: https://developers.kit.com/api-reference/authentication
+  - type: ChangeLog
+    url: https://developers.kit.com/changelog
+  - type: Overlay
+    url: overlays/convertkit-segments-overlay.yaml
+- aid: convertkit:convertkit-sequence-emails-api
+  name: Kit Sequence Emails API
+  description: The Sequence Emails API from Kit — 2 operation(s) for sequence emails.
+  humanURL: https://developers.kit.com
+  baseURL: https://api.kit.com/v4
+  tags:
+  - Sequence Emails
+  properties:
+  - type: OpenAPI
+    url: openapi/convertkit-sequence-emails-api-openapi.yml
+  - type: Documentation
+    url: https://developers.kit.com/docs
+  - type: Authentication
+    url: https://developers.kit.com/api-reference/authentication
+  - type: ChangeLog
+    url: https://developers.kit.com/changelog
+  - type: Overlay
+    url: overlays/convertkit-sequence-emails-overlay.yaml
+- aid: convertkit:convertkit-sequences-api
+  name: Kit Sequences API
+  description: The Sequences API from Kit — 4 operation(s) for sequences.
+  humanURL: https://developers.kit.com
+  baseURL: https://api.kit.com/v4
+  tags:
+  - Sequences
+  properties:
+  - type: OpenAPI
+    url: openapi/convertkit-sequences-api-openapi.yml
+  - type: Documentation
+    url: https://developers.kit.com/docs
+  - type: Authentication
+    url: https://developers.kit.com/api-reference/authentication
+  - type: ChangeLog
+    url: https://developers.kit.com/changelog
+  - type: Overlay
+    url: overlays/convertkit-sequences-overlay.yaml
+- aid: convertkit:convertkit-snippets-api
+  name: Kit Snippets API
+  description: The Snippets API from Kit — 2 operation(s) for snippets.
+  humanURL: https://developers.kit.com
+  baseURL: https://api.kit.com/v4
+  tags:
+  - Snippets
+  properties:
+  - type: OpenAPI
+    url: openapi/convertkit-snippets-api-openapi.yml
+  - type: Documentation
+    url: https://developers.kit.com/docs
+  - type: Authentication
+    url: https://developers.kit.com/api-reference/authentication
+  - type: ChangeLog
+    url: https://developers.kit.com/changelog
+  - type: Overlay
+    url: overlays/convertkit-snippets-overlay.yaml
+- aid: convertkit:convertkit-subscribers-api
+  name: Kit Subscribers API
+  description: The Subscribers API from Kit — 7 operation(s) for subscribers.
+  humanURL: https://developers.kit.com
+  baseURL: https://api.kit.com/v4
+  tags:
+  - Subscribers
+  properties:
+  - type: OpenAPI
+    url: openapi/convertkit-subscribers-api-openapi.yml
+  - type: Documentation
+    url: https://developers.kit.com/docs
+  - type: Authentication
+    url: https://developers.kit.com/api-reference/authentication
+  - type: ChangeLog
+    url: https://developers.kit.com/changelog
+  - type: Overlay
+    url: overlays/convertkit-subscribers-overlay.yaml
+  - type: JSONSchema
+    url: json-schema/convertkit-subscriber-filter-request-schema.json
+- aid: convertkit:convertkit-tags-api
+  name: Kit Tags API
+  description: The Tags API from Kit — 6 operation(s) for tags.
+  humanURL: https://developers.kit.com
+  baseURL: https://api.kit.com/v4
+  tags:
+  - Tags
+  properties:
+  - type: OpenAPI
+    url: openapi/convertkit-tags-api-openapi.yml
+  - type: Documentation
+    url: https://developers.kit.com/docs
+  - type: Authentication
+    url: https://developers.kit.com/api-reference/authentication
+  - type: ChangeLog
+    url: https://developers.kit.com/changelog
+  - type: Overlay
+    url: overlays/convertkit-tags-overlay.yaml
+- aid: convertkit:convertkit-webhooks-api
+  name: Kit Webhooks API
+  description: The Webhooks API from Kit — 2 operation(s) for webhooks.
+  humanURL: https://developers.kit.com
+  baseURL: https://api.kit.com/v4
+  tags:
+  - Webhook
+  tags_raw:
+  - Webhooks
+  properties:
+  - type: OpenAPI
+    url: openapi/convertkit-webhooks-api-openapi.yml
+  - type: Documentation
+    url: https://developers.kit.com/docs
+  - type: Authentication
+    url: https://developers.kit.com/api-reference/authentication
+  - type: ChangeLog
+    url: https://developers.kit.com/changelog
+  - type: Overlay
+    url: overlays/convertkit-webhooks-overlay.yaml
+- aid: convertkit:kit-api-v3
+  name: Kit API V3 (Deprecated)
+  humanURL: https://developers.kit.com/v3/api-reference
+  baseURL: https://api.convertkit.com/v3
+  tags:
+  - Email Marketing
+  - Subscribers
+  - Deprecated
+  description: The legacy ConvertKit V3 API is deprecated and slated for discontinuation; new integrations should target V4.
+  properties:
+  - type: Documentation
+    url: https://developers.kit.com/v3/api-reference
+  - type: Deprecation
+    url: https://developers.kit.com/v4/api-reference/v3-to-v4-upgrade-guide
+- aid: convertkit:convertkit-account-api
+  name: Kit Account API
+  description: Account, creator profile, and account-level statistics
+  humanURL: https://developers.kit.com
+  baseURL: https://api.kit.com/v4
+  tags:
+  - Account
+  properties:
+  - type: OpenAPI
+    url: openapi/convertkit-account-api-openapi.yml
+  - type: Documentation
+    url: https://developers.kit.com/v4/api-reference
+  - type: Authentication
+    url: https://developers.kit.com/v4/api-reference/authentication
+  - type: Webhooks
+    url: https://developers.kit.com/v4/api-reference/webhooks
+  - type: Migration
+    url: https://developers.kit.com/v4/api-reference/v3-to-v4-upgrade-guide
+  - type: AsyncAPI
+    url: asyncapi/kit-webhooks-asyncapi.yml
+  - type: JSONSchema
+    url: json-schema/convertkit-stats-response-schema.json
+  - type: JSONSchema
+    url: json-schema/convertkit-colors-request-schema.json
+  - type: JSONSchema
+    url: json-schema/convertkit-colors-response-schema.json
+  - type: JSONSchema
+    url: json-schema/convertkit-account-response-schema.json
+
 x-enrichment:
-  date: '2026-08-13'
+  date: '2026-10-12'
   status: enriched
-  artifacts_added: 38
-  pass: local-v1
+  artifacts_added: 7
+  pass: local-v5
+
 x-a2a:
   verified: true
   probed: '2026-09-26'
-  url: "https://developers.kit.com/.well-known/agent-card.json"
-  grade: "conformant"
-  protocol_version: "0.3"
+  url: https://developers.kit.com/.well-known/agent-card.json
+  grade: conformant
+  protocol_version: '0.3'
   control: 404

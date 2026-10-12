@@ -10,40 +10,49 @@ docs:
 - https://developers.kit.com/api-reference/response-codes
 - https://developers.kit.com/api-reference/upgrading-to-v4
 - https://developers.kit.com/api-reference/email-data-retention
-
 authentication:
   styles:
   - name: API key
     header: X-Kit-Api-Key
-    intended_use: Personal automations and pre-launch testing only. Kit requires OAuth for any published app.
+    intended_use: Personal automations and pre-launch testing only. Kit requires OAuth
+      for any published app.
     rate_limit: 120 requests / rolling 60s
-    restrictions: Bulk endpoints and Create purchase reject API-key auth and require OAuth.
+    restrictions: Bulk endpoints and Create purchase reject API-key auth and require
+      OAuth.
   - name: OAuth 2.0
-    grants: [authorization_code, refresh_token]
+    grants:
+    - authorization_code
+    - refresh_token
     pkce: S256
     dynamic_client_registration: true
     rate_limit: 600 requests / rolling 60s
-    refresh_token_rotation: single-use; each refresh issues a new refresh token and revokes the previous one (reuse returns invalid_grant)
+    refresh_token_rotation: single-use; each refresh issues a new refresh token and
+      revokes the previous one (reuse returns invalid_grant)
   artifact: authentication/convertkit-authentication.yml
-
 pagination:
   style: cursor
   applies_to: all list endpoints unless noted
   request_params:
   - name: after
-    description: Pass the previous response's pagination.end_cursor to get the next page.
+    description: Pass the previous response's pagination.end_cursor to get the next
+      page.
   - name: before
-    description: Pass the previous response's pagination.start_cursor to get the previous page.
+    description: Pass the previous response's pagination.start_cursor to get the previous
+      page.
   - name: per_page
     description: Page size. Default 500, maximum 1000.
   - name: include_total_count
-    description: Set true to run an extra count query and return the collection total. Slower.
+    description: Set true to run an extra count query and return the collection total.
+      Slower.
   response_envelope:
     field: pagination
-    fields: [has_previous_page, has_next_page, start_cursor, end_cursor, per_page]
-  note: >-
-    V3 page/offset pagination was removed in V4; there is no `page` parameter.
-
+    fields:
+    - has_previous_page
+    - has_next_page
+    - start_cursor
+    - end_cursor
+    - per_page
+  note: V3 page/offset pagination was removed in V4; there is no `page` parameter.
 response_shaping:
   include_parameter:
     param: include
@@ -58,39 +67,38 @@ response_shaping:
   sparse_fields:
     param: slim
     value: 'true'
-    description: >-
-      Omits the custom-field `fields` object from each subscriber record and skips
-      the underlying join. Supported on GET /v4/subscribers,
-      GET /v4/forms/{form_id}/subscribers, GET /v4/broadcasts and
-      GET /v4/tags/{tag_id}/subscribers.
+    description: Omits the custom-field `fields` object from each subscriber record
+      and skips the underlying join. Supported on GET /v4/subscribers, GET /v4/forms/{form_id}/subscribers,
+      GET /v4/broadcasts and GET /v4/tags/{tag_id}/subscribers.
   metadata:
     custom_fields: true
-    description: >-
-      Arbitrary per-subscriber key/value data is modelled as first-class Custom
-      Fields resources (not an opaque metadata blob). Keys must be created before
-      use; sending an unknown key returns an error.
-
+    description: Arbitrary per-subscriber key/value data is modelled as first-class
+      Custom Fields resources (not an opaque metadata blob). Keys must be created
+      before use; sending an unknown key returns an error.
 idempotency:
   idempotency_key_header: null
   supported: false
-  note: >-
-    Kit publishes NO idempotency-key contract — there is no Idempotency-Key
-    header, no client-supplied request token, and no replay window documented
-    anywhere in the API reference, and no such parameter appears in the OpenAPI.
-    Two narrower guarantees exist and are recorded honestly rather than
-    upgraded into an idempotency claim: (1) POST /v4/tags is idempotent on tag
-    name — a duplicate name returns 200 with the existing tag instead of 201;
-    (2) POST /v4/subscribers behaves as an upsert on email address. Retrying any
-    other write is not safe. Because of this, NO `Idempotency` pointer is wired
-    into apis.yml.
+  note: 'Kit publishes NO idempotency-key contract — there is no Idempotency-Key header,
+    no client-supplied request token, and no replay window documented anywhere in
+    the API reference, and no such parameter appears in the OpenAPI. Two narrower
+    guarantees exist and are recorded honestly rather than upgraded into an idempotency
+    claim: (1) POST /v4/tags is idempotent on tag name — a duplicate name returns
+    200 with the existing tag instead of 201; (2) POST /v4/subscribers behaves as
+    an upsert on email address. Retrying any other write is not safe. Because of this,
+    NO `Idempotency` pointer is wired into apis.yml.'
   natural_idempotence:
   - operation: POST /v4/tags
-    behavior: Idempotent on name, matched case-insensitively. Returns 200 + existing tag, 201 on a genuine create.
+    behavior: Idempotent on name, matched case-insensitively. Returns 200 + existing
+      tag, 201 on a genuine create.
   - operation: POST /v4/subscribers
     behavior: Upsert on email_address. Creates if absent, updates first name if present.
   - operation: POST /v4/purchases
-    behavior: Carries a client-supplied transaction_id, but Kit does not document it as a replay key.
-
+    behavior: Carries a client-supplied transaction_id, but Kit does not document
+      it as a replay key.
+  coverage: partial
+  scope:
+  - postV4Tags
+  - postV4Subscribers
 bulk_and_async:
   namespace: https://api.kit.com/v4/bulk/
   auth_required: oauth
@@ -112,7 +120,6 @@ bulk_and_async:
   - POST /v4/bulk/custom_fields
   - POST /v4/bulk/custom_fields/subscribers
   - POST /v4/bulk/forms/subscribers
-
 consistency:
   model: eventually consistent reads on list/filter/reporting endpoints
   strongly_consistent:
@@ -121,48 +128,82 @@ consistency:
   propagation_delay:
     p50: ~30 seconds
     p99: up to 5 minutes
-  guidance: >-
-    Trust the write response and reuse the returned id; do not read-after-write
-    to confirm. Retry list reads with exponential backoff (250-500ms start, 5s
-    cap, 30-60s timeout).
+  guidance: Trust the write response and reuse the returned id; do not read-after-write
+    to confirm. Retry list reads with exponential backoff (250-500ms start, 5s cap,
+    30-60s timeout).
   docs: https://developers.kit.com/api-reference/eventual-consistency
-
 dates:
   format: ISO 8601, UTC
   example: '2023-07-17T16:48:20Z'
   localisation: Convert with timezone.utc_offset from GET /v4/account.
-  exception: GET /v4/account/growth_stats returns timestamps in the account's sending time zone, not UTC.
-
+  exception: GET /v4/account/growth_stats returns timestamps in the account's sending
+    time zone, not UTC.
 error_envelope:
   shape: '{"errors": ["message", ...]}'
-  description: A single top-level `errors` attribute containing an array of strings. Introduced in V4 to replace V3's inconsistent shapes.
+  description: A single top-level `errors` attribute containing an array of strings.
+    Introduced in V4 to replace V3's inconsistent shapes.
   rfc9457: false
   artifact: errors/convertkit-problem-types.yml
-
 rate_limit_signaling:
   status_on_exhaustion: 429
   response_headers_documented: false
-  note: >-
-    Kit documents the limits (600/60s OAuth, 120/60s API key, rolling window) but
-    does NOT document any X-RateLimit-* / RateLimit-* / Retry-After response
-    header, and none appears in the OpenAPI. Agents must count locally and back
-    off exponentially — Kit's own documented remedy.
+  note: Kit documents the limits (600/60s OAuth, 120/60s API key, rolling window)
+    but does NOT document any X-RateLimit-* / RateLimit-* / Retry-After response header,
+    and none appears in the OpenAPI. Agents must count locally and back off exponentially
+    — Kit's own documented remedy.
   artifact: rate-limits/convertkit-rate-limits.yml
-
 versioning:
   scheme: uri-path
   current: v4
   base_url: https://api.kit.com/v4/
   previous: v3 (https://api.convertkit.com/v3/) — deprecated, sunset pending
   artifact: lifecycle/convertkit-lifecycle.yml
-
 request_tracing:
   request_id_header: null
   observed:
     header: x-request-id
-    where: Observed on live responses from app.kit.com (probed 2026-08-13), but not documented in the API reference.
-  note: Kit's troubleshooting guidance asks integrators to "contact support with request IDs and timestamps", implying the header is intended for support use even though it is undocumented.
-
+    where: Observed on live responses from app.kit.com (probed 2026-08-13), but not
+      documented in the API reference.
+  note: Kit's troubleshooting guidance asks integrators to "contact support with request
+    IDs and timestamps", implying the header is intended for support use even though
+    it is undocumented.
 data_retention:
   docs: https://developers.kit.com/api-reference/email-data-retention
-  note: Email stats availability through the API is time-bounded; account email stats report a rolling last-90-days window (email_stats_mode last_90).
+  note: Email stats availability through the API is time-bounded; account email stats
+    report a rolling last-90-days window (email_stats_mode last_90).
+reversibility:
+  method: derived
+  source: openapi/convertkit-*-openapi.yml
+  note: Derived from paired operations in the contract. Kit documents no reversal
+    WINDOW anywhere, so every row is documented, not verified; deletes of broadcasts,
+    sequences, custom fields and webhooks have no restore operation.
+  surfaces:
+  - write: postV4TagsByTagIdSubscribersById
+    reversal: deleteV4TagsByTagIdSubscribersById
+    window: null
+  - write: postV4TagsByTagIdSubscribers
+    reversal: deleteV4TagsByTagIdSubscribers
+    window: null
+  - write: postV4BulkTagsSubscribers
+    reversal: deleteV4BulkTagsSubscribers
+    window: null
+  - write: postV4Webhooks
+    reversal: deleteV4WebhooksById
+    window: null
+  - write: postV4CustomFields
+    reversal: deleteV4CustomFieldsById
+    window: null
+  - write: postV4Sequences
+    reversal: deleteV4SequencesById
+    window: null
+  - write: postV4Broadcasts
+    reversal: deleteV4BroadcastsById
+    window: null
+    note: Deleting a broadcast does not recall an email already sent.
+  - write: deleteV4BroadcastsById
+    reversal: null
+    window: null
+  - write: postV4SubscribersByIdUnsubscribe
+    reversal: null
+    window: null
+    note: No resubscribe operation is published.

@@ -1,0 +1,85 @@
+arazzo: 1.0.1
+info:
+  title: 'Kit Jotform: tag form respondents'
+  summary: Add new Jotform form respondents as subscriber tags on Kit.
+  description: Add new Jotform form respondents as subscriber tags on Kit. Recreated
+    from the Zapier template that names Kit and jotform; every operationId is copied
+    from the catalog specs.
+  version: 1.0.0
+x-integration:
+  partner: jotform
+  template: https://zapier.com/apps/jotform/integrations/kit/11723/add-new-jotform-form-respondents-as-subscriber-tags-on-kit
+  edge_evidence: https://zapier.com/apps/jotform/integrations/kit/11723/add-new-jotform-form-respondents-as-subscriber-tags-on-kit
+  edge_type: marketplace
+  method: generated
+  generated: '2026-10-12'
+  generator: claude-enrich local-v5
+  guessed_steps:
+  - step: get-jotform-submission
+    cause: partner-contract
+    why: Jotform answers are keyed by question id; the spec does not fix which answer
+      holds email or name.
+sourceDescriptions:
+- name: jotformSubmissions
+  url: https://raw.githubusercontent.com/api-evangelist/jotform/refs/heads/main/openapi/jotform-submission-api-openapi.yml
+  type: openapi
+- name: kitSubscribers
+  url: https://raw.githubusercontent.com/api-evangelist/convertkit/refs/heads/main/openapi/convertkit-subscribers-api-openapi.yml
+  type: openapi
+- name: kitTags
+  url: https://raw.githubusercontent.com/api-evangelist/convertkit/refs/heads/main/openapi/convertkit-tags-api-openapi.yml
+  type: openapi
+workflows:
+- workflowId: jotform-tag-respondents
+  summary: Add new Jotform form respondents as subscriber tags on Kit.
+  inputs:
+    type: object
+    properties:
+      submissionID:
+        type: string
+      tag_id:
+        type: string
+    required:
+    - submissionID
+    - tag_id
+  steps:
+  - stepId: get-jotform-submission
+    description: Read the Jotform submission.
+    operationId: $sourceDescriptions.jotformSubmissions.getSubmission
+    parameters:
+    - name: submissionID
+      in: path
+      value: $inputs.submissionID
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      email: $response.body#/content/answers/email
+      name: $response.body#/content/answers/name
+  - stepId: upsert-kit-subscriber
+    description: Create or update the Kit subscriber (upsert on email_address).
+    operationId: $sourceDescriptions.kitSubscribers.postV4Subscribers
+    requestBody:
+      contentType: application/json
+      payload:
+        email_address: $steps.get-jotform-submission.outputs.email
+        first_name: $steps.get-jotform-submission.outputs.name
+    successCriteria:
+    - condition: $statusCode == 201 || $statusCode == 200
+    outputs:
+      subscriberId: $response.body#/subscriber/id
+  - stepId: add-to-tag
+    description: Attach the subscriber to the Kit tag.
+    operationId: $sourceDescriptions.kitTags.postV4TagsByTagIdSubscribersById
+    parameters:
+    - name: tag_id
+      in: path
+      value: $inputs.tag_id
+    - name: id
+      in: path
+      value: $steps.upsert-kit-subscriber.outputs.subscriberId
+    successCriteria:
+    - condition: $statusCode == 201 || $statusCode == 200
+    outputs:
+      subscriberId: $response.body#/subscriber/id
+  outputs:
+    subscriberId: $steps.add-to-tag.outputs.subscriberId

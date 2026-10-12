@@ -1,0 +1,68 @@
+arazzo: 1.0.1
+info:
+  title: 'Kit HubSpot: create contacts for new subscribers'
+  summary: Create or update HubSpot contacts for new subscribers in Kit.
+  description: Create or update HubSpot contacts for new subscribers in Kit. Recreated
+    from the Zapier template that names Kit and hubspot; every operationId is copied
+    from the catalog specs.
+  version: 1.0.0
+x-integration:
+  partner: hubspot
+  template: https://zapier.com/apps/hubspot/integrations/kit/174826/create-or-update-hubspot-contacts-for-new-subscribers-in-kit
+  edge_evidence: https://zapier.com/apps/hubspot/integrations/kit/174826/create-or-update-hubspot-contacts-for-new-subscribers-in-kit
+  edge_type: marketplace
+  method: generated
+  generated: '2026-10-12'
+  generator: claude-enrich local-v5
+  guessed_steps:
+  - step: create-hubspot-contact
+    cause: partner-contract
+    why: The HubSpot spec has create and update by id but no upsert-by-email; the
+      "or update" half is not expressible in one documented call.
+sourceDescriptions:
+- name: kitSubscribers
+  url: https://raw.githubusercontent.com/api-evangelist/convertkit/refs/heads/main/openapi/convertkit-subscribers-api-openapi.yml
+  type: openapi
+- name: hubspotBasic
+  url: https://raw.githubusercontent.com/api-evangelist/hubspot/refs/heads/main/openapi/hubspot-basic-api-openapi.yml
+  type: openapi
+workflows:
+- workflowId: hubspot-contacts
+  summary: Create or update HubSpot contacts for new subscribers in Kit.
+  inputs:
+    type: object
+    properties:
+      subscriber_id:
+        type: string
+    required:
+    - subscriber_id
+  steps:
+  - stepId: get-kit-subscriber
+    description: Read the new Kit subscriber.
+    operationId: $sourceDescriptions.kitSubscribers.getV4SubscribersById
+    parameters:
+    - name: id
+      in: path
+      value: $inputs.subscriber_id
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      email: $response.body#/subscriber/email_address
+      firstName: $response.body#/subscriber/first_name
+      subscriberId: $response.body#/subscriber/id
+  - stepId: create-hubspot-contact
+    description: Create the HubSpot contact from the Kit subscriber.
+    operationId: $sourceDescriptions.hubspotBasic.post-/crm/objects/2026-03/contacts_create
+    requestBody:
+      contentType: application/json
+      payload:
+        properties:
+          email: $steps.get-kit-subscriber.outputs.email
+          firstname: $steps.get-kit-subscriber.outputs.firstName
+    successCriteria:
+    - condition: $statusCode == 201
+    outputs:
+      subscriberId: $steps.get-kit-subscriber.outputs.subscriberId
+      contactId: $response.body#/id
+  outputs:
+    subscriberId: $steps.create-hubspot-contact.outputs.subscriberId
