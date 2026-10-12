@@ -412,3 +412,21 @@
   source: edge
   status: pending-generation
   arazzo: null
+- slug: convertkit-bonjoro
+  label: bonjoro
+  partner: bonjoro
+  partner_name: bonjoro
+  type: contract
+  channel: partner-built
+  evidence: https://github.com/api-evangelist/bonjoro/blob/main/openapi/bonjoro-integrations-api-openapi.yml
+  source: edge
+  relationship: processor-connection
+  contract_reference:
+    repo: bonjoro
+    spec_file: bonjoro-integrations-api-openapi.yml
+    value: convertkit
+    property: schemas.integration.provider
+    detected_by: detect-payment-method-edges.py
+    detected: '2026-10-12'
+  status: not-a-workflow
+  arazzo: null

@@ -1010,6 +1010,21 @@ edges:
   direction: third-party
   category: Marketing Automation
   partner_url: http://www.hubspot.com/
+- partner_name: bonjoro
+  partner: bonjoro
+  partner_match: domain
+  type: contract
+  channel: partner-built
+  relationship: processor-connection
+  direction: partner-built
+  evidence: https://github.com/api-evangelist/bonjoro/blob/main/openapi/bonjoro-integrations-api-openapi.yml
+  contract_reference:
+    repo: bonjoro
+    spec_file: bonjoro-integrations-api-openapi.yml
+    value: convertkit
+    property: schemas.integration.provider
+    detected_by: detect-payment-method-edges.py
+    detected: '2026-10-12'
 templates:
 - title: Add new Jotform form respondents as subscriber tags on Kit
   url: https://zapier.com/apps/jotform/integrations/kit/11723/add-new-jotform-form-respondents-as-subscriber-tags-on-kit
