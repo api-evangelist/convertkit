@@ -475,7 +475,7 @@
     app_slug: kit
     beta: false
     builder: unknown (not in the directory record)
-  status: pending-generation
+  status: not-a-workflow
   arazzo: null
 - slug: convertkit-wordpress-own
   label: WordPress (own)
