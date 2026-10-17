@@ -118,18 +118,13 @@ paths:
           $ref: '#/components/responses/Unauthorized'
 components:
   schemas:
-    ColorsRequest:
+    ErrorResponse:
       type: object
       properties:
-        colors:
+        errors:
           type: array
           items:
             type: string
-    AccountResponse:
-      type: object
-      properties:
-        account:
-          $ref: '#/components/schemas/Account'
     Account:
       type: object
       properties:
@@ -139,6 +134,17 @@ components:
           type: string
         primary_email_address:
           type: string
+    AccountResponse:
+      type: object
+      properties:
+        account:
+          $ref: '#/components/schemas/Account'
+    StatsResponse:
+      type: object
+      properties:
+        stats:
+          type: object
+          additionalProperties: true
     ColorsResponse:
       type: object
       properties:
@@ -146,19 +152,13 @@ components:
           type: array
           items:
             type: string
-    ErrorResponse:
+    ColorsRequest:
       type: object
       properties:
-        errors:
+        colors:
           type: array
           items:
             type: string
-    StatsResponse:
-      type: object
-      properties:
-        stats:
-          type: object
-          additionalProperties: true
   responses:
     Unauthorized:
       description: Missing or invalid credentials
