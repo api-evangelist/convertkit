@@ -94,15 +94,14 @@ notes:
 - Custom enterprise pricing is available above 500K subscribers; no published figure.
 - ConvertKit rebranded to Kit in 2024.
 x-canonical:
-  generated: '2026-10-08'
+  generated: '2026-10-18'
   vocabulary: all/0-working/economics/plans-canonical.yml
-  models:
-  - free
+  models: []
   units: []
   plans:
   - name: Newsletter
     access: other
-    model: free
+    model: unstated
     model_how: derived
     units: []
     periods: []
