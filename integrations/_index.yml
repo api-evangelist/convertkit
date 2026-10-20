@@ -18,6 +18,7 @@
   related_arazzo:
   - convertkit-jotform-form-subscribers.yml
   - convertkit-jotform-sequence.yml
+  relationship: ipaas-bridge
   arazzo: convertkit-jotform-tag-respondents.yml
   status: arazzo
 - slug: convertkit-add-tagged-subscribers-to-converkit-from-new-calendly-events
@@ -32,8 +33,10 @@
   evidence: https://zapier.com/apps/calendly/integrations/kit/11530/add-tagged-subscribers-to-converkit-from-new-calendly-events
   template: https://zapier.com/apps/calendly/integrations/kit/11530/add-tagged-subscribers-to-converkit-from-new-calendly-events
   source: template
+  relationship: ipaas-bridge
   arazzo: convertkit-calendly-tag-invitees.yml
-  status: arazzo
+  status: arazzo-broken
+  broken_reason: 'source url->missing local spec: https://raw.githubusercontent.com/api-evangelist/calendly/refs/heads/main/openapi/calendly-invitees-api-openapi.yml'
 - slug: convertkit-add-subscribers-to-a-kit-form-from-new-jotform-submissions
   label: Add subscribers to a Kit form from new Jotform submissions
   partner: jotform
@@ -49,6 +52,7 @@
   related_arazzo:
   - convertkit-jotform-sequence.yml
   - convertkit-jotform-tag-respondents.yml
+  relationship: ipaas-bridge
   arazzo: convertkit-jotform-form-subscribers.yml
   status: arazzo
 - slug: convertkit-add-new-leads-from-facebook-lead-ads-to-kit-forms
@@ -63,6 +67,7 @@
   evidence: https://zapier.com/apps/facebook-lead-ads/integrations/kit/12923/add-new-leads-from-facebook-lead-ads-to-kit-forms
   template: https://zapier.com/apps/facebook-lead-ads/integrations/kit/12923/add-new-leads-from-facebook-lead-ads-to-kit-forms
   source: template
+  relationship: ipaas-bridge
   status: pending-generation
   arazzo: null
 - slug: convertkit-add-kit-subscribers-from-new-stan-customers
@@ -77,6 +82,7 @@
   evidence: https://zapier.com/apps/kit/integrations/stan-creator/1210424/add-kit-subscribers-from-new-stan-customers
   template: https://zapier.com/apps/kit/integrations/stan-creator/1210424/add-kit-subscribers-from-new-stan-customers
   source: template
+  relationship: ipaas-bridge
   status: pending-partner-spec
   arazzo: null
 - slug: convertkit-create-or-update-hubspot-contacts-for-new-subscribers-in-kit
@@ -91,6 +97,7 @@
   evidence: https://zapier.com/apps/hubspot/integrations/kit/174826/create-or-update-hubspot-contacts-for-new-subscribers-in-kit
   template: https://zapier.com/apps/hubspot/integrations/kit/174826/create-or-update-hubspot-contacts-for-new-subscribers-in-kit
   source: template
+  relationship: ipaas-bridge
   arazzo: convertkit-hubspot-contacts.yml
   status: arazzo
 - slug: convertkit-create-kit-subscribers-from-new-wpforms-entries
@@ -104,6 +111,7 @@
   evidence: https://zapier.com/apps/kit/integrations/wpforms/412378/create-kit-subscribers-from-new-wpforms-entries
   template: https://zapier.com/apps/kit/integrations/wpforms/412378/create-kit-subscribers-from-new-wpforms-entries
   source: template
+  relationship: ipaas-bridge
   status: pending-partner-spec
   arazzo: null
 - slug: convertkit-add-new-jotform-submissions-to-kit-subscribers-sequence
@@ -121,6 +129,7 @@
   related_arazzo:
   - convertkit-jotform-form-subscribers.yml
   - convertkit-jotform-tag-respondents.yml
+  relationship: ipaas-bridge
   arazzo: convertkit-jotform-sequence.yml
   status: arazzo
 - slug: convertkit-add-subscribers-to-kit-from-new-google-sheets-spreadsheets-rows
@@ -135,283 +144,9 @@
   evidence: https://zapier.com/apps/google-sheets/integrations/kit/60847/add-subscribers-to-kit-from-new-google-sheets-spreadsheets-rows
   template: https://zapier.com/apps/google-sheets/integrations/kit/60847/add-subscribers-to-kit-from-new-google-sheets-spreadsheets-rows
   source: template
+  relationship: ipaas-bridge
   arazzo: convertkit-google-sheets-subscribers.yml
   status: arazzo
-- slug: convertkit-typeform
-  label: Typeform
-  partner: typeform
-  partner_name: Typeform
-  category: Forms & Surveys
-  type: marketplace
-  marketplace: zapier
-  channel: ipaas-usage
-  evidence: https://zapier.com/apps/convertkit/integrations/typeform
-  source: edge
-  status: pending-generation
-  arazzo: null
-- slug: convertkit-kajabi
-  label: Kajabi
-  partner: kajabi
-  partner_name: Kajabi
-  category: eCommerce
-  type: marketplace
-  marketplace: zapier
-  channel: ipaas-usage
-  evidence: https://zapier.com/apps/convertkit/integrations/kajabi
-  source: edge
-  status: pending-generation
-  arazzo: null
-- slug: convertkit-stripe
-  label: Stripe
-  partner: stripe
-  partner_name: Stripe
-  category: Payment Processing
-  type: marketplace
-  marketplace: zapier
-  channel: ipaas-usage
-  evidence: https://zapier.com/apps/convertkit/integrations/stripe
-  source: edge
-  status: pending-generation
-  arazzo: null
-- slug: convertkit-squarespace-forms
-  label: Squarespace Forms
-  partner: squarespace
-  partner_name: Squarespace Forms
-  category: Forms & Surveys
-  type: marketplace
-  marketplace: zapier
-  channel: ipaas-usage
-  evidence: https://zapier.com/apps/convertkit/integrations/squarespace-forms
-  source: edge
-  status: pending-generation
-  arazzo: null
-- slug: convertkit-tally
-  label: Tally
-  partner: tally
-  partner_name: Tally
-  category: Forms & Surveys
-  type: marketplace
-  marketplace: zapier
-  channel: ipaas-usage
-  evidence: https://zapier.com/apps/convertkit/integrations/tally
-  source: edge
-  status: pending-generation
-  arazzo: null
-- slug: convertkit-zoom
-  label: Zoom
-  partner: zoom
-  partner_name: Zoom
-  category: Video Conferencing
-  type: marketplace
-  marketplace: zapier
-  channel: ipaas-usage
-  evidence: https://zapier.com/apps/convertkit/integrations/zoom
-  source: edge
-  status: pending-generation
-  arazzo: null
-- slug: convertkit-circle
-  label: Circle
-  partner: circle-community
-  partner_name: Circle
-  category: CRM (Customer Relationship Management)
-  type: marketplace
-  marketplace: zapier
-  channel: ipaas-usage
-  evidence: https://zapier.com/apps/convertkit/integrations/circle
-  source: edge
-  status: pending-generation
-  arazzo: null
-- slug: convertkit-gmail
-  label: Gmail
-  partner: gmail
-  partner_name: Gmail
-  category: Email
-  type: marketplace
-  marketplace: zapier
-  channel: ipaas-usage
-  evidence: https://zapier.com/apps/convertkit/integrations/gmail
-  source: edge
-  status: pending-partner-spec
-  arazzo: null
-- slug: convertkit-thrivecart
-  label: ThriveCart
-  partner: thrivecart
-  partner_name: ThriveCart
-  category: eCommerce
-  type: marketplace
-  marketplace: zapier
-  channel: ipaas-usage
-  evidence: https://zapier.com/apps/convertkit/integrations/thrivecart
-  source: edge
-  status: pending-generation
-  arazzo: null
-- slug: convertkit-google-forms
-  label: Google Forms
-  partner: google-forms
-  partner_name: Google Forms
-  category: Forms & Surveys
-  type: marketplace
-  marketplace: zapier
-  channel: ipaas-usage
-  evidence: https://zapier.com/apps/convertkit/integrations/google-forms
-  source: edge
-  status: pending-generation
-  arazzo: null
-- slug: convertkit-airtable
-  label: Airtable
-  partner: airtable
-  partner_name: Airtable
-  category: Databases
-  type: marketplace
-  marketplace: zapier
-  channel: ipaas-usage
-  evidence: https://zapier.com/apps/convertkit/integrations/airtable
-  source: edge
-  status: pending-generation
-  arazzo: null
-- slug: convertkit-leadconnector
-  label: LeadConnector
-  partner_name: LeadConnector
-  category: Marketing Automation
-  type: marketplace
-  marketplace: zapier
-  channel: ipaas-usage
-  evidence: https://zapier.com/apps/convertkit/integrations/leadconnector
-  source: edge
-  status: pending-partner-spec
-  arazzo: null
-- slug: convertkit-gumroad
-  label: Gumroad
-  partner: gumroad
-  partner_name: Gumroad
-  category: eCommerce
-  type: marketplace
-  marketplace: zapier
-  channel: ipaas-usage
-  evidence: https://zapier.com/apps/convertkit/integrations/gumroad
-  source: edge
-  status: pending-partner-spec
-  arazzo: null
-- slug: convertkit-skool
-  label: Skool
-  partner: skool
-  partner_name: Skool
-  category: Education
-  type: marketplace
-  marketplace: zapier
-  channel: ipaas-usage
-  evidence: https://zapier.com/apps/convertkit/integrations/skool
-  source: edge
-  status: pending-partner-spec
-  arazzo: null
-- slug: convertkit-acuity-scheduling
-  label: Acuity Scheduling
-  partner: acuity-scheduling
-  partner_name: Acuity Scheduling
-  category: Scheduling & Booking
-  type: marketplace
-  marketplace: zapier
-  channel: ipaas-usage
-  evidence: https://zapier.com/apps/convertkit/integrations/acuity-scheduling
-  source: edge
-  status: pending-generation
-  arazzo: null
-- slug: convertkit-wix
-  label: Wix
-  partner: wix
-  partner_name: Wix
-  category: Website Builders
-  type: marketplace
-  marketplace: zapier
-  channel: ipaas-usage
-  evidence: https://zapier.com/apps/convertkit/integrations/wix
-  source: edge
-  status: pending-generation
-  arazzo: null
-- slug: convertkit-shopify
-  label: Shopify
-  partner: shopify
-  partner_name: Shopify
-  category: eCommerce
-  type: marketplace
-  marketplace: zapier
-  channel: ipaas-usage
-  evidence: https://zapier.com/apps/convertkit/integrations/shopify
-  source: edge
-  status: pending-generation
-  arazzo: null
-- slug: convertkit-thinkific
-  label: Thinkific
-  partner: thinkific
-  partner_name: Thinkific
-  category: Online Courses
-  type: marketplace
-  marketplace: zapier
-  channel: ipaas-usage
-  evidence: https://zapier.com/apps/convertkit/integrations/thinkific
-  source: edge
-  status: pending-generation
-  arazzo: null
-- slug: convertkit-whop
-  label: Whop
-  partner: whop
-  partner_name: Whop
-  category: Commerce
-  type: marketplace
-  marketplace: zapier
-  channel: ipaas-usage
-  evidence: https://zapier.com/apps/convertkit/integrations/whop
-  source: edge
-  status: pending-generation
-  arazzo: null
-- slug: convertkit-teachable
-  label: Teachable
-  partner: teachable
-  partner_name: Teachable
-  category: Online Courses
-  type: marketplace
-  marketplace: zapier
-  channel: ipaas-usage
-  evidence: https://zapier.com/apps/convertkit/integrations/teachable
-  source: edge
-  status: pending-generation
-  arazzo: null
-- slug: convertkit-manychat
-  label: Manychat
-  partner: manychat
-  partner_name: Manychat
-  category: Social Media Marketing
-  type: marketplace
-  marketplace: zapier
-  channel: ipaas-usage
-  evidence: https://zapier.com/apps/convertkit/integrations/manychat
-  source: edge
-  status: pending-generation
-  arazzo: null
-- slug: convertkit-squarespace-commerce
-  label: Squarespace Commerce
-  partner: squarespace
-  partner_name: Squarespace Commerce
-  category: Website Builders
-  type: marketplace
-  marketplace: zapier
-  channel: ipaas-usage
-  evidence: https://zapier.com/apps/convertkit/integrations/squarespace-commerce
-  source: edge
-  status: pending-generation
-  arazzo: null
-- slug: convertkit-mighty-networks
-  label: Mighty Networks
-  partner: mighty-networks
-  partner_name: Mighty Networks
-  category: Website Builders
-  type: marketplace
-  marketplace: zapier
-  channel: ipaas-usage
-  evidence: https://zapier.com/apps/convertkit/integrations/mightynetworks
-  source: edge
-  status: pending-generation
-  arazzo: null
 - slug: convertkit-bonjoro
   label: bonjoro
   partner: bonjoro
@@ -428,28 +163,6 @@
     property: schemas.integration.provider
     detected_by: detect-payment-method-edges.py
     detected: '2026-10-12'
-  status: not-a-workflow
-  arazzo: null
-- slug: convertkit-a2a-protocol-own-agent-card
-  label: A2A protocol (own Agent Card)
-  partner_name: A2A protocol (own Agent Card)
-  category: A2A agent
-  type: register
-  channel: provider-built
-  evidence: https://developers.kit.com/.well-known/agent-card.json
-  source: edge
-  relationship: compatible
-  contract_reference:
-    register: provider's own /.well-known/agent-card.json
-    spec_file: null
-    standard: A2A
-    role: a2a-agent-card
-    registered_name: Kit Developer Documentation
-    organization: Kit Developer Documentation
-    matched_domain: kit.com
-    matched_by: own-domain
-    detected_by: sweep-ai-agents.py
-    detected: '2026-10-15'
   status: not-a-workflow
   arazzo: null
 - slug: convertkit-zapier
@@ -551,4 +264,324 @@
     detected_by: sweep-official-sdks.py
     detected: '2026-10-18'
   status: not-a-workflow
+  arazzo: null
+- slug: convertkit-a2a-protocol-own-agent-card
+  label: A2A protocol (own Agent Card)
+  partner_name: A2A protocol (own Agent Card)
+  category: A2A agent
+  type: register
+  channel: provider-built
+  evidence: https://developers.kit.com/.well-known/agent-card.json
+  source: edge
+  relationship: compatible
+  contract_reference:
+    register: provider's own /.well-known/agent-card.json
+    spec_file: null
+    standard: A2A
+    role: a2a-agent-card
+    registered_name: Kit Developer Documentation
+    organization: Kit Developer Documentation
+    matched_domain: kit.com
+    matched_by: own-domain
+    detected_by: sweep-ai-agents.py
+    detected: '2026-10-19'
+  status: not-a-workflow
+  arazzo: null
+- slug: convertkit-typeform
+  label: Typeform
+  partner: typeform
+  partner_name: Typeform
+  category: Forms & Surveys
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/convertkit/integrations/typeform
+  source: edge
+  relationship: ipaas-bridge
+  status: pending-generation
+  arazzo: null
+- slug: convertkit-kajabi
+  label: Kajabi
+  partner: kajabi
+  partner_name: Kajabi
+  category: eCommerce
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/convertkit/integrations/kajabi
+  source: edge
+  relationship: ipaas-bridge
+  status: pending-generation
+  arazzo: null
+- slug: convertkit-stripe
+  label: Stripe
+  partner: stripe
+  partner_name: Stripe
+  category: Payment Processing
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/convertkit/integrations/stripe
+  source: edge
+  relationship: ipaas-bridge
+  status: pending-generation
+  arazzo: null
+- slug: convertkit-squarespace-forms
+  label: Squarespace Forms
+  partner: squarespace
+  partner_name: Squarespace Forms
+  category: Forms & Surveys
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/convertkit/integrations/squarespace-forms
+  source: edge
+  relationship: ipaas-bridge
+  status: pending-generation
+  arazzo: null
+- slug: convertkit-tally
+  label: Tally
+  partner: tally
+  partner_name: Tally
+  category: Forms & Surveys
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/convertkit/integrations/tally
+  source: edge
+  relationship: ipaas-bridge
+  status: pending-generation
+  arazzo: null
+- slug: convertkit-zoom
+  label: Zoom
+  partner: zoom
+  partner_name: Zoom
+  category: Video Conferencing
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/convertkit/integrations/zoom
+  source: edge
+  relationship: ipaas-bridge
+  status: pending-generation
+  arazzo: null
+- slug: convertkit-circle
+  label: Circle
+  partner: circle-community
+  partner_name: Circle
+  category: CRM (Customer Relationship Management)
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/convertkit/integrations/circle
+  source: edge
+  relationship: ipaas-bridge
+  status: pending-generation
+  arazzo: null
+- slug: convertkit-gmail
+  label: Gmail
+  partner: gmail
+  partner_name: Gmail
+  category: Email
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/convertkit/integrations/gmail
+  source: edge
+  relationship: ipaas-bridge
+  status: pending-partner-spec
+  arazzo: null
+- slug: convertkit-thrivecart
+  label: ThriveCart
+  partner: thrivecart
+  partner_name: ThriveCart
+  category: eCommerce
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/convertkit/integrations/thrivecart
+  source: edge
+  relationship: ipaas-bridge
+  status: pending-generation
+  arazzo: null
+- slug: convertkit-google-forms
+  label: Google Forms
+  partner: google-forms
+  partner_name: Google Forms
+  category: Forms & Surveys
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/convertkit/integrations/google-forms
+  source: edge
+  relationship: ipaas-bridge
+  status: pending-generation
+  arazzo: null
+- slug: convertkit-airtable
+  label: Airtable
+  partner: airtable
+  partner_name: Airtable
+  category: Databases
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/convertkit/integrations/airtable
+  source: edge
+  relationship: ipaas-bridge
+  status: pending-generation
+  arazzo: null
+- slug: convertkit-leadconnector
+  label: LeadConnector
+  partner_name: LeadConnector
+  category: Marketing Automation
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/convertkit/integrations/leadconnector
+  source: edge
+  relationship: ipaas-bridge
+  status: pending-partner-spec
+  arazzo: null
+- slug: convertkit-skool
+  label: Skool
+  partner: skool
+  partner_name: Skool
+  category: Education
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/convertkit/integrations/skool
+  source: edge
+  relationship: ipaas-bridge
+  status: pending-partner-spec
+  arazzo: null
+- slug: convertkit-gumroad
+  label: Gumroad
+  partner: gumroad
+  partner_name: Gumroad
+  category: eCommerce
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/convertkit/integrations/gumroad
+  source: edge
+  relationship: ipaas-bridge
+  status: pending-partner-spec
+  arazzo: null
+- slug: convertkit-acuity-scheduling
+  label: Acuity Scheduling
+  partner: acuity-scheduling
+  partner_name: Acuity Scheduling
+  category: Scheduling & Booking
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/convertkit/integrations/acuity-scheduling
+  source: edge
+  relationship: ipaas-bridge
+  status: pending-generation
+  arazzo: null
+- slug: convertkit-wix
+  label: Wix
+  partner: wix
+  partner_name: Wix
+  category: Website Builders
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/convertkit/integrations/wix
+  source: edge
+  relationship: ipaas-bridge
+  status: pending-generation
+  arazzo: null
+- slug: convertkit-shopify
+  label: Shopify
+  partner: shopify
+  partner_name: Shopify
+  category: eCommerce
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/convertkit/integrations/shopify
+  source: edge
+  relationship: ipaas-bridge
+  status: pending-generation
+  arazzo: null
+- slug: convertkit-thinkific
+  label: Thinkific
+  partner: thinkific
+  partner_name: Thinkific
+  category: Online Courses
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/convertkit/integrations/thinkific
+  source: edge
+  relationship: ipaas-bridge
+  status: pending-generation
+  arazzo: null
+- slug: convertkit-teachable
+  label: Teachable
+  partner: teachable
+  partner_name: Teachable
+  category: Online Courses
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/convertkit/integrations/teachable
+  source: edge
+  relationship: ipaas-bridge
+  status: pending-generation
+  arazzo: null
+- slug: convertkit-whop
+  label: Whop
+  partner: whop
+  partner_name: Whop
+  category: Commerce
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/convertkit/integrations/whop
+  source: edge
+  relationship: ipaas-bridge
+  status: pending-generation
+  arazzo: null
+- slug: convertkit-manychat
+  label: Manychat
+  partner: manychat
+  partner_name: Manychat
+  category: Social Media Marketing
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/convertkit/integrations/manychat
+  source: edge
+  relationship: ipaas-bridge
+  status: pending-generation
+  arazzo: null
+- slug: convertkit-mighty-networks
+  label: Mighty Networks
+  partner: mighty-networks
+  partner_name: Mighty Networks
+  category: Website Builders
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/convertkit/integrations/mightynetworks
+  source: edge
+  relationship: ipaas-bridge
+  status: pending-generation
+  arazzo: null
+- slug: convertkit-squarespace-commerce
+  label: Squarespace Commerce
+  partner: squarespace
+  partner_name: Squarespace Commerce
+  category: Website Builders
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/convertkit/integrations/squarespace-commerce
+  source: edge
+  relationship: ipaas-bridge
+  status: pending-generation
   arazzo: null
