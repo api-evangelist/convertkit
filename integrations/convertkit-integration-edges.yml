@@ -18,6 +18,9 @@ checked:
 - https://zapier.com/api/v4/apps/
 - https://zapier.com/apps/convertkit/integrations
 - wordpress/integrations/wordpress-integration-edges.yml
+- https://hex.pm/api
+- https://packagist.org/packages
+- https://pub.dev/api
 summary: null
 marketplace_apps:
 - marketplace: zapier
@@ -589,6 +592,36 @@ edges:
   direction: third-party
   category: Marketing Automation
   partner_url: http://www.hubspot.com/
+- partner_name: Packagist
+  partner: packagist
+  partner_match: register
+  type: register
+  direction: provider-built
+  category: official SDK (PHP)
+  evidence: https://packagist.org/packages/convertkit/convertkitapi
+  channel: package-registry
+  relationship: distribution-channel
+  contract_reference:
+    register: Packagist (public registry JSON)
+    spec_file: null
+    language: PHP
+    packages:
+    - name: convertkit/convertkitapi
+      version: '2.8'
+      released: '2026-09-15'
+      released_field: time
+      lapsed: false
+      page: https://packagist.org/packages/convertkit/convertkitapi
+      repo_leg: github-org:kit
+      publisher_leg: org:convertkit
+      matched_by: github-org
+    current: true
+    signal_note: 'an official package on the registry: distribution, not an integration; lapsed = no release in
+      24 months'
+    detected_by: sweep-php-dart-elixir-package-registries.py
+    detected: '2026-10-22'
+  detected_by: sweep-php-dart-elixir-package-registries.py
+  first_seen: '2026-10-22'
 templates:
 - title: Add new Jotform form respondents as subscriber tags on Kit
   url: https://zapier.com/apps/jotform/integrations/kit/11723/add-new-jotform-form-respondents-as-subscriber-tags-on-kit
